@@ -14,8 +14,8 @@ import com.badbones69.crazycrates.api.oldobjects.Crate;
 import com.badbones69.crazycrates.api.oldobjects.CrateLocation;
 import com.badbones69.crazycrates.api.oldobjects.Prize;
 import com.badbones69.crazycrates.api.configs.types.Config;
-import com.badbones69.crazycrates.api.enums.Permissions;
 import com.badbones69.crazycrates.api.enums.KeyType;
+import com.badbones69.crazycrates.commands.CommandPermissions;
 import com.badbones69.crazycrates.listeners.CrateControlListener;
 import com.badbones69.crazycrates.listeners.MenuListener;
 import dev.triumphteam.cmd.bukkit.annotation.Permission;
@@ -47,12 +47,6 @@ public class CrateBaseCommand extends BaseCommand {
     @Permission(value = "crazycrates.command.player.menu", def = PermissionDefault.TRUE)
     public void onDefaultMenu(Player player) {
         if (this.plugin.getApiManager().getConfig().getProperty(Config.ENABLE_CRATE_MENU)) MenuListener.openGUI(player); else player.sendMessage(Messages.FEATURE_DISABLED.getMessage());
-    }
-
-    @SubCommand("help")
-    @Permission(value = "crazycrates.command.player.help", def = PermissionDefault.TRUE)
-    public void onHelp(CommandSender sender) {
-        sender.sendMessage(Messages.HELP.getMessage());
     }
 
     @SubCommand("transfer")
@@ -96,23 +90,6 @@ public class CrateBaseCommand extends BaseCommand {
         }
     }
 
-    @SubCommand("admin-help")
-    @Permission(value = "crazycrates.command.admin.help", def = PermissionDefault.OP)
-    public void onAdminHelp(CommandSender sender) {
-        sender.sendMessage(Messages.ADMIN_HELP.getMessage());
-    }
-
-    @SubCommand("reload")
-    @Permission(value = "crazycrates.command.admin.reload", def = PermissionDefault.OP)
-    public void onReload(CommandSender sender) {
-        fileManager.reloadAllFiles();
-        fileManager.setup();
-
-        crazyManager.loadCrates();
-
-        sender.sendMessage(Messages.RELOAD.getMessage());
-    }
-
     @SubCommand("debug")
     @Permission(value = "crazycrates.command.admin.debug", def = PermissionDefault.OP)
     public void onDebug(CommandSender sender, @Suggestion("crates") String crateName) {
@@ -123,18 +100,6 @@ public class CrateBaseCommand extends BaseCommand {
         } else {
             sender.sendMessage(Messages.NOT_A_CRATE.getMessage("%Crate%", crateName));
         }
-    }
-
-    @SubCommand("schem-save")
-    @Permission(value = "crazycrates.command.admin.schematic.save", def = PermissionDefault.OP)
-    public void onAdminSave(Player player) {
-        player.sendMessage(Messages.FEATURE_DISABLED.getMessage());
-    }
-
-    @SubCommand("schem-set")
-    @Permission(value = "crazycrates.command.admin.schematic.set", def = PermissionDefault.OP)
-    public void onAdminSet(Player player) {
-        player.sendMessage(Messages.FEATURE_DISABLED.getMessage());
     }
 
     @SubCommand("admin")
@@ -617,7 +582,7 @@ public class CrateBaseCommand extends BaseCommand {
 
                 for (Player onlinePlayer : plugin.getServer().getOnlinePlayers()) {
 
-                    if (Methods.permCheck(onlinePlayer, Permissions.CRAZY_CRATES_PLAYER_EXCLUDE_GIVE_ALL, true)) continue;
+                    if (Methods.permCheck(onlinePlayer, CommandPermissions.PLAYER_EXCLUDE_ALL, true)) continue;
 
                     PlayerReceiveKeyEvent event = new PlayerReceiveKeyEvent(onlinePlayer, crate, PlayerReceiveKeyEvent.KeyReceiveReason.GIVE_ALL_COMMAND, amount);
                     onlinePlayer.getServer().getPluginManager().callEvent(event);
