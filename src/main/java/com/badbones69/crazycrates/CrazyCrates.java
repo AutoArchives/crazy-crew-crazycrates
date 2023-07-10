@@ -75,6 +75,8 @@ public class CrazyCrates extends JavaPlugin implements Listener {
         baseCommand.addSubCommand(new CommandSchematicSave());
         baseCommand.addSubCommand(new CommandSchematicSet());
 
+        baseCommand.addSubCommand(new CommandAddKeys());
+
         PluginCommand command = getCommand(baseCommand.prefix);
 
         PluginCommand keyCommand = getCommand(keyBaseCommand.prefix);
