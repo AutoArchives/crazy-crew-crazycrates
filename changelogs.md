@@ -23,59 +23,80 @@ You should take a pretty portion of what you know of the previous versions of Cr
 
 <details><summary>/crazycrates schematic set1/set2 | /crazycrates/schematic save</summary>
 
-  * crazycrates.command.admin.schematic.set -> crazycrates.command.admin.schematic-set
-  * crazycrates.command.admin.schematic.save -> crazycrates.command.admin.schematic-save
+| Old                                        | New                                         |
+|--------------------------------------------|---------------------------------------------|
+| crazycrates.command.admin.schematic.save   | crazycrates.command.admin.schematic-save    |
+| crazycrates.command.admin.schematic.set    | crazycrates.command.admin.schematic-set     |
 </details>
 
 <details><summary>/crazycrates open-others</summary>
 
-  * crazycrates.command.admin.open.others -> crazycrates.command.admin.open-others
+| Old                                        | New                                         |
+|--------------------------------------------|---------------------------------------------|
+| crazycrates.command.admin.open.others      | crazycrates.command.admin.open-others       |
 </details>
 
 <details><summary>/crazycrates mass-open</summary>
 
-  * crazycrates.command.admin.mass.open -> crazycrates.command.admin.mass-open
+| Old                                        | New                                         |
+|--------------------------------------------|---------------------------------------------|
+| crazycrates.command.admin.mass.open        | crazycrates.command.admin.mass-open         |
 </details>
 
 <details><summary>/crazycrates force-open</summary>
 
-  * crazycrates.command.admin.forceopen -> crazycrates.command.admin.force-open
+| Old                                        | New                                         |
+|--------------------------------------------|---------------------------------------------|
+| crazycrates.command.admin.forceopen        | crazycrates.command.admin.force-open        |
 </details>
 
 <details><summary>/crazycrates give</summary>
 
-  * crazycrates.command.admin.givekey -> crazycrates.command.admin.give-key
+| Old                                        | New                                         |
+|--------------------------------------------|---------------------------------------------|
+| crazycrates.command.admin.givekey          | crazycrates.command.admin.give-key          |
 </details>
 
 <details><summary>/crazycrates give-random</summary>
 
-  * crazycrates.command.admin.giverandomkey -> crazycrates.command.admin.give-random-key
+| Old                                        | New                                         |
+|--------------------------------------------|---------------------------------------------|
+| crazycrates.command.admin.giverandomkey    | crazycrates.command.admin.give-random-key   |
 </details>
 
 <details><summary>/crazycrates give-all</summary>
 
-  * crazycrates.command.admin.giveall -> crazycrates.command.admin.give-all
-  #### Note: The permission used to exclude players from getting keys from give-all has changed!
-  * crazycrates.command.exclude.player.giveall -> crazycrates.command.excludes.player.give-all
+| Old                                        | New                                         |
+|--------------------------------------------|---------------------------------------------|
+| crazycrates.command.admin.giveall          | crazycrates.command.admin.give-all          |
+| crazycrates.command.exclude.player.giveall | crazycrates.command.exclude.player.give-all |
 </details>
 
 <details><summary>/crazycrates set-crate</summary>
 
-  * crazycrates.command.admin.set -> crazycrates.command.admin.set-crate
+| Old                                        | New                                         |
+|--------------------------------------------|---------------------------------------------|
+| crazycrates.command.admin.set              | crazycrates.command.admin.set-crate         |
 </details>
 
 
 <details><summary>/crazycrates set-menu</summary>
 
-  * crazycrates.command.admin.setmenu -> crazycrates.command.admin.set-menu
+| Old                               | New                                |
+|-----------------------------------|------------------------------------|
+| crazycrates.command.admin.setmenu | crazycrates.command.admin.set-menu |
 </details>
 
 <details><summary>/crazycrates key {player}</summary>
 
-  * crazycrates.command.player.key.others -> crazycrates.command.player.key-others
+| Old                                   | New                                   |
+|---------------------------------------|---------------------------------------|
+| crazycrates.command.player.key.others | crazycrates.command.player.key-others |
 </details>
 
 <details><summary>/crazycrates gui</summary>
 
-  * crazycrates.command.player.menu -> crazycrates.command.player.crate-menu
+| Old                             | New                                   |
+|---------------------------------|---------------------------------------|
+| crazycrates.command.player.menu | crazycrates.command.player.crate-menu |
 </details>
