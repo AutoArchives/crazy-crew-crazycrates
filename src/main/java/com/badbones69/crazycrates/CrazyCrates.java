@@ -1,14 +1,13 @@
 package com.badbones69.crazycrates;
 
 import com.badbones69.crazycrates.api.*;
-import com.badbones69.crazycrates.commands.CommandCore;
 import com.badbones69.crazycrates.commands.CommandPermissions;
 import com.badbones69.crazycrates.commands.v2.BaseCommand;
 import com.badbones69.crazycrates.commands.v2.KeyBaseCommand;
 import com.badbones69.crazycrates.commands.v2.admin.CommandAdmin;
 import com.badbones69.crazycrates.commands.v2.admin.CommandHelp;
 import com.badbones69.crazycrates.api.configs.types.PluginConfig;
-import com.badbones69.crazycrates.api.holograms.interfaces.HologramManager;
+import com.badbones69.crazycrates.api.support.holograms.interfaces.HologramManager;
 import com.badbones69.crazycrates.commands.v2.admin.CommandReload;
 import com.badbones69.crazycrates.commands.v2.admin.keys.CommandAddKeys;
 import com.badbones69.crazycrates.commands.v2.admin.schematics.CommandSchematicSave;
@@ -28,11 +27,7 @@ public class CrazyCrates extends JavaPlugin implements Listener {
 
     private ApiManager apiManager;
     private InternalPlaceholderSupport placeholderManager;
-
-    private FileManager fileManager;
-    private CrazyManager crazyManager;
-    private ChestStateHandler chestStateHandler;
-    private EventLogger eventLogger;
+    private Timer timer;
 
     private boolean isEnabled;
 
@@ -59,8 +54,6 @@ public class CrazyCrates extends JavaPlugin implements Listener {
         this.placeholderManager = new InternalPlaceholderSupport();
 
         registerPermissions(getServer().getPluginManager());
-
-        new CommandCore();
 
         BaseCommand baseCommand = new BaseCommand();
 
@@ -100,9 +93,7 @@ public class CrazyCrates extends JavaPlugin implements Listener {
     public void onDisable() {
         if (!this.isEnabled) return;
 
-        //SessionManager.endCrates();
-
-        //QuickCrate.removeAllRewards();
+        if (this.timer != null) this.timer.cancel();
 
         if (this.apiManager.getUserManager() != null) this.apiManager.getUserManager().save();
 
@@ -133,19 +124,20 @@ public class CrazyCrates extends JavaPlugin implements Listener {
         return getApiManager().getHolograms();
     }
 
+    // TODO() Remove
     public FileManager getFileManager() {
-        return this.fileManager;
+        return new FileManager();
     }
 
     public CrazyManager getCrazyManager() {
-        return this.crazyManager;
+        return new CrazyManager();
     }
 
     public ChestStateHandler getChestStateHandler() {
-        return this.chestStateHandler;
+        return new ChestStateHandler();
     }
 
     public EventLogger getEventLogger() {
-        return this.eventLogger;
+        return new EventLogger();
     }
 }
