@@ -2,13 +2,13 @@ package com.badbones69.crazycrates.commands.v2;
 
 import ch.jalu.configme.SettingsManager;
 import com.badbones69.crazycrates.CrazyCrates;
+import com.badbones69.crazycrates.commands.engine.CommandContext;
+import com.badbones69.crazycrates.commands.engine.CommandEngine;
+import com.badbones69.crazycrates.commands.engine.reqs.CommandRequirementsBuilder;
+import com.badbones69.crazycrates.commands.engine.sender.args.Argument;
 import com.badbones69.crazycrates.api.configs.types.Locale;
 import com.badbones69.crazycrates.api.objects.Crate;
 import com.badbones69.crazycrates.commands.v2.args.PlayerArgument;
-import com.ryderbelserion.stick.paper.commands.CommandContext;
-import com.ryderbelserion.stick.paper.commands.CommandEngine;
-import com.ryderbelserion.stick.paper.commands.reqs.CommandRequirementsBuilder;
-import com.ryderbelserion.stick.paper.commands.sender.args.Argument;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;

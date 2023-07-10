@@ -1,7 +1,7 @@
 package com.badbones69.crazycrates.commands.v2.args;
 
+import com.badbones69.crazycrates.commands.engine.sender.args.ArgumentType;
 import com.badbones69.crazycrates.api.enums.KeyType;
-import com.ryderbelserion.stick.paper.commands.sender.args.ArgumentType;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;

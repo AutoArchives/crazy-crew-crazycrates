@@ -33,11 +33,9 @@ public class PluginConfig extends YamlConfiguration implements SettingsHolder {
     @Comment("How many commands should be displayed per page in /crazycrates help?")
     public static final Property<Integer> MAX_HELP_PAGE_ENTRIES = newProperty("help.max-help-page-entries", 10);
 
-    public static final Property<String> COMMAND_HELP_FORMAT = newProperty("help.command-format", "{prefix}<red>{command}</red> <green>{args}</green>");
-
     public static final Property<String> INVALID_HELP_PAGE = newProperty("help.invalid-page", "{prefix}<red>The page</red> <gold>{page}</gold> <red>does not exist.</red>");
 
-    public static final Property<String> HELP_PAGE_FORMAT = newProperty("help.page-format", "<gold>{command}{args}</gold> <dark_gray>»</dark_gray> <reset>{description}");
+    public static final Property<String> HELP_PAGE_FORMAT = newProperty("help.page-format", "<gold>{command}</gold> <dark_gray>»</dark_gray> <reset>{description}");
 
     public static final Property<String> HELP_PAGE_HEADER = newProperty("help.header", "<dark_gray>────────</dark_gray> <gold>CrazyCrates Help {page}</gold> <dark_gray>────────</dark_gray>");
 

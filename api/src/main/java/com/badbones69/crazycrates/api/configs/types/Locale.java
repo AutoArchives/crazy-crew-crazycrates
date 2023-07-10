@@ -17,8 +17,18 @@ public class Locale implements SettingsHolder {
                 "Submit your translations here: https://github.com/Crazy-Crew/CrazyCrates/discussions/categories/translations"
         };
 
-        conf.setComment("misc", header);
+        conf.setComment("general", header);
     }
+
+    public static final Property<String> INVALID_ACTION = newProperty("general.requirements.invalid-action", "{prefix}<gold>{value}</gold> <red>is an invalid {action}.</red>");
+
+    public static final Property<String> REQUIRED_ARGUMENT = newProperty("general.requirements.required-argument", "{prefix}<red>This argument is not optional</red>");
+
+    public static final Property<String> OPTIONAL_ARGUMENT = newProperty("general.requirements.optional-argument", "{prefix}<green>This argument is optional</green>");
+
+    public static final Property<String> TOO_MANY_ARGS = newProperty("general.requirements.too-many-args", "{prefix}<red>You put more arguments then I can handle.</red>");
+
+    public static final Property<String> NOT_ENOUGH_ARGS = newProperty("general.requirements.not-enough-args", "{prefix}<red>You did not supply enough arguments.</red>");
 
     public static final Property<String> UNKNOWN_COMMAND = newProperty("misc.unknown-command", "{prefix}<red>The command {command} is not known.</red>");
 
@@ -32,9 +42,6 @@ public class Locale implements SettingsHolder {
 
     public static final Property<String> FEATURE_DISABLED = newProperty("misc.feature-disabled", "{prefix}<red>This feature is disabled. We have no ETA on when this will function.</red>");
 
-    //TODO() Removed.
-    //public static final Property<String> CORRECT_USAGE = newProperty("misc.correct-usage", "{prefix}<red>The correct usage for this command is</red> <gold>{usage}</gold>");
-
     public static final Property<String> NO_PRIZES_FOUND = newProperty("errors.no-prizes.found", "{prefix}<red>{crate} contains no prizes that you can win.</red>");
 
     public static final Property<String> NO_SCHEMATICS_FOUND = newProperty("errors.no-schematics-found", "{prefix}<red>No schematic were found, Please re-generate them by deleting the folder or checking for errors!</red>");
@@ -43,15 +50,7 @@ public class Locale implements SettingsHolder {
 
     public static final Property<String> INTERNAL_ERROR = newProperty("errors.internal-error", "{prefix}<red>An internal error has occurred. Please check the console for the full error.</red>");
 
-    public static final Property<String> OPTIONAL_ARGUMENT = newProperty("player.requirements.optional-argument", "{prefix}<green>This argument is optional</green>");
-
     public static final Property<String> PLAYER_DOES_NOT_EXIST = newProperty("player.requirements.invalid", "{prefix}<red>The player does not exist</red>");
-
-    public static final Property<String> REQUIRED_ARGUMENT = newProperty("player.requirements.required-argument", "{prefix}<red>This argument is not optional</red>");
-
-    public static final Property<String> TOO_MANY_ARGS = newProperty("player.requirements.too-many-args", "{prefix}<red>You put more arguments then I can handle.</red>");
-
-    public static final Property<String> NOT_ENOUGH_ARGS = newProperty("player.requirements.not-enough-args", "{prefix}<red>You did not supply enough arguments.</red>");
 
     public static final Property<String> MUST_BE_PLAYER = newProperty("player.requirements.must-be-player", "{prefix}<red>You must be a player to use this command.</red>");
 
@@ -61,9 +60,9 @@ public class Locale implements SettingsHolder {
 
     public static final Property<String> TARGET_NOT_ONLINE = newProperty("player.target-not-online", "{prefix}<red>The player</red> <gold>{player}</gold> <red>is not online.</red>");
 
-    public static final Property<String> GRABBING_OFFLINE_PLAYER = newProperty("player.grabbing-offline-player", "{prefix}<red>Grabbing the offline player!</red> <yellow>I hope you got the name spelled right!</yellow>");
-
     public static final Property<String> TARGET_SAME_PLAYER = newProperty("player.target-same-player", "{prefix}<red>You cannot use this command on yourself.</red>");
+
+    public static final Property<String> GRABBING_OFFLINE_PLAYER = newProperty("player.grabbing-offline-player", "{prefix}<red>Grabbing the offline player!</red> <yellow>I hope you got the name spelled right!</yellow>");
 
     public static final Property<String> NO_PERMISSION = newProperty("player.no-permission", "{prefix}<red>You do not have permission to use that command!</red>");
 
@@ -74,8 +73,6 @@ public class Locale implements SettingsHolder {
     public static final Property<String> TOO_CLOSE_TO_ANOTHER_PLAYER = newProperty("player.too-close-to-another-player", "{prefix}<red>You are too close to a player that is opening their crate.</red>");
 
     public static final Property<String> NOT_A_CRATE = newProperty("crates.requirements.not-a-crate", "{prefix}<red>There is no crate called</red> <gold>{crate}.</gold>");
-
-    public static final Property<String> NOT_A_NUMBER = newProperty("crates.requirements.not-a-number", "{prefix}<gold>{number}</gold> <red>is not a number.</red>");
 
     public static final Property<String> NOT_ON_BLOCK = newProperty("crates.not-on-block", "{prefix}<red>You must be standing on a block to use</red> <gold>{crate}.</gold>");
 

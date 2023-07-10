@@ -2,15 +2,14 @@ package com.badbones69.crazycrates.commands.v2.admin;
 
 import ch.jalu.configme.SettingsManager;
 import com.badbones69.crazycrates.CrazyCrates;
-import com.badbones69.crazycrates.api.configs.types.Locale;
+import com.badbones69.crazycrates.commands.engine.CommandContext;
+import com.badbones69.crazycrates.commands.engine.CommandEngine;
+import com.badbones69.crazycrates.commands.engine.reqs.CommandRequirementsBuilder;
+import com.badbones69.crazycrates.commands.engine.sender.args.Argument;
+import com.badbones69.crazycrates.commands.engine.sender.args.builder.IntArgument;
 import com.badbones69.crazycrates.api.configs.types.PluginConfig;
 import com.badbones69.crazycrates.commands.CommandPermissions;
 import com.badbones69.crazycrates.commands.v2.BaseCommand;
-import com.ryderbelserion.stick.paper.commands.CommandContext;
-import com.ryderbelserion.stick.paper.commands.CommandEngine;
-import com.ryderbelserion.stick.paper.commands.reqs.CommandRequirementsBuilder;
-import com.ryderbelserion.stick.paper.commands.sender.args.Argument;
-import com.ryderbelserion.stick.paper.commands.sender.args.builder.IntArgument;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class CommandHelp extends CommandEngine {
@@ -41,7 +40,7 @@ public class CommandHelp extends CommandEngine {
 
     @Override
     protected void perform(CommandContext context) {
-        int arg = context.getArgAsInt(0, true, this.plugin.getPlaceholderManager().setPlaceholders(this.locale.getProperty(Locale.NOT_A_NUMBER)), "\\{number}");
+        int arg = context.getArgAsInt(0, true);
 
         this.baseCommand.generateHelp(arg, this.pluginConfig.getProperty(PluginConfig.MAX_HELP_PAGE_ENTRIES), context);
     }
