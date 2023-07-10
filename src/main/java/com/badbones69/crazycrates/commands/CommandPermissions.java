@@ -5,21 +5,6 @@ import org.bukkit.permissions.PermissionDefault;
 
 public enum CommandPermissions {
 
-    // schematic.save -> schematic-save
-    // schematic.set -> schematic-set
-    // admin.open.others -> admin.open-others
-    // admin.mass.open -> admin.mass-open
-    // admin.forceopen -> admin.force-open
-    // admin.givekey -> admin.give-key
-    // admin.giverandomkey -> admin.give-random-key
-    // admin.giveall -> admin.give-all
-    // admin.set -> admin.set-crate
-    // admin.setmenu -> admin.set-menu
-
-    // player.key.others -> player.key-others
-    // player/menu -> player.crate-menu
-    // excludes.player.giveall -> excludes.player.give-all
-
     PLAYER_HELP("player.help", "Gives access to the help command.", PermissionDefault.TRUE),
 
     PLAYER_KEY("player.key", "Check the number of keys you have", PermissionDefault.OP),
