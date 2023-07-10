@@ -6,78 +6,79 @@
 # Translations: https://github.com/Crazy-Crew/CrazyCrates/discussions/categories/translations
 
 misc:
-  unknown-command: '&cThe command {command} is not known.'
-  no-teleporting: '&cYou may not teleport away while opening &6{crate}.'
-  no-commands: '&cYou are not allowed to use commands while opening &6{crate}.'
-  no-keys: '&cYou need a {key} &cin your hand to use &6{crate}.'
-  no-virtual-keys: '&cYou need {key} &cto open &6{crate}.'
-  feature-disabled: '&cThis feature is disabled. We have no ETA on when this will function.'
-  correct-usage: '&cThe correct usage for this command is &e{usage}'
+  unknown-command: '<red>The command {command} is not known.</red>'
+  no-teleporting: '<red>You may not teleport away while opening</red> <gold>{crate}.</gold>'
+  no-commands: 'red>You are not allowed to use commands while opening</red> <gold>{crate}.</gold>'
+  no-keys: 'red>You need a</red> {key} <red>in your hand to use</red> <gold>{crate}.</gold>'
+  no-virtual-keys: 'red>You need</red> {key} <red>to open</red> <gold>{crate}.</gold>'
+  feature-disabled: 'red>This feature is disabled. We have no ETA on when this will function.</red>'
+  correct-usage: 'red>The correct usage for this command is</red> <yellow>{usage}</yellow>'
 
 errors:
-  no-prizes-found: '&c{crate} contains no prizes that you can win.'
-  no-schematics-found: '&cNo schematic were found, Please re-generate them by deleting the folder or checking for errors!'
-  prize-error: '&cAn error has occurred in &6{crate} &cfor &6#{prize}. &eContact your owner!'
-  internal-error: '&cAn internal error has occurred. Please check the console for the full error.'
+  no-prizes-found: '<red>{crate} contains no prizes that you can win.</red>'
+  no-schematics-found: '<red>No schematic were found, Please re-generate them by deleting the folder or checking for errors!</red>'
+  prize-error: '<red>An error has occurred in</red> <gold>{crate}</gold> <red>for</red> <gold>#{prize}.</gold> <yellow>Contact your owner!</yellow>'
+  internal-error: '<red>An internal error has occurred. Please check the console for the full error.</red>'
 
 player:
   requirements:
-    too-many-args: '&cYou put more arguments then I can handle.'
-    not-enough-args: '&cYou did not supply enough arguments.'
-    must-be-player: '&cYou must be a player to use this command.'
-    must-be-console-sender: '&cYou must be using console to use this command.'
-    must-be-looking-at-block: '&cYou must be looking at a block.'
-  target-not-online: '&cThe player &6{player} &cis not online.'
-  target-same-player: '&cYou cannot use this command on yourself.'
-  no-permission: '&cYou do not have permission to use that command!'
-  inventory-not-empty: '&cInventory is not empty, Please make room before opening &6{crate}.'
-  obtaining-keys: '&7You have been given &6{amount} {key} &7keys.'
-  too-close-to-another-player: '&cYou are too close to a player that is opening their crate.'
+    too-many-args: '<red>You put more arguments then I can handle.</red>'
+    not-enough-args: '<red>You did not supply enough arguments.</red>'
+    must-be-player: '<red>You must be a player to use this command.</red>'
+    must-be-console-sender: '<red>You must be using console to use this command.</red>'
+    must-be-looking-at-block: '<red>You must be looking at a block.</red>'
+  target-not-online: '<red>The player <gold>{player}</gold> <red>is not online.</red>'
+  grabbing-offline-player: '<red>Grabbing the offline player!</red> <yellow>I hope you got the name spelled right!</yellow>'
+  target-same-player: '<red>You cannot use this command on yourself.</red>'
+  no-permission: '<red>You do not have permission to use that command!</red>'
+  inventory-not-empty: '<red>Inventory is not empty, Please make room before opening</red> <gold>{crate}.'
+  obtaining-keys: '<gray>You have been given</gray> <gold>{amount}</gold> {key} <gray>keys.</gray>'
+  too-close-to-another-player: '<red>You are too close to a player that is opening their crate.</red>'
 
 crates:
   requirements:
-    not-a-crate: '&cThere is no crate called &6{crate}.'
-    not-a-number: '&6{number} &cis not a number.'
-  not-on-block: '&cYou must be standing on a block to use &6{crate}.'
-  out-of-time: '&cYou took &a5 Minutes &cto open the &6{crate} &cso it closed.'
-  preview-disabled: '&cThe preview for &6{crate} &7is currently disabled.'
-  already-open: '&cYou are already opening &6{crate}.'
-  in-use: '&6{crate} &cis already in use. Please wait until it finishes!'
-  cannot-be-a-virtual-crate: '&6{crate} &ccannot be used as a Virtual Crate. You have it set to &6{cratetype}.'
-  need-more-room: '&cThere is not enough space to open {crate} here.'
-  world-disabled: '&cCrates are disabled in &6{world}.'
+    not-a-crate: '<red>There is no crate called</red> <gold>{crate}.</gold>'
+    not-a-number: '<gold>{number}</gold> <red>is not a number.</red>'
+  not-on-block: '<red>You must be standing on a block to use</red> <gold>{crate}.</gold>'
+  out-of-time: '<red>You took</red> <green>5 Minutes</green> <red>to open the</red> <gold>{crate}</gold> <red>so it closed.</red>'
+  preview-disabled: '<red>The preview for</red> <gold>{crate}</gold> <red>is currently disabled.</red>'
+  already-open: '<red>You are already opening <gold>{crate}.'
+  in-use: '<gold>{crate} <red>is already in use. Please wait until it finishes!'
+  cannot-be-a-virtual-crate: '<gold>{crate}</gold> <red>cannot be used as a Virtual Crate. You have it set to</red> <gold>{cratetype}.</gold>'
+  need-more-room: '<red>There is not enough space to open {crate} here.</red>'
+  world-disabled: '<red>Crates are disabled in</red> <gold>{world}.</gold>'
   physical-crate:
     created:
-      - '&7You have set that block to &6{crate}.'
-      - '&7To remove &6{crate}, &7Shift Click Break in Creative to remove.'
-    removed: '&7You have removed &6{id}.'
+      - '<gray>You have set that block to</gray> <gold>{crate}.</gold>'
+      - '<gray>To remove</gray> <gold>{crate},</gold> <gray>Shift-click break in creative to remove.</gray>'
+    removed: '<gray>You have removed</gray> <gold>{id}.</gold>'
 command:
   open:
-    opened-a-crate: '&7You have opened the &6{crate} &7crate for &6{player}.'
+    opened-a-crate: '<gray>You have opened the</gray> <gold>{crate}</gold> <gray>crate for</gray> <gold>{player}.</gold>'
   give:
-    given-player-keys: '&7You have given &6{player} {amount} keys.'
-    cannot-give-player-keys: '&7You have been given &6{amount} {key} &7virtual keys because your inventory was full.'
-    given-everyone-keys: '&7You have given everyone &6{amount} keys.'
-    given-offline-player-keys: '&7You have given &6{amount} key(s) &7to the offline player &6{player}.'
+    given-player-keys: '<gray>You have given</gray> <gold>{player} {amount} keys.'
+    cannot-give-player-keys: '<gray>You have been given</gray> <gold>{amount} {key} <gray>virtual keys because your inventory was full.</gray>'
+    given-everyone-keys: '<gray>You have given everyone</gray> <gold>{amount} keys.'
+    given-offline-player-keys: '<gray>You have given</gray> <gold>{amount} key(s) <gray>to the offline player</gray> <gold>{player}.</gold>'
   take:
-    take-player-keys: '&7You have taken &6{amount} key(s) &7from &6{player}.'
-    take-offline-player-keys: '&7You have taken &6{amount} key(s) &7from the offline player &6{player}.'
+    take-player-keys: '<gray>You have taken</gray> <gold>{amount} key(s)</gold> <gray>from <gold>{player}.</gold>'
+    take-offline-player-keys: '<gray>You have taken</gray> <gold>{amount} key(s)</gold> <gray>from the offline player <gold>{player}.</gold>'
   additem:
-    no-item-in-hand: '&cYou need to have an item in your hand to add it to &6{crate}.'
-    add-item-from-hand: '&7The item has been added to &6{crate} &7as &6Prize #{prize}.'
+    no-item-in-hand: '<red>You need to have an item in your hand to add it to</red> <gold>{crate}.</gold>'
+    add-item-from-hand: '<gray>The item has been added to</gray> <gold>{crate}</gold> <gray>as</gray> <gold>Prize #{prize}.</gold>'
   reload:
-    reload-plugin: '&eYou have reloaded the plugin!'
+    reload-plugin: '<yellow>You have reloaded the plugin!</yellow>'
   transfer:
-    not-enough-keys: '&cYou do not have enough keys to transfer.'
-    transferred-keys: '&7You have transferred &c{amount} {crate} &7keys to &c{player}.'
-    transferred-keys-received: '&7You have received &c{amount} {crate} &7keys from &c{player}.'
+    not-enough-keys: '<red>You do not have enough keys to transfer.</red>'
+    transferred-keys: '<gray>You have transferred</gray> <red>{amount} {crate}</red> <gray>keys to</gray> <red>{player}.</red>'
+    transferred-keys-received: '<gray>You have received</gray> <red>{amount} {crate}</red> <gray>keys from</gray> <red>{player}.</red>'
   keys:
     personal:
-      no-virtual-keys: '&8(&6!&8) &7You currently do not have any virtual keys.'
+      no-virtual-keys: '<dark_gray>(<dark_gray><gold>!</gold><dark_gray>)</dark_gray> <gray>You currently do not have any virtual keys.</gray>'
       header:
-        - '&8(&6!&8) &7A list of your current amount of keys.'
+        - '<dark_gray>(<dark_gray><gold>!</gold><dark_gray>)</dark_gray> <gray>A list of your current amount of keys.</gray>'
     other-player:
-      no-virtual-keys: '&8(&6!&8) &7The player &c{player} &7does not have any keys.'
+      no-virtual-keys: '<dark_gray>(<dark_gray><gold>!</gold><dark_gray>)</dark_gray> <gray>The player</gray> <red>{player} <gray>does not have any keys.</gray>'
       header:
-        - '&8(&6!&8) &7A list of &c{player}''s &7current amount of keys.'
-    crate-format: '{crate} &8» &6{keys} keys.'
+        - '<dark_gray>(<dark_gray><gold>!</gold><dark_gray>)</dark_gray> <gray>A list of</gray> <red>{player}''s <gray>current amount of keys.</gray>'
+    crate-format: '{crate} <dark_gray>»</dark_gray> <gold>{keys} keys.</gold>'
