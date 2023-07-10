@@ -10,16 +10,11 @@ import static ch.jalu.configme.properties.PropertyInitializer.newProperty;
 public class Locale implements SettingsHolder {
 
     public Locale() {}
-
-    private static final String settings = "Settings.";
-
+    
     @Override
     public void registerComments(CommentsConfiguration conf) {
         String[] header = {
-                "Github: https://github.com/Crazy-Crew",
-                "",
-                "Issues: https://github.com/Crazy-Crew/CrazyCrates/issues",
-                "Features: https://github.com/Crazy-Crew/CrazyCrates/discussions/categories/features"
+                "Submit your translations here: https://github.com/Crazy-Crew/CrazyCrates/discussions/categories/translations"
         };
 
         conf.setComment("misc", header);
