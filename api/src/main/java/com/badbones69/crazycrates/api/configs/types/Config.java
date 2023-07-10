@@ -26,9 +26,6 @@ public class Config implements SettingsHolder {
         conf.setComment("settings", header);
     }
 
-    @Comment("The prefix that shows up in front of commands.")
-    public static final Property<String> MESSAGE_PREFIX = newProperty(settings + "Prefix", "&8[&bCrazyCrates&8]: ");
-
     public static final Property<Boolean> ENABLE_CRATE_MENU = newProperty(settings + "Enable-Crate-Menu", true);
 
     @Comment({
