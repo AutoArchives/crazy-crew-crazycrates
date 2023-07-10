@@ -6,12 +6,12 @@ import com.badbones69.crazycrates.Methods;
 import com.badbones69.crazycrates.api.CrazyManager;
 import com.badbones69.crazycrates.api.configs.types.Config;
 import com.badbones69.crazycrates.api.crates.types.CrateType;
-import com.badbones69.crazycrates.api.enums.Permissions;
 import com.badbones69.crazycrates.api.enums.KeyType;
 import com.badbones69.crazycrates.api.enums.settings.Messages;
 import com.badbones69.crazycrates.api.events.PhysicalCrateKeyCheckEvent;
 import com.badbones69.crazycrates.api.oldobjects.Crate;
 import com.badbones69.crazycrates.api.oldobjects.CrateLocation;
+import com.badbones69.crazycrates.commands.CommandPermissions;
 import com.badbones69.crazycrates.cratetypes.QuickCrate;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -198,7 +198,7 @@ public class CrateControlListener implements Listener { // Crate Control
         if (inv != null && e.getView().getTitle().equals(Methods.sanitizeColor("&4&lAdmin Keys"))) {
             e.setCancelled(true);
 
-            if (!Methods.permCheck(player, Permissions.CRAZY_CRATES_ADMIN_ACCESS, false)) {
+            if (!Methods.permCheck(player, CommandPermissions.ADMIN_ACCESS, false)) {
                 player.closeInventory();
                 return;
             }
