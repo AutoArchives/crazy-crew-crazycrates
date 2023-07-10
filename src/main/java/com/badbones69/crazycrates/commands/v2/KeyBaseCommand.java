@@ -35,7 +35,7 @@ public class KeyBaseCommand extends CommandEngine {
     @Override
     protected void perform(CommandContext context) {
         if (!context.getArgs().isEmpty()) {
-            Player player = context.getArgAsPlayer(0, false, this.locale.getProperty(Locale.TARGET_NOT_ONLINE), "\\{player}");
+            Player player = context.getArgAsPlayer(0, false);
 
             if (player != null && player.isOnline()) {
                 //this.locale.getProperty(Locale.NO_VIRTUAL_KEYS_OTHER_HEADER).forEach(line -> context.reply(line.replaceAll("\\{player}", player.getName())));
@@ -56,7 +56,7 @@ public class KeyBaseCommand extends CommandEngine {
 
             context.reply(this.locale.getProperty(Locale.GRABBING_OFFLINE_PLAYER));
 
-            OfflinePlayer offlinePlayer = context.getArgAsOfflinePlayer(0, true, this.locale.getProperty(Locale.TARGET_NOT_ONLINE), "\\{player}");
+            OfflinePlayer offlinePlayer = context.getArgAsOfflinePlayer(0);
 
             context.reply("Offline Player: " + offlinePlayer.getName());
 
