@@ -3,6 +3,7 @@ package com.badbones69.crazycrates.commands.v2;
 import ch.jalu.configme.SettingsManager;
 import com.badbones69.crazycrates.CrazyCrates;
 import com.badbones69.crazycrates.api.configs.types.Locale;
+import com.badbones69.crazycrates.api.objects.Crate;
 import com.badbones69.crazycrates.commands.v2.args.PlayerArgument;
 import com.ryderbelserion.stick.paper.commands.CommandContext;
 import com.ryderbelserion.stick.paper.commands.CommandEngine;
@@ -34,9 +35,21 @@ public class KeyBaseCommand extends CommandEngine {
     @Override
     protected void perform(CommandContext context) {
         if (!context.getArgs().isEmpty()) {
-            Player player = context.getArgAsPlayer(0, true, this.locale.getProperty(Locale.TARGET_NOT_ONLINE), "\\{player}");
+            Player player = context.getArgAsPlayer(0, false, this.locale.getProperty(Locale.TARGET_NOT_ONLINE), "\\{player}");
 
-            if (player != null) {
+            if (player != null && player.isOnline()) {
+                //this.locale.getProperty(Locale.NO_VIRTUAL_KEYS_OTHER_HEADER).forEach(line -> context.reply(line.replaceAll("\\{player}", player.getName())));
+
+                boolean hasKeys = false;
+
+                for (Crate crate : this.plugin.getApiManager().getCrateManager().getCrates()) {
+                    int amount = this.plugin.getApiManager().getUserManager().getUser(player.getUniqueId(), crate).getKey(crate);
+
+                    if (amount > 0) {
+                        hasKeys = true;
+                    }
+                }
+
                 context.reply("Player: " + player.getName());
                 return;
             }
