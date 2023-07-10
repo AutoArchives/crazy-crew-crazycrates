@@ -6,7 +6,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.ArrayList;
 import java.util.List;
 
-public enum MessageEnum {
+public enum LocaleEnum {
 
     NO_TELEPORTING("No-Teleporting", "misc.no-teleporting"),
     NO_COMMANDS_WHILE_CRATE_OPENED("No-Commands-While-In-Crate", "misc.no-commands"),
@@ -33,13 +33,12 @@ public enum MessageEnum {
     GIVEN_A_PLAYER_KEYS("Given-A-Player-Keys", "command.give.given-player-keys"),
     CANNOT_GIVE_PLAYER_KEYS("Cannot-Give-Player-Keys", "command.give.cannot-give-player-keys"),
     OBTAINING_KEYS("Obtaining-Keys", "players.obtaining-keys"),
-    GIVEN_EVERYONE_KEYS("Given-Everyone-Keys", "command.given-everyone-keys"),
-    GIVEN_OFFLINE_PLAYER_KEYS("Given-Offline-Player-Keys", "command.given-offline-player-keys"),
-    TAKE_A_PLAYER_KEYS("Take-A-Player-Keys", "command.take-player-keys"),
-    TAKE_OFFLINE_PLAYER_KEYS("Take-Offline-Player-Keys", "command.take-offline-player-keys"),
+    GIVEN_EVERYONE_KEYS("Given-Everyone-Keys", "command.give.given-everyone-keys"),
+    GIVEN_OFFLINE_PLAYER_KEYS("Given-Offline-Player-Keys", "command.give.given-offline-player-keys"),
+    TAKE_A_PLAYER_KEYS("Take-A-Player-Keys", "command.take.take-player-keys"),
+    TAKE_OFFLINE_PLAYER_KEYS("Take-Offline-Player-Keys", "command.take.take-offline-player-keys"),
     OPENED_A_CRATE("Opened-A-Crate", "command.open.opened-a-crate"),
     INTERNAL_ERROR("Internal-Error", "errors.internal-error"),
-    CORRECT_USAGE("Correct-Usage", "misc.correct-usage"),
     UNKNOWN_COMMAND("Unknown-Command", "misc.unknown-command"),
     NO_ITEM_IN_HAND("No-Item-In-Hand", "command.additem.no-item-hand"),
     ADDED_ITEM_WITH_EDITOR("Added-Item-With-Editor", "command.additem.add-item-from-hand"),
@@ -70,12 +69,12 @@ public enum MessageEnum {
     private final String newPath;
     private List<String> defaultList;
 
-    MessageEnum(String path, String newPath) {
+    LocaleEnum(String path, String newPath) {
         this.path = path;
         this.newPath = newPath;
     }
 
-    MessageEnum(String path, String newPath, List<String> defaultList) {
+    LocaleEnum(String path, String newPath, List<String> defaultList) {
         this.path = path;
         this.newPath = newPath;
 
@@ -90,8 +89,8 @@ public enum MessageEnum {
         return newPath;
     }
 
-    private boolean contains(Configuration configuration, String value) {
-        return configuration.contains(value);
+    private boolean contains(Configuration reader, String value) {
+        return reader.contains(value);
     }
 
     public void setMessage(Configuration configuration, JavaPlugin plugin) {

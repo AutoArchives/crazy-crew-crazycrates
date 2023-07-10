@@ -4,8 +4,8 @@ import ch.jalu.configme.SettingsManager;
 import ch.jalu.configme.SettingsManagerBuilder;
 import com.Zrips.CMI.Modules.ModuleHandling.CMIModule;
 import com.badbones69.crazycrates.api.configs.ConfigBuilder;
-import com.badbones69.crazycrates.api.configs.types.Locale;
 import com.badbones69.crazycrates.api.configs.types.PluginConfig;
+import com.badbones69.crazycrates.api.configs.types.legacy.LocaleMigration;
 import com.badbones69.crazycrates.api.configs.types.sections.PluginSupportSection;
 import com.badbones69.crazycrates.api.crates.CrateManager;
 import com.badbones69.crazycrates.api.enums.support.HologramSupport;
@@ -28,14 +28,13 @@ public class ApiManager {
 
     private final JavaPlugin plugin;
     private final Path path;
-    private final Stick stick;
 
     public ApiManager(JavaPlugin plugin, Path path) {
         this.plugin = plugin;
 
         this.path = path;
 
-        this.stick = new Stick(path, plugin.getName());
+        new Stick(path, plugin.getName());
     }
 
     private UserManager userManager;
@@ -43,7 +42,7 @@ public class ApiManager {
     private CrateManager crateManager;
 
     private SettingsManager pluginConfig;
-    private Locale locale;
+    private SettingsManager locale;
     private SettingsManager config;
 
     private HologramManager holograms;
@@ -58,16 +57,17 @@ public class ApiManager {
                 .configurationData(ConfigBuilder.buildPluginConfig())
                 .create();
 
-        // Migrate the locale files.
+        // Migrate the locale to the new directory if it's still Messages.yml!
         File localeDir = new File(this.path.toFile(), "locale");
         migrateLocale(localeDir);
 
-        // Load the locale file.
         File localeFile = new File(localeDir, this.pluginConfig.getProperty(PluginConfig.LOCALE_FILE) + ".yml");
 
-        this.locale = new Locale(localeFile, this.plugin);
-        // Load the file.
-        this.locale.load();
+        this.locale = SettingsManagerBuilder
+                .withYamlFile(localeFile)
+                .useDefaultMigrationService()
+                .configurationData(ConfigBuilder.buildLocale())
+                .create();
 
         // Create config.yml
         File config = new File(this.path.toFile(), "config.yml");
@@ -126,6 +126,20 @@ public class ApiManager {
             this.pluginConfig.reload();
             this.config.reload();
 
+            // Save to file just in case.
+            this.locale.save();
+
+            File localeDir = new File(this.path.toFile(), "locale");
+            File localeFile = new File(localeDir, this.pluginConfig.getProperty(PluginConfig.LOCALE_FILE) + ".yml");
+
+            this.locale = SettingsManagerBuilder
+                    .withYamlFile(localeFile)
+                    .useDefaultMigrationService()
+                    .configurationData(ConfigBuilder.buildLocale())
+                    .create();
+
+            this.locale.reload();
+
             // Re-initialize crate manager.
             this.crateManager = new CrateManager(this.plugin);
             this.crateManager.loadCrates();
@@ -136,11 +150,6 @@ public class ApiManager {
     }
 
     private void init() {
-        /*switch (this.pluginConfig.getProperty(PluginConfig.DATA_TYPE)) {
-            case json -> this.userManager = new JsonUserManager(this.path, this.crateManager);
-            case yaml -> this.userManager = new YamlUserManager(new File(this.path.toFile(), "users.yml"), this.crateManager);
-        }*/
-
         this.locationManager = new YamlCrateManager(new File(this.path.toFile(), "locations.yml"), this.plugin, this);
         this.locationManager.load();
 
@@ -169,6 +178,10 @@ public class ApiManager {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+                LocaleMigration localeMigration = new LocaleMigration(renamedFile, this.plugin);
+
+                localeMigration.load();
             }
         }
 
@@ -180,7 +193,7 @@ public class ApiManager {
         return this.pluginConfig;
     }
 
-    public Locale getLocale() {
+    public SettingsManager getLocale() {
         return this.locale;
     }
 
