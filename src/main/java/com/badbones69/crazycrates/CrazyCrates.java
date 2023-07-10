@@ -43,16 +43,16 @@ public class CrazyCrates extends JavaPlugin implements Listener {
                     "It is recommended that you switch to https://papermc.io/",
                     "The plugin will now shut-down!");
 
-            msg.forEach(this.getLogger()::warning);
+            msg.forEach(getLogger()::warning);
 
-            this.getServer().getPluginManager().disablePlugin(this);
+            getServer().getPluginManager().disablePlugin(this);
 
             this.isEnabled = false;
 
             return;
         }
 
-        this.apiManager = new ApiManager(this, this.getDataFolder().toPath());
+        this.apiManager = new ApiManager(this, getDataFolder().toPath());
         this.apiManager.load();
 
         registerPermissions(getServer().getPluginManager());
@@ -102,6 +102,14 @@ public class CrazyCrates extends JavaPlugin implements Listener {
         if (this.apiManager.getUserManager() != null) this.apiManager.getUserManager().save();
 
         if (this.apiManager.getHolograms() != null) this.apiManager.getHolograms().purge();
+    }
+
+    public void registerPermissions(PluginManager pluginManager) {
+        for (CommandPermissions permission : CommandPermissions.values()) {
+            if (pluginManager.getPermission(permission.getBuiltPermission()) != null) return;
+
+            pluginManager.addPermission(new Permission(permission.getBuiltPermission(), permission.getDescription(), permission.getPermissionDefault()));
+        }
     }
 
     public ApiManager getApiManager() {
