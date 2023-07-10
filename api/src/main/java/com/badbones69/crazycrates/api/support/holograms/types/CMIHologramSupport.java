@@ -1,8 +1,8 @@
-package com.badbones69.crazycrates.api.holograms.types;
+package com.badbones69.crazycrates.api.support.holograms.types;
 
 import com.Zrips.CMI.CMI;
 import com.Zrips.CMI.Modules.Holograms.CMIHologram;
-import com.badbones69.crazycrates.api.holograms.interfaces.HologramManager;
+import com.badbones69.crazycrates.api.support.holograms.interfaces.HologramManager;
 import com.badbones69.crazycrates.api.objects.CrateHologram;
 import net.Zrips.CMILib.Container.CMILocation;
 import org.bukkit.Location;

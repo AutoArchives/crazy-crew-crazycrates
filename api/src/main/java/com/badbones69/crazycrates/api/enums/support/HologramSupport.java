@@ -1,8 +1,8 @@
 package com.badbones69.crazycrates.api.enums.support;
 
-import com.badbones69.crazycrates.api.holograms.interfaces.HologramManager;
-import com.badbones69.crazycrates.api.holograms.types.CMIHologramSupport;
-import com.badbones69.crazycrates.api.holograms.types.DecentHologramSupport;
+import com.badbones69.crazycrates.api.support.holograms.interfaces.HologramManager;
+import com.badbones69.crazycrates.api.support.holograms.types.CMIHologramSupport;
+import com.badbones69.crazycrates.api.support.holograms.types.DecentHologramSupport;
 
 public enum HologramSupport {
 

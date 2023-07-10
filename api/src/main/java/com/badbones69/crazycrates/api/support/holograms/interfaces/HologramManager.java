@@ -1,4 +1,4 @@
-package com.badbones69.crazycrates.api.holograms.interfaces;
+package com.badbones69.crazycrates.api.support.holograms.interfaces;
 
 import com.badbones69.crazycrates.api.objects.CrateHologram;
 import org.bukkit.Location;

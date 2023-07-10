@@ -1,4 +1,4 @@
-package com.badbones69.crazycrates.api.holograms.types;
+package com.badbones69.crazycrates.api.support.holograms.types;
 
 /*
 import com.badbones69.crazycrates.api.holograms.interfaces.HologramManager;

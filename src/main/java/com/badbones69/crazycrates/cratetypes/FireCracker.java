@@ -3,7 +3,7 @@ package com.badbones69.crazycrates.cratetypes;
 import com.badbones69.crazycrates.CrazyCrates;
 import com.badbones69.crazycrates.Methods;
 import com.badbones69.crazycrates.api.CrazyManager;
-import com.badbones69.crazycrates.api.holograms.interfaces.HologramManager;
+import com.badbones69.crazycrates.api.support.holograms.interfaces.HologramManager;
 import com.badbones69.crazycrates.api.enums.KeyType;
 import com.badbones69.crazycrates.api.oldobjects.Crate;
 import org.bukkit.Color;

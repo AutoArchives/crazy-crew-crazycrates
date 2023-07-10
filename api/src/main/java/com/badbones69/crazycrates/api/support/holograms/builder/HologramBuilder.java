@@ -1,4 +1,4 @@
-package com.badbones69.crazycrates.api.holograms.builder;
+package com.badbones69.crazycrates.api.support.holograms.builder;
 
 import net.minecraft.world.entity.Display;
 import org.bukkit.Color;
