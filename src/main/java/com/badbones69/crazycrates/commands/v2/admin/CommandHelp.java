@@ -17,10 +17,10 @@ public class CommandHelp extends CommandEngine {
 
     private final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
 
-    private final BaseCommand baseCommand;
-
-    private final SettingsManager config = plugin.getApiManager().getPluginConfig();
+    private final SettingsManager pluginConfig = plugin.getApiManager().getPluginConfig();
     private final SettingsManager locale = plugin.getApiManager().getLocale();
+
+    private final BaseCommand baseCommand;
 
     public CommandHelp(BaseCommand baseCommand) {
         super();
@@ -41,8 +41,8 @@ public class CommandHelp extends CommandEngine {
 
     @Override
     protected void perform(CommandContext context) {
-        int arg = context.getArgAsInt(0, true, this.locale.getProperty(Locale.NOT_A_NUMBER), "\\{number}");
+        int arg = context.getArgAsInt(0, true, this.plugin.getPlaceholderManager().setPlaceholders(this.locale.getProperty(Locale.NOT_A_NUMBER)), "\\{number}");
 
-        this.baseCommand.generateHelp(arg, this.config.getProperty(PluginConfig.MAX_HELP_PAGE_ENTRIES), context);
+        this.baseCommand.generateHelp(arg, this.pluginConfig.getProperty(PluginConfig.MAX_HELP_PAGE_ENTRIES), context);
     }
 }

@@ -33,7 +33,9 @@ public class PluginConfig extends YamlConfiguration implements SettingsHolder {
     @Comment("How many commands should be displayed per page in /crazycrates help?")
     public static final Property<Integer> MAX_HELP_PAGE_ENTRIES = newProperty("help.max-help-page-entries", 10);
 
-    public static final Property<String> INVALID_HELP_PAGE = newProperty("help.invalid-page", "<red>The page</red> <gold>{page}</gold> <red>does not exist.</red>");
+    public static final Property<String> COMMAND_HELP_FORMAT = newProperty("help.command-format", "{prefix}<red>{command}</red> <green>{args}</green>");
+
+    public static final Property<String> INVALID_HELP_PAGE = newProperty("help.invalid-page", "{prefix}<red>The page</red> <gold>{page}</gold> <red>does not exist.</red>");
 
     public static final Property<String> HELP_PAGE_FORMAT = newProperty("help.page-format", "<gold>{command}{args}</gold> <dark_gray>»</dark_gray> <reset>{description}");
 
@@ -50,7 +52,7 @@ public class PluginConfig extends YamlConfiguration implements SettingsHolder {
     })
     public static final Property<String> HELP_PAGE_HOVER_ACTION = newProperty("help.hover.action", "copy_to_clipboard");
 
-    public static final Property<String> HELP_PAGE_HOVER_FORMAT = newProperty("help.hover.format", "<gray>Click me to run the command.</gray> <gold>{commands}</gold>");
+    public static final Property<String> HELP_PAGE_HOVER_FORMAT = newProperty("help.hover.format", "{prefix}<gray>Click me to run the command.</gray> <gold>{commands}</gold>");
 
     public static final Property<String> HELP_PAGE_NEXT = newProperty("help.page-next", " <green>»»»</green>");
 

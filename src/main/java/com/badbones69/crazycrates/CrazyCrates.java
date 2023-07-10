@@ -10,9 +10,11 @@ import com.badbones69.crazycrates.commands.v2.admin.CommandHelp;
 import com.badbones69.crazycrates.api.configs.types.PluginConfig;
 import com.badbones69.crazycrates.api.holograms.interfaces.HologramManager;
 import com.badbones69.crazycrates.commands.v2.admin.CommandReload;
+import com.badbones69.crazycrates.commands.v2.admin.keys.CommandAddKeys;
 import com.badbones69.crazycrates.commands.v2.admin.schematics.CommandSchematicSave;
 import com.badbones69.crazycrates.commands.v2.admin.schematics.CommandSchematicSet;
 import com.badbones69.crazycrates.listeners.v2.DataListener;
+import com.badbones69.crazycrates.support.placeholders.InternalPlaceholderSupport;
 import com.badbones69.crazycrates.support.structures.blocks.ChestStateHandler;
 import com.ryderbelserion.stick.paper.utils.PaperUtils;
 import org.bukkit.command.PluginCommand;
@@ -25,8 +27,7 @@ import java.util.List;
 public class CrazyCrates extends JavaPlugin implements Listener {
 
     private ApiManager apiManager;
-
-    private CommandCore commandCore;
+    private InternalPlaceholderSupport placeholderManager;
 
     private FileManager fileManager;
     private CrazyManager crazyManager;
@@ -55,9 +56,11 @@ public class CrazyCrates extends JavaPlugin implements Listener {
         this.apiManager = new ApiManager(this, getDataFolder().toPath());
         this.apiManager.load();
 
+        this.placeholderManager = new InternalPlaceholderSupport();
+
         registerPermissions(getServer().getPluginManager());
 
-        this.commandCore = new CommandCore();
+        new CommandCore();
 
         BaseCommand baseCommand = new BaseCommand();
 
@@ -116,8 +119,8 @@ public class CrazyCrates extends JavaPlugin implements Listener {
         return this.apiManager;
     }
 
-    public void setCommandCore(CommandCore commandCore) {
-        this.commandCore = commandCore;
+    public InternalPlaceholderSupport getPlaceholderManager() {
+        return this.placeholderManager;
     }
 
     public boolean verbose() {
