@@ -126,8 +126,7 @@ public class ApiManager {
             this.pluginConfig.reload();
             this.config.reload();
 
-            // Save to file just in case.
-            this.locale.save();
+            this.locale.reload();
 
             File localeDir = new File(this.path.toFile(), "locale");
             File localeFile = new File(localeDir, this.pluginConfig.getProperty(PluginConfig.LOCALE_FILE) + ".yml");
@@ -137,8 +136,6 @@ public class ApiManager {
                     .useDefaultMigrationService()
                     .configurationData(ConfigBuilder.buildLocale())
                     .create();
-
-            this.locale.reload();
 
             // Re-initialize crate manager.
             this.crateManager = new CrateManager(this.plugin);
