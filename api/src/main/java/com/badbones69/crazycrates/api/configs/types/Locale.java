@@ -14,7 +14,17 @@ public class Locale implements SettingsHolder {
     @Override
     public void registerComments(CommentsConfiguration conf) {
         String[] header = {
-                "Submit your translations here: https://github.com/Crazy-Crew/CrazyCrates/discussions/categories/translations"
+                "Submit your translations here: https://github.com/Crazy-Crew/CrazyCrates/discussions/categories/translations",
+                "",
+                "Legacy color codes such as &7,&c no longer work. You must use MiniMessage",
+                "https://docs.advntr.dev/minimessage/format.html#color"
+        };
+
+        String[] deprecation = {
+                "",
+                "Warning: This section is subject to change so it is considered deprecated.",
+                "This is your warning before the change happens.",
+                ""
         };
 
         conf.setComment("general", header);

@@ -17,7 +17,17 @@ public class PluginConfig extends YamlConfiguration implements SettingsHolder {
                 "Github: https://github.com/Crazy-Crew",
                 "",
                 "Issues: https://github.com/Crazy-Crew/CrazyCrates/issues",
-                "Features: https://github.com/Crazy-Crew/CrazyCrates/discussions/categories/features"
+                "Features: https://github.com/Crazy-Crew/CrazyCrates/discussions/categories/features",
+                "",
+                "Legacy color codes such as &7,&c no longer work. You must use MiniMessage",
+                "https://docs.advntr.dev/minimessage/format.html#color"
+        };
+
+        String[] deprecation = {
+                "",
+                "Warning: This section is subject to change so it is considered deprecated.",
+                "This is your warning before the change happens.",
+                ""
         };
 
         conf.setComment("settings", header);
