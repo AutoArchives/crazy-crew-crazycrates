@@ -28,10 +28,8 @@ public abstract class CommandEngine {
     private final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
     private final ApiManager apiManager = this.plugin.getApiManager();
     private final SettingsManager locale = this.apiManager.getLocale();
-
     private final InternalPlaceholderSupport placeholderSupport = this.apiManager.getPlaceholderSupport();
 
-    // i.e. /crazycrates test
     private final LinkedList<String> aliases = new LinkedList<>();
 
     public final LinkedList<Argument> requiredArgs = new LinkedList<>();
