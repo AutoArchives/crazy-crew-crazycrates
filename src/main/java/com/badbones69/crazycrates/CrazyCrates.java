@@ -16,19 +16,22 @@ import com.badbones69.crazycrates.listeners.v2.DataListener;
 import com.badbones69.crazycrates.support.placeholders.InternalPlaceholderSupport;
 import com.badbones69.crazycrates.support.structures.blocks.ChestStateHandler;
 import com.badbones69.crazycrates.support.tasks.AutoSaveTask;
-import com.ryderbelserion.stick.paper.utils.PaperUtils;
+import com.ryderbelserion.stick.paper.PaperCore;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.event.Listener;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import java.util.List;
 import java.util.Timer;
 
 public class CrazyCrates extends JavaPlugin implements Listener {
 
-    private ApiManager apiManager;
+    private final ApiManager apiManager;
     private InternalPlaceholderSupport placeholderManager;
+
+    public CrazyCrates(ApiManager apiManager, PaperCore paperCore) {
+        this.apiManager = apiManager;
+    }
 
     private Timer timer;
 
@@ -44,24 +47,6 @@ public class CrazyCrates extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
-        if (PaperUtils.isSpigot()) {
-            List<String> msg = List.of(
-                    "We no longer support Spigot servers.",
-                    "It is recommended that you switch to https://papermc.io/",
-                    "The plugin will now shut-down!");
-
-            msg.forEach(getLogger()::warning);
-
-            getServer().getPluginManager().disablePlugin(this);
-
-            this.isEnabled = false;
-
-            return;
-        }
-
-        this.apiManager = new ApiManager(this, getDataFolder().toPath());
-        this.apiManager.load();
-
         if (this.apiManager.getPluginConfig().getProperty(PluginConfig.AUTO_SAVE_TOGGLE)) {
             this.timer = new Timer();
 
