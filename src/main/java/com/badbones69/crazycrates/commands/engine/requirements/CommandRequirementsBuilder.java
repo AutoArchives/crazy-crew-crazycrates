@@ -1,4 +1,4 @@
-package com.badbones69.crazycrates.commands.engine.reqs;
+package com.badbones69.crazycrates.commands.engine.requirements;
 
 import org.bukkit.permissions.Permission;
 

@@ -1,4 +1,4 @@
-package com.badbones69.crazycrates.commands.engine.reqs;
+package com.badbones69.crazycrates.commands.engine.requirements;
 
 import com.badbones69.crazycrates.commands.engine.CommandContext;
 import org.bukkit.command.ConsoleCommandSender;
@@ -40,5 +40,17 @@ public class CommandRequirements {
 
         // The command is valid.
         return true;
+    }
+
+    public Permission getPermission() {
+        return this.permission;
+    }
+
+    public String getRawPermission() {
+        return this.rawPermission;
+    }
+
+    public boolean isPlayer() {
+        return this.asPlayer;
     }
 }
