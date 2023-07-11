@@ -72,7 +72,7 @@ misc:
     # Whether to send the broadcast when opening a crate.
     toggle: true
     # Message that is broadcast when opening the crate.
-    message: '{prefix}&6&l%player%&r &7is opening a &7&lBasic Chest&7.'
+    message: '{prefix}&6&l{player}&r &7is opening a &7&lBasic Chest&7.'
 
 # Settings related to '/cc gui'
 gui:
@@ -156,7 +156,7 @@ prizes:
       toggle: false
       # The commands to run.
       values:
-        - 'broadcast &6&l%player%&r &7won {reward}! WOW'
+        - 'broadcast &6&l{player}&r &7won {reward}! WOW'
 
     messages:
       # Whether to send messages.
@@ -263,7 +263,7 @@ prizes:
       toggle: false
       # The commands to run.
       values:
-        - 'broadcast &6&l%player%&r &7won {reward}! WOW'
+        - 'broadcast &6&l{player}&r &7won {reward}! WOW'
 
     messages:
       # Whether to send messages.
@@ -360,10 +360,10 @@ prizes:
       toggle: true
       # The commands to run.
       values:
-        # You can replace lp user %player% with lp group <your group> if you want a prize to only be winnable once.
-        - 'eco give %player% 1000'
-        - 'lp user %player% permission set crazycrates.example.blacklist' # This will add the permission to the user
-        # - 'lp user %player% permission settemp crazycrates.example.blacklist 1h' # This will deny the permission for an hour.
+        # You can replace lp user {player} with lp group <your group> if you want a prize to only be winnable once.
+        - 'eco give {player} 1000'
+        - 'lp user {player} permission set crazycrates.example.blacklist' # This will add the permission to the user
+        # - 'lp user {player} permission settemp crazycrates.example.blacklist 1h' # This will deny the permission for an hour.
 
     messages:
       # Whether to send messages.
@@ -397,7 +397,7 @@ prizes:
           toggle: false
           # The commands to run.
           values:
-            - 'give %player% gold_nugget 16'
+            - 'give {player} gold_nugget 16'
 
         messages:
           # Whether to send messages.
