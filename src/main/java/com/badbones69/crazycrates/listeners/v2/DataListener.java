@@ -22,13 +22,13 @@ public class DataListener implements Listener {
 
         UUID uuid = event.getPlayer().getUniqueId();
 
-        if (apiManager.getCrateManager().getCrates().isEmpty()) return;
+        if (this.apiManager.getCrateManager().getCrates().isEmpty()) return;
 
-        apiManager.getCrateManager().getCrates().forEach(crate -> {
-            apiManager.getUserManager().addUser(uuid, crate);
+        this.apiManager.getCrateManager().getCrates().forEach(crate -> {
+            this.apiManager.getUserManager().addUser(uuid, crate);
 
             if (crate.getCrateConfig().isStartingKeysEnabled()) {
-                apiManager.getUserManager().addKey(uuid, crate.getCrateConfig().getStartingKeysAmount(), crate);
+                this.apiManager.getUserManager().addKey(uuid, crate.getCrateConfig().getStartingKeysAmount(), crate);
 
                 if (this.plugin.verbose()) this.plugin.getLogger().warning("Added starting keys to " + uuid + ".");
             }
@@ -37,6 +37,6 @@ public class DataListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onPlayerQuit(PlayerQuitEvent event) {
-        apiManager.getUserManager().saveSingular(event.getPlayer().getUniqueId());
+        this.apiManager.getUserManager().saveSingular(event.getPlayer().getUniqueId());
     }
 }
