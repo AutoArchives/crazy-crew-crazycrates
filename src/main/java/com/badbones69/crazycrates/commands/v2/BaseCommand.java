@@ -30,9 +30,9 @@ public class BaseCommand extends CommandEngine implements TabCompleter, CommandE
     public BaseCommand() {
         super();
 
-        this.prefix = "crazycrates";
+        this.setPrefix("crazycrates");
 
-        this.ignoreInput = true;
+        this.setExclude(true);
 
         this.requirements = new CommandRequirementsBuilder()
                 .asPlayer(false)

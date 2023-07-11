@@ -30,7 +30,7 @@ public class CommandAddKeys extends CommandEngine {
         this.requiredArgs.add(new Argument("amount", 2, new IntArgument(20)));
         this.requiredArgs.add(new Argument("player", 3, new PlayerArgument()));
 
-        this.description = Permissions.ADMIN_GIVE_KEY.getDescription();
+        setDescription(Permissions.ADMIN_GIVE_KEY.getDescription());
 
         this.requirements = new CommandRequirementsBuilder()
                 .withRawPermission(Permissions.ADMIN_GIVE_KEY.getBuiltPermission())

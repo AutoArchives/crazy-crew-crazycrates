@@ -27,7 +27,7 @@ public class CommandReload extends CommandEngine {
 
         addAlias("reload");
 
-        this.description = Permissions.ADMIN_RELOAD.getDescription();
+        setDescription(Permissions.ADMIN_RELOAD.getDescription());
 
         this.requirements = new CommandRequirementsBuilder()
                 .withRawPermission(Permissions.ADMIN_RELOAD.getBuiltPermission())

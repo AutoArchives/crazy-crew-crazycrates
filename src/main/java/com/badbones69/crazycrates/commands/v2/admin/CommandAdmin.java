@@ -20,7 +20,7 @@ public class CommandAdmin extends CommandEngine {
 
         addAlias("admin");
 
-        this.description = "Opens up a menu to easily get keys.";
+        setDescription("Opens up a menu to easily get keys.");
 
         this.requirements = new CommandRequirementsBuilder()
                 .withRawPermission(Permissions.ADMIN_ACCESS.getBuiltPermission())

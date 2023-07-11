@@ -1,4 +1,4 @@
-package com.badbones69.crazycrates.commands.engine;
+package com.badbones69.crazycrates.commands.v2;
 
 import com.badbones69.crazycrates.CrazyCrates;
 import com.badbones69.crazycrates.commands.v2.BaseCommand;
@@ -20,7 +20,7 @@ public class CommandHandler {
 
         KeyBaseCommand keyBaseCommand = new KeyBaseCommand();
 
-        baseCommand.addSubCommand(new CommandHelp(baseCommand));
+        baseCommand.addSubCommand(new CommandHelp());
 
         // Admin Commands.
         baseCommand.addSubCommand(new CommandAdmin());

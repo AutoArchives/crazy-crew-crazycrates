@@ -21,7 +21,7 @@ public class CommandSchematicSet extends CommandEngine {
 
         addAlias("schem-set");
 
-        this.description = Permissions.ADMIN_SCHEMATIC_SET.getDescription();
+        setDescription(Permissions.ADMIN_SCHEMATIC_SET.getDescription());
 
         this.requirements = new CommandRequirementsBuilder()
                 .withRawPermission(Permissions.ADMIN_SCHEMATIC_SET.getBuiltPermission())

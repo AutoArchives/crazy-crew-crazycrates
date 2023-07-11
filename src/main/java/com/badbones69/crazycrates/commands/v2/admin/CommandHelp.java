@@ -19,18 +19,14 @@ public class CommandHelp extends CommandEngine {
     private final SettingsManager pluginConfig = plugin.getApiManager().getPluginConfig();
     private final SettingsManager locale = plugin.getApiManager().getLocale();
 
-    private final BaseCommand baseCommand;
-
-    public CommandHelp(BaseCommand baseCommand) {
+    public CommandHelp() {
         super();
-
-        this.baseCommand = baseCommand;
 
         addAlias("help");
 
         this.requiredArgs.add(new Argument("page", 0, new IntArgument(2)));
 
-        this.description = Permissions.PLAYER_HELP.getDescription();
+        setDescription(Permissions.PLAYER_HELP.getDescription());
 
         this.requirements = new CommandRequirementsBuilder()
                 .withRawPermission(Permissions.PLAYER_HELP.getBuiltPermission())

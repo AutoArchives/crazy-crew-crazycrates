@@ -21,7 +21,7 @@ public class CommandSchematicSave extends CommandEngine {
 
         addAlias("schem-save");
 
-        this.description = Permissions.ADMIN_SCHEMATIC_SAVE.getDescription();
+        setDescription(Permissions.ADMIN_SCHEMATIC_SAVE.getDescription());
 
         this.requirements = new CommandRequirementsBuilder()
                 .withRawPermission(Permissions.ADMIN_SCHEMATIC_SAVE.getBuiltPermission())

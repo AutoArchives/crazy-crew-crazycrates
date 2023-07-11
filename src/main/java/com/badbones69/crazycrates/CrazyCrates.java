@@ -2,7 +2,7 @@ package com.badbones69.crazycrates;
 
 import com.badbones69.crazycrates.api.*;
 import com.badbones69.crazycrates.api.utils.MiscUtils;
-import com.badbones69.crazycrates.commands.engine.CommandHandler;
+import com.badbones69.crazycrates.commands.v2.CommandHandler;
 import com.badbones69.crazycrates.api.configs.types.PluginConfig;
 import com.badbones69.crazycrates.api.support.holograms.interfaces.HologramManager;
 import com.badbones69.crazycrates.listeners.v2.DataListener;

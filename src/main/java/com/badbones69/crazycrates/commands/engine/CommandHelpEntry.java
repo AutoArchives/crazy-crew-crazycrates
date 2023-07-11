@@ -52,7 +52,7 @@ public class CommandHelpEntry {
 
             if (data.isVisible()) continue;
 
-            StringBuilder base = new StringBuilder("/" + command.prefix + " " + command.getAliases().get(0));
+            StringBuilder base = new StringBuilder("/" + command.getPrefix() + " " + command.getAliases().get(0));
 
             String format = this.pluginConfig.getProperty(PluginConfig.HELP_PAGE_FORMAT)
                     .replaceAll("\\{command}", base.toString())

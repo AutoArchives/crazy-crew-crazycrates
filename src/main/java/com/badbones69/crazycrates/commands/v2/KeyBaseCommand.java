@@ -29,7 +29,7 @@ public class KeyBaseCommand extends CommandEngine implements TabCompleter, Comma
     private final SettingsManager locale = plugin.getApiManager().getLocale();
 
     public KeyBaseCommand() {
-        this.prefix = "keys";
+        this.setPrefix("keys");
 
         this.optionalArgs.add(new Argument("player", 0, new PlayerArgument()));
 

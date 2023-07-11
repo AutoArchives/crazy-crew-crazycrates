@@ -37,20 +37,32 @@ public abstract class CommandEngine {
 
     private final HashMap<String, CommandData> commandData = new HashMap<>();
 
-    private CommandHelpEntry commandHelpEntry;
-
-    // i.e. the java classes.
     private final LinkedList<CommandEngine> subCommands = new LinkedList<>();
 
-    // i.e. the command requirements for each class or command.
     public CommandRequirements requirements;
+    private CommandHelpEntry commandHelpEntry;
 
-    public boolean ignoreInput = false;
+    private boolean excludeInput = false;
 
-    // i.e. the base of the command like /crazycrates
-    // Only define this once!
-    public String prefix;
-    public String description;
+    public void setExclude(boolean excludeInput) {
+        this.excludeInput = excludeInput;
+    }
+
+    private String prefix;
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
+
+    public String getPrefix() {
+        return this.prefix;
+    }
+
+    private String description;
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public void execute(CommandContext context) {
         String aliasUsed = context.getAlias();
@@ -76,7 +88,7 @@ public abstract class CommandEngine {
 
         if (!this.requirements.checkRequirements(true, context)) return;
 
-        if (!this.ignoreInput) {
+        if (!this.excludeInput) {
             if (!inputValidation(context)) return;
         }
 
@@ -101,7 +113,7 @@ public abstract class CommandEngine {
 
         if (!engine.prefix.isEmpty() || !engine.prefix.isBlank()) engine.prefix = this.prefix;
 
-        engine.ignoreInput = this.ignoreInput;
+        engine.excludeInput = this.excludeInput;
     }
 
     public CommandHelpEntry getCommandHelp() {
