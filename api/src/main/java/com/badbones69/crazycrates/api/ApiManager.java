@@ -66,7 +66,7 @@ public class ApiManager {
                 .configurationData(ConfigBuilder.buildPluginConfig())
                 .create();
 
-        this.paperCore.setProjectPrefix(this.pluginConfig.getProperty(PluginConfig.COMMAND_PREFIX));
+        this.paperCore.setProjectPrefix(this.pluginConfig.getProperty(PluginConfig.CONSOLE_PREFIX));
 
         if (serverStart) {
             this.paperCore.setPaperConsole(new PaperConsole());
