@@ -46,7 +46,7 @@ Something related to Terminal wizardry and PaperMC, Do not worry. We have fix...
  **config.yml / plugin-config.yml:**
  * `Prefix` in `config.yml` has been moved to `plugin-config.yml`
    * You can easily move over your old value. You can find it by looking for `command-value` under `prefix` section
- * `Config-Version`, `Update-Checker` have been removed.
+ * `Config-Version`, `Update-Checker` have been removed as they don't serve a purpose.
  * `Toggle-Metrics` in `config.yml` has been moved to `plugin-config.yml`
    * The name is simply `toggle-metrics`
  
