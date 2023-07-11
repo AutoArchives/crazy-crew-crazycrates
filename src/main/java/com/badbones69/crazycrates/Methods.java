@@ -7,7 +7,7 @@ import com.badbones69.crazycrates.api.events.PlayerPrizeEvent;
 import com.badbones69.crazycrates.api.oldobjects.Crate;
 import com.badbones69.crazycrates.api.objects.builder.ItemBuilder;
 import com.badbones69.crazycrates.api.oldobjects.Prize;
-import com.badbones69.crazycrates.commands.CommandPermissions;
+import com.badbones69.crazycrates.api.enums.Permissions;
 import com.badbones69.crazycrates.listeners.FireworkDamageListener;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -159,12 +159,12 @@ public class Methods {
         } catch (Exception ignored) {}
     }
 
-    public static boolean permCheck(CommandSender sender, CommandPermissions commandPermissions, boolean tabComplete) {
+    public static boolean permCheck(CommandSender sender, Permissions permissions, boolean tabComplete) {
         if (sender instanceof ConsoleCommandSender || sender instanceof RemoteConsoleCommandSender) return true;
 
         Player player = (Player) sender;
 
-        if (player.hasPermission(commandPermissions.getBuiltPermission("command"))) {
+        if (player.hasPermission(permissions.getBuiltPermission("command"))) {
             return true;
         } else {
             if (!tabComplete) {

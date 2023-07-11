@@ -15,7 +15,7 @@ import com.badbones69.crazycrates.api.oldobjects.CrateLocation;
 import com.badbones69.crazycrates.api.oldobjects.Prize;
 import com.badbones69.crazycrates.api.configs.types.Config;
 import com.badbones69.crazycrates.api.enums.KeyType;
-import com.badbones69.crazycrates.commands.CommandPermissions;
+import com.badbones69.crazycrates.api.enums.Permissions;
 import com.badbones69.crazycrates.listeners.CrateControlListener;
 import com.badbones69.crazycrates.listeners.MenuListener;
 import dev.triumphteam.cmd.bukkit.annotation.Permission;
@@ -582,7 +582,7 @@ public class CrateBaseCommand extends BaseCommand {
 
                 for (Player onlinePlayer : plugin.getServer().getOnlinePlayers()) {
 
-                    if (Methods.permCheck(onlinePlayer, CommandPermissions.PLAYER_EXCLUDE_ALL, true)) continue;
+                    if (Methods.permCheck(onlinePlayer, Permissions.PLAYER_EXCLUDE_ALL, true)) continue;
 
                     PlayerReceiveKeyEvent event = new PlayerReceiveKeyEvent(onlinePlayer, crate, PlayerReceiveKeyEvent.KeyReceiveReason.GIVE_ALL_COMMAND, amount);
                     onlinePlayer.getServer().getPluginManager().callEvent(event);

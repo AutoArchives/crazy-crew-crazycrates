@@ -2,13 +2,13 @@ package com.badbones69.crazycrates.commands.v2.admin;
 
 import ch.jalu.configme.SettingsManager;
 import com.badbones69.crazycrates.CrazyCrates;
+import com.badbones69.crazycrates.api.configs.types.PluginConfig;
 import com.badbones69.crazycrates.commands.engine.CommandContext;
 import com.badbones69.crazycrates.commands.engine.CommandEngine;
-import com.badbones69.crazycrates.commands.engine.reqs.CommandRequirementsBuilder;
+import com.badbones69.crazycrates.commands.engine.requirements.CommandRequirementsBuilder;
 import com.badbones69.crazycrates.commands.engine.sender.args.Argument;
 import com.badbones69.crazycrates.commands.engine.sender.args.builder.IntArgument;
-import com.badbones69.crazycrates.api.configs.types.PluginConfig;
-import com.badbones69.crazycrates.commands.CommandPermissions;
+import com.badbones69.crazycrates.api.enums.Permissions;
 import com.badbones69.crazycrates.commands.v2.BaseCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -30,10 +30,10 @@ public class CommandHelp extends CommandEngine {
 
         this.requiredArgs.add(new Argument("page", 0, new IntArgument(2)));
 
-        this.description = CommandPermissions.PLAYER_HELP.getDescription();
+        this.description = Permissions.PLAYER_HELP.getDescription();
 
         this.requirements = new CommandRequirementsBuilder()
-                .withRawPermission(CommandPermissions.PLAYER_HELP.getBuiltPermission())
+                .withRawPermission(Permissions.PLAYER_HELP.getBuiltPermission())
                 .asPlayer(false)
                 .build();
     }

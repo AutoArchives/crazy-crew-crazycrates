@@ -5,10 +5,10 @@ import com.badbones69.crazycrates.CrazyCrates;
 import com.badbones69.crazycrates.api.configs.types.PluginConfig;
 import com.badbones69.crazycrates.commands.engine.CommandContext;
 import com.badbones69.crazycrates.commands.engine.CommandEngine;
-import com.badbones69.crazycrates.commands.engine.reqs.CommandRequirementsBuilder;
+import com.badbones69.crazycrates.commands.engine.requirements.CommandRequirementsBuilder;
 import com.badbones69.crazycrates.api.configs.types.Locale;
-import com.badbones69.crazycrates.commands.CommandPermissions;
-import com.badbones69.crazycrates.support.placeholders.InternalPlaceholderSupport;
+import com.badbones69.crazycrates.api.enums.Permissions;
+import com.badbones69.crazycrates.api.support.InternalPlaceholderSupport;
 import com.badbones69.crazycrates.support.tasks.AutoSaveTask;
 import org.bukkit.plugin.java.JavaPlugin;
 import java.util.Timer;
@@ -27,10 +27,10 @@ public class CommandReload extends CommandEngine {
 
         addAlias("reload");
 
-        this.description = CommandPermissions.ADMIN_RELOAD.getDescription();
+        this.description = Permissions.ADMIN_RELOAD.getDescription();
 
         this.requirements = new CommandRequirementsBuilder()
-                .withRawPermission(CommandPermissions.ADMIN_RELOAD.getBuiltPermission())
+                .withRawPermission(Permissions.ADMIN_RELOAD.getBuiltPermission())
                 .asPlayer(false)
                 .build();
     }

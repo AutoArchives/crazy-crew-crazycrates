@@ -101,14 +101,6 @@ public class CrazyCrates extends JavaPlugin implements Listener {
         if (this.apiManager.getHolograms() != null) this.apiManager.getHolograms().purge();
     }
 
-    public void registerPermissions(PluginManager pluginManager) {
-        for (CommandPermissions permission : CommandPermissions.values()) {
-            if (pluginManager.getPermission(permission.getBuiltPermission()) != null) return;
-
-            pluginManager.addPermission(new Permission(permission.getBuiltPermission(), permission.getDescription(), permission.getPermissionDefault()));
-        }
-    }
-
     public ApiManager getApiManager() {
         return this.apiManager;
     }

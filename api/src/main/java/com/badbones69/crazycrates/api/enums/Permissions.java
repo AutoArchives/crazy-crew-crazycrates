@@ -1,9 +1,9 @@
-package com.badbones69.crazycrates.commands;
+package com.badbones69.crazycrates.api.enums;
 
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.permissions.PermissionDefault;
 
-public enum CommandPermissions {
+public enum Permissions {
 
     PLAYER_HELP("player.help", "Gives access to the help command.", PermissionDefault.TRUE),
 
@@ -50,7 +50,7 @@ public enum CommandPermissions {
     private final String description;
     private final PermissionDefault permissionDefault;
 
-    CommandPermissions(String node, String description, PermissionDefault permissionDefault) {
+    Permissions(String node, String description, PermissionDefault permissionDefault) {
         this.node = node;
         this.description = description;
         this.permissionDefault = permissionDefault;
@@ -74,13 +74,5 @@ public enum CommandPermissions {
 
     public String getBuiltPermission() {
         return "crazycrates.command." + this.node;
-    }
-
-    public boolean hasPermission(HumanEntity entity, CommandPermissions commandPermissions) {
-        return entity.hasPermission(commandPermissions.getBuiltPermission());
-    }
-
-    public boolean hasPermission(HumanEntity entity, String rawPermission) {
-        return entity.hasPermission(rawPermission);
     }
 }
