@@ -31,6 +31,6 @@ public class CommandSchematicSave extends CommandEngine {
 
     @Override
     protected void perform(CommandContext context) {
-        context.reply(this.plugin.getPlaceholderManager().setPlaceholders(this.locale.getProperty(Locale.FEATURE_DISABLED)));
+        //context.reply(this.plugin.getPlaceholderManager().setPlaceholders(this.locale.getProperty(Locale.FEATURE_DISABLED)));
     }
 }

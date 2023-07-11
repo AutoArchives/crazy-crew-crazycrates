@@ -50,7 +50,8 @@ public class BaseCommand extends CommandEngine implements TabCompleter, CommandE
                 new CommandContext(
                         sender,
                         "",
-                        new ArrayList<>(Arrays.asList(args))
+                        new ArrayList<>(Arrays.asList(args)),
+                        this.getCommandHelp()
                 );
 
         this.execute(context);

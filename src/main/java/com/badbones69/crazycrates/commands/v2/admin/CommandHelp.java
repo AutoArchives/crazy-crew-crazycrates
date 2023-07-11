@@ -9,7 +9,6 @@ import com.badbones69.crazycrates.commands.engine.requirements.CommandRequiremen
 import com.badbones69.crazycrates.commands.engine.sender.args.Argument;
 import com.badbones69.crazycrates.commands.engine.sender.args.builder.IntArgument;
 import com.badbones69.crazycrates.api.enums.Permissions;
-import com.badbones69.crazycrates.commands.v2.BaseCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class CommandHelp extends CommandEngine {
@@ -38,6 +37,6 @@ public class CommandHelp extends CommandEngine {
     protected void perform(CommandContext context) {
         int arg = context.getArgAsInt(0, true);
 
-        this.baseCommand.getCommandHelp().generateHelp(arg, this.pluginConfig.getProperty(PluginConfig.MAX_HELP_PAGE_ENTRIES), context);
+        context.getHelpEntry().generateHelp(arg, this.pluginConfig.getProperty(PluginConfig.MAX_HELP_PAGE_ENTRIES), context);
     }
 }

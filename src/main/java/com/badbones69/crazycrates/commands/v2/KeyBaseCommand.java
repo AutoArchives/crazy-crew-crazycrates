@@ -78,7 +78,8 @@ public class KeyBaseCommand extends CommandEngine implements TabCompleter, Comma
                 new CommandContext(
                         sender,
                         "",
-                        new ArrayList<>(Arrays.asList(args))
+                        new ArrayList<>(Arrays.asList(args)),
+                        this.getCommandHelp()
                 );
 
         this.execute(context);

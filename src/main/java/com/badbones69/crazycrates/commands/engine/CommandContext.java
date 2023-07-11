@@ -31,10 +31,11 @@ public class CommandContext implements CommandActor, CommandArgs {
     private final CommandSender sender;
     private String alias;
     private final ArrayList<String> args;
+    private final CommandHelpEntry helpEntry;
 
     private Player player;
 
-    public CommandContext(CommandSender sender, String alias, ArrayList<String> args) {
+    public CommandContext(CommandSender sender, String alias, ArrayList<String> args, CommandHelpEntry helpEntry) {
         this.sender = sender;
 
         if (sender instanceof Player) {
@@ -43,6 +44,7 @@ public class CommandContext implements CommandActor, CommandArgs {
 
         this.alias = alias;
         this.args = args;
+        this.helpEntry = helpEntry;
     }
 
     @Override
@@ -163,6 +165,11 @@ public class CommandContext implements CommandActor, CommandArgs {
     @Override
     public void removeArgs(int arg) {
         this.args.remove(arg);
+    }
+
+    @Override
+    public CommandHelpEntry getHelpEntry() {
+        return this.helpEntry;
     }
 
     @Override

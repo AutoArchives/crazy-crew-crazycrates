@@ -1,5 +1,6 @@
 package com.badbones69.crazycrates.commands.engine.sender;
 
+import com.badbones69.crazycrates.commands.engine.CommandHelpEntry;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
@@ -43,5 +44,7 @@ public interface CommandActor {
     List<String> getArgs();
 
     void removeArgs(int arg);
+
+    CommandHelpEntry getHelpEntry();
 
 }
