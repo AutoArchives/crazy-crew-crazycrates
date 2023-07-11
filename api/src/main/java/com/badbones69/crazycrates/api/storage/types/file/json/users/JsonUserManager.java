@@ -5,8 +5,8 @@ import com.badbones69.crazycrates.api.objects.Crate;
 import com.badbones69.crazycrates.api.storage.interfaces.UserManager;
 import com.badbones69.crazycrates.api.storage.objects.UserData;
 import com.google.gson.GsonBuilder;
+import com.ryderbelserion.stick.core.storage.FileHandler;
 import com.ryderbelserion.stick.core.storage.enums.StorageType;
-import com.ryderbelserion.stick.paper.Stick;
 import com.ryderbelserion.stick.paper.adapters.LocationTypeAdapter;
 import org.bukkit.Location;
 import java.io.File;
@@ -20,9 +20,9 @@ public non-sealed class JsonUserManager extends JsonStorage implements UserManag
 
     private final Path path;
     private final CrateManager crate;
-    private final Stick stick;
+    private final FileHandler fileHandler;
 
-    public JsonUserManager(Path path, CrateManager crate, Stick stick) {
+    public JsonUserManager(Path path, CrateManager crate, FileHandler fileHandler) {
         super(path);
 
         // Assign the path.
@@ -30,7 +30,7 @@ public non-sealed class JsonUserManager extends JsonStorage implements UserManag
 
         this.crate = crate;
 
-        this.stick = stick;
+        this.fileHandler = fileHandler;
     }
 
     GsonBuilder builder = new GsonBuilder().disableHtmlEscaping()
@@ -44,12 +44,12 @@ public non-sealed class JsonUserManager extends JsonStorage implements UserManag
 
         jsonStorage.setGsonBuilder(builder);
 
-        this.stick.getFileHandler().addFile(jsonStorage);
+        this.fileHandler.addFile(jsonStorage);
     }
 
     @Override
     public void save() {
-        this.stick.getFileHandler().saveFile(new JsonStorage(this.path));
+        this.fileHandler.saveFile(new JsonStorage(this.path));
     }
 
     @Override

@@ -3,19 +3,15 @@ package com.badbones69.crazycrates.api.configs.types.legacy;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.io.IOException;
 
 public class LocaleMigration extends YamlConfiguration {
 
     private final File file;
-    private final JavaPlugin plugin;
 
-    public LocaleMigration(File file, JavaPlugin plugin) {
+    public LocaleMigration(File file) {
         this.file = file;
-
-        this.plugin = plugin;
     }
 
     public void load() {
@@ -26,7 +22,7 @@ public class LocaleMigration extends YamlConfiguration {
 
             if (legacySection != null) {
                 for (LocaleEnum value : LocaleEnum.values()) {
-                    value.setMessage(this, this.plugin);
+                    value.setMessage(this);
 
                     save();
                 }

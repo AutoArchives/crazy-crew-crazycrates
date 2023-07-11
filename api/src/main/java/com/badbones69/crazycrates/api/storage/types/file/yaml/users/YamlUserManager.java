@@ -1,15 +1,16 @@
 package com.badbones69.crazycrates.api.storage.types.file.yaml.users;
 
+import com.badbones69.crazycrates.api.ApiManager;
 import com.badbones69.crazycrates.api.crates.CrateManager;
 import com.badbones69.crazycrates.api.storage.interfaces.UserManager;
 import com.badbones69.crazycrates.api.storage.objects.UserData;
 import com.badbones69.crazycrates.api.objects.Crate;
+import com.ryderbelserion.stick.core.StickLogger;
 import com.ryderbelserion.stick.core.storage.enums.StorageType;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
@@ -21,17 +22,16 @@ public class YamlUserManager extends YamlConfiguration implements UserManager {
 
     private final File file;
     private final CrateManager crateManager;
-    private final JavaPlugin plugin;
+    private final ApiManager apiManager;
     private final boolean verbose;
 
     private final ConcurrentHashMap<UUID, UserData> userData = new ConcurrentHashMap<>();
 
-    public YamlUserManager(File file, CrateManager crateManager, JavaPlugin plugin, boolean verbose) {
+    public YamlUserManager(File file, CrateManager crateManager, ApiManager apiManager, boolean verbose) {
         this.file = file;
 
         this.crateManager = crateManager;
-
-        this.plugin = plugin;
+        this.apiManager = apiManager;
 
         this.verbose = verbose;
     }
@@ -113,7 +113,7 @@ public class YamlUserManager extends YamlConfiguration implements UserManager {
             section.getKeys(false).forEach(value -> {
                 int amount = legacy.getInt("Players." + uuid + "." + value);
 
-                if (this.verbose) this.plugin.getLogger().warning("Keys: " + amount + " UUID:" + uuid + " Crate: " + value);
+                if (this.verbose) StickLogger.warn("Keys: " + amount + " UUID:" + uuid + " Crate: " + value);
 
                 addKey(uuid, amount, crate);
 
@@ -124,7 +124,7 @@ public class YamlUserManager extends YamlConfiguration implements UserManager {
 
     @Override
     public void addUser(UUID uuid, Crate crate) {
-        Player player = this.plugin.getServer().getPlayer(uuid);
+        Player player = this.apiManager.getServer().getPlayer(uuid);
 
         // Get the configuration section. This is used to check for existing users.
         ConfigurationSection section = getConfigurationSection("users");
@@ -134,7 +134,7 @@ public class YamlUserManager extends YamlConfiguration implements UserManager {
             if (player == null && !section.contains(String.valueOf(uuid))) {
                 // If the crate manager actually contains the crate.
                 if (this.crateManager.getCrates().contains(crate)) {
-                    if (this.verbose) this.plugin.getLogger().warning("Added " + uuid + " who has never played to the data file.");
+                    if (this.verbose) StickLogger.warn("Added " + uuid + " who has never played to the data file.");
 
                     // Add uuid since it doesn't exist.
                     set("users." + uuid, Collections.emptySet());
@@ -172,7 +172,7 @@ public class YamlUserManager extends YamlConfiguration implements UserManager {
 
     @Override
     public UserData getUser(UUID uuid, Crate crate) {
-        Player player = this.plugin.getServer().getPlayer(uuid);
+        Player player = this.apiManager.getServer().getPlayer(uuid);
 
         // Check if player is not null and is online before checking the files.
         if (player != null && player.isOnline()) {
@@ -200,7 +200,7 @@ public class YamlUserManager extends YamlConfiguration implements UserManager {
 
     @Override
     public void addKey(UUID uuid, int amount, Crate crate) {
-        Player player = this.plugin.getServer().getPlayer(uuid);
+        Player player = this.apiManager.getServer().getPlayer(uuid);
 
         // Check if the player is null or if the player is not online but has played before.
         if (player == null || !player.isOnline() && player.hasPlayedBefore()) {
@@ -220,7 +220,7 @@ public class YamlUserManager extends YamlConfiguration implements UserManager {
             }
 
             // Send a message if uuid is not found i.e for us or improper use of our api!
-            if (this.verbose) this.plugin.getLogger().warning(uuid + " does not exist in " + this.file.getName());
+            if (this.verbose) StickLogger.warn(uuid + " does not exist in " + this.file.getName());
 
             // We're done.
             return;
@@ -232,7 +232,7 @@ public class YamlUserManager extends YamlConfiguration implements UserManager {
 
     @Override
     public void removeKey(UUID uuid, int amount, Crate crate) {
-        Player player = this.plugin.getServer().getPlayer(uuid);
+        Player player = this.apiManager.getServer().getPlayer(uuid);
 
         // Check if the player is null or if the player is not online but has played before.
         if (player == null || !player.isOnline() && player.hasPlayedBefore()) {
@@ -244,7 +244,7 @@ public class YamlUserManager extends YamlConfiguration implements UserManager {
 
                 // New amount cannot be less than 0
                 if (currentAmount-amount < 0) {
-                    if (this.verbose) this.plugin.getLogger().warning("Amount cannot be less then 0.");
+                    if (this.verbose) StickLogger.warn("Amount cannot be less then 0.");
                     return;
                 }
 
@@ -258,7 +258,7 @@ public class YamlUserManager extends YamlConfiguration implements UserManager {
             }
 
             // Send a message if uuid is not found i.e for us or improper use of our api!
-            if (this.verbose) this.plugin.getLogger().warning(uuid + " does not exist in " + this.file.getName());
+            if (this.verbose) StickLogger.warn(uuid + " does not exist in " + this.file.getName());
 
             // We're done.
             return;

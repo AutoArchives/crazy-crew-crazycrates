@@ -1,6 +1,6 @@
 package com.badbones69.crazycrates.commands.engine.builder;
 
-import com.ryderbelserion.stick.paper.utils.AdventureUtils;
+import com.ryderbelserion.stick.core.utils.AdventureUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.event.ClickEvent;

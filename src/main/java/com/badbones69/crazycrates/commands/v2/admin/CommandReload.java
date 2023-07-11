@@ -11,7 +11,6 @@ import com.badbones69.crazycrates.commands.CommandPermissions;
 import com.badbones69.crazycrates.support.placeholders.InternalPlaceholderSupport;
 import com.badbones69.crazycrates.support.tasks.AutoSaveTask;
 import org.bukkit.plugin.java.JavaPlugin;
-
 import java.util.Timer;
 
 public class CommandReload extends CommandEngine {

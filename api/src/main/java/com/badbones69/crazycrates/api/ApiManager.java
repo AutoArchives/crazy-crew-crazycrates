@@ -16,25 +16,34 @@ import com.badbones69.crazycrates.api.storage.interfaces.LocationManager;
 import com.badbones69.crazycrates.api.storage.interfaces.UserManager;
 import com.badbones69.crazycrates.api.storage.types.file.yaml.crates.YamlCrateManager;
 import com.badbones69.crazycrates.api.storage.types.file.yaml.users.YamlUserManager;
+import com.ryderbelserion.stick.core.StickLogger;
 import com.ryderbelserion.stick.core.utils.FileUtils;
-import com.ryderbelserion.stick.paper.Stick;
-import org.bukkit.plugin.java.JavaPlugin;
+import com.ryderbelserion.stick.paper.PaperConsole;
+import com.ryderbelserion.stick.paper.PaperCore;
+import org.bukkit.Server;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.logging.LogManager;
 
 public class ApiManager {
 
-    private final JavaPlugin plugin;
     private final Path path;
+    private final PaperCore paperCore;
+    private Server server;
 
-    public ApiManager(JavaPlugin plugin, Path path) {
-        this.plugin = plugin;
-
+    public ApiManager(Path path, PaperCore paperCore) {
         this.path = path;
+        this.paperCore = paperCore;
+    }
 
-        new Stick(path, plugin.getName());
+    public Server getServer() {
+        return this.server;
+    }
+
+    public void setServer(Server server) {
+        this.server = server;
     }
 
     private UserManager userManager;
@@ -47,7 +56,7 @@ public class ApiManager {
 
     private HologramManager holograms;
 
-    public ApiManager load() {
+    public ApiManager load(boolean serverStart) {
         // Create plugin-config.yml
         File pluginConfig = new File(this.path.toFile(), "plugin-config.yml");
 
@@ -56,6 +65,16 @@ public class ApiManager {
                 .useDefaultMigrationService()
                 .configurationData(ConfigBuilder.buildPluginConfig())
                 .create();
+
+        this.paperCore.setProjectPrefix(this.pluginConfig.getProperty(PluginConfig.COMMAND_PREFIX));
+
+        if (serverStart) {
+            this.paperCore.setPaperConsole(new PaperConsole());
+
+            StickLogger.setName(this.paperCore.getProjectPrefix());
+
+            LogManager.getLogManager().addLogger(StickLogger.getLogger());
+        }
 
         // Migrate the locale to the new directory if it's still Messages.yml!
         File localeDir = new File(this.path.toFile(), "locale");
@@ -79,7 +98,7 @@ public class ApiManager {
                 .create();
 
         // Re-initialize crate manager.
-        this.crateManager = new CrateManager(this.plugin);
+        this.crateManager = new CrateManager(this.path.toFile());
         this.crateManager.loadCrates();
 
         // Initialize user data.
@@ -107,13 +126,13 @@ public class ApiManager {
                         return;
                     }
 
-                    this.plugin.getLogger().warning("CMI support is enabled by you but the CMI Hologram Module is not enabled.");
-                    this.plugin.getLogger().warning("Please go to Modules.yml in CMI & turn on the hologram module: Restart is required.");
+                    StickLogger.warn("CMI support is enabled by you but the CMI Hologram Module is not enabled.");
+                    StickLogger.warn("Please go to Modules.yml in CMI & turn on the hologram module: Restart is required.");
                 }
 
                 case decent_holograms -> {
                     this.holograms = new DecentHologramSupport();
-                    this.plugin.getLogger().warning("DecentHologram Support is enabled.");
+                    StickLogger.warn("DecentHologram Support is enabled.");
                 }
             }
         }
@@ -138,7 +157,7 @@ public class ApiManager {
                     .create();
 
             // Re-initialize crate manager.
-            this.crateManager = new CrateManager(this.plugin);
+            this.crateManager = new CrateManager(this.path.toFile());
             this.crateManager.loadCrates();
 
             // Initialize user data.
@@ -147,10 +166,10 @@ public class ApiManager {
     }
 
     private void init() {
-        this.locationManager = new YamlCrateManager(new File(this.path.toFile(), "locations.yml"), this.plugin, this);
+        this.locationManager = new YamlCrateManager(new File(this.path.toFile(), "locations.yml"), this);
         this.locationManager.load();
 
-        this.userManager = new YamlUserManager(new File(this.path.toFile(), "users.yml"), this.crateManager, this.plugin, this.pluginConfig.getProperty(PluginConfig.VERBOSE_LOGGING));
+        this.userManager = new YamlUserManager(new File(this.path.toFile(), "users.yml"), this.crateManager, this, this.pluginConfig.getProperty(PluginConfig.VERBOSE_LOGGING));
         this.userManager.load();
     }
 
@@ -160,23 +179,23 @@ public class ApiManager {
 
         if (!localeDir.exists()) {
             if (!localeDir.mkdirs()) {
-                this.plugin.getLogger().severe("Could not create crates directory! " +  localeDir.getAbsolutePath());
+                StickLogger.severe("Could not create crates directory! " +  localeDir.getAbsolutePath());
                 return;
             }
 
             if (messages.exists()) {
                 File renamedFile = new File(this.path.toFile(), "en-US.yml");
 
-                if (messages.renameTo(renamedFile)) this.plugin.getLogger().info("Renamed " + messages.getName() + " to " + renamedFile.getName());
+                if (messages.renameTo(renamedFile)) StickLogger.info("Renamed " + messages.getName() + " to " + renamedFile.getName());
 
                 try {
                     Files.move(renamedFile.toPath(), newFile.toPath());
-                    this.plugin.getLogger().warning("Moved " + renamedFile.getPath() + " to " + newFile.getPath());
+                    StickLogger.warn("Moved " + renamedFile.getPath() + " to " + newFile.getPath());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
-                LocaleMigration localeMigration = new LocaleMigration(renamedFile, this.plugin);
+                LocaleMigration localeMigration = new LocaleMigration(renamedFile);
 
                 localeMigration.load();
             }

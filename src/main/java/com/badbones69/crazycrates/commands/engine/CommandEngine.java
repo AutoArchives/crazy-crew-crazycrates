@@ -10,7 +10,7 @@ import com.badbones69.crazycrates.commands.engine.sender.CommandData;
 import com.badbones69.crazycrates.commands.engine.sender.args.Argument;
 import com.badbones69.crazycrates.api.configs.types.Locale;
 import com.badbones69.crazycrates.support.placeholders.InternalPlaceholderSupport;
-import com.ryderbelserion.stick.paper.utils.AdventureUtils;
+import com.ryderbelserion.stick.core.utils.AdventureUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.event.ClickEvent;
@@ -31,8 +31,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import static com.ryderbelserion.stick.paper.utils.AdventureUtils.hover;
-import static com.ryderbelserion.stick.paper.utils.AdventureUtils.send;
+import static com.ryderbelserion.stick.core.utils.AdventureUtils.hover;
+import static com.ryderbelserion.stick.core.utils.AdventureUtils.send;
 
 public abstract class CommandEngine implements TabCompleter, CommandExecutor {
 

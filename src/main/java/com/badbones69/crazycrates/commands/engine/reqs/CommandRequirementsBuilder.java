@@ -1,6 +1,5 @@
 package com.badbones69.crazycrates.commands.engine.reqs;
 
-import com.ryderbelserion.stick.paper.commands.reqs.CommandRequirements;
 import org.bukkit.permissions.Permission;
 
 public class CommandRequirementsBuilder {

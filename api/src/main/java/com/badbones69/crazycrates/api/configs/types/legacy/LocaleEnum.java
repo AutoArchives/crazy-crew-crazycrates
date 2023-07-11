@@ -1,8 +1,8 @@
 package com.badbones69.crazycrates.api.configs.types.legacy;
 
 import com.badbones69.crazycrates.api.utils.MiscUtils;
+import com.ryderbelserion.stick.core.StickLogger;
 import org.bukkit.configuration.Configuration;
-import org.bukkit.plugin.java.JavaPlugin;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,7 +93,7 @@ public enum LocaleEnum {
         return reader.contains(value);
     }
 
-    public void setMessage(Configuration configuration, JavaPlugin plugin) {
+    public void setMessage(Configuration configuration) {
         try {
             if (contains(configuration, getLegacyPath())) {
                 if (configuration.isList(getLegacyPath())) {
@@ -114,8 +114,8 @@ public enum LocaleEnum {
                 }
             }
         } catch (Exception exception) {
-            plugin.getLogger().warning("Failed to set: " + getNewPath());
-            plugin.getLogger().warning("Tried to use: " + getLegacyPath());
+            StickLogger.warn("Failed to set: " + getNewPath());
+            StickLogger.warn("Tried to use: " + getLegacyPath());
         }
     }
 

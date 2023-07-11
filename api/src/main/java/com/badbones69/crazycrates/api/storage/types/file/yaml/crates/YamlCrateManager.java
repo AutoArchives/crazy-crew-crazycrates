@@ -22,15 +22,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class YamlCrateManager extends YamlConfiguration implements LocationManager {
 
     private final File file;
-    private final JavaPlugin plugin;
     private final ApiManager apiManager;
 
     private final ConcurrentHashMap<String, CrateData> crates = new ConcurrentHashMap<>();
 
-    public YamlCrateManager(File file, JavaPlugin plugin, ApiManager apiManager) {
+    public YamlCrateManager(File file, ApiManager apiManager) {
         this.file = file;
 
-        this.plugin = plugin;
         this.apiManager = apiManager;
     }
 
@@ -90,7 +88,7 @@ public class YamlCrateManager extends YamlConfiguration implements LocationManag
             if (name == null) return;
 
             // Converting world to a unique id.
-            World world = this.plugin.getServer().getWorld(name);
+            World world = this.apiManager.getServer().getWorld(name);
 
             int x = configuration.getInt("Locations." + id + ".X");
             int y = configuration.getInt("Locations." + id + ".Y");
@@ -184,7 +182,7 @@ public class YamlCrateManager extends YamlConfiguration implements LocationManag
             if (this.apiManager.getHolograms() != null) {
                 for (Crate crate : this.apiManager.getCrateManager().getCrates()) {
                     if (crate.getCrateName().equals(crateName)) {
-                        this.apiManager.getHolograms().remove(new Location(this.plugin.getServer().getWorld(customLocation.world()), customLocation.x(), customLocation.y(), customLocation.z()));
+                        this.apiManager.getHolograms().remove(new Location(this.apiManager.getServer().getWorld(customLocation.world()), customLocation.x(), customLocation.y(), customLocation.z()));
 
                         break;
                     }

@@ -7,7 +7,7 @@ import com.badbones69.crazycrates.api.configs.types.Locale;
 import com.badbones69.crazycrates.commands.engine.sender.CommandActor;
 import com.badbones69.crazycrates.commands.engine.sender.CommandArgs;
 import com.badbones69.crazycrates.support.placeholders.InternalPlaceholderSupport;
-import com.ryderbelserion.stick.paper.utils.AdventureUtils;
+import com.ryderbelserion.stick.core.utils.AdventureUtils;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import org.bukkit.OfflinePlayer;
