@@ -1,4 +1,4 @@
-package com.badbones69.crazycrates.commands.v2.args;
+package com.badbones69.crazycrates.commands.engine.sender.args.builder.custom;
 
 import com.badbones69.crazycrates.commands.engine.sender.args.ArgumentType;
 import com.badbones69.crazycrates.api.enums.KeyType;
