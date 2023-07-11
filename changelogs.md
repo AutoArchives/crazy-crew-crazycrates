@@ -34,11 +34,26 @@ You should take a pretty portion of what you know of the previous versions of Cr
   * Color Codes such as &7, &c or &e are no longer supported. We fully support MiniMessage across the entire project.
     * https://docs.advntr.dev/minimessage/format.html
 
+### Minor Changes:
+#### Config Changes:
+ **config.yml / plugin-config.yml:**
+ * `Prefix` in `config.yml` has been moved to `plugin-config.yml`
+   * You can easily move over your old value. You can find it by looking for `command-value` under `prefix` section
+ * `Config-Version`, `Update-Checker` have been removed.
+ * `Toggle-Metrics` in `config.yml` has been moved to `plugin-config.yml`
+   * The name is simply `toggle-metrics`
+ 
+ * New options have been added introduced with `plugin-config.yml`
+   * You are able to almost fully configure the output of the commands with options like `page-next` for the help command pagination
+   * `verbose-logging` which if enabled, allows extra logging for debug purposes to see what's going on.
+   * A section dedicated to auto-saving has been added.
+     * The value of `time` under `auto-save` is default to every `15 minutes.`
+
  ### Dev API Changes:
-  * N/A
+  * Plenty, A proper api, hopefully. I'll document shortly.
 
  ### Bug Fixes:
-  * N/A
+  * I have fixed bugs. I just forgot what I fixed.
 
  ### Permissions Changed:
 
