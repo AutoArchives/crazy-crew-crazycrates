@@ -9,7 +9,7 @@ You should take a pretty portion of what you know of the previous versions of Cr
 
 ## Changes:
  ### Major Changes:
-  * Spigot is genuinely no longer supported, The plugin will disable on Spigot based servers.
+  * Spigot is genuinely no longer supported, The plugin will not even boot. I've removed the plugin.yml in favor of paper-plugin.yml
   * Color Codes such as &7, &c or &e are no longer supported. We fully support MiniMessage across the entire project.
     * https://docs.advntr.dev/minimessage/format.html
 
