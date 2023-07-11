@@ -29,7 +29,6 @@ public class CrateBaseCommand extends CommandEngine implements TabCompleter, Com
     private final SettingsManager pluginConfig = this.plugin.getApiManager().getPluginConfig();
 
     public CrateBaseCommand() {
-        super();
         setPrefix("crazycrates");
 
         setCommandEntryData(new CommandDataEntry());
@@ -63,7 +62,7 @@ public class CrateBaseCommand extends CommandEngine implements TabCompleter, Com
 
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (requirements.isPlayer() && !MiscUtils.hasPermission((HumanEntity) sender, this.requirements.getPermission())) return Collections.emptyList();
+        if (this.requirements.isPlayer() && !MiscUtils.hasPermission((HumanEntity) sender, this.requirements.getPermission())) return Collections.emptyList();
 
         return handleTabComplete(args);
     }

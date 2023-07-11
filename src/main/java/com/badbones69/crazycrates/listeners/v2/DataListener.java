@@ -30,7 +30,7 @@ public class DataListener implements Listener {
             if (crate.getCrateConfig().isStartingKeysEnabled()) {
                 this.apiManager.getUserManager().addKey(uuid, crate.getCrateConfig().getStartingKeysAmount(), crate);
 
-                if (this.plugin.verbose()) this.plugin.getLogger().warning("Added starting keys to " + uuid + ".");
+                //if (this.plugin.verbose()) this.plugin.getLogger().warning("Added starting keys to " + uuid + ".");
             }
         });
     }
