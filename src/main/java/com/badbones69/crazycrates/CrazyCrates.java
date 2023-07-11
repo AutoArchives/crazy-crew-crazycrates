@@ -16,7 +16,6 @@ import com.badbones69.crazycrates.listeners.v2.DataListener;
 import com.badbones69.crazycrates.support.placeholders.InternalPlaceholderSupport;
 import com.badbones69.crazycrates.support.structures.blocks.ChestStateHandler;
 import com.badbones69.crazycrates.support.tasks.AutoSaveTask;
-import com.ryderbelserion.stick.paper.PaperCore;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.event.Listener;
 import org.bukkit.permissions.Permission;
@@ -29,7 +28,7 @@ public class CrazyCrates extends JavaPlugin implements Listener {
     private final ApiManager apiManager;
     private InternalPlaceholderSupport placeholderManager;
 
-    public CrazyCrates(ApiManager apiManager, PaperCore paperCore) {
+    public CrazyCrates(ApiManager apiManager) {
         this.apiManager = apiManager;
     }
 

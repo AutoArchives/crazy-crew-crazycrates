@@ -12,14 +12,13 @@ import org.jetbrains.annotations.NotNull;
 
 public class CrazyStarter implements PluginBootstrap {
 
-    private PaperCore paperCore;
     private ApiManager apiManager;
 
     @Override
     public void bootstrap(@NotNull BootstrapContext context) {
-        this.paperCore = new PaperCore(context.getConfiguration().getName(), context.getDataDirectory());
+        PaperCore paperCore = new PaperCore(context.getConfiguration().getName(), context.getDataDirectory());
 
-        this.apiManager = new ApiManager(context.getDataDirectory(), this.paperCore);
+        this.apiManager = new ApiManager(context.getDataDirectory(), paperCore);
     }
 
     @Override
@@ -27,6 +26,6 @@ public class CrazyStarter implements PluginBootstrap {
         this.apiManager.setServer(Bukkit.getServer());
         this.apiManager.load(true);
 
-        return new CrazyCrates(this.apiManager, this.paperCore);
+        return new CrazyCrates(this.apiManager);
     }
 }
