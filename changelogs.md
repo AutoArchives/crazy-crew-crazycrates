@@ -10,6 +10,26 @@ You should take a pretty portion of what you know of the previous versions of Cr
 ## Changes:
  ### Major Changes:
   * Spigot is genuinely no longer supported, The plugin will not even boot. I've removed the plugin.yml in favor of paper-plugin.yml
+  * All internal placeholders not related to PlaceholderAPI have been changed as to not be confused with PlaceholderAPI
+
+| Old         | New         |
+|-------------|-------------|
+| %command%   | {command}   |
+| %crate%     | {crate}     |
+| %key%       | {key}       |
+| %usage%     | {usage}     |
+| %prize%     | {prize}     |
+| %player%    | {player}    |
+| %amount%    | {amount}    |
+| %world%     | {world}     |
+| %id%        | {id}        |
+| %prefix%    | {prefix}    |
+| %number%    | {number}    |
+| %cratetype% | {cratetype} |
+| %keys%      | {keys}      |
+
+ * All old placeholders should be automatically replaced however it's easy for you to do it manually in advance!
+   * Find & Replace in your file editors.
   * Color Codes such as &7, &c or &e are no longer supported. We fully support MiniMessage across the entire project.
     * https://docs.advntr.dev/minimessage/format.html
 
