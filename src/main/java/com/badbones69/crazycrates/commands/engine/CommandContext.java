@@ -6,7 +6,7 @@ import com.badbones69.crazycrates.api.ApiManager;
 import com.badbones69.crazycrates.api.configs.types.Locale;
 import com.badbones69.crazycrates.commands.engine.sender.CommandActor;
 import com.badbones69.crazycrates.commands.engine.sender.CommandArgs;
-import com.badbones69.crazycrates.support.placeholders.InternalPlaceholderSupport;
+import com.badbones69.crazycrates.api.support.InternalPlaceholderSupport;
 import com.ryderbelserion.stick.core.utils.AdventureUtils;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
@@ -26,9 +26,7 @@ public class CommandContext implements CommandActor, CommandArgs {
     private final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
     private final ApiManager apiManager = this.plugin.getApiManager();
     private final SettingsManager locale = this.apiManager.getLocale();
-    private final SettingsManager pluginConfig = this.apiManager.getPluginConfig();
-
-    private final InternalPlaceholderSupport placeholderSupport = this.plugin.getPlaceholderManager();
+    private final InternalPlaceholderSupport placeholderSupport = this.apiManager.getPlaceholderSupport();
 
     private final CommandSender sender;
     private String alias;

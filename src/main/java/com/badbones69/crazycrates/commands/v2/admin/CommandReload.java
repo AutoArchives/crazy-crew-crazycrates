@@ -17,7 +17,7 @@ public class CommandReload extends CommandEngine {
 
     private final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
 
-    private final InternalPlaceholderSupport placeholderSupport = this.plugin.getPlaceholderManager();
+    private final InternalPlaceholderSupport placeholderSupport = this.plugin.getApiManager().getPlaceholderSupport();
 
     private final SettingsManager pluginConfig = this.plugin.getApiManager().getPluginConfig();
     private final SettingsManager locale = this.plugin.getApiManager().getLocale();

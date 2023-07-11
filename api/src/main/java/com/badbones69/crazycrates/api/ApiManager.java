@@ -9,6 +9,7 @@ import com.badbones69.crazycrates.api.configs.types.legacy.LocaleMigration;
 import com.badbones69.crazycrates.api.configs.types.sections.PluginSupportSection;
 import com.badbones69.crazycrates.api.crates.CrateManager;
 import com.badbones69.crazycrates.api.enums.support.HologramSupport;
+import com.badbones69.crazycrates.api.support.InternalPlaceholderSupport;
 import com.badbones69.crazycrates.api.support.holograms.interfaces.HologramManager;
 import com.badbones69.crazycrates.api.support.holograms.types.CMIHologramSupport;
 import com.badbones69.crazycrates.api.support.holograms.types.DecentHologramSupport;
@@ -54,6 +55,8 @@ public class ApiManager {
     private SettingsManager locale;
     private SettingsManager config;
 
+    private InternalPlaceholderSupport placeholderSupport;
+
     private HologramManager holograms;
 
     public ApiManager load(boolean serverStart) {
@@ -96,6 +99,8 @@ public class ApiManager {
                 .useDefaultMigrationService()
                 .configurationData(ConfigBuilder.buildConfig())
                 .create();
+
+        this.placeholderSupport = new InternalPlaceholderSupport(this);
 
         // Re-initialize crate manager.
         this.crateManager = new CrateManager(this.path.toFile());
@@ -215,6 +220,11 @@ public class ApiManager {
 
     public SettingsManager getConfig() {
         return this.config;
+    }
+
+    // Placeholders.
+    public InternalPlaceholderSupport getPlaceholderSupport() {
+        return this.placeholderSupport;
     }
 
     // Crate Management.
