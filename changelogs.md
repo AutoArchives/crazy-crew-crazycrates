@@ -38,6 +38,8 @@ Something related to Terminal wizardry and PaperMC, Do not worry. We have fix...
    * Find & Replace in your file editors.
   * Color Codes such as &7, &c or &e are no longer supported. We fully support MiniMessage across the entire project.
     * https://docs.advntr.dev/minimessage/format.html
+    * Note: in each crate file inside the crate folder, Any commands you want to run are independent of what I said about Color Codes above.
+    * Any command is executed by an external plugin thus it is up to them how they handle color codes, We will not handle any color codes in that section.
 
 ### Minor Changes:
 #### Config Changes:
