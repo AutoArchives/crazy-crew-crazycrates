@@ -97,7 +97,7 @@ public non-sealed class JsonUserManager extends JsonStorage implements UserManag
     }
 
     @Override
-    public Map<UUID, UserData> getUsers(UUID uuid) {
+    public Map<UUID, UserData> getUsers() {
         return Collections.unmodifiableMap(userData);
     }
 }

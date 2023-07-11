@@ -274,7 +274,7 @@ public class YamlUserManager extends YamlConfiguration implements UserManager {
     }
 
     @Override
-    public Map<UUID, UserData> getUsers(UUID uuid) {
+    public Map<UUID, UserData> getUsers() {
         return Collections.unmodifiableMap(this.userData);
     }
 }

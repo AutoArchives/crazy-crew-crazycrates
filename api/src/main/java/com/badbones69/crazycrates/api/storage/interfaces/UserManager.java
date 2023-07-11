@@ -29,6 +29,6 @@ public interface UserManager {
 
     Map<String, Integer> getKeys(UUID uuid, Crate crate);
 
-    Map<UUID, UserData> getUsers(UUID uuid);
+    Map<UUID, UserData> getUsers();
 
 }
