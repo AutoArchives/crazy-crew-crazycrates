@@ -9,18 +9,14 @@ repositories {
 }
 
 dependencies {
-    api("ch.jalu", "configme", "1.3.0")
-
-    compileOnly("com.github.decentsoftware-eu", "decentholograms", "2.8.2")
-
-    compileOnly("de.tr7zw", "item-nbt-api", "2.11.3")
-
     compileOnly("cmi-api:CMI-API")
     compileOnly("cmi-lib:CMILib")
 
-    api("com.ryderbelserion.stick", "stick-paper", "2.2.1-snapshot") {
-        exclude("com.google.code.gson", "gson")
-        exclude("me.carleslc.Simple-YAML", "Simple-Yaml")
-        exclude("org.jetbrains", "annotations")
-    }
+    compileOnly("ch.jalu", "configme", "1.3.0")
+
+    compileOnly("de.tr7zw", "item-nbt-api", "2.11.3")
+
+    compileOnly("com.github.decentsoftware-eu", "decentholograms", "2.8.2")
+
+    compileOnly("com.ryderbelserion.stick", "stick-paper", "2.2.1-snapshot")
 }

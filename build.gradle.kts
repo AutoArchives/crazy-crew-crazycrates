@@ -13,12 +13,17 @@ repositories {
 dependencies {
     api(project(":crazycrates-api"))
 
-    compileOnly("me.clip", "placeholderapi", "2.11.3")
-    compileOnly("com.github.decentsoftware-eu", "decentholograms", "2.8.2")
+    compileOnly("ch.jalu", "configme", "1.3.0")
 
-    implementation("de.tr7zw", "item-nbt-api", "2.11.3")
+    compileOnly("me.clip", "placeholderapi", "2.11.3")
+
+    compileOnly("de.tr7zw", "item-nbt-api", "2.11.3")
 
     compileOnly("dev.triumphteam", "triumph-cmd-bukkit", "2.0.0-SNAPSHOT")
+
+    compileOnly("com.github.decentsoftware-eu", "decentholograms", "2.8.2")
+
+    implementation("com.ryderbelserion.stick", "stick-paper", "2.2.1-snapshot")
 
     implementation("org.bstats", "bstats-bukkit", "3.0.0")
 }
@@ -35,9 +40,8 @@ tasks {
     shadowJar {
         fun reloc(pkg: String) = relocate(pkg, "${rootProject.group}.dep.$pkg")
 
-        reloc("de.tr7zw.changeme.nbtapi")
         reloc("org.bstats")
-        reloc("ch.jalu")
+        reloc("com.ryderbelserion.stick")
     }
 
     runServer {
@@ -45,13 +49,12 @@ tasks {
     }
 
     processResources {
-        filesMatching("plugin.yml") {
+        filesMatching("paper-plugin.yml") {
             expand(
                 "name" to rootProject.name,
                 "group" to rootProject.group,
                 "version" to rootProject.version,
                 "description" to rootProject.description,
-                "website" to "https://modrinth.com/plugin/${rootProject.name.lowercase()}"
             )
         }
     }
