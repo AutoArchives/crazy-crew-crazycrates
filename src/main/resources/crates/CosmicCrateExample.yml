@@ -5,15 +5,15 @@ crate-settings:
   # https://github.com/Crazy-Crew/Crazy-Crates/wiki
   type: Cosmic
   # The display name when opening a gui crate.
-  name: '&dCosmic Crate'
+  name: '<purple>Cosmic Crate</purple>'
   # Settings related to how the key looks in-game
   key:
     # The name of the key.
-    name: '&d&lCosmic Crate Key'
+    name: '<bold><purple>Cosmic Crate Key</purple></bold>'
     # The lore on the key.
     lore:
-      - '&7A special key!'
-      - '&7for a special crate.'
+      - '<gray>A special key!</gray>'
+      - '<gray>&7for a special crate.</gray>'
     display:
       # The item the key is.
       # You can use TRIPWIRE_HOOK#1 for custom model data.
@@ -27,18 +27,18 @@ crate-settings:
     # The display of the items shown when ready to pick the crates.
     mystery-crate:
       item: 'CHEST'
-      name: '&f&l???'
+      name: '<bold><white>???</white></bold>'
       lore:
-        - '&7You may choose 4 crates.'
+        - '<gray>You may choose 4 crates.</gray>'
     # After the player chooses a crate, the item will change to the values below.
     picked-crate:
       item: 'GLASS_PANE'
-      name: '&f&l???'
+      name: '<bold><white>???</white></bold>'
       lore:
-        - '&7You have chosen #{slot}.'
+        - '<gray>You have chosen #{slot}.</gray>'
     tiers:
       basic:
-        name: '&8Basic Prize'
+        name: '<dark_gray>Basic Prize</dark_gray>'
         color: 'GRAY_STAINED_GLASS_PANE'
         max-range: 100 # Available values: 100, 1000, 10000, 100000, 1000000, 10000000
         #
@@ -47,7 +47,7 @@ crate-settings:
         #
         chance: 80 # The chance out of MaxRange to win an item.
       uncommon:
-        name: '&aUncommon Prize'
+        name: '<green>Uncommon Prize</green>'
         color: 'LIME_STAINED_GLASS_PANE'
         max-range: 1000 # Available values: 100, 1000, 10000, 100000, 1000000, 10000000
         #
@@ -56,7 +56,7 @@ crate-settings:
         #
         chance: 55 # The chance out of MaxRange to win an item.
       rare:
-        name: '&4Rare Prize'
+        name: '<red>Rare Prize</red>'
         color: 'RED_STAINED_GLASS_PANE'
         max-range: 10000 # Available values: 100, 1000, 10000, 100000, 1000000, 10000000
         #
@@ -74,15 +74,15 @@ holograms:
   display:
     # The messages displayed in the hologram.
     lines:
-      - '&7&lWow this is one line'
-      - '&e&lWow we have another line.'
+      - '<bold><gray>Wow this is one line</gray></bold>'
+      - '<bold><yellow>Wow we have another line.</yellow></bold>'
 
 # Settings related to the crate preview.
 crate-preview:
   # If the crate preview should be enabled.
   toggle: false
   # The name of the crate preview.
-  name: '&aBasic Crate Preview'
+  name: '<purple>Cosmic Crate Preview</purple>'
   # How many rows should the Crate Preview have? Header & Bottom included so 3-6
   rows: 6
   glass:
@@ -113,7 +113,7 @@ misc:
     # Whether to send the broadcast when opening a crate.
     toggle: true
     # Message that is broadcast when opening the crate.
-    message: '{prefix}&6&l{player}&r &7is opening a &d&lCosmic Chest&7.'
+    message: '{prefix}<bold><gold>{player}</gold></bold><reset> <gray>is opening a</gray> <bold><purple>Basic Chest</purple></bold>.</gray>'
 
 # Settings related to '/cc gui'
 gui:
@@ -126,10 +126,10 @@ gui:
     name: '&d&lCosmic Chest'
     # The lore displayed on the item.
     lore:
-      - '&7This crate contains strange objects,'
-      - '&7from somewhere beyond this planet.'
-      - '&7You have &6{keys} keys &7to open this crate with.'
-      - '&7&l(&e&l!&7&l) Right click to view rewards.'
+      - '<gray>This crate contains strange objects.</gray>'
+      - '<gray>from somewhere beyond this planet.</gray>'
+      - '<gray>You have</gray> <gold>{keys} keys</gold> <gray>to open this crate with.</gray>'
+      - '<bold><gray>(</gray><yellow>!</yellow><gray>)</gray></bold> Right click to view rewards.</gray>'
     # The item displayed in the gui.
     item: 'ENDER_CHEST'
   # If the item should be glowing or not.
@@ -140,7 +140,7 @@ prizes:
     # Settings related to how the item will look cosmetically when previewing prizes.
     display:
       # The name of the prize.
-      name: '&cAn example of a player head!'
+      name: '<red>An example of a player head!</red>'
       # The item the prize will look like.
       item: 'PLAYER_HEAD'
       # You can get these textures from https://minecraft-heads.com/!
@@ -151,17 +151,19 @@ prizes:
       amount: 1
       # What enchants to display? Set to [] to disable.
       # https://jd.papermc.io/paper/1.20/org/bukkit/enchantments/Enchantment.html
-      enchantments: []
+      enchantments:
+        - 'SHARPNESS:5'
+        - 'FORTUNE:3'
       # The lore related settings.
       lore:
         # If the lore should be enabled.
         toggle: false
         # The lore of the preview item.
         lines:
-          - '&7Want a player head?'
+          - '<gray>Want a player head?</gray>'
           - ''
-          - '&cChance: &e{chance}'
-          - '&cRange: {max-range}'
+          - '<red>Chance:</red> <yellow>{chance}</yellow>'
+          - '<red>Range:</red> {max-range}'
 
     # If you want the item to be unbreakable.
     unbreakable: false
@@ -170,7 +172,8 @@ prizes:
     hide-item-flags: false
 
     # If you want fireworks to spawn.
-    fireworks: false
+    fireworks:
+      toggle: false
 
     # If you want the item to glow.
     glowing: false
@@ -202,7 +205,7 @@ prizes:
       toggle: false
       # The messages to send.
       values:
-        - '&cYou won a &r{reward}!'
+        - '<red>You won a</red> <reset>{reward}!</reset>'
 
     permissions:
       blacklisted:
@@ -237,7 +240,7 @@ prizes:
     # Settings related to how the item will look cosmetically when previewing prizes.
     display:
       # The name of the prize.
-      name: '&b&lCheap Helmet'
+      name: '<bold><blue>Cheap Helmet</blue></bold>'
       # The item the prize will look like.
       item: 'GOLDEN_HELMET'
       # An example of how to add trim patterns.
@@ -265,10 +268,10 @@ prizes:
         toggle: false
         # The lore of the preview item.
         lines:
-          - '&7Win a cheap helmet.'
+          - '<gray>Win a cheap helmet</gray>'
           - ''
-          - '&cChance: &e{chance}'
-          - '&cRange: {max-range}'
+          - '<red>Chance:</red> <yellow>{chance}</yellow>'
+          - '<red>Range:</red> {max-range}'
 
     # If you want the item to be unbreakable.
     unbreakable: false
@@ -295,7 +298,7 @@ prizes:
       # The items to build.
       # This item is an example of giving someone a texture head without HeadDataBase!
       values:
-        - 'Item:GOLDEN_HELMET, Amount:1, Name:&bCheap Helmet, PROTECTION_ENVIRONMENTAL:1, OXYGEN:1'
+        - 'Item:GOLDEN_HELMET, Amount:1, Name:<blue>Cheap Helmet</blue>, PROTECTION_ENVIRONMENTAL:1, OXYGEN:1'
 
     commands:
       # Whether to send commands.
@@ -309,7 +312,7 @@ prizes:
       toggle: false
       # The messages to send.
       values:
-        - '&cYou won a &r{reward}!'
+        - '<red>You won a</red> <reset>{reward}!</reset>'
 
     permissions:
       blacklisted:
@@ -344,7 +347,7 @@ prizes:
     # Settings related to how the item will look cosmetically when previewing prizes.
     display:
       # The name of the prize.
-      name: '&e&l$1,000'
+      name: '<bold><yellow>$1,000</yellow></bold>'
       # The item the prize will look like.
       item: 'SUNFLOWER'
       # You can get these textures from https://minecraft-heads.com/!
@@ -362,10 +365,10 @@ prizes:
         toggle: false
         # The lore of the preview item.
         lines:
-          - '&7Make it rain Money.'
+          - '<gray>Make it rain money.</gray>'
           - ''
-          - '&cChance: &e{chance}'
-          - '&cRange: {max-range}'
+          - '<red>Chance:</red> <yellow>{chance}</yellow>'
+          - '<red>Range:</red> {max-range}'
 
     # If you want the item to be unbreakable.
     unbreakable: false
@@ -374,8 +377,7 @@ prizes:
     hide-item-flags: false
 
     # If you want fireworks to spawn.
-    fireworks:
-      toggle: false
+    fireworks: false
 
     # If you want the item to glow.
     glowing: false
@@ -410,7 +412,7 @@ prizes:
       toggle: false
       # The messages to send.
       values:
-        - '&cYou won a &r{reward}!'
+        - '<red>You won a</red> <reset>{reward}!</reset>'
 
     permissions:
       blacklisted:
@@ -444,4 +446,4 @@ prizes:
           toggle: false
           # The messages to send.
           values:
-            - '&r &8[&bCrazyCrates&8]: &7You have already won that prize, so enjoy some gold nuggets.'
+            - ' <dark_gray>[</dark_gray><blue>CrazyCrates</blue><dark_gray>]:</dark_gray> <gray>You have already won that prize, so enjoy some gold nuggets.</gray>'
