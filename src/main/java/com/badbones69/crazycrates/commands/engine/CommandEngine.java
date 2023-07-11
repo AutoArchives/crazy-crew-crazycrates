@@ -3,25 +3,18 @@ package com.badbones69.crazycrates.commands.engine;
 import ch.jalu.configme.SettingsManager;
 import com.badbones69.crazycrates.CrazyCrates;
 import com.badbones69.crazycrates.api.ApiManager;
-import com.badbones69.crazycrates.api.configs.types.PluginConfig;
-import com.badbones69.crazycrates.commands.engine.builder.ComponentBuilder;
-import com.badbones69.crazycrates.commands.engine.reqs.CommandRequirements;
+import com.badbones69.crazycrates.commands.engine.requirements.CommandRequirements;
 import com.badbones69.crazycrates.commands.engine.sender.CommandData;
 import com.badbones69.crazycrates.commands.engine.sender.args.Argument;
 import com.badbones69.crazycrates.api.configs.types.Locale;
-import com.badbones69.crazycrates.support.placeholders.InternalPlaceholderSupport;
+import com.badbones69.crazycrates.api.support.InternalPlaceholderSupport;
 import com.ryderbelserion.stick.core.utils.AdventureUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -29,19 +22,14 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
-import static com.ryderbelserion.stick.core.utils.AdventureUtils.hover;
-import static com.ryderbelserion.stick.core.utils.AdventureUtils.send;
-
-public abstract class CommandEngine implements TabCompleter, CommandExecutor {
+public abstract class CommandEngine {
 
     private final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
     private final ApiManager apiManager = this.plugin.getApiManager();
     private final SettingsManager locale = this.apiManager.getLocale();
-    private final SettingsManager pluginConfig = this.apiManager.getPluginConfig();
 
-    private final InternalPlaceholderSupport placeholderSupport = this.plugin.getPlaceholderManager();
+    private final InternalPlaceholderSupport placeholderSupport = this.apiManager.getPlaceholderSupport();
 
     // i.e. /crazycrates test
     private final LinkedList<String> aliases = new LinkedList<>();
@@ -50,6 +38,8 @@ public abstract class CommandEngine implements TabCompleter, CommandExecutor {
     public final LinkedList<Argument> optionalArgs = new LinkedList<>();
 
     private final HashMap<String, CommandData> commandData = new HashMap<>();
+
+    private CommandHelpEntry commandHelpEntry;
 
     // i.e. the java classes.
     private final LinkedList<CommandEngine> subCommands = new LinkedList<>();
@@ -63,8 +53,6 @@ public abstract class CommandEngine implements TabCompleter, CommandExecutor {
     // Only define this once!
     public String prefix;
     public String description;
-
-    public CommandEngine() {}
 
     public void execute(CommandContext context) {
         String aliasUsed = context.getAlias();
@@ -97,34 +85,6 @@ public abstract class CommandEngine implements TabCompleter, CommandExecutor {
         perform(context);
     }
 
-    public boolean hasCommand(String command) {
-        return this.commandData.containsKey(command);
-    }
-
-    public CommandData getCommand(String command) {
-        if (hasCommand(command)) return this.commandData.get(command);
-
-        return null;
-    }
-
-    public boolean isVisible(String command) {
-        if (hasCommand(command)) {
-            CommandData data = getCommand(command);
-
-            return data.isVisible();
-        }
-
-        return false;
-    }
-
-    public void setVisible(String command) {
-        if (hasCommand(command)) {
-            CommandData data = getCommand(command);
-
-            data.setVisible(!isVisible(command));
-        }
-    }
-
     public void addAlias(String alias) {
         this.aliases.add(alias);
     }
@@ -134,18 +94,20 @@ public abstract class CommandEngine implements TabCompleter, CommandExecutor {
     }
 
     public void addSubCommand(CommandEngine engine) {
-        //String alias = engine.aliases.getFirst();
-
-        //if (!alias.equalsIgnoreCase(prefix)) {
-        //    Bukkit.getLogger().warning("Command " + alias + " is a blacklisted command and will not be added.");
-        //    return;
-        //}
+        String alias = engine.aliases.getFirst();
 
         this.subCommands.add(engine);
-        this.commandData.put(engine.aliases.getFirst(), new CommandData(engine.description));
+        this.commandData.put(alias, new CommandData(engine.description));
 
-        engine.prefix = this.prefix;
+        if (this.commandHelpEntry == null) this.commandHelpEntry = new CommandHelpEntry(this.apiManager, this.subCommands);
+
+        if (!engine.prefix.isEmpty() || !engine.prefix.isBlank()) engine.prefix = this.prefix;
+
         engine.ignoreInput = this.ignoreInput;
+    }
+
+    public CommandHelpEntry getCommandHelp() {
+        return this.commandHelpEntry;
     }
 
     public void removeSubCommand(CommandEngine engine) {
@@ -225,22 +187,7 @@ public abstract class CommandEngine implements TabCompleter, CommandExecutor {
         context.reply(format.toString());
     }
 
-    @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        CommandContext context =
-                new CommandContext(
-                        sender,
-                        "",
-                        new ArrayList<>(Arrays.asList(args))
-                );
-
-        this.execute(context);
-
-        return true;
-    }
-
-    @Override
-    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public List<String> handleTabComplete(String[] args) {
         List<String> argArray = Arrays.asList(args);
 
         if (argArray.size() == 1) {
@@ -316,89 +263,11 @@ public abstract class CommandEngine implements TabCompleter, CommandExecutor {
         return Collections.emptyList();
     }
 
-    public void generateHelp(int page, int maxPage, CommandContext context) {
-        int startPage = maxPage * (page - 1);
-
-        if (page <= 0 || startPage >= this.subCommands.size()) {
-            context.reply(this.pluginConfig.getProperty(PluginConfig.INVALID_HELP_PAGE).replaceAll("\\{page}", String.valueOf(page)));
-            return;
-        }
-
-        context.reply(this.pluginConfig.getProperty(PluginConfig.HELP_PAGE_HEADER).replaceAll("\\{page}", String.valueOf(page)));
-
-        for (int i = startPage; i < (startPage + maxPage); i++) {
-            if (this.subCommands.size() - 1 < i) continue;
-
-            CommandEngine command = this.subCommands.get(i);
-
-            CommandData data = this.getCommand(command.getAliases().get(0));
-
-            if (data.isVisible()) continue;
-
-            StringBuilder base = new StringBuilder("/" + command.prefix + " " + command.getAliases().get(0));
-
-            String format = this.pluginConfig.getProperty(PluginConfig.HELP_PAGE_FORMAT)
-                    .replaceAll("\\{command}", base.toString())
-                    .replaceAll("\\{description}", data.getDescription());
-
-            ArrayList<Argument> arguments = new ArrayList<>();
-
-            arguments.addAll(command.optionalArgs);
-            arguments.addAll(command.requiredArgs);
-
-            arguments.sort(Comparator.comparingInt(Argument::order));
-
-            if (context.isPlayer()) {
-                StringBuilder types = new StringBuilder();
-
-                ComponentBuilder builder = new ComponentBuilder();
-
-                for (Argument arg : arguments) {
-                    String value = command.optionalArgs.contains(arg) ? " (" + arg.name() + ") " : " <" + arg.name() + ">";
-
-                    types.append(value);
-                }
-
-                builder.setMessage(format.replaceAll("\\{args}", String.valueOf(types)));
-
-                String hoverShit = base.append(types).toString();
-
-                String hoverFormat = this.pluginConfig.getProperty(PluginConfig.HELP_PAGE_HOVER_FORMAT);
-
-                builder.hover(this.placeholderSupport.setPlaceholders(hoverFormat).replaceAll("\\{commands}", hoverShit)).click(hoverShit, ClickEvent.Action.valueOf(this.pluginConfig.getProperty(PluginConfig.HELP_PAGE_HOVER_ACTION).toUpperCase()));
-
-                context.reply(builder.build());
-            }
-        }
-
-        String footer = this.pluginConfig.getProperty(PluginConfig.HELP_PAGE_FOOTER);
-
-        if (context.isPlayer()) {
-            String text = this.pluginConfig.getProperty(PluginConfig.HELP_PAGE_GO_TO_PAGE);
-
-            if (page > 1) {
-                int number = page-1;
-
-                hover(context.getPlayer(), footer.replaceAll("\\{page}", String.valueOf(page)),  text.replaceAll("\\{page}", String.valueOf(number)), this.pluginConfig.getProperty(PluginConfig.HELP_PAGE_BACK), "/crazycrates help " + number, ClickEvent.Action.RUN_COMMAND);
-            } else if (page < this.subCommands.size()) {
-                int number = page+1;
-
-                hover(context.getPlayer(), footer.replaceAll("\\{page}", String.valueOf(page)),  text.replaceAll("\\{page}", String.valueOf(number)), this.pluginConfig.getProperty(PluginConfig.HELP_PAGE_NEXT), "/crazycrates help " + number, ClickEvent.Action.RUN_COMMAND);
-            }
-        } else {
-            send(context.getSender(), footer.replaceAll("\\{page}", String.valueOf(page)), false, "");
-        }
-    }
-
     public List<String> getAliases() {
         return Collections.unmodifiableList(this.aliases);
     }
 
     public List<CommandEngine> getSubCommands() {
         return Collections.unmodifiableList(this.subCommands);
-    }
-
-    public Map<String, CommandData> getCommandData() {
-        return Collections.unmodifiableMap(this.commandData);
     }
 }

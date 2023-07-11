@@ -42,6 +42,6 @@ public class CommandHelp extends CommandEngine {
     protected void perform(CommandContext context) {
         int arg = context.getArgAsInt(0, true);
 
-        this.baseCommand.generateHelp(arg, this.pluginConfig.getProperty(PluginConfig.MAX_HELP_PAGE_ENTRIES), context);
+        this.baseCommand.getCommandHelp().generateHelp(arg, this.pluginConfig.getProperty(PluginConfig.MAX_HELP_PAGE_ENTRIES), context);
     }
 }

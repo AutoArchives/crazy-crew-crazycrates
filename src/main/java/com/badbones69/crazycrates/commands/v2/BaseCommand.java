@@ -28,6 +28,6 @@ public class BaseCommand extends CommandEngine {
 
     @Override
     protected void perform(CommandContext context) {
-        this.generateHelp(1, this.config.getProperty(PluginConfig.MAX_HELP_PAGE_ENTRIES), context);
+        getCommandHelp().generateHelp(1, this.pluginConfig.getProperty(PluginConfig.MAX_HELP_PAGE_ENTRIES), context);
     }
 }
