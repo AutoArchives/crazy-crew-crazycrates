@@ -3,8 +3,9 @@ package com.badbones69.crazycrates.commands.engine;
 import ch.jalu.configme.SettingsManager;
 import com.badbones69.crazycrates.CrazyCrates;
 import com.badbones69.crazycrates.api.ApiManager;
+import com.badbones69.crazycrates.commands.engine.builder.CommandDataEntry;
+import com.badbones69.crazycrates.commands.engine.builder.CommandHelpEntry;
 import com.badbones69.crazycrates.commands.engine.requirements.CommandRequirements;
-import com.badbones69.crazycrates.commands.engine.sender.CommandData;
 import com.badbones69.crazycrates.commands.engine.sender.args.Argument;
 import com.badbones69.crazycrates.api.configs.types.Locale;
 import com.badbones69.crazycrates.api.support.InternalPlaceholderSupport;
@@ -32,37 +33,19 @@ public abstract class CommandEngine {
 
     private final LinkedList<String> aliases = new LinkedList<>();
 
-    public final LinkedList<Argument> requiredArgs = new LinkedList<>();
-    public final LinkedList<Argument> optionalArgs = new LinkedList<>();
-
-    private final HashMap<String, CommandData> commandData = new HashMap<>();
+    private final HashMap<String, CommandDataEntry> commandData = new HashMap<>();
 
     private final LinkedList<CommandEngine> subCommands = new LinkedList<>();
 
-    public CommandRequirements requirements;
-    private CommandHelpEntry commandHelpEntry;
-
-    private boolean excludeInput = false;
-
-    public void setExclude(boolean excludeInput) {
-        this.excludeInput = excludeInput;
-    }
-
     private String prefix;
 
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
-    }
+    private CommandHelpEntry commandHelpEntry;
+    private CommandDataEntry commandDataEntry;
 
-    public String getPrefix() {
-        return this.prefix;
-    }
+    public final LinkedList<Argument> requiredArgs = new LinkedList<>();
+    public final LinkedList<Argument> optionalArgs = new LinkedList<>();
 
-    private String description;
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    public CommandRequirements requirements;
 
     public void execute(CommandContext context) {
         String aliasUsed = context.getAlias();
@@ -88,9 +71,7 @@ public abstract class CommandEngine {
 
         if (!this.requirements.checkRequirements(true, context)) return;
 
-        if (!this.excludeInput) {
-            if (!inputValidation(context)) return;
-        }
+        if (!this.commandData.get(aliasUsed).isExcludeValidation()) if (!inputValidation(context)) return;
 
         perform(context);
     }
@@ -107,17 +88,9 @@ public abstract class CommandEngine {
         String alias = engine.aliases.getFirst();
 
         this.subCommands.add(engine);
-        this.commandData.put(alias, new CommandData(engine.description));
+        this.commandData.put(alias, engine.commandDataEntry);
 
         if (this.commandHelpEntry == null) this.commandHelpEntry = new CommandHelpEntry(this.apiManager, this.subCommands);
-
-        if (!engine.prefix.isEmpty() || !engine.prefix.isBlank()) engine.prefix = this.prefix;
-
-        engine.excludeInput = this.excludeInput;
-    }
-
-    public CommandHelpEntry getCommandHelp() {
-        return this.commandHelpEntry;
     }
 
     public void removeSubCommand(CommandEngine engine) {
@@ -155,7 +128,7 @@ public abstract class CommandEngine {
         this.requiredArgs.sort(Comparator.comparing(Argument::order));
 
         if (context.isPlayer()) {
-            String format = "/" + this.prefix + context.getAlias();
+            String format = "/" + getPrefix() + context.getAlias();
 
             Component component = AdventureUtils.parse(format);
             TextComponent.@NotNull Builder emptyComponent = Component.text();
@@ -186,7 +159,7 @@ public abstract class CommandEngine {
             return;
         }
 
-        StringBuilder format = new StringBuilder("/" + this.prefix + context.getAlias());
+        StringBuilder format = new StringBuilder("/" + getPrefix() + context.getAlias());
 
         for (Argument arg : arguments) {
             String value = this.optionalArgs.contains(arg) ? "(" + arg.name() + ") " : "<" + arg.name() + "> ";
@@ -271,6 +244,26 @@ public abstract class CommandEngine {
         }
 
         return Collections.emptyList();
+    }
+
+    public void setCommandEntryData(CommandDataEntry commandDataEntry) {
+        this.commandDataEntry = commandDataEntry;
+    }
+
+    public CommandDataEntry getCommandDataEntry() {
+        return this.commandDataEntry;
+    }
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
+
+    public String getPrefix() {
+        return this.prefix;
+    }
+
+    public CommandHelpEntry getCommandHelp() {
+        return this.commandHelpEntry;
     }
 
     public List<String> getAliases() {

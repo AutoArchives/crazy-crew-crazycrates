@@ -25,11 +25,11 @@ public class KeyBaseCommand extends CommandEngine implements TabCompleter, Comma
 
     private final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
 
-    private final SettingsManager config = plugin.getApiManager().getPluginConfig();
-    private final SettingsManager locale = plugin.getApiManager().getLocale();
+    private final SettingsManager pluginConfig = this.plugin.getApiManager().getPluginConfig();
+    private final SettingsManager locale = this.plugin.getApiManager().getLocale();
 
     public KeyBaseCommand() {
-        this.setPrefix("keys");
+        setPrefix("keys");
 
         this.optionalArgs.add(new Argument("player", 0, new PlayerArgument()));
 

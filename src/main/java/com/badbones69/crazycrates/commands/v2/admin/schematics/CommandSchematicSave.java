@@ -2,8 +2,10 @@ package com.badbones69.crazycrates.commands.v2.admin.schematics;
 
 import ch.jalu.configme.SettingsManager;
 import com.badbones69.crazycrates.CrazyCrates;
+import com.badbones69.crazycrates.api.support.InternalPlaceholderSupport;
 import com.badbones69.crazycrates.commands.engine.CommandContext;
 import com.badbones69.crazycrates.commands.engine.CommandEngine;
+import com.badbones69.crazycrates.commands.engine.builder.CommandDataEntry;
 import com.badbones69.crazycrates.commands.engine.requirements.CommandRequirementsBuilder;
 import com.badbones69.crazycrates.api.configs.types.Locale;
 import com.badbones69.crazycrates.api.enums.Permissions;
@@ -13,15 +15,17 @@ public class CommandSchematicSave extends CommandEngine {
 
     private final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
 
-    private final SettingsManager pluginConfig = plugin.getApiManager().getPluginConfig();
-    private final SettingsManager locale = plugin.getApiManager().getLocale();
+    private final InternalPlaceholderSupport placeholderSupport = this.plugin.getApiManager().getPlaceholderSupport();
+
+    private final SettingsManager pluginConfig = this.plugin.getApiManager().getPluginConfig();
+    private final SettingsManager locale = this.plugin.getApiManager().getLocale();
 
     public CommandSchematicSave() {
-        super();
-
         addAlias("schem-save");
 
-        setDescription(Permissions.ADMIN_SCHEMATIC_SAVE.getDescription());
+        setCommandEntryData(new CommandDataEntry());
+
+        getCommandDataEntry().setDescription(Permissions.ADMIN_SCHEMATIC_SAVE.getDescription());
 
         this.requirements = new CommandRequirementsBuilder()
                 .withRawPermission(Permissions.ADMIN_SCHEMATIC_SAVE.getBuiltPermission())
@@ -31,6 +35,6 @@ public class CommandSchematicSave extends CommandEngine {
 
     @Override
     protected void perform(CommandContext context) {
-        //context.reply(this.plugin.getPlaceholderManager().setPlaceholders(this.locale.getProperty(Locale.FEATURE_DISABLED)));
+        context.reply(this.placeholderSupport.setPlaceholders(this.locale.getProperty(Locale.FEATURE_DISABLED)));
     }
 }

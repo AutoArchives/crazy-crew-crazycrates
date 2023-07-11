@@ -4,6 +4,7 @@ import ch.jalu.configme.SettingsManager;
 import com.badbones69.crazycrates.CrazyCrates;
 import com.badbones69.crazycrates.api.ApiManager;
 import com.badbones69.crazycrates.api.configs.types.Locale;
+import com.badbones69.crazycrates.commands.engine.builder.CommandHelpEntry;
 import com.badbones69.crazycrates.commands.engine.sender.CommandActor;
 import com.badbones69.crazycrates.commands.engine.sender.CommandArgs;
 import com.badbones69.crazycrates.api.support.InternalPlaceholderSupport;

@@ -1,8 +1,6 @@
 package com.badbones69.crazycrates.commands.v2;
 
 import com.badbones69.crazycrates.CrazyCrates;
-import com.badbones69.crazycrates.commands.v2.BaseCommand;
-import com.badbones69.crazycrates.commands.v2.KeyBaseCommand;
 import com.badbones69.crazycrates.commands.v2.admin.CommandAdmin;
 import com.badbones69.crazycrates.commands.v2.admin.CommandHelp;
 import com.badbones69.crazycrates.commands.v2.admin.CommandReload;
@@ -16,19 +14,19 @@ public class CommandHandler {
     private final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
 
     public void load() {
-        BaseCommand baseCommand = new BaseCommand();
+        CrateBaseCommand crateBaseCommand = new CrateBaseCommand();
 
         KeyBaseCommand keyBaseCommand = new KeyBaseCommand();
 
-        baseCommand.addSubCommand(new CommandHelp());
+        crateBaseCommand.addSubCommand(new CommandHelp());
 
         // Admin Commands.
-        baseCommand.addSubCommand(new CommandAdmin());
-        baseCommand.addSubCommand(new CommandReload());
+        crateBaseCommand.addSubCommand(new CommandAdmin());
+        crateBaseCommand.addSubCommand(new CommandReload());
 
-        baseCommand.addSubCommand(new CommandSchematicSave());
-        baseCommand.addSubCommand(new CommandSchematicSet());
+        crateBaseCommand.addSubCommand(new CommandSchematicSave());
+        crateBaseCommand.addSubCommand(new CommandSchematicSet());
 
-        baseCommand.addSubCommand(new CommandAddKeys());
+        crateBaseCommand.addSubCommand(new CommandAddKeys());
     }
 }

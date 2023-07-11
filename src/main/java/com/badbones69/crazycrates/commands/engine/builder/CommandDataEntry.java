@@ -1,13 +1,10 @@
-package com.badbones69.crazycrates.commands.engine.sender;
+package com.badbones69.crazycrates.commands.engine.builder;
 
-public class CommandData {
+public class CommandDataEntry {
 
     private String description;
     private boolean isVisible;
-
-    public CommandData(String description) {
-        this.description = description;
-    }
+    private boolean isExcludeValidation = false;
 
     public void setDescription(String description) {
         this.description = description;
@@ -23,5 +20,13 @@ public class CommandData {
 
     public boolean isVisible() {
         return this.isVisible;
+    }
+
+    public void setExcludeValidation(boolean excludeValidation) {
+        this.isExcludeValidation = excludeValidation;
+    }
+
+    public boolean isExcludeValidation() {
+        return this.isExcludeValidation;
     }
 }

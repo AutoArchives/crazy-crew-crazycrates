@@ -1,11 +1,12 @@
-package com.badbones69.crazycrates.commands.engine;
+package com.badbones69.crazycrates.commands.engine.builder;
 
 import ch.jalu.configme.SettingsManager;
 import com.badbones69.crazycrates.api.ApiManager;
 import com.badbones69.crazycrates.api.configs.types.PluginConfig;
 import com.badbones69.crazycrates.api.support.InternalPlaceholderSupport;
-import com.badbones69.crazycrates.commands.engine.builder.ComponentBuilder;
-import com.badbones69.crazycrates.commands.engine.sender.CommandData;
+import com.badbones69.crazycrates.commands.engine.CommandContext;
+import com.badbones69.crazycrates.commands.engine.CommandEngine;
+import com.badbones69.crazycrates.commands.engine.builder.comps.ComponentBuilder;
 import com.badbones69.crazycrates.commands.engine.sender.args.Argument;
 import net.kyori.adventure.text.event.ClickEvent;
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class CommandHelpEntry {
 
     private final LinkedList<CommandEngine> subCommands;
 
-    private final HashMap<String, CommandData> commandData = new HashMap<>();
+    private final HashMap<String, CommandDataEntry> commandData = new HashMap<>();
 
     public CommandHelpEntry(ApiManager apiManager, LinkedList<CommandEngine> subCommands) {
         this.pluginConfig = apiManager.getPluginConfig();
@@ -48,7 +49,7 @@ public class CommandHelpEntry {
 
             CommandEngine command = this.subCommands.get(i);
 
-            CommandData data = this.getCommand(command.getAliases().get(0));
+            CommandDataEntry data = getCommand(command.getAliases().get(0));
 
             if (data.isVisible()) continue;
 
@@ -111,7 +112,7 @@ public class CommandHelpEntry {
         return this.commandData.containsKey(command);
     }
 
-    public CommandData getCommand(String command) {
+    public CommandDataEntry getCommand(String command) {
         if (hasCommand(command)) return this.commandData.get(command);
 
         return null;
@@ -119,7 +120,7 @@ public class CommandHelpEntry {
 
     public boolean isVisible(String command) {
         if (hasCommand(command)) {
-            CommandData data = getCommand(command);
+            CommandDataEntry data = getCommand(command);
 
             return data.isVisible();
         }
@@ -129,13 +130,13 @@ public class CommandHelpEntry {
 
     public void setVisible(String command) {
         if (hasCommand(command)) {
-            CommandData data = getCommand(command);
+            CommandDataEntry data = getCommand(command);
 
             data.setVisible(!isVisible(command));
         }
     }
 
-    public Map<String, CommandData> getCommandData() {
+    public Map<String, CommandDataEntry> getCommandData() {
         return Collections.unmodifiableMap(this.commandData);
     }
 }

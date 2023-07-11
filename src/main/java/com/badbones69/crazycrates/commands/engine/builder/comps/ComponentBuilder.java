@@ -1,4 +1,4 @@
-package com.badbones69.crazycrates.commands.engine.builder;
+package com.badbones69.crazycrates.commands.engine.builder.comps;
 
 import com.ryderbelserion.stick.core.utils.AdventureUtils;
 import net.kyori.adventure.text.Component;

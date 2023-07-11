@@ -6,6 +6,7 @@ import com.badbones69.crazycrates.api.configs.types.PluginConfig;
 import com.badbones69.crazycrates.api.utils.MiscUtils;
 import com.badbones69.crazycrates.commands.engine.CommandContext;
 import com.badbones69.crazycrates.commands.engine.CommandEngine;
+import com.badbones69.crazycrates.commands.engine.builder.CommandDataEntry;
 import com.badbones69.crazycrates.commands.engine.requirements.CommandRequirementsBuilder;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -20,19 +21,20 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class BaseCommand extends CommandEngine implements TabCompleter, CommandExecutor {
+public class CrateBaseCommand extends CommandEngine implements TabCompleter, CommandExecutor {
 
     private final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
 
     private final SettingsManager config = this.plugin.getApiManager().getPluginConfig();
     private final SettingsManager pluginConfig = this.plugin.getApiManager().getPluginConfig();
 
-    public BaseCommand() {
+    public CrateBaseCommand() {
         super();
+        setPrefix("crazycrates");
 
-        this.setPrefix("crazycrates");
+        setCommandEntryData(new CommandDataEntry());
 
-        this.setExclude(true);
+        getCommandDataEntry().setExcludeValidation(true);
 
         this.requirements = new CommandRequirementsBuilder()
                 .asPlayer(false)

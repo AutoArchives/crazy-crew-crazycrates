@@ -5,6 +5,7 @@ import com.badbones69.crazycrates.CrazyCrates;
 import com.badbones69.crazycrates.api.configs.types.PluginConfig;
 import com.badbones69.crazycrates.commands.engine.CommandContext;
 import com.badbones69.crazycrates.commands.engine.CommandEngine;
+import com.badbones69.crazycrates.commands.engine.builder.CommandDataEntry;
 import com.badbones69.crazycrates.commands.engine.requirements.CommandRequirementsBuilder;
 import com.badbones69.crazycrates.commands.engine.sender.args.Argument;
 import com.badbones69.crazycrates.commands.engine.sender.args.builder.IntArgument;
@@ -15,17 +16,17 @@ public class CommandHelp extends CommandEngine {
 
     private final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
 
-    private final SettingsManager pluginConfig = plugin.getApiManager().getPluginConfig();
-    private final SettingsManager locale = plugin.getApiManager().getLocale();
+    private final SettingsManager pluginConfig = this.plugin.getApiManager().getPluginConfig();
+    private final SettingsManager locale = this.plugin.getApiManager().getLocale();
 
     public CommandHelp() {
-        super();
-
         addAlias("help");
 
-        this.requiredArgs.add(new Argument("page", 0, new IntArgument(2)));
+        setCommandEntryData(new CommandDataEntry());
 
-        setDescription(Permissions.PLAYER_HELP.getDescription());
+        getCommandDataEntry().setDescription(Permissions.PLAYER_HELP.getDescription());
+
+        this.requiredArgs.add(new Argument("page", 0, new IntArgument(2)));
 
         this.requirements = new CommandRequirementsBuilder()
                 .withRawPermission(Permissions.PLAYER_HELP.getBuiltPermission())

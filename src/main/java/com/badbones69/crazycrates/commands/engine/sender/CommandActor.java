@@ -1,6 +1,6 @@
 package com.badbones69.crazycrates.commands.engine.sender;
 
-import com.badbones69.crazycrates.commands.engine.CommandHelpEntry;
+import com.badbones69.crazycrates.commands.engine.builder.CommandHelpEntry;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;

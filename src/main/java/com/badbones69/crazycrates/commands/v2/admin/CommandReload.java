@@ -5,6 +5,7 @@ import com.badbones69.crazycrates.CrazyCrates;
 import com.badbones69.crazycrates.api.configs.types.PluginConfig;
 import com.badbones69.crazycrates.commands.engine.CommandContext;
 import com.badbones69.crazycrates.commands.engine.CommandEngine;
+import com.badbones69.crazycrates.commands.engine.builder.CommandDataEntry;
 import com.badbones69.crazycrates.commands.engine.requirements.CommandRequirementsBuilder;
 import com.badbones69.crazycrates.api.configs.types.Locale;
 import com.badbones69.crazycrates.api.enums.Permissions;
@@ -23,11 +24,11 @@ public class CommandReload extends CommandEngine {
     private final SettingsManager locale = this.plugin.getApiManager().getLocale();
 
     public CommandReload() {
-        super();
-
         addAlias("reload");
 
-        setDescription(Permissions.ADMIN_RELOAD.getDescription());
+        setCommandEntryData(new CommandDataEntry());
+
+        getCommandDataEntry().setDescription(Permissions.ADMIN_RELOAD.getDescription());
 
         this.requirements = new CommandRequirementsBuilder()
                 .withRawPermission(Permissions.ADMIN_RELOAD.getBuiltPermission())
