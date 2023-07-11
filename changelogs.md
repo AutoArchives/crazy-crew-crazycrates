@@ -8,6 +8,11 @@ You should take a pretty portion of what you know of the previous versions of Cr
 **I am not responsible for any data loss, You've been warned**
 </p>
 
+### Notice:
+Something related to Terminal wizardry and PaperMC, Do not worry. We have fix... Check below.
+
+`If you're having issues with colors / gradients in your console, Add this JVM flag to your startup command -Dnet.kyori.ansi.colorLevel=truecolor` - BillyGalbreath
+
 ## Changes:
  ### Major Changes:
   * Spigot is genuinely no longer supported, The plugin will not even boot. I've removed the plugin.yml in favor of paper-plugin.yml
