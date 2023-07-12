@@ -59,6 +59,10 @@ public class CrazyCrates extends JavaPlugin implements Listener {
         return this.apiManager;
     }
 
+    public CommandHandler getCommandHandler() {
+        return this.commandHandler;
+    }
+
     public HologramManager getHolograms() {
         return getApiManager().getHolograms();
     }

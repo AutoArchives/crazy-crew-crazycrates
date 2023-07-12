@@ -1,32 +1,25 @@
 package com.badbones69.crazycrates.commands.v2;
 
 import com.badbones69.crazycrates.CrazyCrates;
-import com.badbones69.crazycrates.commands.v2.admin.CommandAdmin;
-import com.badbones69.crazycrates.commands.v2.admin.CommandHelp;
-import com.badbones69.crazycrates.commands.v2.admin.CommandReload;
-import com.badbones69.crazycrates.commands.v2.admin.keys.CommandAddKeys;
-import com.badbones69.crazycrates.commands.v2.admin.schematics.CommandSchematicSave;
-import com.badbones69.crazycrates.commands.v2.admin.schematics.CommandSchematicSet;
+import com.badbones69.crazycrates.commands.engine.v2.CommandManager;
+import com.badbones69.crazycrates.commands.engine.v2.example.FirstCommand;
+import com.badbones69.crazycrates.commands.engine.v2.example.SecondCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class CommandHandler {
 
     private final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
 
+    private CommandManager manager;
+
     public void load() {
-        CrateBaseCommand crateBaseCommand = new CrateBaseCommand();
+        this.manager = CommandManager.create(this.plugin.getName().toLowerCase());
 
-        KeyBaseCommand keyBaseCommand = new KeyBaseCommand();
+        this.manager.addCommand(new FirstCommand());
+        this.manager.addCommand(new SecondCommand());
+    }
 
-        crateBaseCommand.addSubCommand(new CommandHelp());
-
-        // Admin Commands.
-        crateBaseCommand.addSubCommand(new CommandAdmin());
-        crateBaseCommand.addSubCommand(new CommandReload());
-
-        crateBaseCommand.addSubCommand(new CommandSchematicSave());
-        crateBaseCommand.addSubCommand(new CommandSchematicSet());
-
-        crateBaseCommand.addSubCommand(new CommandAddKeys());
+    public CommandManager getManager() {
+        return this.manager;
     }
 }
