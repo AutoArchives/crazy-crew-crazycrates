@@ -1,6 +1,6 @@
-package com.badbones69.crazycrates.commands.engine.requirements;
+package com.badbones69.crazycrates.commands.engine.v2.builders.requirements;
 
-import com.badbones69.crazycrates.commands.engine.CommandContext;
+import com.badbones69.crazycrates.commands.engine.v1.CommandContext;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.permissions.Permission;
 

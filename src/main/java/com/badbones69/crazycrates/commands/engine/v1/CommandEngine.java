@@ -1,12 +1,11 @@
-package com.badbones69.crazycrates.commands.engine;
+package com.badbones69.crazycrates.commands.engine.v1;
 
 import ch.jalu.configme.SettingsManager;
 import com.badbones69.crazycrates.CrazyCrates;
 import com.badbones69.crazycrates.api.ApiManager;
-import com.badbones69.crazycrates.commands.engine.builder.CommandDataEntry;
-import com.badbones69.crazycrates.commands.engine.builder.CommandHelpEntry;
-import com.badbones69.crazycrates.commands.engine.requirements.CommandRequirements;
-import com.badbones69.crazycrates.commands.engine.sender.args.Argument;
+import com.badbones69.crazycrates.commands.engine.v1.builder.CommandHelpEntry;
+import com.badbones69.crazycrates.commands.engine.v2.builders.requirements.CommandRequirements;
+import com.badbones69.crazycrates.commands.engine.v2.builders.args.Argument;
 import com.badbones69.crazycrates.api.configs.types.Locale;
 import com.badbones69.crazycrates.api.support.InternalPlaceholderSupport;
 import com.ryderbelserion.stick.core.utils.AdventureUtils;
@@ -33,14 +32,13 @@ public abstract class CommandEngine {
 
     private final LinkedList<String> aliases = new LinkedList<>();
 
-    private final HashMap<String, CommandDataEntry> commandData = new HashMap<>();
+    private final HashMap<String, String> commandData = new HashMap<>();
 
     private final LinkedList<CommandEngine> subCommands = new LinkedList<>();
 
     private String prefix;
 
     private CommandHelpEntry commandHelpEntry;
-    private CommandDataEntry commandDataEntry;
 
     public final LinkedList<Argument> requiredArgs = new LinkedList<>();
     public final LinkedList<Argument> optionalArgs = new LinkedList<>();
@@ -71,7 +69,7 @@ public abstract class CommandEngine {
 
         if (!this.requirements.checkRequirements(true, context)) return;
 
-        if (!this.commandData.get(aliasUsed).isExcludeValidation()) if (!inputValidation(context)) return;
+        //if (!this.commandData.get(aliasUsed).isExcludeValidation()) if (!inputValidation(context)) return;
 
         perform(context);
     }
@@ -88,9 +86,11 @@ public abstract class CommandEngine {
         String alias = engine.aliases.getFirst();
 
         this.subCommands.add(engine);
-        this.commandData.put(alias, engine.commandDataEntry);
+        this.commandData.put(alias, "Entry");
 
         if (this.commandHelpEntry == null) this.commandHelpEntry = new CommandHelpEntry(this.apiManager, this.subCommands);
+
+        engine.prefix = prefix;
     }
 
     public void removeSubCommand(CommandEngine engine) {
@@ -244,14 +244,6 @@ public abstract class CommandEngine {
         }
 
         return Collections.emptyList();
-    }
-
-    public void setCommandEntryData(CommandDataEntry commandDataEntry) {
-        this.commandDataEntry = commandDataEntry;
-    }
-
-    public CommandDataEntry getCommandDataEntry() {
-        return this.commandDataEntry;
     }
 
     public void setPrefix(String prefix) {
