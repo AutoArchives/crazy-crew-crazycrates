@@ -26,7 +26,7 @@ public class CommandHelpEntry {
         this.subCommands = subCommands;
     }
 
-    public void generateHelp(int page, int maxPage, CommandContext context) {
+    public void generateHelp(int page, int maxPage) {
         /*int startPage = maxPage * (page - 1);
 
         for (int i = startPage; i < (startPage + maxPage); i++) {

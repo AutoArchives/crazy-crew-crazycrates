@@ -35,7 +35,7 @@ public class KeyBaseCommand extends CommandEngine implements TabCompleter {
     }
 
     @Override
-    protected void perform(CommandContext context) {
+    protected void perform() {
         /*if (!context.getArgs().isEmpty()) {
             Player player = context.getArgAsPlayer(0, false);
 
