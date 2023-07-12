@@ -1,6 +1,6 @@
-package com.badbones69.crazycrates.commands.engine.sender.args.builder;
+package com.badbones69.crazycrates.commands.engine.v2.builders.args.builder;
 
-import com.badbones69.crazycrates.commands.engine.sender.args.ArgumentType;
+import com.badbones69.crazycrates.commands.engine.v2.builders.args.ArgumentType;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
