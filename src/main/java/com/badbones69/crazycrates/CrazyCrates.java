@@ -1,6 +1,7 @@
 package com.badbones69.crazycrates;
 
 import com.badbones69.crazycrates.api.*;
+import com.badbones69.crazycrates.api.configs.types.Locale;
 import com.badbones69.crazycrates.api.utils.MiscUtils;
 import com.badbones69.crazycrates.commands.engine.v2.CommandManager;
 import com.badbones69.crazycrates.commands.engine.v2.example.FirstCommand;
@@ -42,6 +43,8 @@ public class CrazyCrates extends JavaPlugin implements Listener {
         }
 
         MiscUtils.registerPermissions(getServer().getPluginManager());
+
+        this.manager.getEntry().setPermissionMessage(this.apiManager.getPlaceholderSupport().setPlaceholders(this.apiManager.getLocale().getProperty(Locale.NO_PERMISSION)));
 
         this.manager.addCommand(new FirstCommand());
         this.manager.addCommand(new SecondCommand());

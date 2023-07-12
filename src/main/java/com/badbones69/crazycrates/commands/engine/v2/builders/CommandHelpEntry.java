@@ -3,6 +3,7 @@ package com.badbones69.crazycrates.commands.engine.v2.builders;
 import com.badbones69.crazycrates.commands.engine.v2.CommandEngine;
 import com.badbones69.crazycrates.commands.engine.v2.CommandManager;
 import com.ryderbelserion.stick.core.StickLogger;
+import com.ryderbelserion.stick.core.utils.AdventureUtils;
 
 public class CommandHelpEntry {
 
@@ -14,7 +15,7 @@ public class CommandHelpEntry {
         this.engine = engine;
     }
 
-    public void buildHelpMenu(int page, int maxPage) {
+    public void generateHelp(int page, int maxPage) {
         int startPage = maxPage * (page - 1);
 
         if (page <= 0 || startPage >= this.manager.getCommands().size()) {
@@ -33,5 +34,9 @@ public class CommandHelpEntry {
 
             StickLogger.info("Command: /" + this.engine.getLabel());
         }
+    }
+
+    public void setPermissionMessage(String message) {
+        this.engine.permissionMessage(AdventureUtils.parse(message));
     }
 }
