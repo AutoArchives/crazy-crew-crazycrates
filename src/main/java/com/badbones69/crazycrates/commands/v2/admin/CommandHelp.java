@@ -2,8 +2,6 @@ package com.badbones69.crazycrates.commands.v2.admin;
 
 import ch.jalu.configme.SettingsManager;
 import com.badbones69.crazycrates.CrazyCrates;
-import com.badbones69.crazycrates.api.configs.types.PluginConfig;
-import com.badbones69.crazycrates.commands.engine.v1.CommandContext;
 import com.badbones69.crazycrates.commands.engine.v1.CommandEngine;
 import com.badbones69.crazycrates.commands.engine.v2.builders.requirements.CommandRequirementsBuilder;
 import com.badbones69.crazycrates.commands.engine.v2.builders.args.Argument;
@@ -34,8 +32,8 @@ public class CommandHelp extends CommandEngine {
     }
 
     @Override
-    protected void perform(CommandContext context) {
-        int arg = context.getArgAsInt(0, true);
+    protected void perform() {
+        //int arg = context.getArgAsInt(0, true);
 
         //context.getHelpEntry().generateHelp(arg, this.pluginConfig.getProperty(PluginConfig.MAX_HELP_PAGE_ENTRIES), context);
     }

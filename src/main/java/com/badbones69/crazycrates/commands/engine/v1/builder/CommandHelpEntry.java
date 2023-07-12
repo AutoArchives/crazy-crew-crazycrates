@@ -3,7 +3,6 @@ package com.badbones69.crazycrates.commands.engine.v1.builder;
 import ch.jalu.configme.SettingsManager;
 import com.badbones69.crazycrates.api.ApiManager;
 import com.badbones69.crazycrates.api.support.InternalPlaceholderSupport;
-import com.badbones69.crazycrates.commands.engine.v1.CommandContext;
 import com.badbones69.crazycrates.commands.engine.v1.CommandEngine;
 import com.badbones69.crazycrates.commands.engine.v2.builders.CommandDataEntry;
 import java.util.Collections;

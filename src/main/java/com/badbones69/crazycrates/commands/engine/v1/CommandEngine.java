@@ -44,7 +44,7 @@ public abstract class CommandEngine {
 
     public CommandRequirements requirements;
 
-    public void execute(CommandContext context) {
+    public void execute() {
         /*String aliasUsed = context.getAlias();
 
         if (!context.getArgs().isEmpty()) {
@@ -66,11 +66,11 @@ public abstract class CommandEngine {
             }
         }*/
 
-        if (!this.requirements.checkRequirements(true, context)) return;
+        //if (!this.requirements.checkRequirements(true, context)) return;
 
         //if (!this.commandData.get(aliasUsed).isExcludeValidation()) if (!inputValidation(context)) return;
 
-        perform(context);
+        perform();
     }
 
     public void addAlias(String alias) {
@@ -100,9 +100,9 @@ public abstract class CommandEngine {
         });
     }
 
-    protected abstract void perform(CommandContext context);
+    protected abstract void perform();
 
-    private boolean inputValidation(CommandContext context) {
+    private boolean inputValidation() {
         /*if (context.getArgs().size() < this.requiredArgs.size()) {
             context.reply(this.placeholderSupport.setPlaceholders(this.locale.getProperty(Locale.NOT_ENOUGH_ARGS)));
             sendValidFormat(context);
@@ -118,7 +118,7 @@ public abstract class CommandEngine {
         return true;
     }
 
-    private void sendValidFormat(CommandContext context) {
+    private void sendValidFormat() {
         ArrayList<Argument> arguments = new ArrayList<>();
 
         arguments.addAll(this.requiredArgs);

@@ -2,6 +2,8 @@ package com.badbones69.crazycrates.commands.engine.v2.builders;
 
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
+import org.bukkit.entity.Player;
+import org.bukkit.permissions.Permission;
 
 public interface CommandActor {
 
@@ -21,15 +23,15 @@ public interface CommandActor {
 
     void send(Audience audience, Component message, String prefix, boolean hasPrefix);
 
-    //boolean hasPermission(Permission permission);
+    Audience getSender();
 
-    //boolean hasPermission(String rawPermission);
+    boolean isPlayer();
 
-    //CommandSender getSender();
+    Player getPlayer();
 
-    //boolean isPlayer();
+    boolean hasPermission(Permission permission);
 
-    //Player getPlayer();
+    boolean hasPermission(String rawPermission);
 
     //void setAlias(String alias);
 
