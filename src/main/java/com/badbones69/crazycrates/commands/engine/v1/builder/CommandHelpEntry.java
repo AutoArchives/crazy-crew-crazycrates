@@ -2,17 +2,11 @@ package com.badbones69.crazycrates.commands.engine.v1.builder;
 
 import ch.jalu.configme.SettingsManager;
 import com.badbones69.crazycrates.api.ApiManager;
-import com.badbones69.crazycrates.api.configs.types.PluginConfig;
 import com.badbones69.crazycrates.api.support.InternalPlaceholderSupport;
 import com.badbones69.crazycrates.commands.engine.v1.CommandContext;
 import com.badbones69.crazycrates.commands.engine.v1.CommandEngine;
 import com.badbones69.crazycrates.commands.engine.v2.builders.CommandDataEntry;
-import com.badbones69.crazycrates.commands.engine.v2.builders.other.ComponentBuilder;
-import com.badbones69.crazycrates.commands.engine.v2.builders.args.Argument;
-import net.kyori.adventure.text.event.ClickEvent;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -34,7 +28,7 @@ public class CommandHelpEntry {
     }
 
     public void generateHelp(int page, int maxPage, CommandContext context) {
-        int startPage = maxPage * (page - 1);
+        /*int startPage = maxPage * (page - 1);
 
         for (int i = startPage; i < (startPage + maxPage); i++) {
             if (this.subCommands.size() - 1 < i) continue;
@@ -97,7 +91,7 @@ public class CommandHelpEntry {
             }
         } else {
             //send(context.getSender(), footer.replaceAll("\\{page}", String.valueOf(page)), false, "");
-        }
+        }*/
     }
 
     public boolean hasCommand(String command) {
