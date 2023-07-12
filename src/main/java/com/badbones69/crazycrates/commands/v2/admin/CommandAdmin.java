@@ -18,9 +18,9 @@ public class CommandAdmin extends CommandEngine {
     public CommandAdmin() {
         addAlias("admin");
 
-        setCommandEntryData(new CommandDataEntry());
+        //setCommandEntryData(new CommandDataEntry());
 
-        getCommandDataEntry().setDescription("Opens up a menu to easily get keys.");
+        //getCommandDataEntry().setDescription("Opens up a menu to easily get keys.");
 
         this.requirements = new CommandRequirementsBuilder()
                 .withRawPermission(Permissions.ADMIN_ACCESS.getBuiltPermission())

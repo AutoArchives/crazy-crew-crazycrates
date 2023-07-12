@@ -23,9 +23,9 @@ public class CommandGiveKeys extends CommandEngine {
     public CommandGiveKeys() {
         addAlias("give");
 
-        setCommandEntryData(new CommandDataEntry());
+        //setCommandEntryData(new CommandDataEntry());
 
-        getCommandDataEntry().setDescription(Permissions.ADMIN_GIVE_KEY.getDescription());
+        //getCommandDataEntry().setDescription(Permissions.ADMIN_GIVE_KEY.getDescription());
 
         this.requiredArgs.add(new Argument("key-type", 0, new KeyArgument()));
         this.requiredArgs.add(new Argument("crate-name", 1, new CrateArgument()));

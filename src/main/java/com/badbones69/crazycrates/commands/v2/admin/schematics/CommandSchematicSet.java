@@ -22,9 +22,9 @@ public class CommandSchematicSet extends CommandEngine {
     public CommandSchematicSet() {
         addAlias("schem-set");
 
-        setCommandEntryData(new CommandDataEntry());
+        //setCommandEntryData(new CommandDataEntry());
 
-        getCommandDataEntry().setDescription(Permissions.ADMIN_SCHEMATIC_SET.getDescription());
+        //getCommandDataEntry().setDescription(Permissions.ADMIN_SCHEMATIC_SET.getDescription());
 
         this.requirements = new CommandRequirementsBuilder()
                 .withRawPermission(Permissions.ADMIN_SCHEMATIC_SET.getBuiltPermission())
@@ -34,6 +34,6 @@ public class CommandSchematicSet extends CommandEngine {
 
     @Override
     protected void perform(CommandContext context) {
-        context.reply(this.placeholderSupport.setPlaceholders(this.locale.getProperty(Locale.FEATURE_DISABLED)));
+        //context.reply(this.placeholderSupport.setPlaceholders(this.locale.getProperty(Locale.FEATURE_DISABLED)));
     }
 }

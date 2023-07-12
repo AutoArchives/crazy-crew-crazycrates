@@ -21,9 +21,9 @@ public class CommandHelp extends CommandEngine {
     public CommandHelp() {
         addAlias("help");
 
-        setCommandEntryData(new CommandDataEntry());
+        //setCommandEntryData(new CommandDataEntry());
 
-        getCommandDataEntry().setDescription(Permissions.PLAYER_HELP.getDescription());
+        //getCommandDataEntry().setDescription(Permissions.PLAYER_HELP.getDescription());
 
         this.requiredArgs.add(new Argument("page", 0, new IntArgument(2)));
 
@@ -37,6 +37,6 @@ public class CommandHelp extends CommandEngine {
     protected void perform(CommandContext context) {
         int arg = context.getArgAsInt(0, true);
 
-        context.getHelpEntry().generateHelp(arg, this.pluginConfig.getProperty(PluginConfig.MAX_HELP_PAGE_ENTRIES), context);
+        //context.getHelpEntry().generateHelp(arg, this.pluginConfig.getProperty(PluginConfig.MAX_HELP_PAGE_ENTRIES), context);
     }
 }

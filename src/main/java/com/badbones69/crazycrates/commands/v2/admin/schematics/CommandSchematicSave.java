@@ -22,9 +22,9 @@ public class CommandSchematicSave extends CommandEngine {
     public CommandSchematicSave() {
         addAlias("schem-save");
 
-        setCommandEntryData(new CommandDataEntry());
+        //setCommandEntryData(new CommandDataEntry());
 
-        getCommandDataEntry().setDescription(Permissions.ADMIN_SCHEMATIC_SAVE.getDescription());
+        //getCommandDataEntry().setDescription(Permissions.ADMIN_SCHEMATIC_SAVE.getDescription());
 
         this.requirements = new CommandRequirementsBuilder()
                 .withRawPermission(Permissions.ADMIN_SCHEMATIC_SAVE.getBuiltPermission())
@@ -34,6 +34,6 @@ public class CommandSchematicSave extends CommandEngine {
 
     @Override
     protected void perform(CommandContext context) {
-        context.reply(this.placeholderSupport.setPlaceholders(this.locale.getProperty(Locale.FEATURE_DISABLED)));
+        //context.reply(this.placeholderSupport.setPlaceholders(this.locale.getProperty(Locale.FEATURE_DISABLED)));
     }
 }

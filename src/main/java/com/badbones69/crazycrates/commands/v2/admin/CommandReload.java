@@ -25,9 +25,9 @@ public class CommandReload extends CommandEngine {
     public CommandReload() {
         addAlias("reload");
 
-        setCommandEntryData(new CommandDataEntry());
+        //setCommandEntryData(new CommandDataEntry());
 
-        getCommandDataEntry().setDescription(Permissions.ADMIN_RELOAD.getDescription());
+        //getCommandDataEntry().setDescription(Permissions.ADMIN_RELOAD.getDescription());
 
         this.requirements = new CommandRequirementsBuilder()
                 .withRawPermission(Permissions.ADMIN_RELOAD.getBuiltPermission())
@@ -49,6 +49,6 @@ public class CommandReload extends CommandEngine {
 
         String message = this.locale.getProperty(Locale.RELOAD_PLUGIN);
 
-        context.reply(this.placeholderSupport.setPlaceholders(message));
+        //context.reply(this.placeholderSupport.setPlaceholders(message));
     }
 }

@@ -2,7 +2,9 @@ package com.badbones69.crazycrates;
 
 import com.badbones69.crazycrates.api.*;
 import com.badbones69.crazycrates.api.utils.MiscUtils;
-import com.badbones69.crazycrates.commands.v2.CommandHandler;
+import com.badbones69.crazycrates.commands.engine.v2.CommandManager;
+import com.badbones69.crazycrates.commands.engine.v2.example.FirstCommand;
+import com.badbones69.crazycrates.commands.engine.v2.example.SecondCommand;
 import com.badbones69.crazycrates.api.configs.types.PluginConfig;
 import com.badbones69.crazycrates.api.support.holograms.interfaces.HologramManager;
 import com.badbones69.crazycrates.listeners.v2.DataListener;
@@ -15,7 +17,7 @@ import java.util.Timer;
 public class CrazyCrates extends JavaPlugin implements Listener {
 
     private final ApiManager apiManager;
-    private CommandHandler commandHandler;
+    private final CommandManager manager = CommandManager.create("crazycrates");
 
     public CrazyCrates(ApiManager apiManager) {
         this.apiManager = apiManager;
@@ -41,8 +43,8 @@ public class CrazyCrates extends JavaPlugin implements Listener {
 
         MiscUtils.registerPermissions(getServer().getPluginManager());
 
-        this.commandHandler = new CommandHandler();
-        this.commandHandler.load();
+        this.manager.addCommand(new FirstCommand());
+        this.manager.addCommand(new SecondCommand());
 
         getServer().getPluginManager().registerEvents(new DataListener(), this);
     }
@@ -59,8 +61,8 @@ public class CrazyCrates extends JavaPlugin implements Listener {
         return this.apiManager;
     }
 
-    public CommandHandler getCommandHandler() {
-        return this.commandHandler;
+    public CommandManager getManager() {
+        return this.manager;
     }
 
     public HologramManager getHolograms() {

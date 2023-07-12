@@ -11,7 +11,6 @@ import com.badbones69.crazycrates.api.support.InternalPlaceholderSupport;
 import com.ryderbelserion.stick.core.utils.AdventureUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
-import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -46,26 +45,26 @@ public abstract class CommandEngine {
     public CommandRequirements requirements;
 
     public void execute(CommandContext context) {
-        String aliasUsed = context.getAlias();
+        /*String aliasUsed = context.getAlias();
 
         if (!context.getArgs().isEmpty()) {
             for (CommandEngine command : this.subCommands) {
-                boolean exists = context.getArgs().stream().findFirst().isPresent();
+                //boolean exists = context.getArgs().stream().findFirst().isPresent();
 
-                if (exists) {
-                    String value = context.getArgs().stream().findFirst().get();
+                //if (exists) {
+                    //String value = context.getArgs().stream().findFirst().get();
 
-                    if (command.aliases.contains(value)) {
-                        aliasUsed += " " + context.getArgs().get(0);
+                    //if (command.aliases.contains(value)) {
+                        //aliasUsed += " " + context.getArgs().get(0);
 
-                        context.removeArgs(0);
-                        context.setAlias(aliasUsed);
-                        command.execute(context);
-                        return;
-                    }
-                }
+                        //context.removeArgs(0);
+                        //context.setAlias(aliasUsed);
+                    //    command.execute(context);
+                    //    return;
+                    //}
+                //}
             }
-        }
+        }*/
 
         if (!this.requirements.checkRequirements(true, context)) return;
 
@@ -104,7 +103,7 @@ public abstract class CommandEngine {
     protected abstract void perform(CommandContext context);
 
     private boolean inputValidation(CommandContext context) {
-        if (context.getArgs().size() < this.requiredArgs.size()) {
+        /*if (context.getArgs().size() < this.requiredArgs.size()) {
             context.reply(this.placeholderSupport.setPlaceholders(this.locale.getProperty(Locale.NOT_ENOUGH_ARGS)));
             sendValidFormat(context);
             return false;
@@ -114,7 +113,7 @@ public abstract class CommandEngine {
             context.reply(this.placeholderSupport.setPlaceholders(this.locale.getProperty(Locale.TOO_MANY_ARGS)));
             sendValidFormat(context);
             return false;
-        }
+        }*/
 
         return true;
     }
@@ -127,10 +126,10 @@ public abstract class CommandEngine {
 
         this.requiredArgs.sort(Comparator.comparing(Argument::order));
 
-        if (context.isPlayer()) {
-            String format = "/" + getPrefix() + context.getAlias();
+        //if (context.isPlayer()) {
+            //String format = "/" + getPrefix() + context.getAlias();
 
-            Component component = AdventureUtils.parse(format);
+            //Component component = AdventureUtils.parse(format);
             TextComponent.@NotNull Builder emptyComponent = Component.text();
 
             StringBuilder types = new StringBuilder();
@@ -149,25 +148,25 @@ public abstract class CommandEngine {
                 if (isPresent) types.append(" ").append(arg.argumentType().getPossibleValues().stream().findFirst().get());
             }
 
-            Component finalComponent = component
-                    .hoverEvent(HoverEvent.showText(AdventureUtils.parse("<gold>Click me to insert into chat</gold>")))
-                    .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.SUGGEST_COMMAND, format + types))
-                    .append(emptyComponent.build());
+            //Component finalComponent = component
+            //        .hoverEvent(HoverEvent.showText(AdventureUtils.parse("<gold>Click me to insert into chat</gold>")))
+            //        .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.SUGGEST_COMMAND, format + types))
+            //        .append(emptyComponent.build());
 
-            context.reply(finalComponent);
+            //context.reply(finalComponent);
 
-            return;
-        }
+        //    return;
+        //}
 
-        StringBuilder format = new StringBuilder("/" + getPrefix() + context.getAlias());
+        //StringBuilder format = new StringBuilder("/" + getPrefix() + context.getAlias());
 
         for (Argument arg : arguments) {
             String value = this.optionalArgs.contains(arg) ? "(" + arg.name() + ") " : "<" + arg.name() + "> ";
 
-            format.append(value);
+            //format.append(value);
         }
 
-        context.reply(format.toString());
+        //context.reply(format.toString());
     }
 
     public List<String> handleTabComplete(String[] args) {

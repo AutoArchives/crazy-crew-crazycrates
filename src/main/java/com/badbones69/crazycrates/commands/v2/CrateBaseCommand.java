@@ -30,9 +30,9 @@ public class CrateBaseCommand extends CommandEngine implements TabCompleter, Com
     public CrateBaseCommand() {
         setPrefix("crazycrates");
 
-        setCommandEntryData(new CommandDataEntry());
+        //setCommandEntryData(new CommandDataEntry());
 
-        getCommandDataEntry().setExcludeValidation(true);
+        //getCommandDataEntry().setExcludeValidation(true);
 
         this.requirements = new CommandRequirementsBuilder()
                 .asPlayer(false)
