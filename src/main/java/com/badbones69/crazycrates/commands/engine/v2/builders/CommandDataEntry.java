@@ -9,7 +9,7 @@ public class CommandDataEntry {
     }
 
     public boolean isHidden() {
-        return !this.isHidden;
+        return this.isHidden;
     }
 
     /*

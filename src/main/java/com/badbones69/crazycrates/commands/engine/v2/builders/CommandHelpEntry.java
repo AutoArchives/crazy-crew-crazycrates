@@ -3,6 +3,8 @@ package com.badbones69.crazycrates.commands.engine.v2.builders;
 import com.badbones69.crazycrates.commands.engine.v2.CommandEngine;
 import com.badbones69.crazycrates.commands.engine.v2.CommandManager;
 
+import java.util.Map;
+
 public class CommandHelpEntry {
 
     private final CommandManager manager;
@@ -39,12 +41,14 @@ public class CommandHelpEntry {
             return;
         }
 
-        //Map<String, CommandDataEntry> entries = this.manager.getCommands();
+        Map<String, CommandDataEntry> entries = this.manager.getCommands();
 
         for (int value = min; value < max; value++) {
             if (this.totalResults - 1 < value) continue;
 
             CommandEngine command = this.manager.getClasses().get(value);
+
+            CommandDataEntry dataEntry = entries.get(command.getLabel());
 
             //boolean isHidden = entries.get(this.engine.getLabel()).isHidden();
 

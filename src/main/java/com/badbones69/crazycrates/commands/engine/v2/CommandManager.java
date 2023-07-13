@@ -39,7 +39,7 @@ public class CommandManager implements CommandFlow {
         // Set visibility if annotation is present.
         entry.setHidden(engine.getClass().isAnnotationPresent(Hidden.class));
 
-        if (!entry.isHidden()) return;
+        if (entry.isHidden()) return;
 
         // Add to the hash-map & linked list!
         this.commands.put(engine.getLabel(), entry);
