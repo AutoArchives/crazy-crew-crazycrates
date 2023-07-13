@@ -2,7 +2,9 @@ package com.badbones69.crazycrates.commands.engine.v2.builders;
 
 import com.badbones69.crazycrates.commands.engine.v2.CommandEngine;
 import com.badbones69.crazycrates.commands.engine.v2.CommandManager;
-
+import com.badbones69.crazycrates.commands.engine.v2.builders.args.Argument;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Map;
 
 public class CommandHelpEntry {
@@ -27,6 +29,7 @@ public class CommandHelpEntry {
         this.showHelp(this.actor);
     }
 
+    @SuppressWarnings("MismatchedQueryAndUpdateOfStringBuilder")
     public void showHelp(CommandActor actor) {
         int min = this.perPage * (this.page - 1);
         int max = min + this.perPage;
@@ -51,6 +54,22 @@ public class CommandHelpEntry {
             CommandDataEntry dataEntry = entries.get(command.getLabel());
 
             //boolean isHidden = entries.get(this.engine.getLabel()).isHidden();
+
+            StringBuilder baseFormat = new StringBuilder("/" + command.getLabel());
+
+            // Only add aliases if the list isn't empty.
+            if (!command.getAliases().isEmpty()) baseFormat.append(" ").append(command.getAliases().get(0));
+
+            ArrayList<Argument> arguments = new ArrayList<>();
+
+            arguments.addAll(command.getOptionalArgs());
+            arguments.addAll(command.getRequiredArgs());
+
+            arguments.sort(Comparator.comparingInt(Argument::order));
+
+            if (actor.isPlayer()) {
+
+            }
 
             actor.reply("/" + command.getLabel());
         }

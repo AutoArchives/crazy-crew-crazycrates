@@ -4,6 +4,7 @@ import com.badbones69.crazycrates.commands.engine.v2.annotations.Hidden;
 import com.badbones69.crazycrates.commands.engine.v2.builders.CommandActor;
 import com.badbones69.crazycrates.commands.engine.v2.builders.CommandDataEntry;
 import com.badbones69.crazycrates.commands.engine.v2.builders.CommandHelpEntry;
+import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import java.util.Collections;
@@ -51,6 +52,8 @@ public class CommandManager implements CommandFlow {
 
     @Override
     public boolean hasCommand(String label) {
+        Validate.notNull(label);
+
         return this.commands.containsKey(label);
     }
 

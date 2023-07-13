@@ -48,7 +48,7 @@ public class Locale implements SettingsHolder {
 
     public static final Property<String> INTERNAL_ERROR = newProperty("general.errors.internal-error", "{prefix}<red>An internal error has occurred. Please check the console for the full error.</red>");
 
-    public static final Property<String> NO_SCHEMATICS_FOUND = newProperty("general.errors.no-schematics-found", "{prefix}<red>No schematic were found, Please re-generate them by deleting the folder or checking for errors!</red>");
+    public static final Property<String> SCHEMATICS_ERROR = newProperty("general.errors.no-schematics-found", "{prefix}<red>No schematic were found, Please re-generate them by deleting the folder or checking for errors!</red>");
 
     public static final Property<String> PRIZE_ERROR = newProperty("general.errors.prize-error", "{prefix}<red>An error has occurred in</red> <gold>{crate}</gold> <red>for</red> <gold>#{prize}. Contact your owner!</gold>");
 
@@ -56,7 +56,7 @@ public class Locale implements SettingsHolder {
 
     public static final Property<String> MUST_BE_PLAYER = newProperty("general.player-checks.must-be-player", "{prefix}<red>You must be a player to use this command.</red>");
 
-    public static final Property<String> TARGET_SAME_PLAYER = newProperty("general.player-checks.target-same-player", "{prefix}<red>You cannot use this command on yourself.</red>");
+    public static final Property<String> CANNOT_USE_COMMAND_ON_YOURSELF = newProperty("general.player-checks.target-same-player", "{prefix}<red>You cannot use this command on yourself.</red>");
 
     public static final Property<String> MUST_BE_LOOKING_AT_BLOCK = newProperty("general.player-checks.must-be-looking-at-block", "{prefix}<red>You must be looking at a block.</red>");
 
