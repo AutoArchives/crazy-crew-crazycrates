@@ -2,15 +2,12 @@ package com.badbones69.crazycrates.commands.v2.admin;
 
 import ch.jalu.configme.SettingsManager;
 import com.badbones69.crazycrates.CrazyCrates;
-import com.badbones69.crazycrates.api.configs.types.PluginConfig;
 import com.badbones69.crazycrates.commands.engine.v1.CommandEngine;
 import com.badbones69.crazycrates.commands.engine.v2.builders.requirements.CommandRequirementsBuilder;
 import com.badbones69.crazycrates.api.configs.types.Locale;
 import com.badbones69.crazycrates.api.enums.Permissions;
 import com.badbones69.crazycrates.api.support.InternalPlaceholderSupport;
-import com.badbones69.crazycrates.support.tasks.AutoSaveTask;
 import org.bukkit.plugin.java.JavaPlugin;
-import java.util.Timer;
 
 public class CommandReload extends CommandEngine {
 
@@ -38,16 +35,34 @@ public class CommandReload extends CommandEngine {
     protected void perform() {
         this.plugin.getApiManager().reload(true);
 
-        if (!this.pluginConfig.getProperty(PluginConfig.AUTO_SAVE_TOGGLE)) {
-            if (this.plugin.getTimer() != null) this.plugin.getTimer().cancel();
-        } else {
-            if (this.plugin.getTimer() == null) this.plugin.setTimer(new Timer());
+        //if (!this.pluginConfig.getProperty(PluginConfig.AUTO_SAVE_TOGGLE)) {
+        //    if (this.plugin.getTimer() != null) this.plugin.getTimer().cancel();
+        //} else {
+        //    if (this.plugin.getTimer() == null) this.plugin.setTimer(new Timer());
 
-            this.plugin.getTimer().schedule(new AutoSaveTask(), 0, 20 * 60 * 1000);
-        }
+        //    this.plugin.getTimer().schedule(new AutoSaveTask(), 0, 20 * 60 * 1000);
+        //}
 
         String message = this.locale.getProperty(Locale.RELOAD_PLUGIN);
 
         //context.reply(this.placeholderSupport.setPlaceholders(message));
     }
+
+    //if (this.apiManager.getPluginConfig().getProperty(PluginConfig.AUTO_SAVE_TOGGLE)) {
+    //    this.timer = new Timer();
+
+    //    this.timer.schedule(new AutoSaveTask(), 0, 20 * 60 * 1000);
+    //}
+
+        /*private Timer timer;
+
+    public void setTimer(Timer timer) {
+        this.timer = timer;
+    }
+
+    public Timer getTimer() {
+        return this.timer;
+    }*/
+
+    //if (this.timer != null) this.timer.cancel();
 }

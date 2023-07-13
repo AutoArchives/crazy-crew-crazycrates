@@ -1,32 +1,26 @@
 package com.badbones69.crazycrates.commands.engine.v1.builder;
 
-import ch.jalu.configme.SettingsManager;
-import com.badbones69.crazycrates.api.ApiManager;
-import com.badbones69.crazycrates.api.support.InternalPlaceholderSupport;
-import com.badbones69.crazycrates.commands.engine.v1.CommandEngine;
-import com.badbones69.crazycrates.commands.engine.v2.builders.CommandDataEntry;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
+import com.badbones69.crazycrates.commands.engine.v2.CommandFlow;
+import com.badbones69.crazycrates.commands.engine.v2.CommandManager;
 
 public class CommandHelpEntry {
 
-    private final SettingsManager pluginConfig;
-    private final InternalPlaceholderSupport placeholderSupport;
+    private final CommandManager commandManager;
 
-    private final LinkedList<CommandEngine> subCommands;
+    private int page = 1;
+    private int perPage;
 
-    private final HashMap<String, CommandDataEntry> commandData = new HashMap<>();
+    public CommandHelpEntry(CommandManager manager, CommandFlow flow) {
+        this.commandManager = manager;
 
-    public CommandHelpEntry(ApiManager apiManager, LinkedList<CommandEngine> subCommands) {
-        this.pluginConfig = apiManager.getPluginConfig();
-        this.placeholderSupport = apiManager.getPlaceholderSupport();
-
-        this.subCommands = subCommands;
+        this.perPage = manager.defaultHelpPerPage();
     }
 
-    public void generateHelp(int page, int maxPage) {
+    public void showHelp() {
+        this.generateHelp();
+    }
+
+    private void generateHelp() {
         /*int startPage = maxPage * (page - 1);
 
         for (int i = startPage; i < (startPage + maxPage); i++) {
@@ -93,6 +87,7 @@ public class CommandHelpEntry {
         }*/
     }
 
+    /*
     public boolean hasCommand(String command) {
         return this.commandData.containsKey(command);
     }
@@ -105,5 +100,5 @@ public class CommandHelpEntry {
 
     public Map<String, CommandDataEntry> getCommandData() {
         return Collections.unmodifiableMap(this.commandData);
-    }
+    }*/
 }

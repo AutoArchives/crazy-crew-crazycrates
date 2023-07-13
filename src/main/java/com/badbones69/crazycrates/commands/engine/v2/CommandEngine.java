@@ -2,6 +2,8 @@ package com.badbones69.crazycrates.commands.engine.v2;
 
 import com.badbones69.crazycrates.CrazyCrates;
 import com.badbones69.crazycrates.commands.engine.v2.builders.args.Argument;
+import com.ryderbelserion.stick.core.StickLogger;
+import com.ryderbelserion.stick.core.utils.AdventureUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -24,12 +26,6 @@ public abstract class CommandEngine extends Command {
     }
 
     public void execute(CommandContext context) {
-        String label = getLabel();
-
-        //if (!context.getArgs().isEmpty()) {
-
-        //}
-
         perform(context);
     }
 
@@ -51,9 +47,14 @@ public abstract class CommandEngine extends Command {
     public @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String alias, @NotNull String[] args) throws IllegalArgumentException {
         List<String> arrays = Arrays.asList(args);
 
-        return Collections.emptyList();
+        arrays.forEach(StickLogger::warn);
+
+        return arrays;
     }
 
+    public void updatePermissionMessage(String message) {
+        permissionMessage(AdventureUtils.parse(message));
+    }
 
     private boolean validate(CommandContext context) {
         if (context.getArgs().size() < this.requiredArgs.size()) {

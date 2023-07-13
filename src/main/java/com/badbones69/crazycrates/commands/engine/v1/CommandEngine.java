@@ -3,7 +3,6 @@ package com.badbones69.crazycrates.commands.engine.v1;
 import ch.jalu.configme.SettingsManager;
 import com.badbones69.crazycrates.CrazyCrates;
 import com.badbones69.crazycrates.api.ApiManager;
-import com.badbones69.crazycrates.commands.engine.v1.builder.CommandHelpEntry;
 import com.badbones69.crazycrates.commands.engine.v2.builders.requirements.CommandRequirements;
 import com.badbones69.crazycrates.commands.engine.v2.builders.args.Argument;
 import com.badbones69.crazycrates.api.configs.types.Locale;
@@ -36,8 +35,6 @@ public abstract class CommandEngine {
     private final LinkedList<CommandEngine> subCommands = new LinkedList<>();
 
     private String prefix;
-
-    private CommandHelpEntry commandHelpEntry;
 
     public final LinkedList<Argument> requiredArgs = new LinkedList<>();
     public final LinkedList<Argument> optionalArgs = new LinkedList<>();
@@ -86,8 +83,6 @@ public abstract class CommandEngine {
 
         this.subCommands.add(engine);
         this.commandData.put(alias, "Entry");
-
-        if (this.commandHelpEntry == null) this.commandHelpEntry = new CommandHelpEntry(this.apiManager, this.subCommands);
 
         engine.prefix = prefix;
     }
@@ -251,10 +246,6 @@ public abstract class CommandEngine {
 
     public String getPrefix() {
         return this.prefix;
-    }
-
-    public CommandHelpEntry getCommandHelp() {
-        return this.commandHelpEntry;
     }
 
     public List<String> getAliases() {

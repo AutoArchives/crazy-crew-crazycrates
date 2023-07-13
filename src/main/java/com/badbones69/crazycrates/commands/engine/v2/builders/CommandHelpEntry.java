@@ -2,41 +2,88 @@ package com.badbones69.crazycrates.commands.engine.v2.builders;
 
 import com.badbones69.crazycrates.commands.engine.v2.CommandEngine;
 import com.badbones69.crazycrates.commands.engine.v2.CommandManager;
-import com.ryderbelserion.stick.core.StickLogger;
-import com.ryderbelserion.stick.core.utils.AdventureUtils;
 
 public class CommandHelpEntry {
 
     private final CommandManager manager;
-    private final CommandEngine engine;
+    private final CommandActor actor;
 
-    public CommandHelpEntry(CommandManager manager, CommandEngine engine) {
+    private int page = 1;
+    private int perPage;
+    private int totalPages;
+    private int totalResults;
+    private boolean lastPage;
+
+    public CommandHelpEntry(CommandManager manager, CommandActor actor) {
         this.manager = manager;
-        this.engine = engine;
+        this.actor = actor;
+
+        this.perPage = manager.defaultHelpPerPage();
     }
 
-    public void generateHelp(int page, int maxPage) {
-        int startPage = maxPage * (page - 1);
+    public void showHelp() {
+        this.showHelp(this.actor);
+    }
 
-        if (page <= 0 || startPage >= this.manager.getCommands().size()) {
+    public void showHelp(CommandActor actor) {
+        int min = this.perPage * (this.page - 1);
+        int max = min + this.perPage;
+
+        this.totalResults = this.manager.getCommands().size();
+
+        this.totalPages = this.totalResults / this.perPage;
+
+        if (min >= this.totalResults) {
+            actor.reply("No results found.");
             //context.reply(this.pluginConfig.getProperty(PluginConfig.INVALID_HELP_PAGE).replaceAll("\\{page}", String.valueOf(page)));
             return;
         }
 
-        //context.reply(this.pluginConfig.getProperty(PluginConfig.HELP_PAGE_HEADER).replaceAll("\\{page}", String.valueOf(page)));
+        //Map<String, CommandDataEntry> entries = this.manager.getCommands();
 
-        for (int current = startPage; current < (startPage + maxPage); current++) {
-            if (this.manager.getCommands().size() - 1 < current) continue;
+        for (int value = min; value < max; value++) {
+            if (this.totalResults - 1 < value) continue;
 
-            CommandDataEntry command = this.manager.getCommands().get(this.engine.getLabel());
+            CommandEngine command = this.manager.getClasses().get(value);
 
-            if (command.isHidden()) continue;
+            //boolean isHidden = entries.get(this.engine.getLabel()).isHidden();
 
-            StickLogger.info("Command: /" + this.engine.getLabel());
+            actor.reply("/" + command.getLabel());
         }
+
+        this.lastPage = max >= this.totalResults;
     }
 
-    public void setPermissionMessage(String message) {
-        this.engine.permissionMessage(AdventureUtils.parse(message));
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public void setPerPage(int perPage) {
+        this.perPage = perPage;
+    }
+
+    public void setPage(int page, int perPage) {
+        this.setPage(page);
+        this.setPerPage(perPage);
+    }
+
+    public int getPage() {
+        return this.page;
+    }
+
+    public int getPerPage() {
+        return this.perPage;
+    }
+
+    public int getTotalResults() {
+        return this.totalResults;
+    }
+
+    public int getTotalPages() {
+        return this.totalPages;
+    }
+
+    public boolean isLastPage() {
+        return this.lastPage;
     }
 }
