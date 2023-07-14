@@ -25,9 +25,6 @@ public class CrazyCrates extends JavaPlugin implements Listener {
         MiscUtils.registerPermissions(getServer().getPluginManager());
 
         this.manager.addCommand(new FirstCommand());
-
-        //this.manager.getEntry().setPermissionMessage(this.apiManager.getPlaceholderSupport().setPlaceholders(this.apiManager.getLocale().getProperty(Locale.NO_PERMISSION)));
-
         this.manager.addCommand(new SecondCommand());
 
         getServer().getPluginManager().registerEvents(new DataListener(), this);

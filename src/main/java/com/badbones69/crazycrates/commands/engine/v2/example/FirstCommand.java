@@ -13,11 +13,6 @@ public class FirstCommand extends CommandEngine {
 
     public FirstCommand() {
         super("first", "example command", Collections.emptyList());
-
-        //CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
-        //String message = plugin.getApiManager().getPlaceholderSupport().setPlaceholders(plugin.getApiManager().getLocale().getProperty(Locale.NO_PERMISSION));
-
-        //updatePermissionMessage(message);
     }
 
     @Override
@@ -36,19 +31,19 @@ public class FirstCommand extends CommandEngine {
             return;
         }
 
-        context.reply(material + " is not a valid material!");
-
-        //this.plugin.getManager().generateCommandHelp(context).showHelp();
+        context.reply("No valid material provided.");
     }
 
     @Override
     public @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String alias, @NotNull String[] args) throws IllegalArgumentException {
         if (args.length == 1) {
-            List<String> numbers = new ArrayList<>();
+            ArrayList<String> suggestions = new ArrayList<>();
 
-            for (int value = 1; value <= 100; value++) numbers.add(String.valueOf(value));
+            for (Material material : Material.values()) {
+                if (material.isBlock()) suggestions.add(material.name().toLowerCase());
+            }
 
-            return numbers;
+            return suggestions;
         }
 
         return new ArrayList<>();

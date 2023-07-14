@@ -8,6 +8,8 @@ repositories {
     flatDir {
         dirs("libs")
     }
+
+    maven("https://repo.codemc.org/repository/maven-public/")
 }
 
 dependencies {
@@ -23,9 +25,9 @@ dependencies {
 
     compileOnly("com.github.decentsoftware-eu", "decentholograms", "2.8.2")
 
-    implementation("com.ryderbelserion.stick", "stick-paper", "2.2.1-snapshot")
-
     implementation("org.bstats", "bstats-bukkit", "3.0.0")
+
+    implementation("com.ryderbelserion.stick", "stick-paper", "2.2.1-snapshot")
 }
 
 tasks {
