@@ -20,7 +20,7 @@ public abstract class CommandEngine extends Command {
 
     // TODO() Add a usage message /crazycrates help <page>
     protected CommandEngine(@NotNull String name, @NotNull String description, List<String> aliases) {
-        super("crazycrates", description, "", aliases);
+        super(name, description, "", aliases);
     }
 
     public void execute(CommandContext context, String[] args) {
