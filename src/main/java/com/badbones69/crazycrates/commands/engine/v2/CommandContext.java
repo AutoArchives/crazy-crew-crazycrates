@@ -21,11 +21,12 @@ public class CommandContext implements CommandActor, CommandArgs {
     private final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
 
     private final Audience audience;
-    private final ArrayList<String> args;
+    private final List<String> args;
+    private String label;
 
     private Player player;
 
-    public CommandContext(Audience audience, ArrayList<String> args) {
+    public CommandContext(Audience audience, List<String> args) {
         this.audience = audience;
 
         if (audience instanceof Player) {
@@ -135,8 +136,23 @@ public class CommandContext implements CommandActor, CommandArgs {
         return this.player.hasPermission(rawPermission);
     }
 
+    @Override
+    public void setLabel(String alias) {
+        this.label = alias;
+    }
+
+    @Override
+    public String getLabel() {
+        return this.label;
+    }
+
     public List<String> getArgs() {
         return Collections.unmodifiableList(this.args);
+    }
+
+    @Override
+    public void removeArgs(int arg) {
+        this.args.remove(arg);
     }
 
     @Override

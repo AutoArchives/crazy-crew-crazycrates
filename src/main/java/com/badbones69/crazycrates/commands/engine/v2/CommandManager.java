@@ -4,9 +4,11 @@ import com.badbones69.crazycrates.commands.engine.v2.annotations.Hidden;
 import com.badbones69.crazycrates.commands.engine.v2.builders.CommandActor;
 import com.badbones69.crazycrates.commands.engine.v2.builders.CommandDataEntry;
 import com.badbones69.crazycrates.commands.engine.v2.builders.CommandHelpEntry;
-import org.apache.commons.lang.Validate;
+import com.badbones69.crazycrates.commands.engine.v2.builders.args.Argument;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -15,13 +17,13 @@ import java.util.Map;
 
 public class CommandManager implements CommandFlow {
 
-    protected final HashMap<String, CommandDataEntry> commands = new HashMap<>();
+    private final HashMap<String, CommandDataEntry> commands = new HashMap<>();
 
-    protected final LinkedList<CommandEngine> classes = new LinkedList<>();
+    private final LinkedList<CommandEngine> classes = new LinkedList<>();
 
-    protected int defaultHelpPerPage = 10;
+    private int defaultHelpPerPage = 10;
 
-    protected static String group;
+    private static String group;
 
     public static CommandManager create(String commandGroup) {
         group = commandGroup;
@@ -44,16 +46,19 @@ public class CommandManager implements CommandFlow {
 
         // Add to the hash-map & linked list!
         this.commands.put(engine.getLabel(), entry);
+
         this.classes.add(engine);
 
         // Add command to the server map!
         Bukkit.getServer().getCommandMap().register(group, engine);
     }
 
+    public void updatePermissionMessage(String message) {
+        //permissionMessage(AdventureUtils.parse(message));
+    }
+
     @Override
     public boolean hasCommand(String label) {
-        Validate.notNull(label);
-
         return this.commands.containsKey(label);
     }
 
@@ -95,7 +100,39 @@ public class CommandManager implements CommandFlow {
         return Collections.unmodifiableMap(this.commands);
     }
 
+    @Override
     public List<CommandEngine> getClasses() {
         return Collections.unmodifiableList(this.classes);
+    }
+
+    @Override
+    public List<String> handleTabComplete(String[] args, CommandEngine engine) {
+        List<String> completions = Arrays.asList(args);
+
+        if (completions.size() >= 1) {
+            int relativeIndex = this.classes.size();
+            int argToComplete = completions.size() + 1 - relativeIndex;
+            if (engine.requiredArgs.size() >= argToComplete) {
+                ArrayList<Argument> arguments = new ArrayList<>();
+
+                arguments.addAll(engine.requiredArgs);
+                arguments.addAll(engine.optionalArgs);
+
+                ArrayList<String> possibleValues = new ArrayList<>();
+
+                for (Argument argument : arguments) {
+                    if (argument.order() == argToComplete) {
+                        List<String> possibleValuesArgs = argument.argumentType().getPossibleValues();
+
+                        possibleValues = new ArrayList<>(possibleValuesArgs);
+                        break;
+                    }
+                }
+
+                return possibleValues;
+            }
+        }
+
+        return Collections.emptyList();
     }
 }

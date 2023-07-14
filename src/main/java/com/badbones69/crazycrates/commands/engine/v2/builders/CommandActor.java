@@ -5,6 +5,8 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 
+import java.util.List;
+
 public interface CommandActor {
 
     void reply(String message);
@@ -33,13 +35,13 @@ public interface CommandActor {
 
     boolean hasPermission(String rawPermission);
 
-    //void setAlias(String alias);
+    void setLabel(String alias);
 
-    //String getAlias();
+    String getLabel();
 
-    //List<String> getArgs();
+    List<String> getArgs();
 
-    //void removeArgs(int arg);
+    void removeArgs(int arg);
 
     //CommandHelpEntry getHelpEntry();
 
