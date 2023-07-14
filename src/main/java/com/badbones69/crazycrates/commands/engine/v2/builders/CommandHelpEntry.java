@@ -68,10 +68,46 @@ public class CommandHelpEntry {
             arguments.sort(Comparator.comparingInt(Argument::order));
 
             if (actor.isPlayer()) {
+                /*
+                                StringBuilder types = new StringBuilder();
 
+                ComponentBuilder builder = new ComponentBuilder();
+
+                for (Argument arg : arguments) {
+                    String value = command.optionalArgs.contains(arg) ? " (" + arg.name() + ") " : " <" + arg.name() + ">";
+
+                    types.append(value);
+                }
+
+                builder.setMessage(format.replaceAll("\\{args}", String.valueOf(types)));
+
+                String hoverShit = base.append(types).toString();
+
+                String hoverFormat = this.pluginConfig.getProperty(PluginConfig.HELP_PAGE_HOVER_FORMAT);
+
+                builder.hover(this.placeholderSupport.setPlaceholders(hoverFormat).replaceAll("\\{commands}", hoverShit)).click(hoverShit, ClickEvent.Action.valueOf(this.pluginConfig.getProperty(PluginConfig.HELP_PAGE_HOVER_ACTION).toUpperCase()));
+
+                //context.reply(builder.build());
+                 */
             }
 
-            actor.reply("/" + command.getLabel());
+            /*String footer = this.pluginConfig.getProperty(PluginConfig.HELP_PAGE_FOOTER);
+
+            if (context.isPlayer()) {
+                String text = this.pluginConfig.getProperty(PluginConfig.HELP_PAGE_GO_TO_PAGE);
+
+                if (page > 1) {
+                    int number = page-1;
+
+                    //hover(context.getPlayer(), footer.replaceAll("\\{page}", String.valueOf(page)),  text.replaceAll("\\{page}", String.valueOf(number)), this.pluginConfig.getProperty(PluginConfig.HELP_PAGE_BACK), "/crazycrates help " + number, ClickEvent.Action.RUN_COMMAND);
+                } else if (page < this.subCommands.size()) {
+                    int number = page+1;
+
+                    //hover(context.getPlayer(), footer.replaceAll("\\{page}", String.valueOf(page)),  text.replaceAll("\\{page}", String.valueOf(number)), this.pluginConfig.getProperty(PluginConfig.HELP_PAGE_NEXT), "/crazycrates help " + number, ClickEvent.Action.RUN_COMMAND);
+                }
+            } else {
+                //send(context.getSender(), footer.replaceAll("\\{page}", String.valueOf(page)), false, "");
+            }*/
         }
 
         this.lastPage = max >= this.totalResults;

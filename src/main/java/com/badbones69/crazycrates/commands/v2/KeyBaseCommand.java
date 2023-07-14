@@ -1,8 +1,8 @@
 package com.badbones69.crazycrates.commands.v2;
 
+/*
 import ch.jalu.configme.SettingsManager;
 import com.badbones69.crazycrates.CrazyCrates;
-import com.badbones69.crazycrates.commands.engine.v1.CommandEngine;
 import com.badbones69.crazycrates.commands.engine.v2.builders.requirements.CommandRequirementsBuilder;
 import com.badbones69.crazycrates.commands.engine.v2.builders.args.Argument;
 import com.badbones69.crazycrates.commands.engine.v2.builders.args.builder.custom.PlayerArgument;
@@ -20,9 +20,9 @@ public class KeyBaseCommand extends CommandEngine {
 
         this.optionalArgs.add(new Argument("player", 0, new PlayerArgument()));
 
-        this.requirements = new CommandRequirementsBuilder()
-                .asPlayer(true)
-                .build();
+        //this.requirements = new CommandRequirementsBuilder()
+        //        .asPlayer(true)
+        //        .build();
     }
 
     @Override
@@ -56,6 +56,7 @@ public class KeyBaseCommand extends CommandEngine {
             return;
         }
 
-        context.reply("Guten Tag!");*/
+        context.reply("Guten Tag!");
     }
 }
+ */

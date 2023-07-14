@@ -1,8 +1,8 @@
 package com.badbones69.crazycrates.commands.v2.admin;
 
+/*
 import ch.jalu.configme.SettingsManager;
 import com.badbones69.crazycrates.CrazyCrates;
-import com.badbones69.crazycrates.commands.engine.v1.CommandEngine;
 import com.badbones69.crazycrates.commands.engine.v2.builders.requirements.CommandRequirementsBuilder;
 import com.badbones69.crazycrates.api.configs.types.Locale;
 import com.badbones69.crazycrates.api.enums.Permissions;
@@ -62,7 +62,8 @@ public class CommandReload extends CommandEngine {
 
     public Timer getTimer() {
         return this.timer;
-    }*/
+    }
 
     //if (this.timer != null) this.timer.cancel();
 }
+*/

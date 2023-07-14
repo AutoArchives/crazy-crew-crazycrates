@@ -3,8 +3,8 @@ package com.badbones69.crazycrates.commands.engine.v2;
 import com.badbones69.crazycrates.CrazyCrates;
 import com.badbones69.crazycrates.commands.engine.v2.builders.args.Argument;
 import com.ryderbelserion.stick.core.utils.AdventureUtils;
-import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
@@ -12,9 +12,10 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public abstract class CommandEngine extends Command {
+public abstract class CommandEngine extends BukkitCommand {
 
     private final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
+
     public final LinkedList<Argument> requiredArgs = new LinkedList<>();
     public final LinkedList<Argument> optionalArgs = new LinkedList<>();
 
@@ -47,7 +48,7 @@ public abstract class CommandEngine extends Command {
             }
         }
 
-        //if (this.plugin.getManager().getCommand(getLabel()).isHidden()) return;
+        if (!validate(context)) return;
 
         perform(context, new String[0]);
     }
@@ -80,15 +81,68 @@ public abstract class CommandEngine extends Command {
     private boolean validate(CommandContext context) {
         if (context.getArgs().size() < this.requiredArgs.size()) {
             context.reply("Not enough args.");
+            sendValidFormat();
             return false;
         }
 
         if (context.getArgs().size() > this.requiredArgs.size() + this.optionalArgs.size()) {
             context.reply("Too many args.");
+            sendValidFormat();
             return false;
         }
 
         return true;
+    }
+
+    private void sendValidFormat() {
+        /*ArrayList<Argument> arguments = new ArrayList<>();
+
+        arguments.addAll(this.requiredArgs);
+        arguments.addAll(this.optionalArgs);
+
+        this.requiredArgs.sort(Comparator.comparing(Argument::order));
+
+        //if (context.isPlayer()) {
+        //String format = "/" + getPrefix() + context.getAlias();
+
+        //Component component = AdventureUtils.parse(format);
+        TextComponent.@NotNull Builder emptyComponent = Component.text();
+
+        StringBuilder types = new StringBuilder();
+
+        for (Argument arg : arguments) {
+            //String value = this.optionalArgs.contains(arg) ? " (" + arg.name() + ") " : " <" + arg.name() + ">";
+
+            //String msg = this.optionalArgs.contains(arg) ? this.locale.getProperty(Locale.OPTIONAL_ARGUMENT) : this.locale.getProperty(Locale.REQUIRED_ARGUMENT);
+
+            //Component argComponent = AdventureUtils.parse(value).hoverEvent(HoverEvent.showText(AdventureUtils.parse(this.placeholderSupport.setPlaceholders(msg)))).asComponent();
+
+            //emptyComponent.append(argComponent);
+
+            //boolean isPresent = arg.argumentType().getPossibleValues().stream().findFirst().isPresent();
+
+            //if (isPresent) types.append(" ").append(arg.argumentType().getPossibleValues().stream().findFirst().get());
+        }
+
+        //Component finalComponent = component
+        //        .hoverEvent(HoverEvent.showText(AdventureUtils.parse("<gold>Click me to insert into chat</gold>")))
+        //        .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.SUGGEST_COMMAND, format + types))
+        //        .append(emptyComponent.build());
+
+        //context.reply(finalComponent);
+
+        //    return;
+        //}
+
+        //StringBuilder format = new StringBuilder("/" + getPrefix() + context.getAlias());
+
+        for (Argument arg : arguments) {
+            String value = this.optionalArgs.contains(arg) ? "(" + arg.name() + ") " : "<" + arg.name() + "> ";
+
+            //format.append(value);
+        }
+
+        //context.reply(format.toString());*/
     }
 
     public List<Argument> getRequiredArgs() {

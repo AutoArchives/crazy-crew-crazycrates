@@ -1,8 +1,8 @@
 package com.badbones69.crazycrates.commands.v2;
 
+/*
 import ch.jalu.configme.SettingsManager;
 import com.badbones69.crazycrates.CrazyCrates;
-import com.badbones69.crazycrates.commands.engine.v1.CommandEngine;
 import com.badbones69.crazycrates.commands.engine.v2.builders.requirements.CommandRequirementsBuilder;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -30,3 +30,4 @@ public class CrateBaseCommand extends CommandEngine {
         //getCommandHelp().generateHelp(1, this.pluginConfig.getProperty(PluginConfig.MAX_HELP_PAGE_ENTRIES));
     }
 }
+ */

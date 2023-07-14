@@ -2,7 +2,6 @@ package com.badbones69.crazycrates.commands.v2.admin;
 
 import ch.jalu.configme.SettingsManager;
 import com.badbones69.crazycrates.CrazyCrates;
-import com.badbones69.crazycrates.commands.engine.v1.CommandEngine;
 import com.badbones69.crazycrates.commands.engine.v2.builders.requirements.CommandRequirementsBuilder;
 import com.badbones69.crazycrates.api.enums.Permissions;
 import org.bukkit.plugin.java.JavaPlugin;
