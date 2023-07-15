@@ -1,17 +1,17 @@
 package com.badbones69.crazycrates;
 
-import cloud.commandframework.minecraft.extras.MinecraftExtrasMetaKeys;
 import com.badbones69.crazycrates.api.*;
-import com.badbones69.crazycrates.api.configs.types.PluginConfig;
 import com.badbones69.crazycrates.api.utils.MiscUtils;
 import com.badbones69.crazycrates.api.support.holograms.interfaces.HologramManager;
 import com.badbones69.crazycrates.commands.engine.v3.paper.BukkitCommandManager;
 import com.badbones69.crazycrates.commands.engine.v3.paper.example.ExampleCommand;
 import com.badbones69.crazycrates.listeners.v2.DataListener;
 import com.badbones69.crazycrates.support.structures.blocks.ChestStateHandler;
-import com.ryderbelserion.stick.core.utils.AdventureUtils;
+import com.ryderbelserion.stick.core.StickLogger;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
+import java.util.logging.Logger;
 
 public class CrazyCrates extends JavaPlugin implements Listener {
 
@@ -19,6 +19,11 @@ public class CrazyCrates extends JavaPlugin implements Listener {
 
     public CrazyCrates(ApiManager apiManager) {
         this.apiManager = apiManager;
+    }
+
+    @Override
+    public @NotNull Logger getLogger() {
+        return StickLogger.getLogger();
     }
 
     @Override
