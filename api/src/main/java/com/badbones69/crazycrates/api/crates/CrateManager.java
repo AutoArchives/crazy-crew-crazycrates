@@ -3,7 +3,6 @@ package com.badbones69.crazycrates.api.crates;
 import com.badbones69.crazycrates.api.objects.Crate;
 import com.ryderbelserion.stick.core.StickLogger;
 import com.ryderbelserion.stick.core.utils.FileUtils;
-import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;

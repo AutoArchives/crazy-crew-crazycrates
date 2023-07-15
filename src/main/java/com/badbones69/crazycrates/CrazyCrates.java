@@ -1,20 +1,21 @@
 package com.badbones69.crazycrates;
 
+import cloud.commandframework.minecraft.extras.MinecraftExtrasMetaKeys;
 import com.badbones69.crazycrates.api.*;
+import com.badbones69.crazycrates.api.configs.types.PluginConfig;
 import com.badbones69.crazycrates.api.utils.MiscUtils;
-import com.badbones69.crazycrates.commands.engine.v2.CommandManager;
-import com.badbones69.crazycrates.commands.engine.v2.example.FirstCommand;
-import com.badbones69.crazycrates.commands.engine.v2.example.SecondCommand;
 import com.badbones69.crazycrates.api.support.holograms.interfaces.HologramManager;
+import com.badbones69.crazycrates.commands.engine.v3.paper.BukkitCommandManager;
+import com.badbones69.crazycrates.commands.engine.v3.paper.example.ExampleCommand;
 import com.badbones69.crazycrates.listeners.v2.DataListener;
 import com.badbones69.crazycrates.support.structures.blocks.ChestStateHandler;
+import com.ryderbelserion.stick.core.utils.AdventureUtils;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class CrazyCrates extends JavaPlugin implements Listener {
 
     private final ApiManager apiManager;
-    private final CommandManager manager = CommandManager.create("crazycrates");
 
     public CrazyCrates(ApiManager apiManager) {
         this.apiManager = apiManager;
@@ -24,8 +25,14 @@ public class CrazyCrates extends JavaPlugin implements Listener {
     public void onEnable() {
         MiscUtils.registerPermissions(getServer().getPluginManager());
 
-        this.manager.addCommand(new FirstCommand());
-        this.manager.addCommand(new SecondCommand());
+        // Create instance.
+        BukkitCommandManager manager = BukkitCommandManager.create(this, "crazycrates", "base command", context -> {});
+
+        // Enable some compat improvements.
+        manager.registerCompatibility();
+
+        // Add the command.
+        manager.getCloudCommandManager().addCommand(new ExampleCommand(manager));
 
         getServer().getPluginManager().registerEvents(new DataListener(), this);
     }
@@ -38,10 +45,6 @@ public class CrazyCrates extends JavaPlugin implements Listener {
 
     public ApiManager getApiManager() {
         return this.apiManager;
-    }
-
-    public CommandManager getManager() {
-        return this.manager;
     }
 
     public HologramManager getHolograms() {

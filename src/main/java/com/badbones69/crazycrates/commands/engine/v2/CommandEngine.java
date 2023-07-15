@@ -33,7 +33,7 @@ public abstract class CommandEngine extends BukkitCommand {
 
         if (!context.getArgs().isEmpty()) {
 
-            for (CommandEngine engine : this.plugin.getManager().getClasses()) {
+            /*for (CommandEngine engine : this.plugin.getManager().getClasses()) {
                 boolean isPresent = context.getArgs().stream().findFirst().isPresent();
 
                 if (isPresent) {
@@ -45,7 +45,7 @@ public abstract class CommandEngine extends BukkitCommand {
                     engine.execute(context);
                     return;
                 }
-            }
+            }*/
         }
 
         if (!validate(context)) return;

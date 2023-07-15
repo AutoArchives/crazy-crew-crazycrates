@@ -53,9 +53,9 @@ public class CommandManager implements CommandFlow {
         Bukkit.getServer().getCommandMap().register(group, engine);
     }
 
-    public void updatePermissionMessage(String message) {
+    //public void updatePermissionMessage(String message) {
         //permissionMessage(AdventureUtils.parse(message));
-    }
+    //}
 
     @Override
     public boolean hasCommand(String label) {

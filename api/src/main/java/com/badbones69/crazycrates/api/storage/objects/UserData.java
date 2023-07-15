@@ -2,6 +2,7 @@ package com.badbones69.crazycrates.api.storage.objects;
 
 import com.badbones69.crazycrates.api.objects.Crate;
 import com.google.gson.annotations.Expose;
+import com.ryderbelserion.stick.core.StickLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import java.util.Collections;
@@ -31,7 +32,7 @@ public class UserData {
 
     public void removeKey(Crate crate, int amount) {
         if (!this.keys.containsKey(crate.getCrateName())) {
-            Bukkit.getLogger().warning("They don't have any keys to remove.");
+            StickLogger.warn("They don't have any keys to remove.");
             return;
         }
 
@@ -40,7 +41,7 @@ public class UserData {
 
     public int getKey(Crate crate) {
         if (!this.keys.containsKey(crate.getCrateName())) {
-            Bukkit.getLogger().warning("They don't have any keys to fetch.");
+            StickLogger.warn("They don't have any keys to fetch.");
             return 0;
         }
 
