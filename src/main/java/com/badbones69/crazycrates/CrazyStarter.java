@@ -1,4 +1,4 @@
-package com.badbones69.crazycrates.loader;
+package com.badbones69.crazycrates;
 
 import com.badbones69.crazycrates.CrazyCrates;
 import com.badbones69.crazycrates.api.ApiManager;
