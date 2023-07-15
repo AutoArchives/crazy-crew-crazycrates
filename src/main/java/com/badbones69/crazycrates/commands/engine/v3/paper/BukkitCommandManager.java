@@ -9,13 +9,17 @@ import cloud.commandframework.execution.CommandExecutionHandler;
 import cloud.commandframework.meta.CommandMeta;
 import cloud.commandframework.paper.PaperCommandManager;
 import com.badbones69.crazycrates.commands.engine.v3.core.CloudCommandManager;
+import com.badbones69.crazycrates.commands.engine.v3.core.other.CloudActor;
 import com.badbones69.crazycrates.commands.engine.v3.core.other.CloudBuilder;
+import com.ryderbelserion.stick.core.utils.AdventureUtils;
+import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import java.util.function.Function;
 
-public class BukkitCommandManager implements CloudBuilder {
+public class BukkitCommandManager implements CloudBuilder, CloudActor {
 
     private PaperCommandManager<@NotNull CommandSender> paperManager;
 
@@ -95,5 +99,19 @@ public class BukkitCommandManager implements CloudBuilder {
         return this.paperManager.commandBuilder(getName())
                 .meta(CommandMeta.DESCRIPTION, getDescription())
                 .handler(getHandler());
+    }
+
+    @Override
+    public void reply(Audience audience, String message) {
+        if (message.isBlank() || message.isEmpty()) return;
+
+        Component component = AdventureUtils.parse(message);
+
+        audience.sendMessage(component);
+    }
+
+    @Override
+    public void reply(Audience audience, Component component) {
+        audience.sendMessage(component);
     }
 }

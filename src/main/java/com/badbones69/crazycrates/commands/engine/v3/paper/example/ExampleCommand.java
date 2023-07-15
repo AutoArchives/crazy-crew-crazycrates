@@ -25,8 +25,6 @@ public class ExampleCommand extends CloudCommandEngine {
 
     @Override
     protected void perform(@NotNull CommandContext<@NotNull CommandSender> context) {
-        //String value = context.flags().getValue("type", KeyType.PHYSICAL_KEY.getName());
-
         this.manager.reply(context.getSender(), "<red>Guten Tag!</red>");
     }
 }
