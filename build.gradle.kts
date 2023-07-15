@@ -15,17 +15,24 @@ repositories {
 dependencies {
     api(project(":crazycrates-api"))
 
-    compileOnly("ch.jalu", "configme", "1.3.0")
-
     compileOnly("me.clip", "placeholderapi", "2.11.3")
-
-    compileOnly("de.tr7zw", "item-nbt-api", "2.11.3")
 
     compileOnly("dev.triumphteam", "triumph-cmd-bukkit", "2.0.0-SNAPSHOT")
 
     compileOnly("com.github.decentsoftware-eu", "decentholograms", "2.8.2")
 
+    implementation("ch.jalu", "configme", "1.3.0")
+
+    implementation("de.tr7zw", "item-nbt-api", "2.11.3")
+
     implementation("org.bstats", "bstats-bukkit", "3.0.0")
+
+    implementation("cloud.commandframework", "cloud-core", "1.8.3")
+    implementation("cloud.commandframework", "cloud-paper", "1.8.3")
+    implementation("cloud.commandframework", "cloud-brigadier", "1.8.3")
+    implementation("cloud.commandframework", "cloud-minecraft-extras", "1.8.3") {
+        exclude("net.kyori", "*")
+    }
 
     implementation("com.ryderbelserion.stick", "stick-paper", "2.2.1-snapshot")
 }
@@ -42,7 +49,10 @@ tasks {
     shadowJar {
         fun reloc(pkg: String) = relocate(pkg, "${rootProject.group}.dep.$pkg")
 
+        reloc("ch.jalu")
+        reloc("de.tr7zw")
         reloc("org.bstats")
+        reloc("cloud.commandframework")
         reloc("com.ryderbelserion.stick")
     }
 

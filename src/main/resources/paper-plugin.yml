@@ -5,8 +5,7 @@ version: '${version}'
 api-version: '1.20'
 description: '${description}'
 
-bootstrapper: '${group}.loader.CrazyStarter'
-loader: '${group}.loader.CrazyLoader'
+bootstrapper: '${group}.CrazyStarter'
 
 dependencies:
   - name: CMI
