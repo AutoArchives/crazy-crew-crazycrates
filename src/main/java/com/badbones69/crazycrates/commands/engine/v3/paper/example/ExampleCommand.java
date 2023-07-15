@@ -3,7 +3,6 @@ package com.badbones69.crazycrates.commands.engine.v3.paper.example;
 import cloud.commandframework.ArgumentDescription;
 import cloud.commandframework.context.CommandContext;
 import cloud.commandframework.minecraft.extras.MinecraftExtrasMetaKeys;
-import com.badbones69.crazycrates.api.enums.KeyType;
 import com.badbones69.crazycrates.commands.engine.v3.core.CloudCommandEngine;
 import com.badbones69.crazycrates.commands.engine.v3.paper.BukkitCommandManager;
 import com.ryderbelserion.stick.core.utils.AdventureUtils;
@@ -31,8 +30,8 @@ public class ExampleCommand extends CloudCommandEngine {
 
     @Override
     protected void perform(@NotNull CommandContext<@NotNull CommandSender> context) {
-        String value = context.flags().getValue("type", KeyType.PHYSICAL_KEY.getName());
+        //String value = context.flags().getValue("type", KeyType.PHYSICAL_KEY.getName());
 
-        context.getSender().sendMessage(AdventureUtils.parse("<red>" + value + "</red>"));
+        //context.getSender().sendMessage(AdventureUtils.parse("<red>" + value + "</red>"));
     }
 }
