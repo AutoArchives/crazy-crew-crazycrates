@@ -41,12 +41,12 @@ allprojects {
     //    }
     //}
 
-    project(":fabric") {
-        repositories {
-            maven { url = 'https://maven.fabricmc.net/' }
-            maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
-        }
-    }
+    //project(":fabric") {
+    //    repositories {
+    //        maven { url = 'https://maven.fabricmc.net/' }
+    //        maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
+    //    }
+    //}
 
     project(":paper") {
         repositories {
