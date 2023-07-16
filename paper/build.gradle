@@ -16,10 +16,10 @@ dependencies {
     compileOnly fileTree(dir: 'libs', include: '*.jar')
 
     compileOnly("me.clip:placeholderapi:$papiVersion")
-    compileOnly("dev.triumphteam:triumph-cmd-bukkit:$triumphCmdVersion")
-    compileOnly("com.github.decentsoftware-eu:decentholograms:$decentHologramsVersion")
+    compileOnly("dev.triumphteam:triumph-cmd-bukkit:$triumphVersion")
+    compileOnly("com.github.decentsoftware-eu:decentholograms:$decentHologramVersion")
 
-    implementation("org.bstats:bstats-bukkit:$bstatsVersion")
+    implementation("org.bstats:bstats-bukkit:$bStatsVersion")
     implementation("de.tr7zw:item-nbt-api:$nbtVersion")
 
     paperweightDevelopmentBundle("io.papermc.paper:dev-bundle:$paperVersion")
