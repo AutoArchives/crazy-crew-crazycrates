@@ -1,6 +1,6 @@
-package com.badbones69.crazycrates.paper.api.events;
+package com.badbones69.crazycrates.paper.api.v1.events;
 
-import com.badbones69.crazycrates.paper.api.oldobjects.CrateLocation;
+import com.badbones69.crazycrates.paper.api.v1.oldobjects.CrateLocation;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;

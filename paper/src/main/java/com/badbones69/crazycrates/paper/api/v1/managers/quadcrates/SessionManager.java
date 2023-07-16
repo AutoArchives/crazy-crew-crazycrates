@@ -1,6 +1,6 @@
-package com.badbones69.crazycrates.paper.api.managers.quadcrates;
+package com.badbones69.crazycrates.paper.api.v1.managers.quadcrates;
 
-import com.badbones69.crazycrates.paper.api.managers.QuadCrateManager;
+import com.badbones69.crazycrates.paper.api.v1.managers.QuadCrateManager;
 import org.bukkit.entity.Player;
 
 public class SessionManager {

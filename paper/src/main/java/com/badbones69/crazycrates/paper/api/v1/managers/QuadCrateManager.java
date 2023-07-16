@@ -1,10 +1,10 @@
-package com.badbones69.crazycrates.paper.api.managers;
+package com.badbones69.crazycrates.paper.api.v1.managers;
 
 import com.badbones69.crazycrates.paper.CrazyCrates;
-import com.badbones69.crazycrates.paper.api.CrazyManager;
+import com.badbones69.crazycrates.paper.api.v1.CrazyManager;
 import com.badbones69.crazycrates.paper.api.v2.enums.settings.Messages;
-import com.badbones69.crazycrates.paper.api.oldobjects.Crate;
-import com.badbones69.crazycrates.paper.api.v2.enums.KeyType;
+import com.badbones69.crazycrates.paper.api.v1.oldobjects.Crate;
+import com.badbones69.crazycrates.core.enums.KeyType;
 import com.badbones69.crazycrates.paper.api.v2.crates.types.quadcrates.CrateParticles;
 import com.badbones69.crazycrates.paper.support.structures.QuadCrateSpiralHandler;
 import com.badbones69.crazycrates.paper.support.structures.StructureHandler;
@@ -178,7 +178,7 @@ public class QuadCrateManager {
             return;
         }
 
-        if (this.plugin.getHolograms() != null) this.plugin.getHolograms().remove(spawnLocation);
+        if (this.plugin.crazyManager().getHologramManager() != null) this.plugin.crazyManager().getHologramManager().remove(spawnLocation);
 
         // Shove other players away from the player opening the crate.
         shovePlayers.forEach(entity -> entity.getLocation().toVector().subtract(spawnLocation.clone().toVector()).normalize().setY(1));
@@ -272,7 +272,7 @@ public class QuadCrateManager {
                 // Restore the old blocks.
                 oldBlocks.keySet().forEach(location -> oldBlocks.get(location).update(true, false));
 
-                if (crate.getHologram().isEnabled() && plugin.getHolograms() != null) plugin.getHolograms().create(spawnLocation, crate.getHologram());
+                if (crate.getHologram().isEnabled() && plugin.crazyManager().getHologramManager() != null) plugin.crazyManager().getHologramManager().create(spawnLocation, crate.getHologram());
 
                 // End the crate.
                 crazyManager.endCrate(player);

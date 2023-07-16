@@ -1,4 +1,4 @@
-package com.badbones69.crazycrates.paper.api.managers;
+package com.badbones69.crazycrates.paper.api.v1.managers;
 
 import com.badbones69.crazycrates.paper.api.v2.objects.CrateManager;
 import com.badbones69.crazycrates.paper.api.v2.objects.builder.ItemBuilder;

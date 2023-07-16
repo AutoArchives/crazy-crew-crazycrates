@@ -1,4 +1,4 @@
-package com.badbones69.crazycrates.paper.api.oldobjects;
+package com.badbones69.crazycrates.paper.api.v1.oldobjects;
 
 import com.badbones69.crazycrates.paper.api.v2.crates.types.CrateType;
 import org.bukkit.Location;
