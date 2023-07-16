@@ -1,4 +1,4 @@
-package com.badbones69.crazycrates.paper.api.v2.config.sections;
+package com.badbones69.crazycrates.paper.api.v2.config.types;
 
 import ch.jalu.configme.Comment;
 import ch.jalu.configme.SettingsHolder;
@@ -7,9 +7,9 @@ import ch.jalu.configme.properties.Property;
 import ch.jalu.configme.properties.PropertyInitializer;
 import com.badbones69.crazycrates.paper.api.v2.enums.support.HologramSupport;
 
-public class PluginSupportSection implements SettingsHolder {
+public class PluginSupport implements SettingsHolder {
 
-    public PluginSupportSection() {}
+    public PluginSupport() {}
 
     @Override
     public void registerComments(CommentsConfiguration conf) {

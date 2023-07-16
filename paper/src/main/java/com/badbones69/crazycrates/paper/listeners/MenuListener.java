@@ -2,30 +2,22 @@ package com.badbones69.crazycrates.paper.listeners;
 
 import com.badbones69.crazycrates.paper.CrazyCrates;
 import com.badbones69.crazycrates.paper.Methods;
-import com.badbones69.crazycrates.paper.api.CrazyManager;
 import com.badbones69.crazycrates.core.config.types.Config;
-import com.badbones69.crazycrates.paper.api.v2.enums.KeyType;
-import com.badbones69.crazycrates.paper.api.v2.enums.settings.Messages;
-import com.badbones69.crazycrates.paper.api.oldobjects.Crate;
 import com.badbones69.crazycrates.paper.api.v2.objects.builder.ItemBuilder;
 import de.tr7zw.changeme.nbtapi.NBTItem;
-import org.bukkit.Sound;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import java.text.NumberFormat;
 import java.util.List;
 
 public class MenuListener implements Listener {
 
     private static final CrazyCrates plugin = CrazyCrates.getPlugin(CrazyCrates.class);
 
-    private static final CrazyManager crazyManager = plugin.getCrazyManager();
+    //private static final CrazyManager crazyManager = plugin.getCrazyManager();
     
     public static void openGUI(Player player) {
         int size = plugin.getApiManager().getConfig().getProperty(Config.INVENTORY_SIZE);
@@ -90,7 +82,7 @@ public class MenuListener implements Listener {
             }
         }
 
-        for (Crate crate : crazyManager.getCrates()) {
+        /*for (Crate crate : crazyManager.getCrates()) {
             FileConfiguration file = crate.getFile();
 
             if (file != null) {
@@ -115,19 +107,19 @@ public class MenuListener implements Listener {
                     .build());
                 }
             }
-        }
+        }*/
 
         player.openInventory(inv);
     }
 
     private static String getCrates(Player player, String option) {
-        for (Crate crate : crazyManager.getCrates()) {
+        //for (Crate crate : crazyManager.getCrates()) {
             //if (crate.getCrateType() != CrateType.MENU) {
             //    option = option.replaceAll("%" + crate.getName().toLowerCase() + "%", crazyManager.getVirtualKeys(player, crate) + "")
             //    .replaceAll("%" + crate.getName().toLowerCase() + "_physical%", crazyManager.getPhysicalKeys(player, crate) + "")
             //    .replaceAll("%" + crate.getName().toLowerCase() + "_total%", crazyManager.getTotalKeys(player, crate) + "");
             //}
-        }
+        //}
 
         return option;
     }
@@ -138,9 +130,9 @@ public class MenuListener implements Listener {
         Inventory inv = e.getInventory();
 
         if (inv != null) {
-            for (Crate crate : crazyManager.getCrates()) {
+            //for (Crate crate : crazyManager.getCrates()) {
                 //if (crate.getCrateType() != CrateType.MENU && crate.isCrateMenu(e.getView())) return;
-            }
+            //}
 
             if (e.getView().getTitle().equals(Methods.sanitizeColor(plugin.getApiManager().getConfig().getProperty(Config.INVENTORY_NAME)))) {
                 e.setCancelled(true);
@@ -151,7 +143,7 @@ public class MenuListener implements Listener {
                     if (item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
                         NBTItem nbtItem = new NBTItem(item);
 
-                        if (nbtItem.hasNBTData() && nbtItem.hasKey("CrazyCrates-Crate")) {
+                        /*if (nbtItem.hasNBTData() && nbtItem.hasKey("CrazyCrates-Crate")) {
                             Crate crate = crazyManager.getCrateFromName(nbtItem.getString("CrazyCrates-Crate"));
 
                             if (crate != null) {
@@ -210,7 +202,7 @@ public class MenuListener implements Listener {
 
                                 crazyManager.openCrate(player, crate, keyType, player.getLocation(), true, false);
                             }
-                        }
+                        }*/
                     }
                 }
             }

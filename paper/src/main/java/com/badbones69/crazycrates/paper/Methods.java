@@ -1,12 +1,12 @@
 package com.badbones69.crazycrates.paper;
 
-import com.badbones69.crazycrates.paper.api.CrazyManager;
+import com.badbones69.crazycrates.paper.api.v1.CrazyManager;
 import com.badbones69.crazycrates.core.config.types.PluginConfig;
 import com.badbones69.crazycrates.paper.api.v2.enums.settings.Messages;
-import com.badbones69.crazycrates.paper.api.events.PlayerPrizeEvent;
-import com.badbones69.crazycrates.paper.api.oldobjects.Crate;
+import com.badbones69.crazycrates.paper.api.v1.events.PlayerPrizeEvent;
+import com.badbones69.crazycrates.paper.api.v1.oldobjects.Crate;
 import com.badbones69.crazycrates.paper.api.v2.objects.builder.ItemBuilder;
-import com.badbones69.crazycrates.paper.api.oldobjects.Prize;
+import com.badbones69.crazycrates.paper.api.v1.oldobjects.Prize;
 import com.badbones69.crazycrates.paper.api.v2.enums.Permissions;
 import com.badbones69.crazycrates.paper.listeners.FireworkDamageListener;
 import de.tr7zw.changeme.nbtapi.NBTItem;
@@ -31,7 +31,7 @@ public class Methods {
 
     private static final CrazyCrates plugin = CrazyCrates.getPlugin(CrazyCrates.class);
 
-    private static final CrazyManager crazyManager = plugin.getCrazyManager();
+    //private static final CrazyManager crazyManager = plugin.getCrazyManager();
     private static final Random random = new Random();
 
     public static void broadCastMessage(FileConfiguration crateFile, Player player) {
@@ -74,7 +74,8 @@ public class Methods {
 
     public static HashMap<ItemStack, String> getItems(Player player) {
         HashMap<ItemStack, String> items = new HashMap<>();
-        FileConfiguration file = crazyManager.getOpeningCrate(player).getFile();
+        //FileConfiguration file = crazyManager.getOpeningCrate(player).getFile();
+        FileConfiguration file = null;
 
         for (String reward : file.getConfigurationSection("Crate.Prizes").getKeys(false)) {
             String id = file.getString("Crate.Prizes." + reward + ".DisplayItem");
@@ -311,7 +312,7 @@ public class Methods {
      */
     public static void pickPrize(Player player, Crate crate, Prize prize) {
         if (prize != null) {
-            crazyManager.givePrize(player, prize, crate);
+            //crazyManager.givePrize(player, prize, crate);
 
             if (prize.useFireworks()) firework(player.getLocation().add(0, 1, 0));
 

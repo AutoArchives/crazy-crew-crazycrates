@@ -7,11 +7,11 @@ import com.badbones69.crazycrates.paper.api.v2.storage.objects.UserData;
 import com.badbones69.crazycrates.paper.api.v2.objects.Crate;
 import com.badbones69.crazycrates.core.frame.CrazyLogger;
 import com.badbones69.crazycrates.core.frame.storage.enums.StorageType;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
@@ -20,6 +20,8 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class YamlUserManager extends YamlConfiguration implements UserManager {
+
+    private final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
 
     private final File file;
     private final CrateManager crateManager;
@@ -123,7 +125,7 @@ public class YamlUserManager extends YamlConfiguration implements UserManager {
 
     @Override
     public void addUser(UUID uuid, Crate crate) {
-        Player player = Bukkit.getServer().getPlayer(uuid);
+        Player player = this.plugin.getServer().getPlayer(uuid);
 
         // Get the configuration section. This is used to check for existing users.
         ConfigurationSection section = getConfigurationSection("users");
@@ -171,7 +173,7 @@ public class YamlUserManager extends YamlConfiguration implements UserManager {
 
     @Override
     public UserData getUser(UUID uuid, Crate crate) {
-        Player player = Bukkit.getServer().getPlayer(uuid);
+        Player player = this.plugin.getServer().getPlayer(uuid);
 
         // Check if player is not null and is online before checking the files.
         if (player != null && player.isOnline()) {
@@ -199,7 +201,7 @@ public class YamlUserManager extends YamlConfiguration implements UserManager {
 
     @Override
     public void addKey(UUID uuid, int amount, Crate crate) {
-        Player player = Bukkit.getServer().getPlayer(uuid);
+        Player player = this.plugin.getServer().getPlayer(uuid);
 
         // Check if the player is null or if the player is not online but has played before.
         if (player == null || !player.isOnline() && player.hasPlayedBefore()) {
@@ -231,7 +233,7 @@ public class YamlUserManager extends YamlConfiguration implements UserManager {
 
     @Override
     public void removeKey(UUID uuid, int amount, Crate crate) {
-        Player player = Bukkit.getServer().getPlayer(uuid);
+        Player player = this.plugin.getServer().getPlayer(uuid);
 
         // Check if the player is null or if the player is not online but has played before.
         if (player == null || !player.isOnline() && player.hasPlayedBefore()) {

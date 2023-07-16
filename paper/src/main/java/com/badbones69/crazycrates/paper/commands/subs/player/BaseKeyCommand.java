@@ -49,8 +49,10 @@ public class BaseKeyCommand extends BaseCommand {
 
         boolean hasKeys = false;
 
-        for (Crate crate : this.plugin.getApiManager().getCrateManager().getCrates()) {
-            int amount = this.plugin.getApiManager().getUserManager().getUser(target.getUniqueId(), crate).getKey(crate);
+        /*for (Crate crate : this.plugin.getApiManager().getCrateManager().getCrates()) {
+            //int amount = this.plugin.getApiManager().getUserManager().getUser(target.getUniqueId(), crate).getKey(crate);
+
+            int amount = 1;
 
             if (amount > 0) {
                 hasKeys = true;
@@ -59,7 +61,7 @@ public class BaseKeyCommand extends BaseCommand {
                 placeholders.put("{keys}", String.valueOf(amount));
                 message.add(Messages.PER_CRATE.getMessageNoPrefix(placeholders));
             }
-        }
+        }*/
 
         if (hasKeys) {
             sender.sendMessage(Messages.convertList(message));

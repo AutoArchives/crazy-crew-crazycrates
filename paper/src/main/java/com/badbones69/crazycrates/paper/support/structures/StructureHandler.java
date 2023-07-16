@@ -30,7 +30,7 @@ public class StructureHandler {
     private final List<Location> preStructureBlocks = new ArrayList<>();
 
     private StructureManager getStructureManager() {
-        return plugin.getServer().getStructureManager();
+        return this.plugin.getServer().getStructureManager();
     }
 
     private BlockVector getStructureSize() {

@@ -1,26 +1,21 @@
 package com.badbones69.crazycrates.paper.support.placeholders;
 
 import com.badbones69.crazycrates.paper.CrazyCrates;
-import com.badbones69.crazycrates.paper.api.CrazyManager;
-import com.badbones69.crazycrates.paper.api.oldobjects.Crate;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import java.text.NumberFormat;
 
 public class PlaceholderAPISupport extends PlaceholderExpansion {
 
     private final CrazyCrates plugin = CrazyCrates.getPlugin(CrazyCrates.class);
-
-    private final CrazyManager crazyManager = plugin.getCrazyManager();
     
     @Override
     public String onRequest(OfflinePlayer player, @NotNull String identifier) {
         if (player.isOnline()) {
             Player playerOnline = (Player) player;
 
-            for (Crate crate : crazyManager.getCrates()) {
+            /*for (Crate crate : crazyManager.getCrates()) {
                 //if (crate.getCrateType() != CrateType.MENU) {
                     if (identifier.equalsIgnoreCase(crate.getName())) {
                         return NumberFormat.getNumberInstance().format(crazyManager.getVirtualKeys(playerOnline, crate));
@@ -30,7 +25,7 @@ public class PlaceholderAPISupport extends PlaceholderExpansion {
                         return NumberFormat.getNumberInstance().format(crazyManager.getTotalKeys(playerOnline, crate));
                     }
                 //}
-            }
+            }*/
         }
 
         return "";

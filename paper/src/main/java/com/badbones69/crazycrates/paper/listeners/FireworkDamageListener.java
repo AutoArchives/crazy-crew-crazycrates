@@ -16,9 +16,6 @@ public class FireworkDamageListener implements Listener {
 
     private static final NamespacedKey noDamage = new NamespacedKey(plugin, "no-damage");
 
-    /**
-     * @param firework The firework you want to add.
-     */
     public static void addFirework(Entity firework) {
         PersistentDataContainer container = firework.getPersistentDataContainer();
 

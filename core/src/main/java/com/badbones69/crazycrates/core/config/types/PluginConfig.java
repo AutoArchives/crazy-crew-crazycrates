@@ -76,19 +76,6 @@ public class PluginConfig implements SettingsHolder {
     @Comment("Whether you want to have verbose logging enabled.")
     public static final Property<Boolean> VERBOSE_LOGGING = PropertyInitializer.newProperty("verbose-logging", true);
 
-    @Comment("Should auto save be enabled?")
-    public static final Property<Boolean> AUTO_SAVE_TOGGLE = PropertyInitializer.newProperty("auto-save.toggle", true);
-
-    @Comment("How long in between auto save intervals? Value is in milliseconds! 300,000 = 5 minutes")
-    public static final Property<Integer> AUTO_SAVE_TIME = PropertyInitializer.newProperty("auto-save.time", 300000);
-
     @Comment("Whether you want statistics sent to https://bstats.org.")
     public static final Property<Boolean> TOGGLE_METRICS = PropertyInitializer.newProperty("toggle-metrics", true);
-
-    //@Comment({
-    //        "Available Values: json / yaml",
-    //        "This is only related to how user data is stored!",
-    //        "Defaults to users.yml"
-    //})
-    //public static final Property<DataSupport> DATA_TYPE = newProperty(DataSupport.class, "data.type", DataSupport.yaml);
 }

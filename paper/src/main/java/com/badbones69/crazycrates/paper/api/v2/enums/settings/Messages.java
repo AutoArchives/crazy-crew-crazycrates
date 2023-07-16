@@ -1,5 +1,6 @@
 package com.badbones69.crazycrates.paper.api.v2.enums.settings;
 
+import com.badbones69.crazycrates.core.frame.CrazyLogger;
 import com.badbones69.crazycrates.paper.CrazyCrates;
 import com.badbones69.crazycrates.paper.api.v2.utils.ColorUtils;
 import com.badbones69.crazycrates.paper.Methods;
@@ -147,16 +148,16 @@ public enum Messages {
         String tooFewArgs = messages.getString("Messages.Not-Enough-Args");
 
         if (tooManyArgs != null) {
-            plugin.getLogger().warning("Found outdated config entry: " + tooManyArgs);
-            plugin.getLogger().warning("Removing now, Please use `Correct-Usage` from now on." );
+            CrazyLogger.warn("Found outdated config entry: " + tooManyArgs);
+            CrazyLogger.warn("Removing now, Please use `Correct-Usage` from now on." );
 
             messages.set("Messages.Too-Many-Args", null);
             FileManager.Files.MESSAGES.saveFile();
         }
 
         if (tooFewArgs != null) {
-            plugin.getLogger().warning("Found outdated config entry: " + tooFewArgs);
-            plugin.getLogger().warning("Removing now, Please use `Correct-Usage` from now on." );
+            CrazyLogger.warn("Found outdated config entry: " + tooFewArgs);
+            CrazyLogger.warn("Removing now, Please use `Correct-Usage` from now on." );
 
             messages.set("Messages.Not-Enough-Args", null);
             FileManager.Files.MESSAGES.saveFile();
