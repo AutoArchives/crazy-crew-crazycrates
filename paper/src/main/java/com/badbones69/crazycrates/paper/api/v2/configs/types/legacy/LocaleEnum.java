@@ -1,7 +1,7 @@
 package com.badbones69.crazycrates.paper.api.v2.configs.types.legacy;
 
 import com.badbones69.crazycrates.paper.api.v2.utils.MiscUtils;
-import com.ryderbelserion.crazycrates.core.CrazyLogger;
+import com.ryderbelserion.crazycrates.core.frame.CrazyLogger;
 import org.bukkit.configuration.Configuration;
 import java.util.ArrayList;
 import java.util.List;

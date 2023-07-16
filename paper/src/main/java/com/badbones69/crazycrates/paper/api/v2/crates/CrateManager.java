@@ -1,8 +1,8 @@
 package com.badbones69.crazycrates.paper.api.v2.crates;
 
 import com.badbones69.crazycrates.paper.api.v2.objects.Crate;
-import com.ryderbelserion.crazycrates.core.CrazyLogger;
-import com.ryderbelserion.crazycrates.core.utils.FileUtils;
+import com.ryderbelserion.crazycrates.core.frame.CrazyLogger;
+import com.ryderbelserion.crazycrates.core.frame.utils.FileUtils;
 
 import java.io.File;
 import java.util.ArrayList;

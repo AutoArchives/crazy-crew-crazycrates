@@ -1,7 +1,7 @@
 package com.badbones69.crazycrates.paper.api.v2.storage.interfaces;
 
 import com.badbones69.crazycrates.paper.api.v2.storage.CrateData;
-import com.ryderbelserion.crazycrates.core.storage.enums.StorageType;
+import com.ryderbelserion.crazycrates.core.frame.storage.enums.StorageType;
 import org.bukkit.Location;
 import java.io.File;
 import java.util.Map;

@@ -2,7 +2,7 @@ package com.badbones69.crazycrates.paper.api.v2.storage.interfaces;
 
 import com.badbones69.crazycrates.paper.api.v2.objects.Crate;
 import com.badbones69.crazycrates.paper.api.v2.storage.objects.UserData;
-import com.ryderbelserion.crazycrates.core.storage.enums.StorageType;
+import com.ryderbelserion.crazycrates.core.frame.storage.enums.StorageType;
 import java.io.File;
 import java.util.Map;
 import java.util.UUID;

@@ -3,7 +3,7 @@ package com.badbones69.crazycrates.paper.commands.engine.paper.example;
 /*
 import cloud.commandframework.context.CommandContext;
 import com.badbones69.crazycrates.paper.commands.engine.paper.BukkitCommandManager;
-import com.ryderbelserion.crazycrates.core.command.CloudCommandEngine;
+import com.ryderbelserion.crazycrates.core.frame.command.CloudCommandEngine;
 import com.ryderbelserion.stick.core.utils.AdventureUtils;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;

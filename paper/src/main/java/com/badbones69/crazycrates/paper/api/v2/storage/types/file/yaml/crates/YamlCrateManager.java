@@ -5,7 +5,7 @@ import com.badbones69.crazycrates.paper.api.v2.objects.Crate;
 import com.badbones69.crazycrates.paper.api.v2.storage.CrateData;
 import com.badbones69.crazycrates.paper.api.v2.storage.CustomLocation;
 import com.badbones69.crazycrates.paper.api.v2.storage.interfaces.LocationManager;
-import com.ryderbelserion.crazycrates.core.storage.enums.StorageType;
+import com.ryderbelserion.crazycrates.core.frame.storage.enums.StorageType;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
