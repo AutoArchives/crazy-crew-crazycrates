@@ -1,0 +1,35 @@
+{
+	"schemaVersion": 1,
+	"id": "crazycrates",
+	"version": "${version}",
+	"name": "${name}",
+	"description": "${description}",
+	"authors": [
+		"Ryder Belserion"
+	],
+	"contact": {
+		"homepage": "${website}",
+		"sources": "${sources}",
+		"issues": "${issues}"
+	},
+	"license": "MIT",
+	"icon": "assets/icon.png",
+	"environment": "server",
+	"entrypoints": {
+		"server": [
+			"${group}.server.CrazyCrates"
+		]
+	},
+	"mixins": [
+		{
+			"config": "crazycrates.server.mixins.json",
+			"environment": "server"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=${fabricLoaderVersion}",
+		"minecraft": "~${minecraftVersion}",
+		"java": ">=17",
+		"fabric-api": ">=${fabricApiVersion}"
+	}
+}

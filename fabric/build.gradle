@@ -1,0 +1,55 @@
+plugins {
+    id 'fabric-loom' version "$fabricLoomVersion"
+}
+
+group = "${rootProject.group}.fabric"
+version = rootProject.version
+
+dependencies {
+    compileOnly project(':core')
+
+    minecraft("com.mojang:minecraft:$minecraftVersion")
+
+    mappings(loom.officialMojangMappings())
+
+    modImplementation("net.fabricmc:fabric-loader:$fabricLoaderVersion")
+    modImplementation("net.fabricmc.fabric-api:fabric-api:$fabricApiVersion")
+
+    modImplementation include("cloud.commandframework:cloud-fabric:$cloudVersion")
+    modImplementation include("net.kyori:adventure-platform-fabric:$advFabricVersion")
+}
+
+base {
+    archivesName = "${rootProject.name}-${project.name}"
+}
+
+remapJar {
+    dependsOn ":core:shadowJar"
+}
+
+processResources {
+    filesMatching('fabric.mod.json') {
+        expand(
+                'name': rootProject.name,
+                'group': project.group,
+                'version': project.version,
+                'description': rootProject.description,
+                'fabricApiVersion': fabricApiVersion,
+                'fabricLoaderVersion': fabricLoaderVersion,
+                'minecraftVersion': minecraftVersion,
+                'website': website,
+                'sources': sources,
+                'issues': issues
+        )
+    }
+}
+
+loom {
+    mixin {
+        defaultRefmapName = "crazycrates.refmap.json"
+    }
+
+    runConfigs.configureEach {
+        ideConfigGenerated(true)
+    }
+}

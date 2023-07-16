@@ -41,6 +41,13 @@ allprojects {
     //    }
     //}
 
+    project(":fabric") {
+        repositories {
+            maven { url = 'https://maven.fabricmc.net/' }
+            maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
+        }
+    }
+
     project(":paper") {
         repositories {
             maven { url = "https://repo.extendedclip.com/content/repositories/placeholderapi/" }
@@ -57,11 +64,6 @@ allprojects {
     }
 
     dependencies {
-        // Provided by Mojang/Paper/Fabric
-        compileOnly("net.kyori:adventure-api:$advVersion")
-        compileOnly("net.kyori:adventure-text-minimessage:$advVersion")
-        compileOnly("com.google.code.gson:gson:$gsonVersion")
-
         implementation("cloud.commandframework:cloud-core:$cloudVersion")
         implementation("cloud.commandframework:cloud-paper:$cloudVersion")
         implementation("cloud.commandframework:cloud-brigadier:$cloudVersion")
@@ -74,6 +76,11 @@ allprojects {
         implementation("com.github.Carleslc.Simple-YAML:Simple-Yaml:$yamlVersion") {
             exclude group: 'org.yaml', module: 'snakeyaml'
         }
+
+        // Provided by Mojang/Paper/Fabric
+        compileOnly("net.kyori:adventure-api:$advVersion")
+        compileOnly("net.kyori:adventure-text-minimessage:$advVersion")
+        compileOnly("com.google.code.gson:gson:$gsonVersion")
     }
 
     jar {
