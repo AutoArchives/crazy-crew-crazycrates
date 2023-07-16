@@ -37,6 +37,8 @@ public class DecentHologramSupport implements HologramManager {
 
     @Override
     public void purge() {
+        if (holograms.isEmpty()) return;
+
         holograms.forEach((key, value) -> value.delete());
         holograms.clear();
     }

@@ -44,6 +44,8 @@ public class CMIHologramSupport implements HologramManager {
 
     @Override
     public void purge() {
+        if (holograms.isEmpty()) return;
+
         holograms.forEach((Key, value) -> value.remove());
         holograms.clear();
     }
