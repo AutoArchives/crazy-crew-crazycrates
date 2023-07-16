@@ -2,6 +2,8 @@ plugins {
     id 'java'
 }
 
+defaultTasks 'build'
+
 rootProject.group = 'com.badbones69.crazycrates'
 rootProject.description = 'Add unlimited crates to your server with 10 different crate types to choose from!'
 rootProject.version = '2.0.0-rc1'
@@ -55,16 +57,30 @@ allprojects {
     }
 
     dependencies {
+        // Provided by Mojang/Paper/Fabric
+        compileOnly("net.kyori:adventure-api:$advVersion")
+        compileOnly("net.kyori:adventure-text-minimessage:$advVersion")
+        compileOnly("com.google.code.gson:gson:$gsonVersion")
+
         implementation("cloud.commandframework:cloud-core:$cloudVersion")
+        implementation("cloud.commandframework:cloud-paper:$cloudVersion")
         implementation("cloud.commandframework:cloud-brigadier:$cloudVersion")
         implementation("cloud.commandframework:cloud-minecraft-extras:$cloudVersion")
 
-        implementation "net.kyori:adventure-platform-bukkit:$advBukkitVersion"
+        implementation("net.kyori:adventure-platform-bukkit:$advBukkitVersion")
 
         implementation("ch.jalu:configme:$configVersion")
 
         implementation("com.github.Carleslc.Simple-YAML:Simple-Yaml:$yamlVersion") {
             exclude group: 'org.yaml', module: 'snakeyaml'
+        }
+    }
+
+    jar {
+        if (rootProject.name == project.name) {
+            archiveBaseName = rootProject.name
+        } else {
+            archiveBaseName = "${rootProject.name}-${project.name}"
         }
     }
 

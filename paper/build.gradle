@@ -1,8 +1,6 @@
 plugins {
     id 'java'
     id 'io.papermc.paperweight.userdev' version "$paperweightVersion"
-
-    id 'com.github.johnrengelman.shadow' version "$shadowVersion"
 }
 
 group = "${rootProject.group}.paper"
@@ -21,9 +19,6 @@ dependencies {
     compileOnly("dev.triumphteam:triumph-cmd-bukkit:$triumphCmdVersion")
     compileOnly("com.github.decentsoftware-eu:decentholograms:$decentHologramsVersion")
 
-    compileOnly("ch.jalu:configme:$configVersion")
-
-    implementation("cloud.commandframework:cloud-paper:$cloudVersion")
     implementation("org.bstats:bstats-bukkit:$bstatsVersion")
     implementation("de.tr7zw:item-nbt-api:$nbtVersion")
 
@@ -34,32 +29,28 @@ base {
     archivesName = "${rootProject.name}-${project.name}"
 }
 
+compileJava {
+    dependsOn ":core:shadowJar"
+}
+
 assemble {
     dependsOn reobfJar
+    doLast {
+        delete fileTree(dir: "$buildDir", include: '**/*-dev*.jar')
+    }
 }
 
 reobfJar {
     outputJar = file("$buildDir/libs/${rootProject.name}-${project.name}-${project.version}.jar")
 }
 
-shadowJar {
-    [
-            "ch.jalu",
-            "de.tr7zw",
-            "org.bstats",
-            "cloud.commandframework"
-    ].forEach { relocate it, "libs.$it" }
-}
-
 processResources {
-    filesMatching('plugin.yml') {
+    filesMatching('paper-plugin.yml') {
         expand(
                 'name': rootProject.name,
                 'group': project.group,
                 'version': project.version,
-                'authors': authors,
-                'description': project.properties['description'],
-                'website': website
+                'description': rootProject.description
         )
     }
 }

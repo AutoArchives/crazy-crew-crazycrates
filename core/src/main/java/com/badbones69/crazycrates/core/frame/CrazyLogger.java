@@ -9,13 +9,13 @@ public class CrazyLogger {
     }
 
     public static void debug(String message, Exception exception) {
-        log("<yellow>[DEBUG] " + message);
+        log(CrazyCore.api().getConsolePrefix() + "<yellow>[DEBUG]</yellow> " + message);
 
         if (exception != null) exception.printStackTrace();
     }
 
     public static void info(String message) {
-        log("<aqua>[INFO] " + message);
+        log(CrazyCore.api().getConsolePrefix() + "<dark_aqua>[INFO]</dark_aqua> " + message);
     }
 
     public static void severe(String message) {
@@ -23,7 +23,7 @@ public class CrazyLogger {
     }
 
     public static void severe(String message, Exception exception) {
-        log("<red>[ERROR] " + message);
+        log(CrazyCore.api().getConsolePrefix() + "<red>[ERROR]</red> " + message);
 
         if (exception != null) exception.printStackTrace();
     }
@@ -33,7 +33,7 @@ public class CrazyLogger {
     }
 
     public static void warn(String message, Exception exception) {
-        log("<yellow>[WARN] " + message);
+        log(CrazyCore.api().getConsolePrefix() + "<yellow>[WARN]</yellow> " + message);
 
         if (exception != null) exception.printStackTrace();
     }

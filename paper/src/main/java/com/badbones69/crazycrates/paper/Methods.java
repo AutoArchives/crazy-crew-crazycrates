@@ -181,7 +181,7 @@ public class Methods {
     }
 
     public static String getPrefix(String msg) {
-        return color(plugin.getApiManager().getPluginConfig().getProperty(PluginConfig.COMMAND_PREFIX) + msg);
+        return color(plugin.getApiManager().getPluginConfig().getProperty(PluginConfig.COMMAND_PREFIX)) + msg;
     }
 
     public static boolean isInventoryFull(Player player) {

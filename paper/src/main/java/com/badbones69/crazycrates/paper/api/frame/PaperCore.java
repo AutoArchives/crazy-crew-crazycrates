@@ -43,12 +43,17 @@ public class PaperCore extends CrazyCore {
 
     @Override
     public Path getDirectory() {
-        return null;
+        return this.plugin.getDataFolder().toPath();
     }
 
     @Override
     public String getPrefix() {
         return this.apiManager.getPluginConfig().getProperty(PluginConfig.COMMAND_PREFIX);
+    }
+
+    @Override
+    public String getConsolePrefix() {
+        return this.apiManager.getPluginConfig().getProperty(PluginConfig.CONSOLE_PREFIX);
     }
 
     @Override

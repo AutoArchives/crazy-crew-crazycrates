@@ -18,6 +18,8 @@ public class CrazyCrates extends JavaPlugin implements Listener {
     public void onEnable() {
         this.apiManager = new ApiManager(getDataFolder().toPath(), this);
 
+        this.apiManager.load(true);
+
         MiscUtils.registerPermissions(getServer().getPluginManager());
 
         // Create instance.
@@ -36,6 +38,8 @@ public class CrazyCrates extends JavaPlugin implements Listener {
     public void onDisable() {
         if (this.apiManager.getUserManager() != null) this.apiManager.getUserManager().save();
         if (this.apiManager.getHolograms() != null) this.apiManager.getHolograms().purge();
+
+        if (this.apiManager.getPaperCore() != null) this.apiManager.getPaperCore().disable();
     }
 
     public ApiManager getApiManager() {

@@ -18,7 +18,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
-public class BukkitCommandManager implements CloudBuilder, CloudActor {
+public class BukkitCommandManager implements CloudActor, CloudBuilder {
 
     private PaperCommandManager<@NotNull Sender> paperManager;
 
