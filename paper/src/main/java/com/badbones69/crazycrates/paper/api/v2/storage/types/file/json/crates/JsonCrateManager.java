@@ -2,8 +2,8 @@ package com.badbones69.crazycrates.paper.api.v2.storage.types.file.json.crates;
 
 import com.badbones69.crazycrates.paper.api.v2.storage.interfaces.LocationManager;
 import com.badbones69.crazycrates.paper.api.v2.storage.CrateData;
-import com.ryderbelserion.crazycrates.core.frame.storage.FileHandler;
-import com.ryderbelserion.crazycrates.core.frame.storage.enums.StorageType;
+import com.badbones69.crazycrates.core.frame.storage.FileHandler;
+import com.badbones69.crazycrates.core.frame.storage.enums.StorageType;
 import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.World;

@@ -4,7 +4,7 @@ import com.badbones69.crazycrates.paper.CrazyCrates;
 import com.badbones69.crazycrates.paper.api.v2.utils.ColorUtils;
 import com.badbones69.crazycrates.paper.Methods;
 import com.badbones69.crazycrates.paper.api.CrazyManager;
-import com.badbones69.crazycrates.paper.api.v2.configs.types.Config;
+import com.badbones69.crazycrates.core.config.types.Config;
 import com.badbones69.crazycrates.paper.api.v2.crates.types.CrateType;
 import com.badbones69.crazycrates.paper.api.v2.enums.KeyType;
 import com.badbones69.crazycrates.paper.api.v2.enums.settings.Messages;

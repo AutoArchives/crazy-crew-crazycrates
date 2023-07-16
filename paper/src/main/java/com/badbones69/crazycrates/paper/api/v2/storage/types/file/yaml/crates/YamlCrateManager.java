@@ -5,7 +5,8 @@ import com.badbones69.crazycrates.paper.api.v2.objects.Crate;
 import com.badbones69.crazycrates.paper.api.v2.storage.CrateData;
 import com.badbones69.crazycrates.paper.api.v2.storage.CustomLocation;
 import com.badbones69.crazycrates.paper.api.v2.storage.interfaces.LocationManager;
-import com.ryderbelserion.crazycrates.core.frame.storage.enums.StorageType;
+import com.badbones69.crazycrates.core.frame.storage.enums.StorageType;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
@@ -87,7 +88,7 @@ public class YamlCrateManager extends YamlConfiguration implements LocationManag
             if (name == null) return;
 
             // Converting world to a unique id.
-            World world = this.apiManager.getServer().getWorld(name);
+            World world = Bukkit.getServer().getWorld(name);
 
             int x = configuration.getInt("Locations." + id + ".X");
             int y = configuration.getInt("Locations." + id + ".Y");
@@ -181,7 +182,7 @@ public class YamlCrateManager extends YamlConfiguration implements LocationManag
             if (this.apiManager.getHolograms() != null) {
                 for (Crate crate : this.apiManager.getCrateManager().getCrates()) {
                     if (crate.getCrateName().equals(crateName)) {
-                        this.apiManager.getHolograms().remove(new Location(this.apiManager.getServer().getWorld(customLocation.world()), customLocation.x(), customLocation.y(), customLocation.z()));
+                        this.apiManager.getHolograms().remove(new Location(Bukkit.getServer().getWorld(customLocation.world()), customLocation.x(), customLocation.y(), customLocation.z()));
 
                         break;
                     }

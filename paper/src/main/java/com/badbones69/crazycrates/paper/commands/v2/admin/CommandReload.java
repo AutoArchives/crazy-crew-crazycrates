@@ -6,7 +6,7 @@ import com.badbones69.crazycrates.paper.CrazyCrates;
 import com.badbones69.crazycrates.paper.commands.engine.v2.builders.requirements.CommandRequirementsBuilder;
 import com.badbones69.crazycrates.paper.api.v2.configs.types.Locale;
 import com.badbones69.crazycrates.paper.api.v2.enums.Permissions;
-import com.badbones69.crazycrates.paper.api.v2.support.InternalPlaceholderSupport;
+import com.badbones69.crazycrates.paper.support.InternalPlaceholderSupport;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class CommandReload extends CommandEngine {

@@ -6,7 +6,7 @@ import com.badbones69.crazycrates.paper.api.CrazyManager;
 import com.badbones69.crazycrates.paper.api.events.PlayerPrizeEvent;
 import com.badbones69.crazycrates.paper.api.oldobjects.Crate;
 import com.badbones69.crazycrates.paper.api.oldobjects.Prize;
-import com.badbones69.crazycrates.paper.api.v2.support.holograms.interfaces.HologramManager;
+import com.badbones69.crazycrates.paper.support.holograms.interfaces.HologramManager;
 import com.badbones69.crazycrates.paper.api.v2.enums.KeyType;
 import com.badbones69.crazycrates.paper.listeners.CrateControlListener;
 import com.badbones69.crazycrates.paper.support.structures.blocks.ChestStateHandler;

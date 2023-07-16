@@ -2,7 +2,7 @@ package com.badbones69.crazycrates.paper.api.v2.storage.objects;
 
 import com.badbones69.crazycrates.paper.api.v2.objects.Crate;
 import com.google.gson.annotations.Expose;
-import com.ryderbelserion.crazycrates.core.frame.CrazyLogger;
+import com.badbones69.crazycrates.core.frame.CrazyLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import java.util.Collections;

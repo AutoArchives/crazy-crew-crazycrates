@@ -3,7 +3,7 @@ package com.badbones69.crazycrates.paper.commands.v2.admin.schematics;
 /*
 import ch.jalu.configme.SettingsManager;
 import com.badbones69.crazycrates.paper.CrazyCrates;
-import com.badbones69.crazycrates.paper.api.v2.support.InternalPlaceholderSupport;
+import com.badbones69.crazycrates.paper.support.InternalPlaceholderSupport;
 import com.badbones69.crazycrates.paper.commands.engine.v2.builders.requirements.CommandRequirementsBuilder;
 import com.badbones69.crazycrates.paper.api.v2.enums.Permissions;
 import org.bukkit.plugin.java.JavaPlugin;

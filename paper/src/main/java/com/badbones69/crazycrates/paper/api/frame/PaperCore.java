@@ -1,9 +1,9 @@
 package com.badbones69.crazycrates.paper.api.frame;
 
 import com.badbones69.crazycrates.paper.api.v2.ApiManager;
-import com.badbones69.crazycrates.paper.api.v2.configs.types.PluginConfig;
-import com.ryderbelserion.crazycrates.core.frame.CrazyCore;
-import com.ryderbelserion.crazycrates.core.frame.storage.FileHandler;
+import com.badbones69.crazycrates.core.config.types.PluginConfig;
+import com.badbones69.crazycrates.core.frame.CrazyCore;
+import com.badbones69.crazycrates.core.frame.storage.FileHandler;
 import net.kyori.adventure.platform.AudienceProvider;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.plugin.java.JavaPlugin;

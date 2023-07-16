@@ -21,10 +21,11 @@ dependencies {
     compileOnly("dev.triumphteam:triumph-cmd-bukkit:$triumphCmdVersion")
     compileOnly("com.github.decentsoftware-eu:decentholograms:$decentHologramsVersion")
 
+    compileOnly("ch.jalu:configme:$configVersion")
+
     implementation("cloud.commandframework:cloud-paper:$cloudVersion")
     implementation("org.bstats:bstats-bukkit:$bstatsVersion")
     implementation("de.tr7zw:item-nbt-api:$nbtVersion")
-    implementation("ch.jalu:configme:$configVersion")
 
     paperweightDevelopmentBundle("io.papermc.paper:dev-bundle:$paperVersion")
 }

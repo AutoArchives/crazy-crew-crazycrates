@@ -1,7 +1,7 @@
 package com.badbones69.crazycrates.paper;
 
 import com.badbones69.crazycrates.paper.api.CrazyManager;
-import com.badbones69.crazycrates.paper.api.v2.configs.types.PluginConfig;
+import com.badbones69.crazycrates.core.config.types.PluginConfig;
 import com.badbones69.crazycrates.paper.api.v2.enums.settings.Messages;
 import com.badbones69.crazycrates.paper.api.events.PlayerPrizeEvent;
 import com.badbones69.crazycrates.paper.api.oldobjects.Crate;

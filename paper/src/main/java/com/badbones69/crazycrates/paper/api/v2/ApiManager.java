@@ -5,22 +5,22 @@ import ch.jalu.configme.SettingsManagerBuilder;
 import com.Zrips.CMI.Modules.ModuleHandling.CMIModule;
 import com.badbones69.crazycrates.paper.CrazyCrates;
 import com.badbones69.crazycrates.paper.api.frame.PaperCore;
-import com.badbones69.crazycrates.paper.api.v2.configs.ConfigBuilder;
-import com.badbones69.crazycrates.paper.api.v2.configs.types.PluginConfig;
-import com.badbones69.crazycrates.paper.api.v2.configs.types.legacy.LocaleMigration;
-import com.badbones69.crazycrates.paper.api.v2.configs.types.sections.PluginSupportSection;
+import com.badbones69.crazycrates.paper.api.v2.config.ConfigBuilder;
+import com.badbones69.crazycrates.core.config.types.PluginConfig;
+import com.badbones69.crazycrates.core.config.types.legacy.LocaleMigration;
+import com.badbones69.crazycrates.paper.api.v2.config.sections.PluginSupportSection;
 import com.badbones69.crazycrates.paper.api.v2.crates.CrateManager;
 import com.badbones69.crazycrates.paper.api.v2.enums.support.HologramSupport;
-import com.badbones69.crazycrates.paper.api.v2.support.InternalPlaceholderSupport;
-import com.badbones69.crazycrates.paper.api.v2.support.holograms.interfaces.HologramManager;
-import com.badbones69.crazycrates.paper.api.v2.support.holograms.types.CMIHologramSupport;
-import com.badbones69.crazycrates.paper.api.v2.support.holograms.types.DecentHologramSupport;
+import com.badbones69.crazycrates.paper.support.PlaceholderSupport;
+import com.badbones69.crazycrates.paper.support.holograms.interfaces.HologramManager;
+import com.badbones69.crazycrates.paper.support.holograms.types.CMIHologramSupport;
+import com.badbones69.crazycrates.paper.support.holograms.types.DecentHologramSupport;
 import com.badbones69.crazycrates.paper.api.v2.storage.interfaces.LocationManager;
 import com.badbones69.crazycrates.paper.api.v2.storage.interfaces.UserManager;
 import com.badbones69.crazycrates.paper.api.v2.storage.types.file.yaml.crates.YamlCrateManager;
 import com.badbones69.crazycrates.paper.api.v2.storage.types.file.yaml.users.YamlUserManager;
-import com.ryderbelserion.crazycrates.core.frame.CrazyLogger;
-import com.ryderbelserion.crazycrates.core.frame.utils.FileUtils;
+import com.badbones69.crazycrates.core.frame.CrazyLogger;
+import com.badbones69.crazycrates.core.frame.utils.FileUtils;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -45,7 +45,7 @@ public class ApiManager {
     private SettingsManager locale;
     private SettingsManager config;
 
-    private InternalPlaceholderSupport placeholderSupport;
+    private PlaceholderSupport placeholderSupport;
 
     private HologramManager holograms;
 
@@ -88,7 +88,7 @@ public class ApiManager {
                 .configurationData(ConfigBuilder.buildConfig())
                 .create();
 
-        this.placeholderSupport = new InternalPlaceholderSupport(this);
+        this.placeholderSupport = new PlaceholderSupport(this);
 
         // Re-initialize crate manager.
         this.crateManager = new CrateManager(this.path.toFile());
@@ -210,8 +210,12 @@ public class ApiManager {
         return this.config;
     }
 
+    public PaperCore getPaperCore() {
+        return this.paperCore;
+    }
+
     // Placeholders.
-    public InternalPlaceholderSupport getPlaceholderSupport() {
+    public PlaceholderSupport getPlaceholderSupport() {
         return this.placeholderSupport;
     }
 

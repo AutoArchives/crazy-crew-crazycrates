@@ -3,7 +3,7 @@ package com.badbones69.crazycrates.paper.api.frame.items;
 import com.badbones69.crazycrates.paper.api.frame.ItemUtils;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
-import com.ryderbelserion.crazycrates.core.frame.CrazyLogger;
+import com.badbones69.crazycrates.core.frame.CrazyLogger;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;

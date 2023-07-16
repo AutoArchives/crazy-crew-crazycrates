@@ -3,7 +3,7 @@ package com.badbones69.crazycrates.paper;
 import com.badbones69.crazycrates.paper.api.*;
 import com.badbones69.crazycrates.paper.api.v2.ApiManager;
 import com.badbones69.crazycrates.paper.api.v2.utils.MiscUtils;
-import com.badbones69.crazycrates.paper.api.v2.support.holograms.interfaces.HologramManager;
+import com.badbones69.crazycrates.paper.support.holograms.interfaces.HologramManager;
 import com.badbones69.crazycrates.paper.commands.engine.paper.BukkitCommandManager;
 import com.badbones69.crazycrates.paper.listeners.v2.DataListener;
 import com.badbones69.crazycrates.paper.support.structures.blocks.ChestStateHandler;

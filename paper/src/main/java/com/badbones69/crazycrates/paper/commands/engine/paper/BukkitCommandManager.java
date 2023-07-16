@@ -8,37 +8,36 @@ import cloud.commandframework.execution.CommandExecutionCoordinator;
 import cloud.commandframework.execution.CommandExecutionHandler;
 import cloud.commandframework.meta.CommandMeta;
 import cloud.commandframework.paper.PaperCommandManager;
-import com.ryderbelserion.crazycrates.core.frame.command.CloudCommandManager;
-import com.ryderbelserion.crazycrates.core.frame.command.other.CloudActor;
-import com.ryderbelserion.crazycrates.core.frame.command.other.CloudBuilder;
-import com.ryderbelserion.stick.core.utils.AdventureUtils;
+import com.badbones69.crazycrates.core.frame.command.CloudCommandManager;
+import com.badbones69.crazycrates.core.frame.command.Sender;
+import com.badbones69.crazycrates.core.frame.command.other.CloudActor;
+import com.badbones69.crazycrates.core.frame.command.other.CloudBuilder;
+import com.badbones69.crazycrates.core.frame.utils.AdventureUtils;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
-import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-import java.util.function.Function;
 
 public class BukkitCommandManager implements CloudBuilder, CloudActor {
 
-    private PaperCommandManager<@NotNull CommandSender> paperManager;
+    private PaperCommandManager<@NotNull Sender> paperManager;
 
     private final CloudCommandManager cloudCommandManager;
 
     private final String name;
     private final String description;
-    private final CommandExecutionHandler<CommandSender> handler;
+    private final CommandExecutionHandler<Sender> handler;
 
-    public static BukkitCommandManager create(JavaPlugin plugin, String name, String description, CommandExecutionHandler<CommandSender> handler) {
+    public static BukkitCommandManager create(JavaPlugin plugin, String name, String description, CommandExecutionHandler<Sender> handler) {
         return new BukkitCommandManager(plugin, name, description, handler);
     }
 
-    public BukkitCommandManager(JavaPlugin plugin, String name, String description, CommandExecutionHandler<CommandSender> handler) {
+    public BukkitCommandManager(JavaPlugin plugin, String name, String description, CommandExecutionHandler<Sender> handler) {
         // Create paper manager.
         try {
             this.paperManager = new PaperCommandManager<>(plugin, CommandExecutionCoordinator.simpleCoordinator(),
-                    Function.identity(),
-                    Function.identity());
+                    BukkitSender::create,
+                    Sender::getSender);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -59,7 +58,7 @@ public class BukkitCommandManager implements CloudBuilder, CloudActor {
             this.paperManager.registerBrigadier();
 
             // Get brigadier manager.
-            CloudBrigadierManager<CommandSender, ?> brigadier = this.paperManager.brigadierManager();
+            CloudBrigadierManager<Sender, ?> brigadier = this.paperManager.brigadierManager();
 
             // Set native number suggestions to false.
             if (brigadier != null) brigadier.setNativeNumberSuggestions(false);
@@ -75,7 +74,7 @@ public class BukkitCommandManager implements CloudBuilder, CloudActor {
     }
 
     @Override
-    public @NotNull CommandManager<@NotNull CommandSender> getManager() {
+    public @NotNull CommandManager<@NotNull Sender> getManager() {
         return this.paperManager;
     }
 
@@ -90,12 +89,12 @@ public class BukkitCommandManager implements CloudBuilder, CloudActor {
     }
 
     @Override
-    public CommandExecutionHandler<CommandSender> getHandler() {
+    public CommandExecutionHandler<Sender> getHandler() {
         return this.handler;
     }
 
     @Override
-    public Command.@NotNull Builder<@NotNull CommandSender> getRoot() {
+    public Command.@NotNull Builder<@NotNull Sender> getRoot() {
         return this.paperManager.commandBuilder(getName())
                 .meta(CommandMeta.DESCRIPTION, getDescription())
                 .handler(getHandler());

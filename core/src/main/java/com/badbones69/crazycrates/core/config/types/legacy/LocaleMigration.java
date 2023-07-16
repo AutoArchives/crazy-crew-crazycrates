@@ -1,0 +1,44 @@
+package com.badbones69.crazycrates.core.config.types.legacy;
+
+import org.simpleyaml.configuration.ConfigurationSection;
+import org.simpleyaml.configuration.file.YamlConfiguration;
+import java.io.File;
+import java.io.IOException;
+
+public class LocaleMigration extends YamlConfiguration {
+
+    private final File file;
+
+    public LocaleMigration(File file) {
+        this.file = file;
+    }
+
+    public void load() {
+        try {
+            load(this.file);
+
+            ConfigurationSection legacySection = getConfigurationSection("Messages");
+
+            if (legacySection != null) {
+                for (LocaleEnum value : LocaleEnum.values()) {
+                    value.setMessage(this);
+
+                    save();
+                }
+
+                set("Messages", null);
+                save();
+            }
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    public void save() {
+        try {
+            save(this.file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}

@@ -5,8 +5,9 @@ import com.badbones69.crazycrates.paper.api.v2.crates.CrateManager;
 import com.badbones69.crazycrates.paper.api.v2.storage.interfaces.UserManager;
 import com.badbones69.crazycrates.paper.api.v2.storage.objects.UserData;
 import com.badbones69.crazycrates.paper.api.v2.objects.Crate;
-import com.ryderbelserion.crazycrates.core.frame.CrazyLogger;
-import com.ryderbelserion.crazycrates.core.frame.storage.enums.StorageType;
+import com.badbones69.crazycrates.core.frame.CrazyLogger;
+import com.badbones69.crazycrates.core.frame.storage.enums.StorageType;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -124,7 +125,7 @@ public class YamlUserManager extends YamlConfiguration implements UserManager {
 
     @Override
     public void addUser(UUID uuid, Crate crate) {
-        Player player = this.apiManager.getServer().getPlayer(uuid);
+        Player player = Bukkit.getServer().getPlayer(uuid);
 
         // Get the configuration section. This is used to check for existing users.
         ConfigurationSection section = getConfigurationSection("users");
@@ -172,7 +173,7 @@ public class YamlUserManager extends YamlConfiguration implements UserManager {
 
     @Override
     public UserData getUser(UUID uuid, Crate crate) {
-        Player player = this.apiManager.getServer().getPlayer(uuid);
+        Player player = Bukkit.getServer().getPlayer(uuid);
 
         // Check if player is not null and is online before checking the files.
         if (player != null && player.isOnline()) {
@@ -200,7 +201,7 @@ public class YamlUserManager extends YamlConfiguration implements UserManager {
 
     @Override
     public void addKey(UUID uuid, int amount, Crate crate) {
-        Player player = this.apiManager.getServer().getPlayer(uuid);
+        Player player = Bukkit.getServer().getPlayer(uuid);
 
         // Check if the player is null or if the player is not online but has played before.
         if (player == null || !player.isOnline() && player.hasPlayedBefore()) {
@@ -232,7 +233,7 @@ public class YamlUserManager extends YamlConfiguration implements UserManager {
 
     @Override
     public void removeKey(UUID uuid, int amount, Crate crate) {
-        Player player = this.apiManager.getServer().getPlayer(uuid);
+        Player player = Bukkit.getServer().getPlayer(uuid);
 
         // Check if the player is null or if the player is not online but has played before.
         if (player == null || !player.isOnline() && player.hasPlayedBefore()) {

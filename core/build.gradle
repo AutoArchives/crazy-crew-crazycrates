@@ -7,14 +7,10 @@ group = "${rootProject.group}.core"
 version = rootProject.version
 
 dependencies {
+    // Provided by Mojang/Paper/Fabric
     compileOnly("net.kyori:adventure-api:$advVersion")
     compileOnly("net.kyori:adventure-text-minimessage:$advVersion")
-
-    compileOnly "com.google.code.gson:gson:$gsonVersion"
-
-    implementation("com.github.Carleslc.Simple-YAML:Simple-Yaml:$yamlVersion") {
-        exclude group: 'org.yaml', module: 'snakeyaml'
-    }
+    compileOnly("com.google.code.gson:gson:$gsonVersion")
 }
 
 base {
@@ -38,8 +34,9 @@ shadowJar {
     mergeServiceFiles()
 
     [
+      "org.yaml.snakeyaml",
       "org.simpleyaml",
-      "org.yaml.snakeyaml"
+      "ch.jalu"
     ].forEach {relocate it, "libs.$it" }
 }
 

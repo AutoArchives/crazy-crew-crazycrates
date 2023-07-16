@@ -13,7 +13,7 @@ import com.badbones69.crazycrates.paper.api.events.PlayerReceiveKeyEvent;
 import com.badbones69.crazycrates.paper.api.oldobjects.Crate;
 import com.badbones69.crazycrates.paper.api.oldobjects.CrateLocation;
 import com.badbones69.crazycrates.paper.api.oldobjects.Prize;
-import com.badbones69.crazycrates.paper.api.v2.configs.types.Config;
+import com.badbones69.crazycrates.core.config.types.Config;
 import com.badbones69.crazycrates.paper.api.v2.enums.KeyType;
 import com.badbones69.crazycrates.paper.api.v2.enums.Permissions;
 import com.badbones69.crazycrates.paper.listeners.CrateControlListener;

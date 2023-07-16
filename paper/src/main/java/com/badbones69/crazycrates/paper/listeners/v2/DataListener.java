@@ -2,6 +2,7 @@ package com.badbones69.crazycrates.paper.listeners.v2;
 
 import com.badbones69.crazycrates.paper.CrazyCrates;
 import com.badbones69.crazycrates.paper.api.v2.ApiManager;
+import com.badbones69.crazycrates.core.config.types.PluginConfig;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -29,7 +30,7 @@ public class DataListener implements Listener {
             if (crate.getCrateConfig().isStartingKeysEnabled()) {
                 this.apiManager.getUserManager().addKey(uuid, crate.getCrateConfig().getStartingKeysAmount(), crate);
 
-                //if (this.plugin.verbose()) this.plugin.getLogger().warning("Added starting keys to " + uuid + ".");
+                if (this.plugin.getApiManager().getPluginConfig().getProperty(PluginConfig.VERBOSE_LOGGING)) this.plugin.getLogger().warning("Added starting keys to " + uuid + ".");
             }
         });
     }
