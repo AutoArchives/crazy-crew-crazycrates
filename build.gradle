@@ -1,0 +1,70 @@
+plugins {
+    id 'java'
+}
+
+/*def combine = tasks.register("combine", Jar) {
+    mustRunAfter build
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    from(files(subprojects.collect {
+        it.layout.buildDirectory.file("libs/${rootProject.name}-${it.name}-${it.version}.jar").get()
+    }).filter { it.name != 'MANIFEST.MF' }.collect { if (it.isDirectory()) it else zipTree(it) })
+}
+
+assemble {
+    // this is to ensure the subprojects finish building completely before this task is finished
+    subprojects.forEach { project ->
+                dependsOn ":${project.name}:build"
+            }
+    // after subprojects are finished we can combine their jars into a fatjar
+    finalizedBy combine
+}
+ */
+
+allprojects {
+    apply plugin: 'java'
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(17)
+        }
+    }
+
+    //project(":core") {
+    //    repositories {
+    //        maven { uri = "" }
+    //    }
+    //}
+
+    project(":paper") {
+        repositories {
+            maven { url = "https://repo.extendedclip.com/content/repositories/placeholderapi/" }
+            maven { url = "https://repo.papermc.io/repository/maven-public/" }
+            maven { url = "https://repo.codemc.io/repository/maven-public/" }
+            maven { url = "https://repo.triumphteam.dev/snapshots/" }
+        }
+    }
+
+    repositories {
+        mavenCentral()
+
+        maven { url = 'https://jitpack.io' }
+    }
+
+    dependencies {
+        implementation("cloud.commandframework:cloud-core:$cloudVersion")
+        implementation("cloud.commandframework:cloud-brigadier:$cloudVersion")
+        implementation("cloud.commandframework:cloud-minecraft-extras:$cloudVersion")
+
+        implementation "net.kyori:adventure-platform-bukkit:$advBukkitVersion"
+    }
+
+    compileJava {
+        options.encoding = 'UTF-8'
+        options.release.set(17)
+    }
+
+    processResources {
+        filteringCharset = 'UTF-8'
+    }
+}
