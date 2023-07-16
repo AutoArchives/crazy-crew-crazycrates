@@ -1,6 +1,6 @@
 package com.badbones69.crazycrates.paper.api.v2.storage.types.file.yaml.users;
 
-import com.badbones69.crazycrates.paper.api.v2.ApiManager;
+import com.badbones69.crazycrates.paper.CrazyCrates;
 import com.badbones69.crazycrates.paper.api.v2.crates.CrateManager;
 import com.badbones69.crazycrates.paper.api.v2.storage.interfaces.UserManager;
 import com.badbones69.crazycrates.paper.api.v2.storage.objects.UserData;
@@ -23,16 +23,14 @@ public class YamlUserManager extends YamlConfiguration implements UserManager {
 
     private final File file;
     private final CrateManager crateManager;
-    private final ApiManager apiManager;
     private final boolean verbose;
 
     private final ConcurrentHashMap<UUID, UserData> userData = new ConcurrentHashMap<>();
 
-    public YamlUserManager(File file, CrateManager crateManager, ApiManager apiManager, boolean verbose) {
+    public YamlUserManager(File file, CrateManager crateManager, boolean verbose) {
         this.file = file;
 
         this.crateManager = crateManager;
-        this.apiManager = apiManager;
 
         this.verbose = verbose;
     }

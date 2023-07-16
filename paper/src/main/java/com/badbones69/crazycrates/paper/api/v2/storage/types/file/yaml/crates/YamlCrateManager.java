@@ -1,6 +1,7 @@
 package com.badbones69.crazycrates.paper.api.v2.storage.types.file.yaml.crates;
 
-import com.badbones69.crazycrates.paper.api.v2.ApiManager;
+import com.badbones69.crazycrates.paper.CrazyCrates;
+import com.badbones69.crazycrates.paper.api.CrazyManager;
 import com.badbones69.crazycrates.paper.api.v2.objects.Crate;
 import com.badbones69.crazycrates.paper.api.v2.storage.CrateData;
 import com.badbones69.crazycrates.paper.api.v2.storage.CustomLocation;
@@ -12,6 +13,7 @@ import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
@@ -21,15 +23,15 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class YamlCrateManager extends YamlConfiguration implements LocationManager {
 
+    private final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
+    private final CrazyManager crazyManager = this.plugin.crazyManager();
+
     private final File file;
-    private final ApiManager apiManager;
 
     private final ConcurrentHashMap<String, CrateData> crates = new ConcurrentHashMap<>();
 
-    public YamlCrateManager(File file, ApiManager apiManager) {
+    public YamlCrateManager(File file) {
         this.file = file;
-
-        this.apiManager = apiManager;
     }
 
     @Override
@@ -137,18 +139,18 @@ public class YamlCrateManager extends YamlConfiguration implements LocationManag
 
         crateData.addLocation(customLocation);
 
-        if (this.apiManager.getHolograms() != null) {
-            this.apiManager.getCrateManager().getCrates().forEach(crate -> {
+        if (this.crazyManager.getHologramManager() != null) {
+            this.crazyManager.getCrateManager().getCrates().forEach(crate -> {
                 if (!crate.getCrateHologram().isEnabled()) return;
 
-                this.apiManager.getHolograms().create(
+                this.crazyManager.getHologramManager().create(
                         location,
                         crate.getCrateHologram()
                 );
             });
         }
 
-        this.apiManager.getHolograms();
+        //this.crazyManager.getHolograms();
     }
 
     @Override
@@ -179,10 +181,10 @@ public class YamlCrateManager extends YamlConfiguration implements LocationManag
         }
 
         if (customLocation != null) {
-            if (this.apiManager.getHolograms() != null) {
-                for (Crate crate : this.apiManager.getCrateManager().getCrates()) {
+            if (this.crazyManager.getHologramManager() != null) {
+                for (Crate crate : this.crazyManager.getCrateManager().getCrates()) {
                     if (crate.getCrateName().equals(crateName)) {
-                        this.apiManager.getHolograms().remove(new Location(Bukkit.getServer().getWorld(customLocation.world()), customLocation.x(), customLocation.y(), customLocation.z()));
+                        this.crazyManager.getHologramManager().remove(new Location(Bukkit.getServer().getWorld(customLocation.world()), customLocation.x(), customLocation.y(), customLocation.z()));
 
                         break;
                     }

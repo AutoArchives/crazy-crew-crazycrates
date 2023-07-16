@@ -1,7 +1,5 @@
 package com.badbones69.crazycrates.paper.api.frame;
 
-import com.badbones69.crazycrates.paper.api.v2.ApiManager;
-import com.badbones69.crazycrates.core.config.types.PluginConfig;
 import com.badbones69.crazycrates.core.frame.CrazyCore;
 import com.badbones69.crazycrates.core.frame.storage.FileHandler;
 import net.kyori.adventure.platform.AudienceProvider;
@@ -15,13 +13,16 @@ public class PaperCore extends CrazyCore {
 
     private final FileHandler fileHandler;
     private final JavaPlugin plugin;
-    private final ApiManager apiManager;
+    private final String prefix;
+    private final String consolePrefix;
 
     private BukkitAudiences adventure;
 
-    public PaperCore(JavaPlugin plugin, ApiManager apiManager) {
+    public PaperCore(JavaPlugin plugin, String prefix, String consolePrefix) {
         this.plugin = plugin;
-        this.apiManager = apiManager;
+
+        this.prefix = prefix;
+        this.consolePrefix = consolePrefix;
 
         // Create directory.
         File file = this.plugin.getDataFolder();
@@ -48,12 +49,12 @@ public class PaperCore extends CrazyCore {
 
     @Override
     public String getPrefix() {
-        return this.apiManager.getPluginConfig().getProperty(PluginConfig.COMMAND_PREFIX);
+        return this.prefix;
     }
 
     @Override
     public String getConsolePrefix() {
-        return this.apiManager.getPluginConfig().getProperty(PluginConfig.CONSOLE_PREFIX);
+        return this.consolePrefix;
     }
 
     @Override

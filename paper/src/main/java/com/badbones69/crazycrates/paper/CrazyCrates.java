@@ -1,9 +1,8 @@
 package com.badbones69.crazycrates.paper;
 
+import com.badbones69.crazycrates.core.ApiManager;
 import com.badbones69.crazycrates.paper.api.*;
-import com.badbones69.crazycrates.paper.api.v2.ApiManager;
 import com.badbones69.crazycrates.paper.api.v2.utils.MiscUtils;
-import com.badbones69.crazycrates.paper.support.holograms.interfaces.HologramManager;
 import com.badbones69.crazycrates.paper.commands.engine.paper.BukkitCommandManager;
 import com.badbones69.crazycrates.paper.listeners.v2.DataListener;
 import com.badbones69.crazycrates.paper.support.structures.blocks.ChestStateHandler;
@@ -13,12 +12,15 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class CrazyCrates extends JavaPlugin implements Listener {
 
     private ApiManager apiManager;
+    private CrazyManager crazyManager;
 
     @Override
     public void onEnable() {
-        this.apiManager = new ApiManager(getDataFolder().toPath(), this);
+        this.apiManager = new ApiManager();
+        this.apiManager.load();
 
-        this.apiManager.load(true);
+        this.crazyManager = new CrazyManager();
+        this.crazyManager.load(true);
 
         MiscUtils.registerPermissions(getServer().getPluginManager());
 
@@ -36,27 +38,31 @@ public class CrazyCrates extends JavaPlugin implements Listener {
 
     @Override
     public void onDisable() {
-        if (this.apiManager.getUserManager() != null) this.apiManager.getUserManager().save();
-        if (this.apiManager.getHolograms() != null) this.apiManager.getHolograms().purge();
+        if (this.crazyManager != null) {
+            this.crazyManager.reload(true);
 
-        if (this.apiManager.getPaperCore() != null) this.apiManager.getPaperCore().disable();
+            if (this.crazyManager.getUserManager() != null) this.crazyManager.getUserManager().save();
+            if (this.crazyManager.getHologramManager() != null) this.crazyManager.getHologramManager().purge();
+
+            if (this.crazyManager.getPaperCore() != null) this.crazyManager.getPaperCore().disable();
+        }
     }
 
     public ApiManager getApiManager() {
         return this.apiManager;
     }
 
-    public HologramManager getHolograms() {
-        return getApiManager().getHolograms();
+    public CrazyManager crazyManager() {
+        return this.crazyManager;
+    }
+
+    public com.badbones69.crazycrates.paper.api.v1.CrazyManager getCrazyManager() {
+        return null;
     }
 
     // TODO() Remove
     public FileManager getFileManager() {
         return new FileManager();
-    }
-
-    public CrazyManager getCrazyManager() {
-        return new CrazyManager();
     }
 
     public ChestStateHandler getChestStateHandler() {
