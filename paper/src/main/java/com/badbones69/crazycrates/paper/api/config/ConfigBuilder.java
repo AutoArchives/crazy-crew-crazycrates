@@ -1,8 +1,8 @@
-package com.badbones69.crazycrates.paper.api.v2.config;
+package com.badbones69.crazycrates.paper.api.config;
 
 import ch.jalu.configme.configurationdata.ConfigurationData;
 import ch.jalu.configme.configurationdata.ConfigurationDataBuilder;
-import com.badbones69.crazycrates.paper.api.v2.config.types.PluginSupport;
+import com.badbones69.crazycrates.paper.api.config.types.PluginSupport;
 
 public class ConfigBuilder {
 

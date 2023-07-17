@@ -1,4 +1,4 @@
-package com.badbones69.crazycrates.paper.api.v2.config.types;
+package com.badbones69.crazycrates.paper.api.config.types;
 
 import ch.jalu.configme.Comment;
 import ch.jalu.configme.SettingsHolder;

@@ -1,4 +1,4 @@
-package com.badbones69.crazycrates.paper.api.v2.utils;
+package com.badbones69.crazycrates.paper.utils;
 
 import com.badbones69.crazycrates.paper.api.v2.enums.Permissions;
 import org.bukkit.entity.HumanEntity;
