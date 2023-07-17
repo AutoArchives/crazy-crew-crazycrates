@@ -49,11 +49,36 @@ allprojects {
     //}
 
     project(":paper") {
+        apply plugin: 'java'
+
         repositories {
             maven { url = "https://repo.extendedclip.com/content/repositories/placeholderapi/" }
             maven { url = "https://repo.papermc.io/repository/maven-public/" }
             maven { url = "https://repo.codemc.io/repository/maven-public/" }
             maven { url = "https://repo.triumphteam.dev/snapshots/" }
+        }
+
+        dependencies {
+            implementation("cloud.commandframework:cloud-paper:$cloudVersion")
+        }
+    }
+
+    project(":core") {
+        apply plugin: 'java'
+
+        repositories {
+            mavenLocal()
+        }
+
+        dependencies {
+            // Provided by Mojang/Paper/Fabric
+            compileOnly("net.kyori:adventure-api:$advVersion")
+            compileOnly("net.kyori:adventure-text-minimessage:$advVersion")
+            compileOnly("com.google.code.gson:gson:$gsonVersion")
+
+            implementation("cloud.commandframework:cloud-core:$cloudVersion")
+            implementation("cloud.commandframework:cloud-brigadier:$cloudVersion")
+            implementation("cloud.commandframework:cloud-minecraft-extras:$cloudVersion")
         }
     }
 
@@ -64,11 +89,7 @@ allprojects {
     }
 
     dependencies {
-        implementation("cloud.commandframework:cloud-core:$cloudVersion")
         implementation("cloud.commandframework:cloud-paper:$cloudVersion")
-        implementation("cloud.commandframework:cloud-brigadier:$cloudVersion")
-        implementation("cloud.commandframework:cloud-minecraft-extras:$cloudVersion")
-
         implementation("net.kyori:adventure-platform-bukkit:$advBukkitVersion")
 
         implementation("ch.jalu:configme:$configVersion")
@@ -76,11 +97,6 @@ allprojects {
         implementation("com.github.Carleslc.Simple-YAML:Simple-Yaml:$yamlVersion") {
             exclude group: 'org.yaml', module: 'snakeyaml'
         }
-
-        // Provided by Mojang/Paper/Fabric
-        compileOnly("net.kyori:adventure-api:$advVersion")
-        compileOnly("net.kyori:adventure-text-minimessage:$advVersion")
-        compileOnly("com.google.code.gson:gson:$gsonVersion")
     }
 
     jar {

@@ -6,7 +6,6 @@ import com.badbones69.crazycrates.core.config.ConfigBuilder;
 import com.badbones69.crazycrates.core.config.types.PluginConfig;
 import com.badbones69.crazycrates.core.config.types.legacy.LocaleMigration;
 import com.badbones69.crazycrates.core.frame.CrazyCore;
-import com.badbones69.crazycrates.core.frame.CrazyLogger;
 import com.badbones69.crazycrates.core.frame.utils.FileUtils;
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class ApiManager {
+
     private final Path path = CrazyCore.api().getDirectory();
 
     private SettingsManager locale;
@@ -76,18 +76,20 @@ public class ApiManager {
 
         if (!localeDir.exists()) {
             if (!localeDir.mkdirs()) {
-                CrazyLogger.severe("Could not create crates directory! " +  localeDir.getAbsolutePath());
+                //CrazyLogger.severe("Could not create crates directory! " +  localeDir.getAbsolutePath());
                 return;
             }
 
             if (messages.exists()) {
                 File renamedFile = new File(this.path.toFile(), "en-US.yml");
 
-                if (messages.renameTo(renamedFile)) CrazyLogger.info("Renamed " + messages.getName() + " to " + renamedFile.getName());
+                //if (messages.renameTo(renamedFile)) CrazyLogger.info("Renamed " + messages.getName() + " to " + renamedFile.getName());
+
+                messages.renameTo(renamedFile);
 
                 try {
                     Files.move(renamedFile.toPath(), newFile.toPath());
-                    CrazyLogger.warn("Moved " + renamedFile.getPath() + " to " + newFile.getPath());
+                    //CrazyLogger.warn("Moved " + renamedFile.getPath() + " to " + newFile.getPath());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
