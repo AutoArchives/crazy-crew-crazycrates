@@ -91,6 +91,8 @@ public class CrazyManager {
                 }
             }
 
+            this.plugin.getApiManager().reload();
+
             this.crateManager = new CrateManager(this.plugin.getDataFolder());
             this.crateManager.loadCrates();
 
