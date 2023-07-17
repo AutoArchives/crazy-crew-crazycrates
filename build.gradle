@@ -35,12 +35,6 @@ allprojects {
         }
     }
 
-    //project(":core") {
-    //    repositories {
-    //        maven { uri = "" }
-    //    }
-    //}
-
     //project(":fabric") {
     //    repositories {
     //        maven { url = 'https://maven.fabricmc.net/' }
@@ -59,7 +53,11 @@ allprojects {
         }
 
         dependencies {
-            implementation("cloud.commandframework:cloud-paper:$cloudVersion")
+            compileOnly("ch.jalu:configme:$configVersion")
+
+            compileOnly("com.github.Carleslc.Simple-YAML:Simple-Yaml:$yamlVersion") {
+                exclude group: 'org.yaml', module: 'snakeyaml'
+            }
         }
     }
 
@@ -76,9 +74,11 @@ allprojects {
             compileOnly("net.kyori:adventure-text-minimessage:$advVersion")
             compileOnly("com.google.code.gson:gson:$gsonVersion")
 
-            implementation("cloud.commandframework:cloud-core:$cloudVersion")
-            implementation("cloud.commandframework:cloud-brigadier:$cloudVersion")
-            implementation("cloud.commandframework:cloud-minecraft-extras:$cloudVersion")
+            implementation("ch.jalu:configme:$configVersion")
+
+            implementation("com.github.Carleslc.Simple-YAML:Simple-Yaml:$yamlVersion") {
+                exclude group: 'org.yaml', module: 'snakeyaml'
+            }
         }
     }
 
@@ -90,13 +90,12 @@ allprojects {
 
     dependencies {
         implementation("cloud.commandframework:cloud-paper:$cloudVersion")
+
+        implementation("cloud.commandframework:cloud-core:$cloudVersion")
+        implementation("cloud.commandframework:cloud-brigadier:$cloudVersion")
+        implementation("cloud.commandframework:cloud-minecraft-extras:$cloudVersion")
+
         implementation("net.kyori:adventure-platform-bukkit:$advBukkitVersion")
-
-        implementation("ch.jalu:configme:$configVersion")
-
-        implementation("com.github.Carleslc.Simple-YAML:Simple-Yaml:$yamlVersion") {
-            exclude group: 'org.yaml', module: 'snakeyaml'
-        }
     }
 
     jar {
