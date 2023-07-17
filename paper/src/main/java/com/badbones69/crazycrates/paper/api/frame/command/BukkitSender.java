@@ -1,4 +1,4 @@
-package com.badbones69.crazycrates.paper.commands.engine.paper;
+package com.badbones69.crazycrates.paper.api.frame.command;
 
 import com.badbones69.crazycrates.core.frame.CrazyCore;
 import com.badbones69.crazycrates.core.frame.command.Sender;
@@ -9,6 +9,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * https://github.com/BillyGalbreath/Pl3xMap/blob/v3/LICENSE
+ *
+ * @author BillyGalbreath
+ */
 public class BukkitSender extends Sender {
 
     public static @NotNull Sender create(@NotNull CommandSender sender) {

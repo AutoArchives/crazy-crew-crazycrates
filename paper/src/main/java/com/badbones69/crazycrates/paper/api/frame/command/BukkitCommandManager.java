@@ -1,4 +1,4 @@
-package com.badbones69.crazycrates.paper.commands.engine.paper;
+package com.badbones69.crazycrates.paper.api.frame.command;
 
 import cloud.commandframework.Command;
 import cloud.commandframework.CommandManager;
