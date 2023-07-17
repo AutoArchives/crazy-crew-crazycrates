@@ -4,17 +4,24 @@ import com.badbones69.crazycrates.core.ApiManager;
 import com.badbones69.crazycrates.paper.api.CrazyManager;
 import com.badbones69.crazycrates.paper.api.v1.EventLogger;
 import com.badbones69.crazycrates.paper.api.v1.FileManager;
+import com.badbones69.crazycrates.paper.commands.v2.admin.CommandReload;
+import com.badbones69.crazycrates.paper.commands.v2.admin.keys.CommandGiveKeys;
+import com.badbones69.crazycrates.paper.commands.v2.admin.schematics.CommandSchematicSave;
+import com.badbones69.crazycrates.paper.commands.v2.admin.schematics.CommandSchematicSet;
 import com.badbones69.crazycrates.paper.utils.MiscUtils;
-import com.badbones69.crazycrates.paper.commands.engine.paper.BukkitCommandManager;
+import com.badbones69.crazycrates.paper.api.frame.command.BukkitCommandManager;
 import com.badbones69.crazycrates.paper.listeners.v2.DataListener;
 import com.badbones69.crazycrates.paper.support.structures.blocks.ChestStateHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.List;
+
 public class CrazyCrates extends JavaPlugin implements Listener {
 
     private ApiManager apiManager;
     private CrazyManager crazyManager;
+    private BukkitCommandManager manager;
 
     @Override
     public void onEnable() {
@@ -28,13 +35,17 @@ public class CrazyCrates extends JavaPlugin implements Listener {
         MiscUtils.registerPermissions(getServer().getPluginManager());
 
         // Create instance.
-        BukkitCommandManager manager = BukkitCommandManager.create(this, "crazycrates", "base command", context -> {});
+        this.manager = BukkitCommandManager.create(this, "crazycrates", "base command", context -> {});
 
         // Enable some compat improvements.
-        manager.registerCompatibility();
+        this.manager.registerCompatibility();
 
-        // Add the command.
-        //manager.getCloudCommandManager().addCommand(new ExampleCommand(manager));
+        List.of(
+                new CommandReload(),
+                new CommandSchematicSave(),
+                new CommandSchematicSet(),
+                new CommandGiveKeys()
+        ).forEach(this.manager.getCloudCommandManager()::addCommand);
 
         getServer().getPluginManager().registerEvents(new DataListener(), this);
     }
@@ -53,6 +64,10 @@ public class CrazyCrates extends JavaPlugin implements Listener {
 
     public ApiManager getApiManager() {
         return this.apiManager;
+    }
+
+    public BukkitCommandManager getCommandManager() {
+        return this.manager;
     }
 
     public CrazyManager crazyManager() {
