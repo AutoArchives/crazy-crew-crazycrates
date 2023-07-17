@@ -21,6 +21,7 @@ public class CrazyCrates extends JavaPlugin implements Listener {
         this.apiManager = new ApiManager();
         this.apiManager.load();
 
+        // CrazyLogger can be used after this loads.
         this.crazyManager = new CrazyManager();
         this.crazyManager.load(true);
 
