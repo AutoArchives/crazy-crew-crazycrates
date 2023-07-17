@@ -1,9 +1,9 @@
-package com.badbones69.crazycrates.paper.api;
+package com.badbones69.crazycrates.paper.api.v1;
 
 import com.badbones69.crazycrates.paper.CrazyCrates;
 import com.badbones69.crazycrates.paper.api.v1.oldobjects.Crate;
 import com.badbones69.crazycrates.core.enums.KeyType;
-import com.badbones69.crazycrates.paper.api.v2.utils.ColorUtils;
+import com.badbones69.crazycrates.paper.utils.ColorUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import java.io.*;

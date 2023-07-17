@@ -1,4 +1,4 @@
-package com.badbones69.crazycrates.paper.api;
+package com.badbones69.crazycrates.paper.api.v1;
 
 import com.badbones69.crazycrates.paper.CrazyCrates;
 import org.bukkit.configuration.file.FileConfiguration;
