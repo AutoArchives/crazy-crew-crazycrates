@@ -62,13 +62,13 @@ public class CrazyManager {
 
         if (!serverStop) {
             // If holograms are enabled.
-            boolean hologramsToggle = this.plugin.getApiManager().getPluginConfig().getProperty(PluginSupport.HOLOGRAMS_SUPPORT_ENABLED);
+            boolean hologramsToggle = this.pluginSupport.getProperty(PluginSupport.HOLOGRAMS_SUPPORT_ENABLED);
 
             // Even if the holograms are disabled. Always purge them just in-case!
             if (this.hologramManager != null) this.hologramManager.purge();
 
             if (hologramsToggle) {
-                HologramSupport hologramType = this.plugin.getApiManager().getPluginConfig().getProperty(PluginSupport.HOLOGRAMS_SUPPORT_TYPE);
+                HologramSupport hologramType = this.pluginSupport.getProperty(PluginSupport.HOLOGRAMS_SUPPORT_TYPE);
 
                 // Switch hologram support based on the config option.
                 switch (hologramType) {
