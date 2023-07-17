@@ -5,7 +5,6 @@ import ch.jalu.configme.SettingsManagerBuilder;
 import com.badbones69.crazycrates.core.config.ConfigBuilder;
 import com.badbones69.crazycrates.core.config.types.PluginConfig;
 import com.badbones69.crazycrates.core.config.types.legacy.LocaleMigration;
-import com.badbones69.crazycrates.core.frame.CrazyCore;
 import com.badbones69.crazycrates.core.frame.utils.FileUtils;
 import java.io.File;
 import java.io.IOException;
@@ -14,7 +13,11 @@ import java.nio.file.Path;
 
 public class ApiManager {
 
-    private final Path path = CrazyCore.api().getDirectory();
+    private final Path path;
+
+    public ApiManager(Path path) {
+        this.path = path;
+    }
 
     private SettingsManager locale;
     private SettingsManager config;
@@ -42,7 +45,7 @@ public class ApiManager {
                 .create();
 
         // Create config.yml
-        File config = new File(CrazyCore.api().getDirectory().toFile(), "config.yml");
+        File config = new File(this.path.toFile(), "config.yml");
 
         this.config = SettingsManagerBuilder
                 .withYamlFile(config)
