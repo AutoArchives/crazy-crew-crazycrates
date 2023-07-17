@@ -23,7 +23,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 import java.util.*;
-import static com.badbones69.crazycrates.paper.api.v2.utils.ColorUtils.color;
+import static com.badbones69.crazycrates.paper.utils.ColorUtils.color;
 import static java.util.regex.Matcher.quoteReplacement;
 
 @SuppressWarnings("deprecation")

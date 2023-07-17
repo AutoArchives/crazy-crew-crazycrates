@@ -1,7 +1,7 @@
 package com.badbones69.crazycrates.paper.listeners;
 
 import com.badbones69.crazycrates.paper.CrazyCrates;
-import com.badbones69.crazycrates.paper.api.FileManager;
+import com.badbones69.crazycrates.paper.api.v1.FileManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.WorldLoadEvent;

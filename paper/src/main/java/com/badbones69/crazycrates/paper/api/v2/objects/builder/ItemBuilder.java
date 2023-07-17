@@ -1,6 +1,6 @@
 package com.badbones69.crazycrates.paper.api.v2.objects.builder;
 
-import com.badbones69.crazycrates.paper.api.v2.utils.ColorUtils;
+import com.badbones69.crazycrates.paper.utils.ColorUtils;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import org.bukkit.Color;
 import org.bukkit.DyeColor;

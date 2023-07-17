@@ -2,9 +2,9 @@ package com.badbones69.crazycrates.paper.api.v2.enums.settings;
 
 import com.badbones69.crazycrates.core.frame.CrazyLogger;
 import com.badbones69.crazycrates.paper.CrazyCrates;
-import com.badbones69.crazycrates.paper.api.v2.utils.ColorUtils;
+import com.badbones69.crazycrates.paper.utils.ColorUtils;
 import com.badbones69.crazycrates.paper.Methods;
-import com.badbones69.crazycrates.paper.api.FileManager;
+import com.badbones69.crazycrates.paper.api.v1.FileManager;
 import org.bukkit.configuration.file.FileConfiguration;
 import java.util.*;
 import java.util.Map.Entry;

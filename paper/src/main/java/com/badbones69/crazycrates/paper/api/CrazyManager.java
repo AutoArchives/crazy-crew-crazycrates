@@ -7,7 +7,7 @@ import com.badbones69.crazycrates.core.config.types.PluginConfig;
 import com.badbones69.crazycrates.core.frame.CrazyLogger;
 import com.badbones69.crazycrates.paper.CrazyCrates;
 import com.badbones69.crazycrates.paper.api.frame.PaperCore;
-import com.badbones69.crazycrates.paper.api.v2.config.types.PluginSupport;
+import com.badbones69.crazycrates.paper.api.config.types.PluginSupport;
 import com.badbones69.crazycrates.paper.api.v2.crates.CrateManager;
 import com.badbones69.crazycrates.paper.api.v2.enums.support.HologramSupport;
 import com.badbones69.crazycrates.paper.api.v2.storage.interfaces.LocationManager;

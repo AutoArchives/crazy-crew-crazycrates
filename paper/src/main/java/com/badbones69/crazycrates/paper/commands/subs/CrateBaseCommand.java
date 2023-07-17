@@ -1,11 +1,11 @@
 package com.badbones69.crazycrates.paper.commands.subs;
 
 import com.badbones69.crazycrates.paper.CrazyCrates;
-import com.badbones69.crazycrates.paper.api.v2.utils.ColorUtils;
+import com.badbones69.crazycrates.paper.utils.ColorUtils;
 import com.badbones69.crazycrates.paper.Methods;
 import com.badbones69.crazycrates.paper.api.v1.CrazyManager;
-import com.badbones69.crazycrates.paper.api.EventLogger;
-import com.badbones69.crazycrates.paper.api.FileManager;
+import com.badbones69.crazycrates.paper.api.v1.EventLogger;
+import com.badbones69.crazycrates.paper.api.v1.FileManager;
 import com.badbones69.crazycrates.core.enums.CrateType;
 import com.badbones69.crazycrates.paper.api.v2.enums.settings.Messages;
 import com.badbones69.crazycrates.paper.api.v1.events.PlayerPrizeEvent;

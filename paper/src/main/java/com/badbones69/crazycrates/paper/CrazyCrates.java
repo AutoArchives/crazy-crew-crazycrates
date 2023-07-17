@@ -2,9 +2,9 @@ package com.badbones69.crazycrates.paper;
 
 import com.badbones69.crazycrates.core.ApiManager;
 import com.badbones69.crazycrates.paper.api.CrazyManager;
-import com.badbones69.crazycrates.paper.api.EventLogger;
-import com.badbones69.crazycrates.paper.api.FileManager;
-import com.badbones69.crazycrates.paper.api.v2.utils.MiscUtils;
+import com.badbones69.crazycrates.paper.api.v1.EventLogger;
+import com.badbones69.crazycrates.paper.api.v1.FileManager;
+import com.badbones69.crazycrates.paper.utils.MiscUtils;
 import com.badbones69.crazycrates.paper.commands.engine.paper.BukkitCommandManager;
 import com.badbones69.crazycrates.paper.listeners.v2.DataListener;
 import com.badbones69.crazycrates.paper.support.structures.blocks.ChestStateHandler;
