@@ -5,7 +5,7 @@ import com.badbones69.crazycrates.paper.api.v1.CrazyManager;
 import com.badbones69.crazycrates.paper.api.v2.enums.settings.Messages;
 import com.badbones69.crazycrates.paper.api.v1.oldobjects.Crate;
 import com.badbones69.crazycrates.core.enums.KeyType;
-import com.badbones69.crazycrates.paper.api.v2.crates.types.quadcrates.CrateParticles;
+import com.badbones69.crazycrates.core.crates.types.quad.CrateParticles;
 import com.badbones69.crazycrates.paper.support.structures.QuadCrateSpiralHandler;
 import com.badbones69.crazycrates.paper.support.structures.StructureHandler;
 import com.badbones69.crazycrates.paper.support.structures.blocks.ChestStateHandler;
@@ -339,9 +339,9 @@ public class QuadCrateManager {
      */
     private void spawnParticles(CrateParticles quadCrateParticle, Color particleColor, Location location1, Location location2) {
         Particle particle = switch (quadCrateParticle) {
-            case FLAME -> Particle.FLAME;
-            case VILLAGER_HAPPY -> Particle.VILLAGER_HAPPY;
-            case SPELL_WITCH -> Particle.SPELL_WITCH;
+            case flame -> Particle.FLAME;
+            case villager_happy -> Particle.VILLAGER_HAPPY;
+            case spell_witch -> Particle.SPELL_WITCH;
             default -> Particle.REDSTONE;
         };
 

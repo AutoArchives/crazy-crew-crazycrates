@@ -2,27 +2,16 @@ package com.badbones69.crazycrates.core.enums;
 
 public enum KeyType {
     
-    PHYSICAL_KEY("Physical_Key"),
-    VIRTUAL_KEY("Virtual_Key"),
-    FREE_KEY("Free_Key");
+    PHYSICAL_KEY("physical_key"),
+    VIRTUAL_KEY("virtual_key"),
+    FREE_KEY("free_key");
     
     private final String name;
 
-    /**
-     * A constructor to build a key type reference.
-     *
-     * @param name of the key-type
-     */
     KeyType(String name) {
         this.name = name;
     }
 
-    /**
-     * Get the key type by name.
-     *
-     * @param type the name of the key-type
-     * @return the type of key otherwise null
-     */
     public static KeyType getFromName(String type) {
         if (type.equalsIgnoreCase("virtual") || type.equalsIgnoreCase("v")) {
             return KeyType.VIRTUAL_KEY;
@@ -35,11 +24,6 @@ public enum KeyType {
         return null;
     }
 
-    /**
-     * Get the name of the key type.
-     *
-     * @return the name of the key-type
-     */
     public String getName() {
         return name;
     }

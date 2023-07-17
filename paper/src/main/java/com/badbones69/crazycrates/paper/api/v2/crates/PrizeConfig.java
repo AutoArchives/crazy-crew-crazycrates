@@ -1,6 +1,6 @@
 package com.badbones69.crazycrates.paper.api.v2.crates;
 
-import com.badbones69.crazycrates.paper.api.v2.crates.types.CrateType;
+import com.badbones69.crazycrates.core.enums.CrateType;
 import java.util.Collections;
 import java.util.List;
 

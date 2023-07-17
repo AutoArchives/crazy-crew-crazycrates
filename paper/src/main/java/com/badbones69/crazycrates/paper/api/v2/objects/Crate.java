@@ -1,7 +1,7 @@
 package com.badbones69.crazycrates.paper.api.v2.objects;
 
 import com.badbones69.crazycrates.paper.api.v2.crates.CrateConfig;
-import com.badbones69.crazycrates.paper.api.v2.crates.types.CrateType;
+import com.badbones69.crazycrates.core.enums.CrateType;
 import org.bukkit.inventory.ItemStack;
 import java.util.List;
 

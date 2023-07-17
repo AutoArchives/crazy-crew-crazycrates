@@ -1,6 +1,6 @@
 package com.badbones69.crazycrates.paper.api.v2.crates;
 
-import com.badbones69.crazycrates.paper.api.v2.crates.types.CrateType;
+import com.badbones69.crazycrates.core.enums.CrateType;
 import org.bukkit.Material;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
@@ -9,7 +9,11 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 public class CrateConfig extends YamlConfiguration {
 

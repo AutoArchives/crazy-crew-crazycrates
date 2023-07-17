@@ -6,7 +6,7 @@ import com.badbones69.crazycrates.paper.Methods;
 import com.badbones69.crazycrates.paper.api.v1.CrazyManager;
 import com.badbones69.crazycrates.paper.api.EventLogger;
 import com.badbones69.crazycrates.paper.api.FileManager;
-import com.badbones69.crazycrates.paper.api.v2.crates.types.CrateType;
+import com.badbones69.crazycrates.core.enums.CrateType;
 import com.badbones69.crazycrates.paper.api.v2.enums.settings.Messages;
 import com.badbones69.crazycrates.paper.api.v1.events.PlayerPrizeEvent;
 import com.badbones69.crazycrates.paper.api.v1.events.PlayerReceiveKeyEvent;
