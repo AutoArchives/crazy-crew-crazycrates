@@ -1,45 +1,31 @@
 package com.badbones69.crazycrates.paper.commands.v2.admin.keys;
 
-/*
-import ch.jalu.configme.SettingsManager;
+import cloud.commandframework.context.CommandContext;
+import cloud.commandframework.minecraft.extras.MinecraftExtrasMetaKeys;
+import com.badbones69.crazycrates.core.frame.command.CloudCommandEngine;
+import com.badbones69.crazycrates.core.frame.command.Sender;
+import com.badbones69.crazycrates.core.frame.utils.AdventureUtils;
 import com.badbones69.crazycrates.paper.CrazyCrates;
-import com.badbones69.crazycrates.paper.commands.engine.v2.builders.requirements.CommandRequirementsBuilder;
-import com.badbones69.crazycrates.paper.commands.engine.v2.builders.args.Argument;
-import com.badbones69.crazycrates.paper.commands.engine.v2.builders.args.builder.IntArgument;
+import com.badbones69.crazycrates.paper.api.frame.command.BukkitCommandManager;
 import com.badbones69.crazycrates.paper.api.v2.enums.Permissions;
-import com.badbones69.crazycrates.paper.commands.engine.v2.builders.args.builder.custom.CrateArgument;
-import com.badbones69.crazycrates.paper.commands.engine.v2.builders.args.builder.custom.KeyArgument;
-import com.badbones69.crazycrates.paper.commands.engine.v2.builders.args.builder.custom.PlayerArgument;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
-public class CommandGiveKeys extends CommandEngine {
+public class CommandGiveKeys extends CloudCommandEngine {
 
     private final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
+    private final BukkitCommandManager manager = this.plugin.getCommandManager();
 
-    private final SettingsManager pluginConfig = this.plugin.getApiManager().getPluginConfig();
-    private final SettingsManager locale = this.plugin.getApiManager().getLocale();
-
-    public CommandGiveKeys() {
-        addAlias("give");
-
-        //setCommandEntryData(new CommandDataEntry());
-
-        //getCommandDataEntry().setDescription(Permissions.ADMIN_GIVE_KEY.getDescription());
-
-        this.requiredArgs.add(new Argument("key-type", 0, new KeyArgument()));
-        this.requiredArgs.add(new Argument("crate-name", 1, new CrateArgument()));
-        this.requiredArgs.add(new Argument("amount", 2, new IntArgument(20)));
-        this.requiredArgs.add(new Argument("player", 3, new PlayerArgument()));
-
-        this.requirements = new CommandRequirementsBuilder()
-                .withRawPermission(Permissions.ADMIN_GIVE_KEY.getBuiltPermission())
-                .asPlayer(false)
-                .build();
+    @Override
+    public void registerCommand() {
+        this.manager.registerCommand(builder -> builder.literal("addkey")
+                .meta(MinecraftExtrasMetaKeys.DESCRIPTION, AdventureUtils.parse(Permissions.ADMIN_GIVE_KEY.getDescription()))
+                .permission(Permissions.ADMIN_GIVE_KEY.getBuiltPermission())
+                .handler(this::perform));
     }
 
     @Override
-    protected void perform() {
-
+    protected void perform(@NotNull CommandContext<@NotNull Sender> context) {
+        this.manager.reply(context.getSender(), "<red>Guten Tag!</red>");
     }
 }
- */

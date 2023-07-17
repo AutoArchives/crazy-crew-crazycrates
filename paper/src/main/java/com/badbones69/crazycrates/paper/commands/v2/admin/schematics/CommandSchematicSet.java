@@ -1,38 +1,33 @@
 package com.badbones69.crazycrates.paper.commands.v2.admin.schematics;
 
-/*
-import ch.jalu.configme.SettingsManager;
+import cloud.commandframework.context.CommandContext;
+import cloud.commandframework.minecraft.extras.MinecraftExtrasMetaKeys;
+import com.badbones69.crazycrates.core.config.types.Locale;
+import com.badbones69.crazycrates.core.frame.command.CloudCommandEngine;
+import com.badbones69.crazycrates.core.frame.command.Sender;
+import com.badbones69.crazycrates.core.frame.utils.AdventureUtils;
 import com.badbones69.crazycrates.paper.CrazyCrates;
-import com.badbones69.crazycrates.paper.support.InternalPlaceholderSupport;
-import com.badbones69.crazycrates.paper.commands.engine.v2.builders.requirements.CommandRequirementsBuilder;
+import com.badbones69.crazycrates.paper.api.frame.command.BukkitCommandManager;
 import com.badbones69.crazycrates.paper.api.v2.enums.Permissions;
+import com.badbones69.crazycrates.paper.support.PlaceholderSupport;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
-public class CommandSchematicSet extends CommandEngine {
+public class CommandSchematicSet extends CloudCommandEngine {
 
     private final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
+    private final BukkitCommandManager manager = this.plugin.getCommandManager();
 
-    private final InternalPlaceholderSupport placeholderSupport = this.plugin.getApiManager().getPlaceholderSupport();
-
-    private final SettingsManager pluginConfig = this.plugin.getApiManager().getPluginConfig();
-    private final SettingsManager locale = this.plugin.getApiManager().getLocale();
-
-    public CommandSchematicSet() {
-        addAlias("schem-set");
-
-        //setCommandEntryData(new CommandDataEntry());
-
-        //getCommandDataEntry().setDescription(Permissions.ADMIN_SCHEMATIC_SET.getDescription());
-
-        this.requirements = new CommandRequirementsBuilder()
-                .withRawPermission(Permissions.ADMIN_SCHEMATIC_SET.getBuiltPermission())
-                .asPlayer(true)
-                .build();
+    @Override
+    public void registerCommand() {
+        this.manager.registerCommand(builder -> builder.literal("schem-set")
+                .meta(MinecraftExtrasMetaKeys.DESCRIPTION, AdventureUtils.parse(Permissions.ADMIN_SCHEMATIC_SET.getDescription()))
+                .permission(Permissions.ADMIN_SCHEMATIC_SET.getBuiltPermission())
+                .handler(this::perform));
     }
 
     @Override
-    protected void perform() {
-        //context.reply(this.placeholderSupport.setPlaceholders(this.locale.getProperty(Locale.FEATURE_DISABLED)));
+    protected void perform(@NotNull CommandContext<@NotNull Sender> context) {
+        this.manager.reply(context.getSender(), PlaceholderSupport.setPlaceholders(this.plugin.getApiManager().getLocale().getProperty(Locale.FEATURE_DISABLED)));
     }
 }
- */
