@@ -7,6 +7,7 @@ import cloud.commandframework.bukkit.CloudBukkitCapabilities;
 import cloud.commandframework.execution.CommandExecutionCoordinator;
 import cloud.commandframework.execution.CommandExecutionHandler;
 import cloud.commandframework.meta.CommandMeta;
+import cloud.commandframework.minecraft.extras.MinecraftExceptionHandler;
 import cloud.commandframework.paper.PaperCommandManager;
 import com.badbones69.crazycrates.core.frame.command.CloudCommandManager;
 import com.badbones69.crazycrates.core.frame.command.Sender;
@@ -16,6 +17,7 @@ import com.badbones69.crazycrates.core.frame.utils.AdventureUtils;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
 
 public class BukkitCommandManager implements CloudActor, CloudBuilder {
@@ -91,6 +93,11 @@ public class BukkitCommandManager implements CloudActor, CloudBuilder {
     @Override
     public CommandExecutionHandler<Sender> getHandler() {
         return this.handler;
+    }
+
+    @Override
+    public @NonNull MinecraftExceptionHandler<Sender> createInvalidSyntax(String prefix, String hoverText, String clickValue) {
+        return CloudBuilder.super.createInvalidSyntax(prefix, hoverText, clickValue);
     }
 
     @Override

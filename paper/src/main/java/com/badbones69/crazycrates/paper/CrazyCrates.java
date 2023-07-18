@@ -1,6 +1,8 @@
 package com.badbones69.crazycrates.paper;
 
+import cloud.commandframework.minecraft.extras.AudienceProvider;
 import com.badbones69.crazycrates.core.ApiManager;
+import com.badbones69.crazycrates.core.config.types.PluginConfig;
 import com.badbones69.crazycrates.paper.api.CrazyManager;
 import com.badbones69.crazycrates.paper.api.v1.EventLogger;
 import com.badbones69.crazycrates.paper.api.v1.FileManager;
@@ -8,6 +10,7 @@ import com.badbones69.crazycrates.paper.commands.v2.admin.CommandReload;
 import com.badbones69.crazycrates.paper.commands.v2.admin.keys.CommandGiveKeys;
 import com.badbones69.crazycrates.paper.commands.v2.admin.schematics.CommandSchematicSave;
 import com.badbones69.crazycrates.paper.commands.v2.admin.schematics.CommandSchematicSet;
+import com.badbones69.crazycrates.paper.commands.v2.player.CommandHelp;
 import com.badbones69.crazycrates.paper.utils.MiscUtils;
 import com.badbones69.crazycrates.paper.api.frame.command.BukkitCommandManager;
 import com.badbones69.crazycrates.paper.listeners.v2.DataListener;
@@ -37,13 +40,27 @@ public class CrazyCrates extends JavaPlugin implements Listener {
         // Create instance.
         this.manager = BukkitCommandManager.create(this, "crazycrates", "base command", context -> {});
 
+        this.manager.createInvalidSyntax(
+                this.apiManager.getPluginConfig().getProperty(PluginConfig.COMMAND_PREFIX),
+                "Click for help.",
+                "/crazycrates help"
+        ).apply(this.manager.getManager(), AudienceProvider.nativeAudience());
+
         // Enable some compat improvements.
         this.manager.registerCompatibility();
 
         List.of(
+                // Player Commands.
+                new CommandHelp(),
+
+                // Admin Commands.
                 new CommandReload(),
+
+                // Admin Schematic Commands.
                 new CommandSchematicSave(),
                 new CommandSchematicSet(),
+
+                // Admin Key Commands.
                 new CommandGiveKeys()
         ).forEach(this.manager.getCloudCommandManager()::addCommand);
 
