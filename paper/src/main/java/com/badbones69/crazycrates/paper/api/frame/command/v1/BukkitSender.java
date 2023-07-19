@@ -1,4 +1,4 @@
-package com.badbones69.crazycrates.paper.api.frame.command;
+package com.badbones69.crazycrates.paper.api.frame.command.v1;
 
 import com.badbones69.crazycrates.core.frame.CrazyCore;
 import com.badbones69.crazycrates.core.frame.command.Sender;

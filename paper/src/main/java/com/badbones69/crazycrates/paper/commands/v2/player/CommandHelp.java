@@ -10,7 +10,7 @@ import com.badbones69.crazycrates.core.frame.command.CloudCommandEngine;
 import com.badbones69.crazycrates.core.frame.command.Sender;
 import com.badbones69.crazycrates.core.frame.utils.AdventureUtils;
 import com.badbones69.crazycrates.paper.api.CrazyConfig;
-import com.badbones69.crazycrates.paper.api.frame.command.BukkitCommandManager;
+import com.badbones69.crazycrates.paper.api.frame.command.v1.BukkitCommandManager;
 import com.badbones69.crazycrates.paper.api.v2.enums.Permissions;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;

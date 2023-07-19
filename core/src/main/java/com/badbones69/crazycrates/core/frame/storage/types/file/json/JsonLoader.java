@@ -5,7 +5,6 @@ import com.badbones69.crazycrates.core.frame.storage.types.file.FileLoader;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.badbones69.crazycrates.core.frame.storage.enums.StorageType;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

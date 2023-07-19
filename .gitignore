@@ -11,3 +11,6 @@ paper/.gradle
 paper/build
 
 build
+
+buildSrc/build
+buildSrc/.gradle

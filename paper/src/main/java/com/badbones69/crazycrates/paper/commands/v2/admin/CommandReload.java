@@ -7,7 +7,7 @@ import com.badbones69.crazycrates.core.frame.command.CloudCommandEngine;
 import com.badbones69.crazycrates.core.frame.command.Sender;
 import com.badbones69.crazycrates.core.frame.utils.AdventureUtils;
 import com.badbones69.crazycrates.paper.CrazyCrates;
-import com.badbones69.crazycrates.paper.api.frame.command.BukkitCommandManager;
+import com.badbones69.crazycrates.paper.api.frame.command.v1.BukkitCommandManager;
 import com.badbones69.crazycrates.paper.api.v2.enums.Permissions;
 import com.badbones69.crazycrates.paper.support.PlaceholderSupport;
 import org.bukkit.plugin.java.JavaPlugin;

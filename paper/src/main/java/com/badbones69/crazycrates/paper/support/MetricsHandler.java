@@ -1,5 +1,6 @@
 package com.badbones69.crazycrates.paper.support;
 
+import com.badbones69.crazycrates.core.frame.CrazyLogger;
 import com.badbones69.crazycrates.paper.CrazyCrates;
 import org.bstats.bukkit.Metrics;
 
@@ -18,6 +19,6 @@ public class MetricsHandler {
         //    metrics.addCustomChart(crateChart);
         //});
 
-        plugin.getLogger().info("Metrics has been enabled.");
+        CrazyLogger.info("Metrics has been enabled.");
     }
 }

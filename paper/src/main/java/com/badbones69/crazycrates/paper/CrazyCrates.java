@@ -12,12 +12,11 @@ import com.badbones69.crazycrates.paper.commands.v2.admin.schematics.CommandSche
 import com.badbones69.crazycrates.paper.commands.v2.admin.schematics.CommandSchematicSet;
 import com.badbones69.crazycrates.paper.commands.v2.player.CommandHelp;
 import com.badbones69.crazycrates.paper.utils.MiscUtils;
-import com.badbones69.crazycrates.paper.api.frame.command.BukkitCommandManager;
+import com.badbones69.crazycrates.paper.api.frame.command.v1.BukkitCommandManager;
 import com.badbones69.crazycrates.paper.listeners.v2.DataListener;
 import com.badbones69.crazycrates.paper.support.structures.blocks.ChestStateHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
-
 import java.util.List;
 
 public class CrazyCrates extends JavaPlugin implements Listener {

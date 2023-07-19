@@ -1,6 +1,5 @@
 package com.badbones69.crazycrates.paper.api.v2.storage.types.file.json.users;
 
-import com.badbones69.crazycrates.paper.api.frame.adapters.LocationTypeAdapter;
 import com.badbones69.crazycrates.paper.api.v2.crates.CrateManager;
 import com.badbones69.crazycrates.paper.api.v2.objects.Crate;
 import com.badbones69.crazycrates.paper.api.v2.storage.interfaces.UserManager;
@@ -8,7 +7,6 @@ import com.badbones69.crazycrates.paper.api.v2.storage.objects.UserData;
 import com.google.gson.GsonBuilder;
 import com.badbones69.crazycrates.core.frame.storage.FileHandler;
 import com.badbones69.crazycrates.core.frame.storage.enums.StorageType;
-import org.bukkit.Location;
 import java.io.File;
 import java.lang.reflect.Modifier;
 import java.nio.file.Path;
@@ -35,8 +33,7 @@ public non-sealed class JsonUserManager extends JsonStorage implements UserManag
 
     GsonBuilder builder = new GsonBuilder().disableHtmlEscaping()
             .excludeFieldsWithModifiers(Modifier.TRANSIENT)
-            .excludeFieldsWithoutExposeAnnotation()
-            .registerTypeAdapter(Location.class, new LocationTypeAdapter());
+            .excludeFieldsWithoutExposeAnnotation();
 
     @Override
     public void load() {

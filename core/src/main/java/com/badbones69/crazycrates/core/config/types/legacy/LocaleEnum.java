@@ -1,8 +1,7 @@
 package com.badbones69.crazycrates.core.config.types.legacy;
 
 import com.badbones69.crazycrates.core.frame.CrazyLogger;
-import org.simpleyaml.configuration.Configuration;
-
+import org.bukkit.configuration.Configuration;
 import java.util.ArrayList;
 import java.util.List;
 

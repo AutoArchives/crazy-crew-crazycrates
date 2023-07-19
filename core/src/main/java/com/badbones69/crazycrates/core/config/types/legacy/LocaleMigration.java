@@ -1,7 +1,9 @@
 package com.badbones69.crazycrates.core.config.types.legacy;
 
-import org.simpleyaml.configuration.ConfigurationSection;
-import org.simpleyaml.configuration.file.YamlConfiguration;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.YamlConfiguration;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -29,7 +31,7 @@ public class LocaleMigration extends YamlConfiguration {
                 set("Messages", null);
                 save();
             }
-        } catch (IOException exception) {
+        } catch (IOException | InvalidConfigurationException exception) {
             exception.printStackTrace();
         }
     }

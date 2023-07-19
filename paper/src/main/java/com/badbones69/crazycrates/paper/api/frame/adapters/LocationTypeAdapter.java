@@ -5,7 +5,6 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-
 import java.io.IOException;
 
 public class LocationTypeAdapter extends TypeAdapter<Location> {
