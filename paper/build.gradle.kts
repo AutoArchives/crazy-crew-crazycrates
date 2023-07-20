@@ -6,7 +6,7 @@ group = "${rootProject.group}.paper"
 version = rootProject.version
 
 base {
-    archivesName = "${rootProject.name}-${project.name}"
+    archivesName.set("${rootProject.name}-${project.name}")
 }
 
 repositories {
@@ -30,7 +30,7 @@ dependencies {
 
 tasks {
     reobfJar {
-        outputJar = file("$buildDir/libs/${rootProject.name}-${project.name}-${project.version}.jar")
+        outputJar.set(file("$buildDir/libs/${rootProject.name}-${project.name}-${project.version}.jar"))
     }
 
     processResources {

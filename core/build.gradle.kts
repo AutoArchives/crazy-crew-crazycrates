@@ -6,7 +6,7 @@ group = "${rootProject.group}.core"
 version = rootProject.version
 
 base {
-    archivesName = "${rootProject.name}-${project.name}"
+    archivesName.set("${rootProject.name}-${project.name}")
 }
 
 tasks {
@@ -18,8 +18,8 @@ tasks {
     }
 
     shadowJar {
-        archiveBaseName = "${rootProject.name}-${project.name}"
-        archiveClassifier = ""
+        archiveBaseName.set("${rootProject.name}-${project.name}")
+        archiveClassifier.set("")
         mergeServiceFiles()
     }
 }
