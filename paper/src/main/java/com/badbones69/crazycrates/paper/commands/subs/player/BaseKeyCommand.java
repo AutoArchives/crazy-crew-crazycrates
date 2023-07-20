@@ -1,15 +1,14 @@
 package com.badbones69.crazycrates.paper.commands.subs.player;
 
 import com.badbones69.crazycrates.paper.CrazyCrates;
-import com.badbones69.crazycrates.paper.api.v2.enums.settings.Messages;
-import com.badbones69.crazycrates.paper.api.v2.objects.Crate;
+import com.badbones69.crazycrates.paper.api.enums.settings.Messages;
 import com.google.common.collect.Lists;
 import dev.triumphteam.cmd.bukkit.annotation.Permission;
 import dev.triumphteam.cmd.core.BaseCommand;
 import dev.triumphteam.cmd.core.annotation.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import java.util.HashMap;
+
 import java.util.List;
 
 @Command(value = "keys", alias = {"key"})

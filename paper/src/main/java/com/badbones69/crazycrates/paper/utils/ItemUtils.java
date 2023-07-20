@@ -1,7 +1,7 @@
 package com.badbones69.crazycrates.paper.utils;
 
-import com.badbones69.crazycrates.paper.api.v2.crates.CrateConfig;
-import com.badbones69.crazycrates.paper.api.v2.objects.builder.ItemBuilder;
+import com.badbones69.crazycrates.paper.api.crates.CrateConfig;
+import com.badbones69.crazycrates.paper.api.objects.builder.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;

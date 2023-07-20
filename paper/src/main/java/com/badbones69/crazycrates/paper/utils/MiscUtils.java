@@ -1,6 +1,6 @@
 package com.badbones69.crazycrates.paper.utils;
 
-import com.badbones69.crazycrates.paper.api.v2.enums.Permissions;
+import com.badbones69.crazycrates.paper.api.enums.Permissions;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.PluginManager;

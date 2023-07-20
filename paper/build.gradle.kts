@@ -24,8 +24,6 @@ dependencies {
 
     compileOnly("me.clip", "placeholderapi", "2.11.3")
 
-    compileOnly("cloud.commandframework", "cloud-paper", "1.8.3")
-
     compileOnly("dev.triumphteam", "triumph-cmd-bukkit", "2.0.0-SNAPSHOT")
     compileOnly("com.github.decentsoftware-eu", "decentholograms","2.8.3")
 }
@@ -46,11 +44,11 @@ tasks {
         }
     }
 
-    //shadowJar {
+    shadowJar {
         //listOf(
-        //    "cloud.commandframework"
+        //    "dev.jorel.commandapi"
         //).forEach {
         //    relocate(it, "libs.$it")
         //}
-    //}
+    }
 }

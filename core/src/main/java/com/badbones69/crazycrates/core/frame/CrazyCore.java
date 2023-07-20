@@ -1,7 +1,7 @@
 package com.badbones69.crazycrates.core.frame;
 
 import com.badbones69.crazycrates.core.frame.storage.FileHandler;
-import net.kyori.adventure.platform.AudienceProvider;
+import net.kyori.adventure.audience.Audience;
 import org.jetbrains.annotations.NotNull;
 import java.lang.reflect.Field;
 import java.nio.file.Path;
@@ -42,5 +42,35 @@ public abstract class CrazyCore {
 
     public abstract FileHandler getFileHandler();
 
-    public abstract @NotNull AudienceProvider adventure();
+    public abstract Audience adventure();
+
+    public abstract String commandTooFewArgs();
+
+    public abstract String commandTooManyArgs();
+
+    public abstract String commandOptionalMsg();
+
+    public abstract String commandRequiredMsg();
+
+    public abstract String commandRequirementNotPlayer();
+
+    public abstract String commandRequirementNoPermission();
+
+    public abstract String commandHelpHeader();
+
+    public abstract String commandHelpFooter();
+
+    public abstract String commandInvalidPage();
+
+    public abstract String commandPageFormat();
+
+    public abstract String commandHoverFormat();
+
+    public abstract String commandHoverAction();
+
+    public abstract String commandNavigationText();
+
+    public abstract String commandNavigationNextButton();
+
+    public abstract String commandNavigationBackButton();
 }

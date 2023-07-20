@@ -39,6 +39,6 @@ public class CrazyLogger {
     }
 
     private static void log(String message) {
-       CrazyCore.api().adventure().console().sendMessage(AdventureUtils.parse(message));
+       CrazyCore.api().adventure().sendMessage(AdventureUtils.parse(message));
     }
 }

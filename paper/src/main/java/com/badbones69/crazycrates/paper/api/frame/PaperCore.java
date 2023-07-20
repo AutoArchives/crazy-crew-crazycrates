@@ -1,39 +1,35 @@
 package com.badbones69.crazycrates.paper.api.frame;
 
+import com.badbones69.crazycrates.core.ApiManager;
+import com.badbones69.crazycrates.core.config.types.Locale;
+import com.badbones69.crazycrates.core.config.types.PluginConfig;
 import com.badbones69.crazycrates.core.frame.CrazyCore;
 import com.badbones69.crazycrates.core.frame.storage.FileHandler;
-import net.kyori.adventure.platform.AudienceProvider;
-import net.kyori.adventure.platform.bukkit.BukkitAudiences;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
-import java.io.File;
+import net.kyori.adventure.audience.Audience;
 import java.nio.file.Path;
 
 public class PaperCore extends CrazyCore {
 
+    private final Path path;
+    private final Audience audience;
     private final FileHandler fileHandler;
-    private final JavaPlugin plugin;
     private final String prefix;
     private final String consolePrefix;
 
-    private BukkitAudiences adventure;
+    public PaperCore(Path path, Audience audience, String prefix, String consolePrefix) {
+        // Create directory.
+        this.path = path;
+        this.path.toFile().mkdir();
 
-    public PaperCore(JavaPlugin plugin, String prefix, String consolePrefix) {
-        this.plugin = plugin;
-
+        this.audience = audience;
         this.prefix = prefix;
         this.consolePrefix = consolePrefix;
-
-        // Create directory.
-        File file = this.plugin.getDataFolder();
-        file.mkdir();
 
         this.fileHandler = new FileHandler();
     }
 
     @Override
     public void enable() {
-        this.adventure = BukkitAudiences.create(this.plugin);
         super.enable();
     }
 
@@ -44,7 +40,7 @@ public class PaperCore extends CrazyCore {
 
     @Override
     public Path getDirectory() {
-        return this.plugin.getDataFolder().toPath();
+        return this.path;
     }
 
     @Override
@@ -63,7 +59,82 @@ public class PaperCore extends CrazyCore {
     }
 
     @Override
-    public @NotNull AudienceProvider adventure() {
-        return this.adventure;
+    public Audience adventure() {
+        return this.audience;
+    }
+
+    @Override
+    public String commandTooFewArgs() {
+        return ApiManager.getLocale().getProperty(Locale.NOT_ENOUGH_ARGS);
+    }
+
+    @Override
+    public String commandTooManyArgs() {
+        return ApiManager.getLocale().getProperty(Locale.TOO_MANY_ARGS);
+    }
+
+    @Override
+    public String commandOptionalMsg() {
+        return ApiManager.getLocale().getProperty(Locale.OPTIONAL_ARGUMENT);
+    }
+
+    @Override
+    public String commandRequiredMsg() {
+        return ApiManager.getLocale().getProperty(Locale.REQUIRED_ARGUMENT);
+    }
+
+    @Override
+    public String commandRequirementNotPlayer() {
+        return ApiManager.getLocale().getProperty(Locale.MUST_BE_PLAYER);
+    }
+
+    @Override
+    public String commandRequirementNoPermission() {
+        return ApiManager.getLocale().getProperty(Locale.NO_PERMISSION);
+    }
+
+    @Override
+    public String commandHelpHeader() {
+        return ApiManager.getPluginConfig().getProperty(PluginConfig.HELP_PAGE_HEADER);
+    }
+
+    @Override
+    public String commandHelpFooter() {
+        return ApiManager.getPluginConfig().getProperty(PluginConfig.HELP_PAGE_FOOTER);
+    }
+
+    @Override
+    public String commandInvalidPage() {
+        return ApiManager.getPluginConfig().getProperty(PluginConfig.INVALID_HELP_PAGE);
+    }
+
+    @Override
+    public String commandPageFormat() {
+        return ApiManager.getPluginConfig().getProperty(PluginConfig.HELP_PAGE_FORMAT);
+    }
+
+    @Override
+    public String commandHoverFormat() {
+        return ApiManager.getPluginConfig().getProperty(PluginConfig.HELP_PAGE_HOVER_FORMAT);
+    }
+
+    @Override
+    public String commandHoverAction() {
+        return ApiManager.getPluginConfig().getProperty(PluginConfig.HELP_PAGE_HOVER_ACTION);
+    }
+
+    @Override
+    public String commandNavigationText() {
+        return ApiManager.getPluginConfig().getProperty(PluginConfig.HELP_PAGE_GO_TO_PAGE);
+    }
+
+    @Override
+    public String commandNavigationNextButton() {
+        return ApiManager.getPluginConfig().getProperty(PluginConfig.HELP_PAGE_NEXT);
+    }
+
+    @Override
+    public String commandNavigationBackButton() {
+        return ApiManager.getPluginConfig().getProperty(PluginConfig.HELP_PAGE_BACK);
     }
 }

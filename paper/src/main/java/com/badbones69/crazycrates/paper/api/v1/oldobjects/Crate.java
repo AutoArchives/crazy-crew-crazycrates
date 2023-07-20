@@ -2,14 +2,14 @@ package com.badbones69.crazycrates.paper.api.v1.oldobjects;
 
 import com.badbones69.crazycrates.paper.CrazyCrates;
 import com.badbones69.crazycrates.paper.api.v1.managers.CosmicCrateManager;
-import com.badbones69.crazycrates.paper.api.v2.objects.CrateHologram;
-import com.badbones69.crazycrates.paper.api.v2.objects.CrateManager;
+import com.badbones69.crazycrates.paper.api.objects.CrateHologram;
+import com.badbones69.crazycrates.paper.api.objects.CrateManager;
 import com.badbones69.crazycrates.paper.utils.ColorUtils;
 import com.badbones69.crazycrates.paper.Methods;
 import com.badbones69.crazycrates.paper.api.v1.FileManager;
 import com.badbones69.crazycrates.core.enums.CrateType;
 import com.badbones69.crazycrates.paper.listeners.PreviewListener;
-import com.badbones69.crazycrates.paper.api.v2.objects.builder.ItemBuilder;
+import com.badbones69.crazycrates.paper.api.objects.builder.ItemBuilder;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import org.bukkit.Location;
 import org.bukkit.Material;

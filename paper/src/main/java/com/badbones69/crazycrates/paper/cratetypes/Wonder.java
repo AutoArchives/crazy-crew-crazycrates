@@ -6,7 +6,7 @@ import com.badbones69.crazycrates.paper.api.v1.CrazyManager;
 import com.badbones69.crazycrates.core.enums.KeyType;
 import com.badbones69.crazycrates.paper.api.v1.events.PlayerPrizeEvent;
 import com.badbones69.crazycrates.paper.api.v1.oldobjects.Crate;
-import com.badbones69.crazycrates.paper.api.v2.objects.builder.ItemBuilder;
+import com.badbones69.crazycrates.paper.api.objects.builder.ItemBuilder;
 import com.badbones69.crazycrates.paper.api.v1.oldobjects.Prize;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

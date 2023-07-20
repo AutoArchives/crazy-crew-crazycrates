@@ -2,12 +2,12 @@ package com.badbones69.crazycrates.paper;
 
 import com.badbones69.crazycrates.paper.api.v1.CrazyManager;
 import com.badbones69.crazycrates.core.config.types.PluginConfig;
-import com.badbones69.crazycrates.paper.api.v2.enums.settings.Messages;
+import com.badbones69.crazycrates.paper.api.enums.settings.Messages;
 import com.badbones69.crazycrates.paper.api.v1.events.PlayerPrizeEvent;
 import com.badbones69.crazycrates.paper.api.v1.oldobjects.Crate;
-import com.badbones69.crazycrates.paper.api.v2.objects.builder.ItemBuilder;
+import com.badbones69.crazycrates.paper.api.objects.builder.ItemBuilder;
 import com.badbones69.crazycrates.paper.api.v1.oldobjects.Prize;
-import com.badbones69.crazycrates.paper.api.v2.enums.Permissions;
+import com.badbones69.crazycrates.paper.api.enums.Permissions;
 import com.badbones69.crazycrates.paper.listeners.FireworkDamageListener;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import net.md_5.bungee.api.chat.TextComponent;

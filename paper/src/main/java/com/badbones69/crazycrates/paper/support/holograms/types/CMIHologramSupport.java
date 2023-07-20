@@ -3,7 +3,7 @@ package com.badbones69.crazycrates.paper.support.holograms.types;
 import com.Zrips.CMI.CMI;
 import com.Zrips.CMI.Modules.Holograms.CMIHologram;
 import com.badbones69.crazycrates.paper.support.holograms.interfaces.HologramManager;
-import com.badbones69.crazycrates.paper.api.v2.objects.CrateHologram;
+import com.badbones69.crazycrates.paper.api.objects.CrateHologram;
 import net.Zrips.CMILib.Container.CMILocation;
 import org.bukkit.Location;
 import java.util.HashMap;

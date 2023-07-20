@@ -43,17 +43,12 @@ allprojects {
 
             dependencies {
                 compileOnly("net.kyori", "adventure-platform-bukkit", "4.3.0")
+                
                 compileOnly("ch.jalu", "configme", "1.3.1")
-
-                compileOnly("cloud.commandframework", "cloud-core", "1.8.3")
-                compileOnly("cloud.commandframework", "cloud-brigadier", "1.8.3")
-                compileOnly("cloud.commandframework", "cloud-minecraft-extras", "1.8.3")
 
                 compileOnly("com.github.Carleslc.Simple-YAML", "Simple-Yaml", "1.8.4") {
                     exclude("org.yaml", "snakeyaml")
                 }
-
-                compileOnly("dev.jorel", "commandapi-bukkit-core", "9.0.3")
             }
         }
     }

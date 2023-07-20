@@ -1,6 +1,6 @@
 package com.badbones69.crazycrates.paper.support.holograms.interfaces;
 
-import com.badbones69.crazycrates.paper.api.v2.objects.CrateHologram;
+import com.badbones69.crazycrates.paper.api.objects.CrateHologram;
 import org.bukkit.Location;
 
 public interface HologramManager {

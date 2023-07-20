@@ -3,17 +3,17 @@ package com.badbones69.crazycrates.paper.api;
 import ch.jalu.configme.SettingsManager;
 import ch.jalu.configme.SettingsManagerBuilder;
 import com.Zrips.CMI.Modules.ModuleHandling.CMIModule;
+import com.badbones69.crazycrates.core.ApiManager;
 import com.badbones69.crazycrates.core.config.types.PluginConfig;
 import com.badbones69.crazycrates.core.frame.CrazyLogger;
 import com.badbones69.crazycrates.paper.CrazyCrates;
-import com.badbones69.crazycrates.paper.api.frame.PaperCore;
 import com.badbones69.crazycrates.paper.api.config.types.PluginSupport;
-import com.badbones69.crazycrates.paper.api.v2.crates.CrateManager;
-import com.badbones69.crazycrates.paper.api.v2.enums.support.HologramSupport;
-import com.badbones69.crazycrates.paper.api.v2.storage.interfaces.LocationManager;
-import com.badbones69.crazycrates.paper.api.v2.storage.interfaces.UserManager;
-import com.badbones69.crazycrates.paper.api.v2.storage.types.file.yaml.crates.YamlCrateManager;
-import com.badbones69.crazycrates.paper.api.v2.storage.types.file.yaml.users.YamlUserManager;
+import com.badbones69.crazycrates.paper.api.crates.CrateManager;
+import com.badbones69.crazycrates.paper.api.enums.support.HologramSupport;
+import com.badbones69.crazycrates.paper.api.storage.interfaces.LocationManager;
+import com.badbones69.crazycrates.paper.api.storage.interfaces.UserManager;
+import com.badbones69.crazycrates.paper.api.storage.types.file.yaml.crates.YamlCrateManager;
+import com.badbones69.crazycrates.paper.api.storage.types.file.yaml.users.YamlUserManager;
 import com.badbones69.crazycrates.paper.support.holograms.interfaces.HologramManager;
 import com.badbones69.crazycrates.paper.support.holograms.types.CMIHologramSupport;
 import com.badbones69.crazycrates.paper.support.holograms.types.DecentHologramSupport;
@@ -31,18 +31,7 @@ public class CrazyManager {
 
     private CrateManager crateManager;
 
-    private PaperCore paperCore;
-
-    public CrazyManager load(boolean serverStart) {
-        if (serverStart) {
-            String prefix = this.plugin.getApiManager().getPluginConfig().getProperty(PluginConfig.COMMAND_PREFIX);
-            String consolePrefix = this.plugin.getApiManager().getPluginConfig().getProperty(PluginConfig.CONSOLE_PREFIX);
-
-            this.paperCore = new PaperCore(plugin, prefix, consolePrefix);
-
-            this.paperCore.enable();
-        }
-
+    public CrazyManager load() {
         this.pluginSupport = SettingsManagerBuilder
                 .withYamlFile(new File(this.plugin.getDataFolder(), "plugin-support.yml"))
                 .useDefaultMigrationService()
@@ -104,12 +93,8 @@ public class CrazyManager {
         this.locationManager = new YamlCrateManager(new File(this.plugin.getDataFolder(), "locations.yml"));
         this.locationManager.load();
 
-        this.userManager = new YamlUserManager(new File(this.plugin.getDataFolder(), "users.yml"), this.crateManager, this.plugin.getApiManager().getPluginConfig().getProperty(PluginConfig.VERBOSE_LOGGING));
+        this.userManager = new YamlUserManager(new File(this.plugin.getDataFolder(), "users.yml"), this.crateManager, ApiManager.getPluginConfig().getProperty(PluginConfig.VERBOSE_LOGGING));
         this.userManager.load();
-    }
-
-    public PaperCore getPaperCore() {
-        return this.paperCore;
     }
 
     public SettingsManager getPluginSupport() {

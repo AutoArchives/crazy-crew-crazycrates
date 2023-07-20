@@ -2,7 +2,7 @@ package com.badbones69.crazycrates.paper.api.v1.managers;
 
 import com.badbones69.crazycrates.paper.CrazyCrates;
 import com.badbones69.crazycrates.paper.api.v1.CrazyManager;
-import com.badbones69.crazycrates.paper.api.v2.enums.settings.Messages;
+import com.badbones69.crazycrates.paper.api.enums.settings.Messages;
 import com.badbones69.crazycrates.paper.api.v1.oldobjects.Crate;
 import com.badbones69.crazycrates.core.enums.KeyType;
 import com.badbones69.crazycrates.core.crates.types.quad.CrateParticles;

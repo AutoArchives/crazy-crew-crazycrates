@@ -5,6 +5,7 @@ import ch.jalu.configme.SettingsManagerBuilder;
 import com.badbones69.crazycrates.core.config.ConfigBuilder;
 import com.badbones69.crazycrates.core.config.types.PluginConfig;
 import com.badbones69.crazycrates.core.config.types.legacy.LocaleMigration;
+import com.badbones69.crazycrates.core.frame.CrazyLogger;
 import com.badbones69.crazycrates.core.frame.utils.FileUtils;
 import java.io.File;
 import java.io.IOException;
@@ -19,15 +20,15 @@ public class ApiManager {
         this.path = path;
     }
 
-    private SettingsManager locale;
-    private SettingsManager config;
-    private SettingsManager pluginConfig;
+    private static SettingsManager locale;
+    private static SettingsManager config;
+    private static SettingsManager pluginConfig;
 
     public ApiManager load() {
-        File pluginConfig = new File(this.path.toFile(), "plugin-config.yml");
+        File pluginConfigFile = new File(this.path.toFile(), "plugin-config.yml");
 
-        this.pluginConfig = SettingsManagerBuilder
-                .withYamlFile(pluginConfig)
+        pluginConfig = SettingsManagerBuilder
+                .withYamlFile(pluginConfigFile)
                 .useDefaultMigrationService()
                 .configurationData(ConfigBuilder.buildPluginConfig())
                 .create();
@@ -36,19 +37,19 @@ public class ApiManager {
         File localeDir = new File(this.path.toFile(), "locale");
         migrateLocale(localeDir);
 
-        File localeFile = new File(localeDir, this.pluginConfig.getProperty(PluginConfig.LOCALE_FILE) + ".yml");
+        File localeFile = new File(localeDir, pluginConfig.getProperty(PluginConfig.LOCALE_FILE) + ".yml");
 
-        this.locale = SettingsManagerBuilder
+        locale = SettingsManagerBuilder
                 .withYamlFile(localeFile)
                 .useDefaultMigrationService()
                 .configurationData(ConfigBuilder.buildLocale())
                 .create();
 
         // Create config.yml
-        File config = new File(this.path.toFile(), "config.yml");
+        File configFile = new File(this.path.toFile(), "config.yml");
 
-        this.config = SettingsManagerBuilder
-                .withYamlFile(config)
+        config = SettingsManagerBuilder
+                .withYamlFile(configFile)
                 .useDefaultMigrationService()
                 .configurationData(ConfigBuilder.buildConfig())
                 .create();
@@ -58,15 +59,15 @@ public class ApiManager {
 
     public void reload() {
         // Reload configs.
-        this.pluginConfig.reload();
-        this.config.reload();
+        pluginConfig.reload();
+        config.reload();
 
-        this.locale.reload();
+        locale.reload();
 
         File localeDir = new File(this.path.toFile(), "locale");
-        File localeFile = new File(localeDir, this.pluginConfig.getProperty(PluginConfig.LOCALE_FILE) + ".yml");
+        File localeFile = new File(localeDir, pluginConfig.getProperty(PluginConfig.LOCALE_FILE) + ".yml");
 
-        this.locale = SettingsManagerBuilder
+        locale = SettingsManagerBuilder
                 .withYamlFile(localeFile)
                 .useDefaultMigrationService()
                 .configurationData(ConfigBuilder.buildLocale())
@@ -79,20 +80,18 @@ public class ApiManager {
 
         if (!localeDir.exists()) {
             if (!localeDir.mkdirs()) {
-                //CrazyLogger.severe("Could not create crates directory! " +  localeDir.getAbsolutePath());
+                CrazyLogger.severe("Could not create crates directory! " +  localeDir.getAbsolutePath());
                 return;
             }
 
             if (messages.exists()) {
                 File renamedFile = new File(this.path.toFile(), "en-US.yml");
 
-                //if (messages.renameTo(renamedFile)) CrazyLogger.info("Renamed " + messages.getName() + " to " + renamedFile.getName());
-
-                messages.renameTo(renamedFile);
+                if (messages.renameTo(renamedFile)) CrazyLogger.info("Renamed " + messages.getName() + " to " + renamedFile.getName());
 
                 try {
                     Files.move(renamedFile.toPath(), newFile.toPath());
-                    //CrazyLogger.warn("Moved " + renamedFile.getPath() + " to " + newFile.getPath());
+                    CrazyLogger.warn("Moved " + renamedFile.getPath() + " to " + newFile.getPath());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -107,15 +106,15 @@ public class ApiManager {
     }
 
     // Config Management.
-    public SettingsManager getPluginConfig() {
-        return this.pluginConfig;
+    public static SettingsManager getPluginConfig() {
+        return pluginConfig;
     }
 
-    public SettingsManager getLocale() {
-        return this.locale;
+    public static SettingsManager getLocale() {
+        return locale;
     }
 
-    public SettingsManager getConfig() {
-        return this.config;
+    public static SettingsManager getConfig() {
+        return config;
     }
 }
