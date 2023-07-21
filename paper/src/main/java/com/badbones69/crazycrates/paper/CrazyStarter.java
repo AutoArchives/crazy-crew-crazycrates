@@ -16,6 +16,7 @@ import org.eclipse.aether.graph.Dependency;
 import org.eclipse.aether.repository.RemoteRepository;
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("ALL")
 public class CrazyStarter implements PluginBootstrap, PluginLoader {
 
     private ApiManager apiManager;
@@ -38,7 +39,7 @@ public class CrazyStarter implements PluginBootstrap, PluginLoader {
     public void classloader(@NotNull PluginClasspathBuilder classpathBuilder) {
         MavenLibraryResolver resolver = new MavenLibraryResolver();
 
-        resolver.addDependency(new Dependency(new DefaultArtifact("ch.jalu:configme:1.3.0"), null));
+        resolver.addDependency(new Dependency(new DefaultArtifact("ch.jalu:configme:1.3.1"), null));
         resolver.addDependency(new Dependency(new DefaultArtifact("de.tr7zw:item-nbt-api:2.11.2"), null));
 
         resolver.addDependency(new Dependency(new DefaultArtifact("org.bstats:bstats-bukkit:3.0.2"), null));

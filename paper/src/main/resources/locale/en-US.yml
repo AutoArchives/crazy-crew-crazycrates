@@ -52,6 +52,7 @@ crates:
       - '<gray>You have set that block to</gray> <gold>{crate}.</gold>'
       - '<gray>To remove</gray> <gold>{crate},</gold> <gray>Shift-click break in creative to remove.</gray>'
     removed: '{prefix}<gray>You have removed</gray> <gold>{id}.</gold>'
+
 command:
   open:
     opened-a-crate: '{prefix}<gray>You have opened the</gray> <gold>{crate}</gold> <gray>crate for</gray> <gold>{player}.</gold>'

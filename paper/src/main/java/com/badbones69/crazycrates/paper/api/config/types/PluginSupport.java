@@ -16,7 +16,7 @@ public class PluginSupport implements SettingsHolder {
         String[] header = {
                 "=========================================================",
                 "",
-                "This section is solely related to plugin dependencies.",
+                "This config is solely related to plugin dependencies.",
                 "You can now have easy control over what gets enabled or not",
                 "",
                 "========================================================="
