@@ -3,6 +3,8 @@ import gradle.kotlin.dsl.accessors._3060c13235291a72581396bc01940dbe.processReso
 plugins {
     `java-library`
     `maven-publish`
+
+    id("com.github.johnrengelman.shadow")
 }
 
 repositories {

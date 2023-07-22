@@ -1,8 +1,6 @@
 plugins {
     id("root-plugin")
 
-    id("com.github.johnrengelman.shadow")
-
     id("io.papermc.paperweight.userdev")
 }
 

@@ -31,7 +31,7 @@ public class CrazyManager {
 
     private CrateManager crateManager;
 
-    public CrazyManager load() {
+    public void load() {
         this.pluginSupport = SettingsManagerBuilder
                 .withYamlFile(new File(this.plugin.getDataFolder(), "plugin-support.yml"))
                 .useDefaultMigrationService()
@@ -42,8 +42,6 @@ public class CrazyManager {
         this.crateManager.loadCrates();
 
         init();
-
-        return this;
     }
 
     public void reload(boolean serverStop) {
