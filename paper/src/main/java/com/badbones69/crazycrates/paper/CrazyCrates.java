@@ -4,6 +4,8 @@ import com.badbones69.crazycrates.api.utils.MiscUtils;
 import com.badbones69.crazycrates.paper.api.FileManager.Files;
 import com.badbones69.crazycrates.paper.api.managers.quadcrates.SessionManager;
 import com.badbones69.crazycrates.paper.commands.subs.CrateCommandHelp;
+import com.badbones69.crazycrates.paper.commands.subs.CrateCommandMenu;
+import com.badbones69.crazycrates.paper.commands.subs.admin.CrateCommandDebug;
 import com.badbones69.crazycrates.paper.commands.subs.admin.CrateCommandReload;
 import com.badbones69.crazycrates.paper.cratetypes.CSGO;
 import com.badbones69.crazycrates.paper.cratetypes.Cosmic;
@@ -83,6 +85,8 @@ public class CrazyCrates extends JavaPlugin {
         // Enable commands
         List.of(
                 new CrateCommandReload(),
+                new CrateCommandDebug(),
+                new CrateCommandMenu(),
                 new CrateCommandHelp()
         ).forEach(this.bukkit.getManager()::addCommand);
 

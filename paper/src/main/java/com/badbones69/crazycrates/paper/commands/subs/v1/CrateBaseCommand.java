@@ -15,7 +15,6 @@ import com.badbones69.crazycrates.api.enums.Permissions;
 import com.badbones69.crazycrates.api.enums.types.CrateType;
 import com.badbones69.crazycrates.api.enums.types.KeyType;
 import com.badbones69.crazycrates.paper.listeners.CrateControlListener;
-import com.badbones69.crazycrates.paper.listeners.MenuListener;
 import com.badbones69.crazycrates.paper.listeners.PreviewListener;
 import dev.triumphteam.cmd.bukkit.annotation.Permission;
 import dev.triumphteam.cmd.core.BaseCommand;
@@ -42,22 +41,6 @@ public class CrateBaseCommand extends BaseCommand {
     private final CrazyManager crazyManager = plugin.getStarter().getCrazyManager();
 
     private final EventLogger eventLogger = plugin.getStarter().getEventLogger();
-
-    @Default
-    @Permission(value = "crazycrates.command.player.crate-menu", def = PermissionDefault.TRUE)
-    public void onDefaultMenu(Player player) {
-        FileConfiguration config = FileManager.Files.CONFIG.getFile();
-
-        boolean openMenu = config.getBoolean("Settings.Enable-Crate-Menu");
-
-        if (openMenu) MenuListener.openGUI(player); else player.sendMessage(Messages.FEATURE_DISABLED.getMessage());
-    }
-
-    @SubCommand("help")
-    @Permission(value = "crazycrates.command.player.help", def = PermissionDefault.TRUE)
-    public void onHelp(CommandSender sender) {
-        sender.sendMessage(Messages.HELP.getMessage());
-    }
 
     @SubCommand("transfer")
     @Permission(value = "crazycrates.command.player.transfer", def = PermissionDefault.OP)
@@ -98,24 +81,6 @@ public class CrateBaseCommand extends BaseCommand {
             } else {
                 sender.sendMessage(Messages.SAME_PLAYER.getMessage());
             }
-        } else {
-            sender.sendMessage(Messages.NOT_A_CRATE.getMessage("%Crate%", crateName));
-        }
-    }
-
-    @SubCommand("admin-help")
-    @Permission(value = "crazycrates.command.admin.help", def = PermissionDefault.OP)
-    public void onAdminHelp(CommandSender sender) {
-        sender.sendMessage(Messages.ADMIN_HELP.getMessage());
-    }
-
-    @SubCommand("debug")
-    @Permission(value = "crazycrates.command.admin.debug", def = PermissionDefault.OP)
-    public void onDebug(CommandSender sender, @Suggestion("crates") String crateName) {
-        Crate crate = crazyManager.getCrateFromName(crateName);
-
-        if (crate != null) {
-            crate.getPrizes().forEach(prize -> crazyManager.givePrize((Player) sender, prize, crate));
         } else {
             sender.sendMessage(Messages.NOT_A_CRATE.getMessage("%Crate%", crateName));
         }
@@ -168,7 +133,7 @@ public class CrateBaseCommand extends BaseCommand {
 
         sender.sendMessage(Methods.color("&e&lCrates:&f " + crates));
 
-        if (brokecrates.length() > 0) sender.sendMessage(Methods.color("&6&lBroken Crates:&f " + brokecrates.substring(0, brokecrates.length() - 2)));
+        if (!brokecrates.isEmpty()) sender.sendMessage(Methods.color("&6&lBroken Crates:&f " + brokecrates.substring(0, brokecrates.length() - 2)));
 
         sender.sendMessage(Methods.color("&e&lAll Crate Locations:"));
         sender.sendMessage(Methods.color("&c[ID]&8, &c[Crate]&8, &c[World]&8, &c[X]&8, &c[Y]&8, &c[Z]"));
