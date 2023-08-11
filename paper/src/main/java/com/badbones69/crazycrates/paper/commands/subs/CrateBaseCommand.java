@@ -117,7 +117,7 @@ public class CrateBaseCommand extends BaseCommand {
         fileManager.reloadAllFiles();
         fileManager.setup();
 
-        plugin.cleanFiles();
+        plugin.getStarter().cleanFiles();
         crazyManager.loadCrates();
 
         sender.sendMessage(Messages.RELOAD.getMessage());
