@@ -19,6 +19,8 @@ public enum Permissions {
     ADMIN_ADD_ITEM("admin.additem", "Adds items in-game to a prize in a crate.", PermissionDefault.OP),
     ADMIN_PREVIEW("admin.preview", "Opens the preview of any crate for a player.", PermissionDefault.OP),
 
+    ADMIN_HELP("admin.help", "Shows the admin help menu.", PermissionDefault.OP),
+
     ADMIN_LIST("admin.list", "Displays a list of all available crates.", PermissionDefault.OP),
 
     ADMIN_OPEN("admin.open", "Tries to open a crate for the player if they have a key.", PermissionDefault.OP),
@@ -27,6 +29,8 @@ public enum Permissions {
     ADMIN_FORCE_OPEN("admin.force-open", "Opens a crate for a player for free.", PermissionDefault.OP),
 
     ADMIN_TELEPORT("admin.teleport", "Teleports you to a crate.", PermissionDefault.OP),
+
+    ADMIN_DEBUG("admin.debug", "Allows you to debug prizes.", PermissionDefault.OP),
 
     ADMIN_GIVE_KEY("admin.give-key", "Allows you to give keys to a player for crates.", PermissionDefault.OP),
     ADMIN_GIVE_RANDOM_KEY("admin.give-random-key", "Allows you to give random keys to a player for crates.", PermissionDefault.OP),
