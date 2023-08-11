@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import java.text.NumberFormat;
 
+@SuppressWarnings("UnstableApiUsage")
 public class PlaceholderAPISupport extends PlaceholderExpansion {
 
     private final CrazyCrates plugin = CrazyCrates.getPlugin();
@@ -44,7 +45,7 @@ public class PlaceholderAPISupport extends PlaceholderExpansion {
     
     @Override
     public @NotNull String getIdentifier() {
-        return "crazycrates";
+        return this.plugin.getPluginMeta().getName().toLowerCase();
     }
     
     @Override
@@ -54,6 +55,6 @@ public class PlaceholderAPISupport extends PlaceholderExpansion {
     
     @Override
     public @NotNull String getVersion() {
-        return plugin.getDescription().getVersion();
+        return this.plugin.getPluginMeta().getVersion();
     }
 }
