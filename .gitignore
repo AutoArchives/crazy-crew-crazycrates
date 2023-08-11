@@ -1,5 +1,6 @@
 .gradle
 .idea
+build
 
 core/.gradle
 core/build
