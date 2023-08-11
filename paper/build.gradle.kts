@@ -22,7 +22,7 @@ dependencies {
 
     implementation("dev.triumphteam", "triumph-cmd-bukkit", "2.0.0-SNAPSHOT")
 
-    implementation("com.ryderbelserion.lexicon", "lexicon-bukkit-api", "1.0")
+    implementation("com.ryderbelserion.lexicon", "lexicon-bukkit-api", "2.0")
 
     compileOnly(fileTree("libs").include("*.jar"))
 
