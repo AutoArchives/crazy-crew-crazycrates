@@ -3,6 +3,7 @@ package com.badbones69.crazycrates.paper;
 import com.badbones69.crazycrates.api.utils.MiscUtils;
 import com.badbones69.crazycrates.paper.api.FileManager.Files;
 import com.badbones69.crazycrates.paper.api.managers.quadcrates.SessionManager;
+import com.badbones69.crazycrates.paper.commands.CrateCommandReload;
 import com.badbones69.crazycrates.paper.cratetypes.CSGO;
 import com.badbones69.crazycrates.paper.cratetypes.Cosmic;
 import com.badbones69.crazycrates.paper.cratetypes.CrateOnTheGo;
@@ -21,22 +22,41 @@ import com.badbones69.crazycrates.paper.listeners.PreviewListener;
 import com.badbones69.crazycrates.paper.support.MetricsHandler;
 import com.badbones69.crazycrates.paper.support.libraries.PluginSupport;
 import com.badbones69.crazycrates.paper.support.placeholders.PlaceholderAPISupport;
+import com.ryderbelserion.lexicon.bukkit.BukkitImpl;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
+import java.util.logging.Logger;
 
 public class CrazyCrates extends JavaPlugin {
 
+    private final BukkitImpl bukkit;
     private Starter starter;
+
+    public CrazyCrates(BukkitImpl bukkit) {
+        this.bukkit = bukkit;
+    }
+
+    @Override
+    public @NotNull Logger getLogger() {
+        return this.bukkit.getLogUtils().getLogger();
+    }
 
     @Override
     public void onEnable() {
-        starter = new Starter();
+        this.bukkit.setPlugin(this);
 
-        starter.run();
+        this.bukkit.enable();
 
         MiscUtils.registerPermissions(getServer().getPluginManager());
 
-        starter.getFileManager().setLog(true)
+        this.bukkit.getManager().setNamespace("crazycrates");
+        this.bukkit.getManager().addCommand(new CrateCommandReload());
+
+        this.starter = new Starter();
+        this.starter.run();
+
+        this.starter.getFileManager().setLog(true)
                 .registerDefaultGenerateFiles("CrateExample.yml", "/crates", "/crates")
                 .registerDefaultGenerateFiles("QuadCrateExample.yml", "/crates", "/crates")
                 .registerDefaultGenerateFiles("CosmicCrateExample.yml", "/crates", "/crates")
@@ -51,7 +71,7 @@ public class CrazyCrates extends JavaPlugin {
                 .registerCustomFilesFolder("/schematics")
                 .setup();
 
-        starter.cleanFiles();
+        this.starter.cleanFiles();
 
         boolean metricsEnabled = Files.CONFIG.getFile().getBoolean("Settings.Toggle-Metrics");
 
@@ -66,11 +86,13 @@ public class CrazyCrates extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        this.bukkit.disable();
+
         SessionManager.endCrates();
 
         QuickCrate.removeAllRewards();
 
-        if (starter.getCrazyManager().getHologramController() != null) starter.getCrazyManager().getHologramController().removeAllHolograms();
+        if (this.starter.getCrazyManager().getHologramController() != null) this.starter.getCrazyManager().getHologramController().removeAllHolograms();
     }
 
     private void enable() {
@@ -92,22 +114,22 @@ public class CrazyCrates extends JavaPlugin {
         pluginManager.registerEvents(new CrateOnTheGo(), this);
         pluginManager.registerEvents(new QuadCrate(), this);
 
-        starter.getCrazyManager().loadCrates();
+        this.starter.getCrazyManager().loadCrates();
 
-        if (!starter.getCrazyManager().getBrokeCrateLocations().isEmpty()) pluginManager.registerEvents(new BrokeLocationsListener(), this);
+        if (!this.starter.getCrazyManager().getBrokeCrateLocations().isEmpty()) pluginManager.registerEvents(new BrokeLocationsListener(), this);
 
         if (PluginSupport.PLACEHOLDERAPI.isPluginEnabled()) new PlaceholderAPISupport().register();
 
         for (PluginSupport value : PluginSupport.values()) {
             if (value.isPluginEnabled()) {
-                getLogger().info(Methods.color("&6&l" + value.name() + " &a&lFOUND"));
+                getLogger().info("<gold>" + value.name() + "</gold> <bold><green>FOUND</green></bold>");
             } else {
-                getLogger().info(Methods.color("&6&l" + value.name() + " &c&lNOT FOUND"));
+                getLogger().info("<gold>" + value.name() + "</gold> <bold><red>NOT FOUND</red></bold>");
             }
         }
     }
 
     public Starter getStarter() {
-        return starter;
+        return this.starter;
     }
 }
