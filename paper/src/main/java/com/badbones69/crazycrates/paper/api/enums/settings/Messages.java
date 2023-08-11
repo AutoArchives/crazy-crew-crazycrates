@@ -26,7 +26,7 @@ public enum Messages {
     CRATE_ALREADY_OPENED("Crate-Already-Opened", "&cYou are already opening a Crate."),
     CANT_BE_A_VIRTUAL_CRATE("Cant-Be-A-Virtual-Crate", "&cThat crate type cannot be used as a Virtual Crate."),
     INVENTORY_FULL("Inventory-Full", "&cYour inventory is full, Please make room before opening a Crate."),
-    TO_CLOSE_TO_ANOTHER_PLAYER("To-Close-To-Another-Player", "&cYou are too close to a player that is opening their Crate."),
+    TOO_CLOSE_TO_ANOTHER_PLAYER("To-Close-To-Another-Player", "&cYou are too close to a player that is opening their Crate."),
     NEEDS_MORE_ROOM("Needs-More-Room", "&cThere is not enough space to open that here."),
     OUT_OF_TIME("Out-Of-Time", "&cYou took 5 Minutes to open the crate so it closed."),
     MUST_BE_A_PLAYER("Must-Be-A-Player", "&cYou must be a player to use this command."),

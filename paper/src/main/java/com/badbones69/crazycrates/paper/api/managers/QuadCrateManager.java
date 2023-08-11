@@ -161,7 +161,7 @@ public class QuadCrateManager {
             if (entity instanceof Player) {
                 for (QuadCrateManager ongoingCrate : crateSessions) {
                     if (entity.getUniqueId() == ongoingCrate.player.getUniqueId()) {
-                        player.sendMessage(Messages.TO_CLOSE_TO_ANOTHER_PLAYER.getMessage("%Player%", entity.getName()));
+                        player.sendMessage(Messages.TOO_CLOSE_TO_ANOTHER_PLAYER.getMessage("%Player%", entity.getName()));
                         crazyManager.removePlayerFromOpeningList(player);
                         crateSessions.remove(instance);
                         return;
