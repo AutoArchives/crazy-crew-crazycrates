@@ -243,7 +243,7 @@ public class CrateControlListener implements Listener { // Crate Control
         if (crazyManager.isInOpeningList(player)) crazyManager.removePlayerFromOpeningList(player);
     }
     
-    public static void knockBack(Player player, Location location) {
+    private void knockBack(Player player, Location location) {
         Vector vector = player.getLocation().toVector().subtract(location.toVector()).normalize().multiply(1).setY(.1);
 
         if (player.isInsideVehicle() && player.getVehicle() != null) {

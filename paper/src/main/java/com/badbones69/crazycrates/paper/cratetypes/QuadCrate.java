@@ -58,45 +58,47 @@ public class QuadCrate implements Listener {
             if (e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.LEFT_CLICK_BLOCK) {
                 Block block = e.getClickedBlock();
 
-                if (session.getCrateLocations().contains(block.getLocation())) {
-                    e.setCancelled(true);
+                if (block != null) {
+                    if (session.getCrateLocations().contains(block.getLocation())) {
+                        e.setCancelled(true);
 
-                    if (!session.getCratesOpened().get(block.getLocation())) {
+                        if (!session.getCratesOpened().get(block.getLocation())) {
 
-                        chestStateHandler.openChest(block, true);
+                            chestStateHandler.openChest(block, true);
 
-                        Crate crate = session.getCrate();
-                        Prize prize = crate.pickPrize(player, block.getLocation().add(.5, 1.3, .5));
-                        crazyManager.givePrize(player, prize, crate);
+                            Crate crate = session.getCrate();
+                            Prize prize = crate.pickPrize(player, block.getLocation().add(.5, 1.3, .5));
+                            crazyManager.givePrize(player, prize, crate);
 
-                        ItemBuilder itemBuilder = ItemBuilder.convertItemStack(prize.getDisplayItem());
-                        itemBuilder.addLore(new Random().nextInt(Integer.MAX_VALUE) + ""); // Makes sure items don't merge
+                            ItemBuilder itemBuilder = ItemBuilder.convertItemStack(prize.getDisplayItem());
+                            itemBuilder.addLore(new Random().nextInt(Integer.MAX_VALUE) + ""); // Makes sure items don't merge
 
-                        ItemStack item = itemBuilder.build();
-                        NBTItem nbtItem = new NBTItem(item);
-                        nbtItem.setBoolean("crazycrates-item", true);
-                        item = nbtItem.getItem();
-                        Item reward = player.getWorld().dropItem(block.getLocation().add(.5, 1, .5), item);
+                            ItemStack item = itemBuilder.build();
+                            NBTItem nbtItem = new NBTItem(item);
+                            nbtItem.setBoolean("crazycrates-item", true);
+                            item = nbtItem.getItem();
+                            Item reward = player.getWorld().dropItem(block.getLocation().add(.5, 1, .5), item);
 
-                        reward.setMetadata("betterdrops_ignore", new FixedMetadataValue(plugin, true));
-                        reward.setVelocity(new Vector(0, .2, 0));
+                            reward.setMetadata("betterdrops_ignore", new FixedMetadataValue(plugin, true));
+                            reward.setVelocity(new Vector(0, .2, 0));
 
-                        reward.setCustomName(prize.getDisplayItem().getItemMeta().getDisplayName());
-                        reward.setCustomNameVisible(true);
-                        reward.setPickupDelay(Integer.MAX_VALUE);
+                            reward.setCustomName(prize.getDisplayItem().getItemMeta().getDisplayName());
+                            reward.setCustomNameVisible(true);
+                            reward.setPickupDelay(Integer.MAX_VALUE);
 
-                        session.getCratesOpened().put(block.getLocation(), true);
+                            session.getCratesOpened().put(block.getLocation(), true);
 
-                        session.getDisplayedRewards().add(reward);
+                            session.getDisplayedRewards().add(reward);
 
-                        if (session.allCratesOpened()) { // All 4 crates have been opened
-                            new BukkitRunnable() {
-                                @Override
-                                public void run() {
-                                    session.endCrate();
-                                    player.playSound(player.getLocation(), Sound.BLOCK_STONE_STEP, 1, 1);
-                                }
-                            }.runTaskLater(plugin, 60);
+                            if (session.allCratesOpened()) { // All 4 crates have been opened
+                                new BukkitRunnable() {
+                                    @Override
+                                    public void run() {
+                                        session.endCrate();
+                                        player.playSound(player.getLocation(), Sound.BLOCK_STONE_STEP, 1, 1);
+                                    }
+                                }.runTaskLater(plugin, 60);
+                            }
                         }
                     }
                 }
