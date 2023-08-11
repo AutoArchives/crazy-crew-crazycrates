@@ -4,6 +4,7 @@ import com.badbones69.crazycrates.api.utils.MiscUtils;
 import com.badbones69.crazycrates.paper.api.FileManager.Files;
 import com.badbones69.crazycrates.paper.api.managers.quadcrates.SessionManager;
 import com.badbones69.crazycrates.paper.commands.subs.CrateCommandHelp;
+import com.badbones69.crazycrates.paper.commands.subs.CrateCommandKey;
 import com.badbones69.crazycrates.paper.commands.subs.CrateCommandMenu;
 import com.badbones69.crazycrates.paper.commands.subs.admin.CrateCommandDebug;
 import com.badbones69.crazycrates.paper.commands.subs.admin.CrateCommandReload;
@@ -87,7 +88,8 @@ public class CrazyCrates extends JavaPlugin {
                 new CrateCommandReload(),
                 new CrateCommandDebug(),
                 new CrateCommandMenu(),
-                new CrateCommandHelp()
+                new CrateCommandHelp(),
+                new CrateCommandKey()
         ).forEach(this.bukkit.getManager()::addCommand);
 
         boolean metricsEnabled = Files.CONFIG.getFile().getBoolean("Settings.Toggle-Metrics");
