@@ -1,5 +1,6 @@
 package com.badbones69.crazycrates.paper;
 
+import com.badbones69.crazycrates.api.utils.MiscUtils;
 import com.badbones69.crazycrates.paper.api.FileManager.Files;
 import com.badbones69.crazycrates.paper.api.enums.settings.Messages;
 import com.badbones69.crazycrates.paper.api.managers.quadcrates.SessionManager;
@@ -55,6 +56,8 @@ public class CrazyCrates extends JavaPlugin implements Listener {
         starter = new Starter();
 
         starter.run();
+
+        MiscUtils.registerPermissions(getServer().getPluginManager());
 
         starter.getFileManager().setLog(true)
                 .registerDefaultGenerateFiles("CrateExample.yml", "/crates", "/crates")
