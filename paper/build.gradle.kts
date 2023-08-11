@@ -22,6 +22,8 @@ dependencies {
 
     implementation("dev.triumphteam", "triumph-cmd-bukkit", "2.0.0-SNAPSHOT")
 
+    implementation("com.ryderbelserion.lexicon", "lexicon-bukkit-api", "1.0")
+
     compileOnly(fileTree("libs").include("*.jar"))
 
     compileOnly("me.clip", "placeholderapi", "2.11.3")
@@ -37,7 +39,7 @@ tasks {
     publishing {
         publications {
             create<MavenPublication>("maven") {
-                groupId = project.group.toString()
+                groupId = rootProject.group.toString()
                 artifactId = "${rootProject.name.lowercase()}-${project.name.lowercase()}-api"
                 version = project.version.toString()
 
@@ -81,7 +83,7 @@ tasks {
             "website" to "https://modrinth.com/plugin/${rootProject.name.lowercase()}"
         )
 
-        filesMatching("plugin.yml") {
+        filesMatching("paper-plugin.yml") {
             expand(props)
         }
     }
@@ -103,8 +105,8 @@ val description = """
 
 val versions = listOf(
     "1.20",
-    "1.20.1",
-    "1.20.2"
+    "1.20.1"
+    //"1.20.2"
 )
 
 modrinth {

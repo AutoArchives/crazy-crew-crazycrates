@@ -1,0 +1,23 @@
+name: '${name}'
+main: '${group}.${name}'
+
+version: '${version}'
+api-version: '${apiVersion}'
+description: '${description}'
+
+bootstrapper: '${group}.plugin.CrazyStarter'
+
+dependencies:
+  server:
+    CMI:
+      load: BEFORE
+      required: false
+      join-classpath: false
+    DecentHolograms:
+      load: BEFORE
+      required: false
+      join-classpath: false
+    PlaceholderAPI:
+      load: BEFORE
+      required: false
+      join-classpath: false
