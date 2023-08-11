@@ -1,4 +1,4 @@
-package com.badbones69.crazycrates.paper.commands.subs.player;
+package com.badbones69.crazycrates.paper.commands.subs.v1.player;
 
 import com.badbones69.crazycrates.paper.CrazyCrates;
 import com.badbones69.crazycrates.paper.api.CrazyManager;
