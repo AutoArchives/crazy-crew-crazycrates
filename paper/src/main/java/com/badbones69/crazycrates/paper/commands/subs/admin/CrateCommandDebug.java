@@ -21,7 +21,7 @@ public class CrateCommandDebug extends BukkitCommandEngine {
 
     @SuppressWarnings("deprecation")
     public CrateCommandDebug() {
-        super("reload", Permissions.ADMIN_DEBUG.getDescription(), "/crazycrates:debug", Collections.emptyList());
+        super("debug", Permissions.ADMIN_DEBUG.getDescription(), "/crazycrates:debug", Collections.emptyList());
 
         setPermission(Permissions.ADMIN_DEBUG.getBuiltPermission());
 

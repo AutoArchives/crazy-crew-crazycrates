@@ -17,7 +17,7 @@ public class CrateCommandMenu extends BukkitCommandEngine {
 
     @SuppressWarnings("deprecation")
     public CrateCommandMenu() {
-        super("help", Permissions.PLAYER_CRATE_MENU.getDescription(), "/crazycrates:menu", Collections.emptyList());
+        super("menu", Permissions.PLAYER_CRATE_MENU.getDescription(), "/crazycrates:menu", Collections.emptyList());
 
         setPermission(Permissions.PLAYER_CRATE_MENU.getBuiltPermission());
 
