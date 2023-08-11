@@ -129,7 +129,7 @@ public class Methods {
 
         Player player = (Player) sender;
 
-        if (MiscUtils.hasPermission(player, permissions.getBuiltPermission("command"))) {
+        if (MiscUtils.hasPermission(player, permissions.getBuiltPermission())) {
             return true;
         } else {
             if (!tabComplete) {

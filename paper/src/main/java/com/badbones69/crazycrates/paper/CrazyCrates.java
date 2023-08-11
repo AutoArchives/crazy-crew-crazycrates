@@ -3,7 +3,8 @@ package com.badbones69.crazycrates.paper;
 import com.badbones69.crazycrates.api.utils.MiscUtils;
 import com.badbones69.crazycrates.paper.api.FileManager.Files;
 import com.badbones69.crazycrates.paper.api.managers.quadcrates.SessionManager;
-import com.badbones69.crazycrates.paper.commands.CrateCommandReload;
+import com.badbones69.crazycrates.paper.commands.subs.CrateCommandHelp;
+import com.badbones69.crazycrates.paper.commands.subs.admin.CrateCommandReload;
 import com.badbones69.crazycrates.paper.cratetypes.CSGO;
 import com.badbones69.crazycrates.paper.cratetypes.Cosmic;
 import com.badbones69.crazycrates.paper.cratetypes.CrateOnTheGo;
@@ -26,6 +27,7 @@ import com.ryderbelserion.lexicon.bukkit.BukkitImpl;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
+import java.util.List;
 import java.util.logging.Logger;
 
 public class CrazyCrates extends JavaPlugin {
@@ -44,18 +46,22 @@ public class CrazyCrates extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        // Enable bukkit impl
         this.bukkit.setPlugin(this);
+        this.bukkit.enable(true);
 
-        this.bukkit.enable();
-
+        // Register permissions to server
         MiscUtils.registerPermissions(getServer().getPluginManager());
 
+        // Set command namespace
         this.bukkit.getManager().setNamespace("crazycrates");
-        this.bukkit.getManager().addCommand(new CrateCommandReload());
 
+        // Create starter
         this.starter = new Starter();
+        // enable all the goodies
         this.starter.run();
 
+        // Load files
         this.starter.getFileManager().setLog(true)
                 .registerDefaultGenerateFiles("CrateExample.yml", "/crates", "/crates")
                 .registerDefaultGenerateFiles("QuadCrateExample.yml", "/crates", "/crates")
@@ -71,7 +77,14 @@ public class CrazyCrates extends JavaPlugin {
                 .registerCustomFilesFolder("/schematics")
                 .setup();
 
+        // Clean files
         this.starter.cleanFiles();
+
+        // Enable commands
+        List.of(
+                new CrateCommandReload(),
+                new CrateCommandHelp()
+        ).forEach(this.bukkit.getManager()::addCommand);
 
         boolean metricsEnabled = Files.CONFIG.getFile().getBoolean("Settings.Toggle-Metrics");
 

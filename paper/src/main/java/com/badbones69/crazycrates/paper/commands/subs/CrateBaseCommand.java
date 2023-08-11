@@ -41,8 +41,6 @@ public class CrateBaseCommand extends BaseCommand {
 
     private final CrazyManager crazyManager = plugin.getStarter().getCrazyManager();
 
-    private final FileManager fileManager = plugin.getStarter().getFileManager();
-
     private final EventLogger eventLogger = plugin.getStarter().getEventLogger();
 
     @Default
@@ -109,18 +107,6 @@ public class CrateBaseCommand extends BaseCommand {
     @Permission(value = "crazycrates.command.admin.help", def = PermissionDefault.OP)
     public void onAdminHelp(CommandSender sender) {
         sender.sendMessage(Messages.ADMIN_HELP.getMessage());
-    }
-
-    @SubCommand("reload")
-    @Permission(value = "crazycrates.command.admin.reload", def = PermissionDefault.OP)
-    public void onReload(CommandSender sender) {
-        fileManager.reloadAllFiles();
-        fileManager.setup();
-
-        plugin.getStarter().cleanFiles();
-        crazyManager.loadCrates();
-
-        sender.sendMessage(Messages.RELOAD.getMessage());
     }
 
     @SubCommand("debug")

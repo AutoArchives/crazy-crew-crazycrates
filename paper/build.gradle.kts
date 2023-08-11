@@ -12,8 +12,6 @@ base {
 
 repositories {
     flatDir { dirs("libs") }
-
-    mavenLocal()
 }
 
 dependencies {
