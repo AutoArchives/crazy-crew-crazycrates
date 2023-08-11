@@ -1,77 +1,77 @@
 package com.badbones69.crazycrates.api.enums;
 
+import org.bukkit.permissions.PermissionDefault;
+
 public enum Permissions {
 
-    CRAZY_CRATES_PLAYER_KEY("player.key", "Check the number of keys you have."),
-    CRAZY_CRATES_PLAYER_KEY_OTHERS("player.key.others", "Check the number of keys a player has."),
-    CRAZY_CRATES_PLAYER_TRANSFER_KEYS("player.transfer", "Allows players to send virtual keys to another player."),
-    CRAZY_CRATES_PLAYER_MENU("player.menu", "Opens the primary crate menu."),
-    CRAZY_CRATES_PLAYER_HELP("player.help", "Shows the help menu for Crazy Crates."),
+    PLAYER_HELP("player.help", "Gives access to the help command.", PermissionDefault.TRUE),
 
-    CRAZY_CRATES_PLAYER_EXCLUDE_GIVE_ALL("exclude.player.giveall", "Permission to prevent a player from getting keys from /GiveAll."),
+    PLAYER_KEY("player.key", "Check the number of keys you have", PermissionDefault.OP),
 
-    CRAZY_CRATES_ADMIN_HELP("admin.help", "Shows the help menu for admins."),
-    CRAZY_CRATES_ADMIN_ACCESS("admin.access", "General purpose access for admins."),
-    CRAZY_CRATES_ADMIN_ADD_ITEM("admin.additem", "Adds items in-game to a prize in a crate."),
-    CRAZY_CRATES_ADMIN_PREVIEW("admin.preview", "Opens the preview of any crate for a player."),
-    CRAZY_CRATES_ADMIN_LIST("admin.list", "Displays a list of all available crates."),
-    CRAZY_CRATES_ADMIN_OPEN("admin.open", "Tries to open a crate for the player if they have a key."),
-    CRAZY_CRATES_ADMIN_OPEN_OTHER("admin.open.others", "Tries to open a crate for a player if they have a key."),
-    CRAZY_CRATES_ADMIN_MASS_OPEN("admin.massopen", "Used to mass open a crate without an animation."),
-    CRAZY_CRATES_ADMIN_FORCE_OPEN("admin.forceopen", "Opens a crate for a player for free."),
-    CRAZY_CRATES_ADMIN_TELEPORT("admin.teleport", "Teleports to a crate."),
-    CRAZY_CRATES_ADMIN_GIVE_KEY("admin.givekey", "Give a key(s) to a player to use on a crate."),
-    CRAZY_CRATES_ADMIN_GIVE_RANDOM_KEY("admin.giverandomkey", "Give a random key(s) to a player to use on a crate."),
-    CRAZY_CRATES_ADMIN_GIVE_ALL("admin.giveall", "Gives all online players keys to use on crates."),
-    CRAZY_CRATES_ADMIN_TAKE_KEY("admin.takekey", "Allows you to take keys from a player."),
-    CRAZY_CRATES_ADMIN_SET_CRATE("admin.set", "Set the block you are looking at as the specified crate."),
-    CRAZY_CRATES_ADMIN_SET_MENU("admin.setmenu", "Sets the block you are looking at to open the (/cc) crate menu."),
-    CRAZY_CRATES_ADMIN_RELOAD("admin.reload", "Reloads the entire plugin."),
-    CRAZY_CRATES_ADMIN_DEBUG("admin.debug", "Debugs the plugin."),
-    CRAZY_CRATES_ADMIN_CONVERT("admin.convert", "Converts data from other supported crate plugins into crazy crates."),
-    CRAZY_CRATES_ADMIN_SCHEMATIC("admin.schematic.*", "Gives all permissions related to schematics."),
-    CRAZY_CRATES_ADMIN_SCHEMATIC_SET("admin.schematic.set", "Sets the positions #1 or #2 when making a new schematic for quadcrates."),
-    CRAZY_CRATES_ADMIN_SCHEMATIC_SAVE("admin.schematic.save", "Saves the new schematic file to the schematics folder.");
+    PLAYER_KEY_OTHERS("player.key-others", "Check the number of keys other players have", PermissionDefault.OP),
 
-    private final String defaultPermission;
+    PLAYER_TRANSFER_KEYS("player.transfer", "Allows you to send keys to another player.", PermissionDefault.OP),
+    PLAYER_CRATE_MENU("player.crate-menu", "Opens the primary crate menu.", PermissionDefault.OP),
+
+    PLAYER_EXCLUDE_ALL("exclude.player.give-all", "Excludes players who have this permission from give-all", PermissionDefault.FALSE),
+
+    ADMIN_ACCESS("admin.access", "General purpose access for admins.", PermissionDefault.OP),
+    ADMIN_ADD_ITEM("admin.additem", "Adds items in-game to a prize in a crate.", PermissionDefault.OP),
+    ADMIN_PREVIEW("admin.preview", "Opens the preview of any crate for a player.", PermissionDefault.OP),
+
+    ADMIN_LIST("admin.list", "Displays a list of all available crates.", PermissionDefault.OP),
+
+    ADMIN_OPEN("admin.open", "Tries to open a crate for the player if they have a key.", PermissionDefault.OP),
+    ADMIN_OPEN_OTHER("admin.open-others", "Tries to open a crate for a player if they have a key.", PermissionDefault.OP),
+    ADMIN_MASS_OPEN("admin.mass-open", "Used to mass open a crate without an animation.", PermissionDefault.OP),
+    ADMIN_FORCE_OPEN("admin.force-open", "Opens a crate for a player for free.", PermissionDefault.OP),
+
+    ADMIN_TELEPORT("admin.teleport", "Teleports you to a crate.", PermissionDefault.OP),
+
+    ADMIN_GIVE_KEY("admin.give-key", "Allows you to give keys to a player for crates.", PermissionDefault.OP),
+    ADMIN_GIVE_RANDOM_KEY("admin.give-random-key", "Allows you to give random keys to a player for crates.", PermissionDefault.OP),
+    ADMIN_GIVE_ALL("admin.give-all", "Gives all online players keys to use on crates", PermissionDefault.OP),
+
+    ADMIN_TAKE_KEY("admin.take-key", "Allows you to take keys from a player", PermissionDefault.OP),
+
+    ADMIN_SET_CRATE("admin.set-crate", "Set the block you are looking at as the specified crate", PermissionDefault.OP),
+    ADMIN_SET_MAIN_MENU("admin.set-menu", "Sets the block you are looking at to open the (/cc) crate menu", PermissionDefault.OP),
+
+    ADMIN_RELOAD("admin.reload", "Reloads the plugin.", PermissionDefault.OP),
+
+    ADMIN_CONVERT("admin.convert", "Converts data from other supported crate plugins to ours", PermissionDefault.OP),
+
+    ADMIN_SCHEMATIC_ALL("admin.schematic.*", "Gives all permissions related to schematics.", PermissionDefault.FALSE),
+    ADMIN_SCHEMATIC_SAVE("admin.schematic-save", "Saves a schematic based around selected points", PermissionDefault.OP),
+    ADMIN_SCHEMATIC_SET("admin.schematic-set", "Allows you to select 4 points to create a new schematic.", PermissionDefault.OP);
+
+    private final String node;
     private final String description;
+    private final PermissionDefault permissionDefault;
 
-    /**
-     * A constructor to build a permission
-     *
-     * @param defaultPermission the default permission
-     * @param description the permission description
-     */
-    Permissions(String defaultPermission, String description) {
-        this.defaultPermission = defaultPermission;
+    Permissions(String node, String description, PermissionDefault permissionDefault) {
+        this.node = node;
         this.description = description;
+        this.permissionDefault = permissionDefault;
     }
 
-    /**
-     * Get a built permission with an action type.
-     *
-     * @param action the action type i.e "command"
-     * @return a completed permission
-     */
-    public String getPermission(String action) {
-        return "crazycrates." + action + "." + defaultPermission;
+    public String getNode() {
+        return this.node;
     }
 
-    /**
-     * Get a built permission with no action type.
-     *
-     * @return a completed permission
-     */
-    public String getPermission() {
-        return "crazycrates.command." + defaultPermission;
-    }
-
-    /**
-     * Get the description of the permission.
-     *
-     * @return the description
-     */
     public String getDescription() {
-        return description;
+        return this.description;
+    }
+
+    public PermissionDefault getPermissionDefault() {
+        return this.permissionDefault;
+    }
+
+    public String getBuiltPermission(String action) {
+        return "crazycrates." + action + "." + this.node;
+    }
+
+    public String getBuiltPermission() {
+        return "crazycrates.command." + this.node;
     }
 }

@@ -205,7 +205,7 @@ public class CrateControlListener implements Listener { // Crate Control
         if (inv != null && e.getView().getTitle().equals(Methods.sanitizeColor("&4&lAdmin Keys"))) {
             e.setCancelled(true);
 
-            if (!Methods.permCheck(player, Permissions.CRAZY_CRATES_ADMIN_ACCESS, false)) {
+            if (!Methods.permCheck(player, Permissions.ADMIN_ACCESS, false)) {
                 player.closeInventory();
                 return;
             }
