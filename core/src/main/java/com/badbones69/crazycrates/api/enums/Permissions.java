@@ -15,7 +15,7 @@ public enum Permissions {
 
     PLAYER_EXCLUDE_ALL("exclude-player-give-all", "Excludes players who have this permission from give-all", PermissionDefault.FALSE),
 
-    ADMIN_ACCESS("access", "General purpose access for admins.", PermissionDefault.OP),
+    ADMIN_ACCESS("admin-access", "General purpose access for admins.", PermissionDefault.OP),
     ADMIN_ADD_ITEM("additem", "Adds items in-game to a prize in a crate.", PermissionDefault.OP),
     ADMIN_PREVIEW("preview", "Opens the preview of any crate for a player.", PermissionDefault.OP),
 
