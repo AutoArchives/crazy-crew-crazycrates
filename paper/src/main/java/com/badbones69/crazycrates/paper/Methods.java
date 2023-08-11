@@ -1,6 +1,7 @@
 package com.badbones69.crazycrates.paper;
 
 import com.badbones69.crazycrates.api.enums.Permissions;
+import com.badbones69.crazycrates.api.utils.MiscUtils;
 import com.badbones69.crazycrates.paper.api.CrazyManager;
 import com.badbones69.crazycrates.paper.api.FileManager;
 import com.badbones69.crazycrates.paper.api.enums.settings.Messages;
@@ -8,7 +9,6 @@ import com.badbones69.crazycrates.paper.api.events.PlayerPrizeEvent;
 import com.badbones69.crazycrates.paper.api.objects.Crate;
 import com.badbones69.crazycrates.paper.api.objects.ItemBuilder;
 import com.badbones69.crazycrates.paper.api.objects.Prize;
-import com.badbones69.crazycrates.api.enums.types.CrateType;
 import com.badbones69.crazycrates.paper.listeners.FireworkDamageListener;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -179,7 +179,7 @@ public class Methods {
 
         Player player = (Player) sender;
 
-        if (player.hasPermission(permissions.getBuiltPermission("command"))) {
+        if (MiscUtils.hasPermission(player, permissions.getBuiltPermission("command"))) {
             return true;
         } else {
             if (!tabComplete) {
