@@ -24,6 +24,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
+import org.bukkit.plugin.java.JavaPlugin;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,7 +33,7 @@ import static java.util.regex.Matcher.quoteReplacement;
 @SuppressWarnings("deprecation")
 public class Methods {
 
-    private static final CrazyCrates plugin = CrazyCrates.getPlugin();
+    private static final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
 
     private static final CrazyManager crazyManager = plugin.getStarter().getCrazyManager();
 

@@ -19,13 +19,15 @@ import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
+
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MenuListener implements Listener {
 
-    private static final CrazyCrates plugin = CrazyCrates.getPlugin();
+    private static final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
 
     private static final CrazyManager crazyManager = plugin.getStarter().getCrazyManager();
     

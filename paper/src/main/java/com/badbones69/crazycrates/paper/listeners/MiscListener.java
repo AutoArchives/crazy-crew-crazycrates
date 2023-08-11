@@ -6,10 +6,11 @@ import com.badbones69.crazycrates.api.enums.types.CrateType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerAttemptPickupItemEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public class MiscListener implements Listener {
 
-    private static final CrazyCrates plugin = CrazyCrates.getPlugin();
+    private static final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
 
     private static final CrazyManager crazyManager = plugin.getStarter().getCrazyManager();
 

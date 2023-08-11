@@ -32,6 +32,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 import java.io.File;
 import java.util.*;
@@ -40,7 +41,7 @@ import static java.util.regex.Matcher.quoteReplacement;
 
 public class CrazyManager {
 
-    private final CrazyCrates plugin = CrazyCrates.getPlugin();
+    private final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
 
     private final FileManager fileManager = plugin.getStarter().getFileManager();
 
@@ -113,7 +114,7 @@ public class CrazyManager {
 
         if (fileManager.isLogging()) plugin.getLogger().info("Loading all crate information...");
 
-        for (String crateName : fileManager.getAllCratesNames(plugin)) {
+        for (String crateName : fileManager.getAllCratesNames()) {
             try {
                 FileConfiguration file = fileManager.getFile(crateName).getFile();
                 CrateType crateType = CrateType.getFromName(file.getString("Crate.CrateType"));

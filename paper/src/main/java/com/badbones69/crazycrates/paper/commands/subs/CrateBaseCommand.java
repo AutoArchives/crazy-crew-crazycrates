@@ -28,6 +28,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.permissions.PermissionDefault;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.UUID;
@@ -36,7 +37,7 @@ import java.util.concurrent.CompletableFuture;
 @Command(value = "crates", alias = {"crazycrates", "cc", "crate", "crazycrate"})
 public class CrateBaseCommand extends BaseCommand {
 
-    private final CrazyCrates plugin = CrazyCrates.getPlugin();
+    private final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
 
     private final CrazyManager crazyManager = plugin.getStarter().getCrazyManager();
 
@@ -497,7 +498,7 @@ public class CrateBaseCommand extends BaseCommand {
     }
 
     public record CustomPlayer(String name) {
-        private static final CrazyCrates plugin = CrazyCrates.getPlugin();
+        private static final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
 
         public @NotNull OfflinePlayer getOfflinePlayer() {
             CompletableFuture<UUID> future = CompletableFuture.supplyAsync(() -> Bukkit.getServer().getOfflinePlayer(name)).thenApply(OfflinePlayer::getUniqueId);

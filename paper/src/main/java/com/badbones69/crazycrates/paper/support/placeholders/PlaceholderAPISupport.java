@@ -7,13 +7,14 @@ import com.badbones69.crazycrates.api.enums.types.CrateType;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import java.text.NumberFormat;
 
 @SuppressWarnings("UnstableApiUsage")
 public class PlaceholderAPISupport extends PlaceholderExpansion {
 
-    private final CrazyCrates plugin = CrazyCrates.getPlugin();
+    private final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
 
     private final CrazyManager crazyManager = plugin.getStarter().getCrazyManager();
     

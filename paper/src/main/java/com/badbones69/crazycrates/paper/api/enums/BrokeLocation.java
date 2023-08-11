@@ -3,6 +3,7 @@ package com.badbones69.crazycrates.paper.api.enums;
 import com.badbones69.crazycrates.paper.CrazyCrates;
 import com.badbones69.crazycrates.paper.api.objects.Crate;
 import org.bukkit.Location;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public class BrokeLocation {
 
@@ -17,7 +18,7 @@ public class BrokeLocation {
     /**
      * Fetch the plugin instance.
      */
-    private final CrazyCrates plugin = CrazyCrates.getPlugin();
+    private final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
 
     /**
      * Builds a location that represents a broken crate.

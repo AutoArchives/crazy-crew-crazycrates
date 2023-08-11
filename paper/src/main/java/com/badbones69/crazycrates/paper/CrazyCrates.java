@@ -43,16 +43,12 @@ import java.util.List;
 
 public class CrazyCrates extends JavaPlugin implements Listener {
 
-    private static CrazyCrates plugin;
-
     private Starter starter;
 
     BukkitCommandManager<CommandSender> manager = BukkitCommandManager.create(this);
 
     @Override
     public void onEnable() {
-        plugin = this;
-
         starter = new Starter();
 
         starter.run();
@@ -225,7 +221,7 @@ public class CrazyCrates extends JavaPlugin implements Listener {
 
         manager.registerMessage(BukkitMessageKey.CONSOLE_ONLY, (sender, context) -> sender.sendMessage(Messages.MUST_BE_A_CONSOLE_SENDER.getMessage()));
 
-        manager.registerSuggestion(SuggestionKey.of("crates"), (sender, context) -> starter.getFileManager().getAllCratesNames(plugin).stream().toList());
+        manager.registerSuggestion(SuggestionKey.of("crates"), (sender, context) -> starter.getFileManager().getAllCratesNames().stream().toList());
 
         manager.registerSuggestion(SuggestionKey.of("key-types"), (sender, context) -> KEYS);
 
@@ -277,16 +273,12 @@ public class CrazyCrates extends JavaPlugin implements Listener {
 
     private final List<String> KEYS = List.of("virtual", "v", "physical", "p");
 
-    public static CrazyCrates getPlugin() {
-        return plugin;
-    }
-
-    public void printHooks() {
+    private void printHooks() {
         for (PluginSupport value : PluginSupport.values()) {
             if (value.isPluginEnabled()) {
-                plugin.getLogger().info(Methods.color("&6&l" + value.name() + " &a&lFOUND"));
+                getLogger().info(Methods.color("&6&l" + value.name() + " &a&lFOUND"));
             } else {
-                plugin.getLogger().info(Methods.color("&6&l" + value.name() + " &c&lNOT FOUND"));
+                getLogger().info(Methods.color("&6&l" + value.name() + " &c&lNOT FOUND"));
             }
         }
     }
