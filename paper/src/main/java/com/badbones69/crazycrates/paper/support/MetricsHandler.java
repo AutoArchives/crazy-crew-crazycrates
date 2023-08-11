@@ -10,14 +10,6 @@ public class MetricsHandler {
     public void start() {
         new Metrics(plugin, 4514);
 
-        //crazyManager.getCrates().forEach(crate -> {
-       //     CrateType crateType = crate.getCrateType();
-
-        //    SimplePie crateChart = new SimplePie("crate_types", crateType::getName);
-
-        //    metrics.addCustomChart(crateChart);
-        //});
-
         plugin.getLogger().info("Metrics has been enabled.");
     }
 }

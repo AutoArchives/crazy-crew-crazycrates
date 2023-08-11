@@ -87,35 +87,6 @@ public class Methods {
         return ChatColor.stripColor(msg);
     }
 
-    public static HashMap<ItemStack, String> getItems(Player player) {
-        HashMap<ItemStack, String> items = new HashMap<>();
-        FileConfiguration file = crazyManager.getOpeningCrate(player).getFile();
-
-        for (String reward : file.getConfigurationSection("Crate.Prizes").getKeys(false)) {
-            String id = file.getString("Crate.Prizes." + reward + ".DisplayItem");
-            String name = file.getString("Crate.Prizes." + reward + ".DisplayName");
-            int chance = file.getInt("Crate.Prizes." + reward + ".Chance");
-            int max = 99;
-
-            if (file.contains("Crate.Prizes." + reward + ".MaxRange")) {
-                max = file.getInt("Crate.Prizes." + reward + ".MaxRange") - 1;
-            }
-
-            try {
-                ItemStack item = new ItemBuilder().setMaterial(id).setName(name).build();
-                int num;
-
-                for (int counter = 1; counter <= 1; counter++) {
-                    num = 1 + new Random().nextInt(max);
-
-                    if (num <= chance) items.put(item, "Crate.Prizes." + reward);
-                }
-            } catch (Exception ignored) {}
-        }
-
-        return items;
-    }
-
     public static void firework(Location loc) {
         final Firework fw = loc.getWorld().spawn(loc, Firework.class);
         FireworkMeta fm = fw.getFireworkMeta();
@@ -138,30 +109,8 @@ public class Methods {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, fw :: detonate, 2);
     }
 
-    public static boolean isInt(String s) {
-        try {
-            Integer.parseInt(s);
-        } catch (NumberFormatException nfe) {
-            return false;
-        }
-
-        return true;
-    }
-
     public static Player getPlayer(String name) {
         return plugin.getServer().getPlayerExact(name);
-    }
-
-    public static boolean isOnline(String name, CommandSender sender) {
-
-        for (Player player : plugin.getServer().getOnlinePlayers()) {
-            if (player.getName().equalsIgnoreCase(name)) {
-                return true;
-            }
-        }
-
-        sender.sendMessage(Messages.NOT_ONLINE.getMessage("%Player%", name));
-        return false;
     }
 
     public static void removeItem(ItemStack item, Player player) {
