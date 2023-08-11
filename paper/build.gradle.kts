@@ -20,6 +20,7 @@ dependencies {
     implementation("de.tr7zw", "item-nbt-api", "2.11.3")
     implementation("org.bstats", "bstats-bukkit", "3.0.2")
 
+    implementation("dev.triumphteam", "triumph-gui", "3.1.2")
     implementation("dev.triumphteam", "triumph-cmd-bukkit", "2.0.0-SNAPSHOT")
 
     implementation("com.ryderbelserion.lexicon", "lexicon-bukkit-api", "2.0")
