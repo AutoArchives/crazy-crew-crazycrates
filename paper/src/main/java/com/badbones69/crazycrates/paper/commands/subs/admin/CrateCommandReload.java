@@ -31,6 +31,9 @@ public class CrateCommandReload extends BukkitCommandEngine {
         this.fileManager.reloadAllFiles();
         this.fileManager.setup();
 
+        // TODO() Migrate old configs
+        this.plugin.getConfigManager().reload();
+
         this.plugin.getStarter().cleanFiles();
         this.crazyManager.loadCrates();
 

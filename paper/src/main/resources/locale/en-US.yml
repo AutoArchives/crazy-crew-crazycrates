@@ -1,0 +1,13 @@
+# Support: https://discord.gg/crazycrew
+# Github: https://github.com/Crazy-Crew
+#
+# Issues: https://github.com/Crazy-Crew/CrazyCrates/issues
+# Features: https://github.com/Crazy-Crew/CrazyCrates/discussions
+# Translations: https://github.com/Crazy-Crew/CrazyCrates/discussions/categories/translations
+
+commands:
+  arguments:
+    optional-message: '{prefix}<green>This argument is optional</green>'
+    required-message: '{prefix}<red>This argument is not optional</red>'
+  too-many-args: '{prefix}<red>You put more arguments then I can handle.</red>'
+  not-enough-args: '{prefix}<red>You did not supply enough arguments.</red>'

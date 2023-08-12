@@ -1,12 +1,12 @@
 package com.badbones69.crazycrates.paper;
 
+import com.badbones69.crazycrates.api.ConfigManager;
 import com.badbones69.crazycrates.api.utils.MiscUtils;
 import com.badbones69.crazycrates.paper.api.FileManager.Files;
 import com.badbones69.crazycrates.paper.api.managers.quadcrates.SessionManager;
 import com.badbones69.crazycrates.paper.commands.subs.CrateCommandHelp;
 import com.badbones69.crazycrates.paper.commands.subs.CrateCommandKey;
 import com.badbones69.crazycrates.paper.commands.subs.CrateCommandMenu;
-import com.badbones69.crazycrates.paper.commands.subs.CrateCommandTest;
 import com.badbones69.crazycrates.paper.commands.subs.admin.CrateCommandDebug;
 import com.badbones69.crazycrates.paper.commands.subs.admin.CrateCommandReload;
 import com.badbones69.crazycrates.paper.cratetypes.CSGO;
@@ -37,10 +37,14 @@ import java.util.logging.Logger;
 public class CrazyCrates extends JavaPlugin {
 
     private final BukkitImpl bukkit;
+    private final ConfigManager configManager;
+
     private Starter starter;
 
-    public CrazyCrates(BukkitImpl bukkit) {
+    public CrazyCrates(BukkitImpl bukkit, ConfigManager configManager) {
         this.bukkit = bukkit;
+
+        this.configManager = configManager;
     }
 
     @Override
@@ -90,8 +94,7 @@ public class CrazyCrates extends JavaPlugin {
                 new CrateCommandDebug(),
                 new CrateCommandMenu(),
                 new CrateCommandHelp(),
-                new CrateCommandKey(),
-                new CrateCommandTest()
+                new CrateCommandKey()
         ).forEach(this.bukkit.getManager()::addCommand);
 
         boolean metricsEnabled = Files.CONFIG.getFile().getBoolean("Settings.Toggle-Metrics");
@@ -152,6 +155,10 @@ public class CrazyCrates extends JavaPlugin {
 
     public BukkitImpl getBukkit() {
         return this.bukkit;
+    }
+
+    public ConfigManager getConfigManager() {
+        return this.configManager;
     }
 
     public Starter getStarter() {

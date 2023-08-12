@@ -10,6 +10,10 @@ base {
 
 dependencies {
     compileOnly("io.papermc.paper", "paper-api","1.20.1-R0.1-SNAPSHOT")
+
+    compileOnly("com.ryderbelserion.lexicon", "lexicon-core-api", "2.4")
+
+    api("ch.jalu", "configme", "1.3.1")
 }
 
 val component: SoftwareComponent = components["java"]

@@ -1,5 +1,6 @@
 package com.badbones69.crazycrates.paper.plugin;
 
+import com.badbones69.crazycrates.api.ConfigManager;
 import com.badbones69.crazycrates.paper.CrazyCrates;
 import com.badbones69.crazycrates.paper.commands.provider.BukkitLocaleProvider;
 import com.ryderbelserion.lexicon.bukkit.BukkitImpl;
@@ -13,8 +14,14 @@ import org.jetbrains.annotations.NotNull;
 @SuppressWarnings("UnstableApiUsage")
 public class CrazyStarter implements PluginBootstrap {
 
+    private ConfigManager configManager;
+
     @Override
-    public void bootstrap(@NotNull BootstrapContext context) {}
+    public void bootstrap(@NotNull BootstrapContext context) {
+        this.configManager = new ConfigManager(context.getDataDirectory());
+
+        this.configManager.load();
+    }
 
     @Override
     public @NotNull JavaPlugin createPlugin(@NotNull PluginProviderContext context) {
@@ -22,6 +29,6 @@ public class CrazyStarter implements PluginBootstrap {
 
         bukkit.setLocaleProvider(new BukkitLocaleProvider());
 
-        return new CrazyCrates(bukkit);
+        return new CrazyCrates(bukkit, this.configManager);
     }
 }
