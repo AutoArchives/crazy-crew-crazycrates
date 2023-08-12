@@ -5,6 +5,7 @@ import com.badbones69.crazycrates.api.utils.MiscUtils;
 import com.badbones69.crazycrates.paper.api.CrazyManager;
 import com.badbones69.crazycrates.paper.api.EventLogger;
 import com.badbones69.crazycrates.paper.api.FileManager;
+import com.badbones69.crazycrates.paper.api.managers.quadcrates.SessionManager;
 import com.badbones69.crazycrates.paper.commands.subs.CrateCommandHelp;
 import com.badbones69.crazycrates.paper.commands.subs.CrateCommandKey;
 import com.badbones69.crazycrates.paper.commands.subs.CrateCommandMenu;
@@ -27,7 +28,6 @@ import com.badbones69.crazycrates.paper.listeners.MiscListener;
 import com.badbones69.crazycrates.paper.listeners.PreviewListener;
 import com.badbones69.crazycrates.paper.support.libraries.PluginSupport;
 import com.badbones69.crazycrates.paper.support.placeholders.PlaceholderAPISupport;
-import com.badbones69.crazycrates.paper.support.placeholders.PlaceholderManager;
 import com.badbones69.crazycrates.paper.support.structures.blocks.ChestStateHandler;
 import com.ryderbelserion.lexicon.bukkit.BukkitImpl;
 import org.bukkit.plugin.PluginManager;
@@ -40,19 +40,16 @@ public class CrazyCrates extends JavaPlugin {
 
     private final BukkitImpl bukkit;
     private final ConfigManager configManager;
-    private final FileManager fileManager;
-    private final PlaceholderManager placeholderManager;
 
+    private FileManager fileManager;
     private CrazyManager crazyManager;
     private EventLogger eventLogger;
     private ChestStateHandler chestHandler;
 
-    public CrazyCrates(BukkitImpl bukkit, ConfigManager configManager, FileManager fileManager, PlaceholderManager placeholderManager) {
+    public CrazyCrates(BukkitImpl bukkit, ConfigManager configManager) {
         this.bukkit = bukkit;
 
         this.configManager = configManager;
-        this.fileManager = fileManager;
-        this.placeholderManager = placeholderManager;
     }
 
     @Override
@@ -72,6 +69,23 @@ public class CrazyCrates extends JavaPlugin {
         // Set command namespace
         this.bukkit.getManager().setNamespace("crazycrates");
 
+        this.fileManager = new FileManager();
+
+        this.fileManager.setLog(true)
+                .registerDefaultGenerateFiles("CrateExample.yml", "/crates", "/crates")
+                .registerDefaultGenerateFiles("QuadCrateExample.yml", "/crates", "/crates")
+                .registerDefaultGenerateFiles("CosmicCrateExample.yml", "/crates", "/crates")
+                .registerDefaultGenerateFiles("QuickCrateExample.yml", "/crates", "/crates")
+                .registerDefaultGenerateFiles("classic.nbt", "/schematics", "/schematics")
+                .registerDefaultGenerateFiles("nether.nbt", "/schematics", "/schematics")
+                .registerDefaultGenerateFiles("outdoors.nbt", "/schematics", "/schematics")
+                .registerDefaultGenerateFiles("sea.nbt", "/schematics", "/schematics")
+                .registerDefaultGenerateFiles("soul.nbt", "/schematics", "/schematics")
+                .registerDefaultGenerateFiles("wooden.nbt", "/schematics", "/schematics")
+                .registerCustomFilesFolder("/crates")
+                .registerCustomFilesFolder("/schematics")
+                .setup();
+
         this.crazyManager = new CrazyManager();
         this.eventLogger = new EventLogger();
         this.chestHandler = new ChestStateHandler();
@@ -87,18 +101,18 @@ public class CrazyCrates extends JavaPlugin {
                 new CrateCommandKey()
         ).forEach(this.bukkit.getManager()::addCommand);
 
-        //enable();
+        enable();
     }
 
     @Override
     public void onDisable() {
         this.bukkit.disable();
 
-        //SessionManager.endCrates();
+        SessionManager.endCrates();
 
-        //QuickCrate.removeAllRewards();
+        QuickCrate.removeAllRewards();
 
-        //if (this.starter.getCrazyManager().getHologramController() != null) this.starter.getCrazyManager().getHologramController().removeAllHolograms();
+        if (this.crazyManager.getHologramController() != null) this.crazyManager.getHologramController().removeAllHolograms();
     }
 
     private void enable() {
@@ -145,10 +159,6 @@ public class CrazyCrates extends JavaPlugin {
 
     public FileManager getFileManager() {
         return this.fileManager;
-    }
-
-    public PlaceholderManager getPlaceholderManager() {
-        return this.placeholderManager;
     }
 
     public CrazyManager getCrazyManager() {

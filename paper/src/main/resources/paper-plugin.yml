@@ -5,7 +5,7 @@ version: '${version}'
 api-version: '${apiVersion}'
 description: '${description}'
 
-bootstrapper: '${group}.plugin.CrazyStarter'
+bootstrapper: '${group}.CrazyStarter'
 
 dependencies:
   server:

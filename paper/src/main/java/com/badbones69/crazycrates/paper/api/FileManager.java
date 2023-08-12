@@ -4,7 +4,6 @@ import com.badbones69.crazycrates.paper.CrazyCrates;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -28,7 +27,7 @@ public class FileManager {
     /**
      * Sets up the plugin and loads all necessary files.
      */
-    public FileManager setup() {
+    public void setup() {
         if (!plugin.getDataFolder().exists()) plugin.getDataFolder().mkdirs();
 
         files.clear();
@@ -113,7 +112,6 @@ public class FileManager {
             if (isLogging()) plugin.getLogger().info("Finished loading custom files.");
         }
 
-        return this;
     }
 
     /**
