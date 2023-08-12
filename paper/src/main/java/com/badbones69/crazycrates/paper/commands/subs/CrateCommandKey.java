@@ -30,8 +30,6 @@ public class CrateCommandKey extends BukkitCommandEngine {
         setPermission(Permissions.PLAYER_HELP.getBuiltPermission());
 
         setPermissionMessage(Messages.NO_PERMISSION.getMessage());
-
-        //addOptionalArgument(new Argument("player", 0, new PlayerArgument()));
     }
 
     @Override
@@ -74,7 +72,11 @@ public class CrateCommandKey extends BukkitCommandEngine {
 
         ArrayList<String> completions = new ArrayList<>();
 
-        this.plugin.getServer().getOnlinePlayers().forEach(player -> completions.add(player.getName()));
+        this.plugin.getServer().getOnlinePlayers().forEach(player -> {
+            if (player == sender) return;
+
+            completions.add(player.getName());
+        });
 
         return StringUtil.copyPartialMatches(args[0], completions, new ArrayList<>());
     }

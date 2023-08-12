@@ -1,19 +1,15 @@
 package com.badbones69.crazycrates.paper.commands.subs;
 
 import com.badbones69.crazycrates.api.enums.Permissions;
-import com.badbones69.crazycrates.paper.CrazyCrates;
 import com.badbones69.crazycrates.paper.api.FileManager.Files;
 import com.badbones69.crazycrates.paper.api.enums.settings.Messages;
 import com.badbones69.crazycrates.paper.listeners.MenuListener;
 import com.ryderbelserion.lexicon.bukkit.builders.commands.BukkitCommandContext;
 import com.ryderbelserion.lexicon.bukkit.builders.commands.BukkitCommandEngine;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
 import java.util.Collections;
 
 public class CrateCommandMenu extends BukkitCommandEngine {
-
-    private final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
 
     @SuppressWarnings("deprecation")
     public CrateCommandMenu() {

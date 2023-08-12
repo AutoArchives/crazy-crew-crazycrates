@@ -22,7 +22,7 @@ public class Locale implements SettingsHolder {
 
     private static final String path = "commands.";
 
-    public static final Property<String> COMMAND_PREFIX = PropertyInitializer.newProperty(path + "prefix", "<gradient:#e91e63:#e03d74>CrazyCrates</gradient> ");
+    public static final Property<String> COMMAND_PREFIX = PropertyInitializer.newProperty(path + "prefix", "<gradient:#f6426e:#725bf1>[CrazyCrates]</gradient> ");
 
     public static final Property<String> REQUIRED_ARGUMENT = PropertyInitializer.newProperty(path + "required-argument", "{prefix}<red>This argument is not optional</red>");
 

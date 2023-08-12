@@ -40,7 +40,6 @@ import java.util.logging.Logger;
 public class CrazyCrates extends JavaPlugin {
 
     private final BukkitImpl bukkit;
-    private final BukkitCommandProvider provider;
     private final ConfigManager configManager;
 
     private FileManager fileManager;
@@ -48,9 +47,8 @@ public class CrazyCrates extends JavaPlugin {
     private EventLogger eventLogger;
     private ChestStateHandler chestHandler;
 
-    public CrazyCrates(BukkitImpl bukkit, BukkitCommandProvider provider, ConfigManager configManager) {
+    public CrazyCrates(BukkitImpl bukkit, ConfigManager configManager) {
         this.bukkit = bukkit;
-        this.provider = provider;
 
         this.configManager = configManager;
     }
@@ -100,7 +98,7 @@ public class CrazyCrates extends JavaPlugin {
                 new CrateCommandReload(),
                 new CrateCommandDebug(),
                 new CrateCommandMenu(),
-                new CrateCommandHelp(this.provider),
+                new CrateCommandHelp(),
                 new CrateCommandKey()
         ).forEach(this.bukkit.getManager()::addCommand);
 

@@ -25,7 +25,7 @@ public class CrazyStarter implements PluginBootstrap {
 
     @Override
     public @NotNull JavaPlugin createPlugin(@NotNull PluginProviderContext context) {
-        BukkitImpl bukkit = new BukkitImpl(context, Bukkit.getConsoleSender(), "<gradient:#e91e63:#e03d74>CrazyCrates</gradient> ");
+        BukkitImpl bukkit = new BukkitImpl(context, Bukkit.getConsoleSender(), "<gradient:#f6426e:#725bf1>[CrazyCrates]</gradient> ");
 
         bukkit.setLocaleProvider(new BukkitLocaleProvider());
 
@@ -35,6 +35,6 @@ public class CrazyStarter implements PluginBootstrap {
 
         bukkit.setCommandProvider(provider);
 
-        return new CrazyCrates(bukkit, provider, this.configManager);
+        return new CrazyCrates(bukkit, this.configManager);
     }
 }

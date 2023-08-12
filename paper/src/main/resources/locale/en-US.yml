@@ -6,7 +6,7 @@
 # Translations: https://github.com/Crazy-Crew/CrazyCrates/discussions/categories/translations
 
 commands:
-  prefix: '<gradient:#e91e63:#e03d74>CrazyCrates</gradient> '
+  prefix: '<gradient:#f6426e:#725bf1>[CrazyCrates]</gradient> '
   arguments:
     optional-message: '{prefix}<green>This argument is optional</green>'
     required-message: '{prefix}<red>This argument is not optional</red>'
