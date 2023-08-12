@@ -1,9 +1,9 @@
 package com.badbones69.crazycrates.paper.api;
 
 import com.badbones69.crazycrates.paper.CrazyCrates;
-import com.badbones69.crazycrates.paper.Methods;
+import com.badbones69.crazycrates.paper.utils.Methods;
 import com.badbones69.crazycrates.paper.api.objects.Crate;
-import com.badbones69.crazycrates.api.enums.types.KeyType;
+import com.badbones69.crazycrates.api.enums.keys.KeyType;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

@@ -1,6 +1,6 @@
 package com.badbones69.crazycrates.paper.api.objects;
 
-import com.badbones69.crazycrates.paper.Methods;
+import com.badbones69.crazycrates.paper.utils.Methods;
 import com.badbones69.crazycrates.paper.support.SkullCreator;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import org.bukkit.*;

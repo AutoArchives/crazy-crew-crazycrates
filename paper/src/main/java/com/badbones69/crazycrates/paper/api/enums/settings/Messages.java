@@ -1,7 +1,7 @@
 package com.badbones69.crazycrates.paper.api.enums.settings;
 
 import com.badbones69.crazycrates.paper.CrazyCrates;
-import com.badbones69.crazycrates.paper.Methods;
+import com.badbones69.crazycrates.paper.utils.Methods;
 import com.badbones69.crazycrates.paper.api.FileManager;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;

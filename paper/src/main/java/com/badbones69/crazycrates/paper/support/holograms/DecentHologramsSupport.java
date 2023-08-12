@@ -1,9 +1,9 @@
 package com.badbones69.crazycrates.paper.support.holograms;
 
-import com.badbones69.crazycrates.paper.Methods;
+import com.badbones69.crazycrates.paper.utils.Methods;
 import com.badbones69.crazycrates.paper.api.interfaces.HologramController;
 import com.badbones69.crazycrates.paper.api.objects.Crate;
-import com.badbones69.crazycrates.api.objects.CrateHologram;
+import com.badbones69.crazycrates.api.crates.CrateHologram;
 import eu.decentsoftware.holograms.api.DHAPI;
 import eu.decentsoftware.holograms.api.holograms.Hologram;
 import org.bukkit.block.Block;

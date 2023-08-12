@@ -1,7 +1,7 @@
 package com.badbones69.crazycrates.paper.commands.subs.v1;
 
 import com.badbones69.crazycrates.paper.CrazyCrates;
-import com.badbones69.crazycrates.paper.Methods;
+import com.badbones69.crazycrates.paper.utils.Methods;
 import com.badbones69.crazycrates.paper.api.CrazyManager;
 import com.badbones69.crazycrates.paper.api.EventLogger;
 import com.badbones69.crazycrates.paper.api.FileManager;
@@ -12,8 +12,8 @@ import com.badbones69.crazycrates.paper.api.objects.Crate;
 import com.badbones69.crazycrates.paper.api.objects.CrateLocation;
 import com.badbones69.crazycrates.paper.api.objects.Prize;
 import com.badbones69.crazycrates.api.enums.Permissions;
-import com.badbones69.crazycrates.api.enums.types.CrateType;
-import com.badbones69.crazycrates.api.enums.types.KeyType;
+import com.badbones69.crazycrates.api.crates.CrateType;
+import com.badbones69.crazycrates.api.enums.keys.KeyType;
 import com.badbones69.crazycrates.paper.listeners.CrateControlListener;
 import com.badbones69.crazycrates.paper.listeners.PreviewListener;
 import dev.triumphteam.cmd.bukkit.annotation.Permission;
@@ -38,9 +38,9 @@ public class CrateBaseCommand extends BaseCommand {
 
     private final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
 
-    private final CrazyManager crazyManager = plugin.getStarter().getCrazyManager();
+    private final CrazyManager crazyManager = plugin.getCrazyManager();
 
-    private final EventLogger eventLogger = plugin.getStarter().getEventLogger();
+    private final EventLogger eventLogger = plugin.getEventLogger();
 
     @SubCommand("transfer")
     @Permission(value = "crazycrates.command.player.transfer", def = PermissionDefault.OP)

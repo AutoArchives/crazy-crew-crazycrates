@@ -1,12 +1,12 @@
 package com.badbones69.crazycrates.paper.api.managers;
 
 import com.badbones69.crazycrates.paper.CrazyCrates;
-import com.badbones69.crazycrates.paper.Methods;
+import com.badbones69.crazycrates.paper.utils.Methods;
 import com.badbones69.crazycrates.paper.api.CrazyManager;
 import com.badbones69.crazycrates.paper.api.enums.settings.Messages;
 import com.badbones69.crazycrates.paper.api.objects.Crate;
-import com.badbones69.crazycrates.api.enums.types.KeyType;
-import com.badbones69.crazycrates.api.quadcrates.CrateParticles;
+import com.badbones69.crazycrates.api.enums.keys.KeyType;
+import com.badbones69.crazycrates.api.crates.quadcrates.CrateParticles;
 import com.badbones69.crazycrates.paper.support.structures.QuadCrateSpiralHandler;
 import com.badbones69.crazycrates.paper.support.structures.StructureHandler;
 import com.badbones69.crazycrates.paper.support.structures.blocks.ChestStateHandler;
@@ -32,9 +32,9 @@ public class QuadCrateManager {
 
     private final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
 
-    private final ChestStateHandler chestStateHandler = plugin.getStarter().getChestStateHandler();
+    private final ChestStateHandler chestStateHandler = plugin.getChestHandler();
 
-    private final CrazyManager crazyManager = plugin.getStarter().getCrazyManager();
+    private final CrazyManager crazyManager = plugin.getCrazyManager();
 
     private static final List<QuadCrateManager> crateSessions = new ArrayList<>();
 

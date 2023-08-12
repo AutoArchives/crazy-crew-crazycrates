@@ -21,7 +21,7 @@ import java.util.List;
 public class CrateCommandKey extends BukkitCommandEngine {
 
     private final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
-    private final CrazyManager crazyManager = plugin.getStarter().getCrazyManager();
+    private final CrazyManager crazyManager = plugin.getCrazyManager();
 
     @SuppressWarnings("deprecation")
     public CrateCommandKey() {

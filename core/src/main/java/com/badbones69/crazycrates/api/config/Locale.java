@@ -4,7 +4,6 @@ import ch.jalu.configme.SettingsHolder;
 import ch.jalu.configme.configurationdata.CommentsConfiguration;
 import ch.jalu.configme.properties.Property;
 import ch.jalu.configme.properties.PropertyInitializer;
-import java.util.List;
 
 public class Locale implements SettingsHolder {
 
@@ -13,9 +12,7 @@ public class Locale implements SettingsHolder {
     @Override
     public void registerComments(CommentsConfiguration conf) {
         String[] header = {
-                "Submit your translations here: https://github.com/Crazy-Crew/CrazyCrates/discussions/categories/translations",
-                "",
-                "Legacy color codes such as &7,&c no longer work. You must use MiniMessage",
+                "Legacy color codes such as &7,&c no longer work. You must use minimessage",
                 "https://docs.advntr.dev/minimessage/format.html#color"
         };
 
@@ -26,7 +23,7 @@ public class Locale implements SettingsHolder {
                 ""
         };
 
-        conf.setComment("general", header);
+        conf.setComment("commands", header);
     }
 
     private static final String path = "commands.";

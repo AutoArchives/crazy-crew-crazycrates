@@ -2,8 +2,9 @@ package com.badbones69.crazycrates.paper;
 
 import com.badbones69.crazycrates.api.ConfigManager;
 import com.badbones69.crazycrates.api.utils.MiscUtils;
-import com.badbones69.crazycrates.paper.api.FileManager.Files;
-import com.badbones69.crazycrates.paper.api.managers.quadcrates.SessionManager;
+import com.badbones69.crazycrates.paper.api.CrazyManager;
+import com.badbones69.crazycrates.paper.api.EventLogger;
+import com.badbones69.crazycrates.paper.api.FileManager;
 import com.badbones69.crazycrates.paper.commands.subs.CrateCommandHelp;
 import com.badbones69.crazycrates.paper.commands.subs.CrateCommandKey;
 import com.badbones69.crazycrates.paper.commands.subs.CrateCommandMenu;
@@ -24,9 +25,9 @@ import com.badbones69.crazycrates.paper.listeners.FireworkDamageListener;
 import com.badbones69.crazycrates.paper.listeners.MenuListener;
 import com.badbones69.crazycrates.paper.listeners.MiscListener;
 import com.badbones69.crazycrates.paper.listeners.PreviewListener;
-import com.badbones69.crazycrates.paper.support.MetricsHandler;
 import com.badbones69.crazycrates.paper.support.libraries.PluginSupport;
 import com.badbones69.crazycrates.paper.support.placeholders.PlaceholderAPISupport;
+import com.badbones69.crazycrates.paper.support.structures.blocks.ChestStateHandler;
 import com.ryderbelserion.lexicon.bukkit.BukkitImpl;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -38,13 +39,17 @@ public class CrazyCrates extends JavaPlugin {
 
     private final BukkitImpl bukkit;
     private final ConfigManager configManager;
+    private final FileManager fileManager;
 
-    private Starter starter;
+    private CrazyManager crazyManager;
+    private EventLogger eventLogger;
+    private ChestStateHandler chestHandler;
 
-    public CrazyCrates(BukkitImpl bukkit, ConfigManager configManager) {
+    public CrazyCrates(BukkitImpl bukkit, ConfigManager configManager, FileManager fileManager) {
         this.bukkit = bukkit;
 
         this.configManager = configManager;
+        this.fileManager = fileManager;
     }
 
     @Override
@@ -64,29 +69,11 @@ public class CrazyCrates extends JavaPlugin {
         // Set command namespace
         this.bukkit.getManager().setNamespace("crazycrates");
 
-        // Create starter
-        this.starter = new Starter();
-        // enable all the goodies
-        this.starter.run();
+        this.crazyManager = new CrazyManager();
+        this.eventLogger = new EventLogger();
+        this.chestHandler = new ChestStateHandler();
 
-        // Load files
-        this.starter.getFileManager().setLog(true)
-                .registerDefaultGenerateFiles("CrateExample.yml", "/crates", "/crates")
-                .registerDefaultGenerateFiles("QuadCrateExample.yml", "/crates", "/crates")
-                .registerDefaultGenerateFiles("CosmicCrateExample.yml", "/crates", "/crates")
-                .registerDefaultGenerateFiles("QuickCrateExample.yml", "/crates", "/crates")
-                .registerDefaultGenerateFiles("classic.nbt", "/schematics", "/schematics")
-                .registerDefaultGenerateFiles("nether.nbt", "/schematics", "/schematics")
-                .registerDefaultGenerateFiles("outdoors.nbt", "/schematics", "/schematics")
-                .registerDefaultGenerateFiles("sea.nbt", "/schematics", "/schematics")
-                .registerDefaultGenerateFiles("soul.nbt", "/schematics", "/schematics")
-                .registerDefaultGenerateFiles("wooden.nbt", "/schematics", "/schematics")
-                .registerCustomFilesFolder("/crates")
-                .registerCustomFilesFolder("/schematics")
-                .setup();
-
-        // Clean files
-        this.starter.cleanFiles();
+        this.crazyManager.janitor();
 
         // Enable commands
         List.of(
@@ -97,26 +84,18 @@ public class CrazyCrates extends JavaPlugin {
                 new CrateCommandKey()
         ).forEach(this.bukkit.getManager()::addCommand);
 
-        boolean metricsEnabled = Files.CONFIG.getFile().getBoolean("Settings.Toggle-Metrics");
-
-        if (metricsEnabled) {
-            MetricsHandler metricsHandler = new MetricsHandler();
-
-            metricsHandler.start();
-        }
-
-        enable();
+        //enable();
     }
 
     @Override
     public void onDisable() {
         this.bukkit.disable();
 
-        SessionManager.endCrates();
+        //SessionManager.endCrates();
 
-        QuickCrate.removeAllRewards();
+        //QuickCrate.removeAllRewards();
 
-        if (this.starter.getCrazyManager().getHologramController() != null) this.starter.getCrazyManager().getHologramController().removeAllHolograms();
+        //if (this.starter.getCrazyManager().getHologramController() != null) this.starter.getCrazyManager().getHologramController().removeAllHolograms();
     }
 
     private void enable() {
@@ -138,9 +117,9 @@ public class CrazyCrates extends JavaPlugin {
         pluginManager.registerEvents(new CrateOnTheGo(), this);
         pluginManager.registerEvents(new QuadCrate(), this);
 
-        this.starter.getCrazyManager().loadCrates();
+        this.crazyManager.loadCrates();
 
-        if (!this.starter.getCrazyManager().getBrokeCrateLocations().isEmpty()) pluginManager.registerEvents(new BrokeLocationsListener(), this);
+        if (!this.crazyManager.getBrokeCrateLocations().isEmpty()) pluginManager.registerEvents(new BrokeLocationsListener(), this);
 
         if (PluginSupport.PLACEHOLDERAPI.isPluginEnabled()) new PlaceholderAPISupport().register();
 
@@ -161,7 +140,19 @@ public class CrazyCrates extends JavaPlugin {
         return this.configManager;
     }
 
-    public Starter getStarter() {
-        return this.starter;
+    public FileManager getFileManager() {
+        return this.fileManager;
+    }
+
+    public CrazyManager getCrazyManager() {
+        return this.crazyManager;
+    }
+
+    public EventLogger getEventLogger() {
+        return this.eventLogger;
+    }
+
+    public ChestStateHandler getChestHandler() {
+        return this.chestHandler;
     }
 }

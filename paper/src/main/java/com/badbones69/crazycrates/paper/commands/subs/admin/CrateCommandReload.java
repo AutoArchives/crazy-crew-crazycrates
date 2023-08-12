@@ -4,6 +4,7 @@ import com.badbones69.crazycrates.api.enums.Permissions;
 import com.badbones69.crazycrates.paper.CrazyCrates;
 import com.badbones69.crazycrates.paper.api.CrazyManager;
 import com.badbones69.crazycrates.paper.api.FileManager;
+import com.badbones69.crazycrates.paper.api.FileManager.Files;
 import com.badbones69.crazycrates.paper.api.enums.settings.Messages;
 import com.ryderbelserion.lexicon.bukkit.builders.commands.BukkitCommandContext;
 import com.ryderbelserion.lexicon.bukkit.builders.commands.BukkitCommandEngine;
@@ -14,8 +15,8 @@ public class CrateCommandReload extends BukkitCommandEngine {
 
     private final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
 
-    private final FileManager fileManager = this.plugin.getStarter().getFileManager();
-    private final CrazyManager crazyManager = this.plugin.getStarter().getCrazyManager();
+    private final FileManager fileManager = this.plugin.getFileManager();
+    private final CrazyManager crazyManager = this.plugin.getCrazyManager();
 
     @SuppressWarnings("deprecation")
     public CrateCommandReload() {
@@ -34,7 +35,17 @@ public class CrateCommandReload extends BukkitCommandEngine {
         // TODO() Migrate old configs
         this.plugin.getConfigManager().reload();
 
-        this.plugin.getStarter().cleanFiles();
+        // Clean files if we have to.
+        if (!Files.LOCATIONS.getFile().contains("Locations")) {
+            Files.LOCATIONS.getFile().set("Locations.Clear", null);
+            Files.LOCATIONS.saveFile();
+        }
+
+        if (!Files.DATA.getFile().contains("Players")) {
+            Files.DATA.getFile().set("Players.Clear", null);
+            Files.DATA.saveFile();
+        }
+
         this.crazyManager.loadCrates();
 
         context.sendLegacyMessage(Messages.RELOAD.getMessage());

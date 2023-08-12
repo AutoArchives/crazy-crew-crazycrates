@@ -1,13 +1,13 @@
 package com.badbones69.crazycrates.paper.cratetypes;
 
 import com.badbones69.crazycrates.paper.CrazyCrates;
-import com.badbones69.crazycrates.paper.Methods;
+import com.badbones69.crazycrates.paper.utils.Methods;
 import com.badbones69.crazycrates.paper.api.CrazyManager;
 import com.badbones69.crazycrates.paper.api.events.PlayerPrizeEvent;
 import com.badbones69.crazycrates.paper.api.interfaces.HologramController;
 import com.badbones69.crazycrates.paper.api.objects.Crate;
 import com.badbones69.crazycrates.paper.api.objects.Prize;
-import com.badbones69.crazycrates.api.enums.types.KeyType;
+import com.badbones69.crazycrates.api.enums.keys.KeyType;
 import com.badbones69.crazycrates.paper.listeners.CrateControlListener;
 import com.badbones69.crazycrates.paper.support.structures.blocks.ChestStateHandler;
 import de.tr7zw.changeme.nbtapi.NBTItem;
@@ -34,10 +34,10 @@ public class QuickCrate implements Listener {
     public static HashMap<Player, Entity> rewards = new HashMap<>();
     private static final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
 
-    private static final CrazyManager crazyManager = plugin.getStarter().getCrazyManager();
+    private static final CrazyManager crazyManager = plugin.getCrazyManager();
     private static final HashMap<Player, BukkitTask> tasks = new HashMap<>();
 
-    private static final ChestStateHandler chestStateHandler = plugin.getStarter().getChestStateHandler();
+    private static final ChestStateHandler chestStateHandler = plugin.getChestHandler();
 
     public static void openCrate(final Player player, final Location loc, Crate crate, KeyType keyType, HologramController hologramController) {
         int keys = switch (keyType) {

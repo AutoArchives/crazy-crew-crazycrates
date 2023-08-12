@@ -1,9 +1,9 @@
 package com.badbones69.crazycrates.paper.api;
 
 import com.Zrips.CMI.Modules.ModuleHandling.CMIModule;
-import com.badbones69.crazycrates.api.enums.types.CrateType;
+import com.badbones69.crazycrates.api.crates.CrateType;
 import com.badbones69.crazycrates.paper.CrazyCrates;
-import com.badbones69.crazycrates.paper.Methods;
+import com.badbones69.crazycrates.paper.utils.Methods;
 import com.badbones69.crazycrates.paper.api.FileManager.Files;
 import com.badbones69.crazycrates.paper.api.enums.BrokeLocation;
 import com.badbones69.crazycrates.paper.api.enums.settings.Messages;
@@ -13,12 +13,12 @@ import com.badbones69.crazycrates.paper.api.interfaces.HologramController;
 import com.badbones69.crazycrates.paper.api.managers.QuadCrateManager;
 import com.badbones69.crazycrates.paper.api.objects.*;
 import com.badbones69.crazycrates.paper.cratetypes.*;
-import com.badbones69.crazycrates.api.enums.types.KeyType;
+import com.badbones69.crazycrates.api.enums.keys.KeyType;
 import com.badbones69.crazycrates.paper.listeners.CrateControlListener;
 import com.badbones69.crazycrates.paper.listeners.MenuListener;
 import com.badbones69.crazycrates.paper.listeners.PreviewListener;
-import com.badbones69.crazycrates.api.objects.CrateHologram;
-import com.badbones69.crazycrates.api.quadcrates.CrateSchematic;
+import com.badbones69.crazycrates.api.crates.CrateHologram;
+import com.badbones69.crazycrates.api.crates.quadcrates.CrateSchematic;
 import com.badbones69.crazycrates.paper.support.holograms.CMIHologramsSupport;
 import com.badbones69.crazycrates.paper.support.holograms.DecentHologramsSupport;
 import com.badbones69.crazycrates.paper.support.libraries.PluginSupport;
@@ -43,7 +43,7 @@ public class CrazyManager {
 
     private final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
 
-    private final FileManager fileManager = plugin.getStarter().getFileManager();
+    private final FileManager fileManager = plugin.getFileManager();
 
     // All the crates that have been loaded.
     private final ArrayList<Crate> crates = new ArrayList<>();
@@ -422,7 +422,7 @@ public class CrazyManager {
         boolean logFile = FileManager.Files.CONFIG.getFile().getBoolean("Settings.Crate-Actions.Log-File");
         boolean logConsole = FileManager.Files.CONFIG.getFile().getBoolean("Settings.Crate-Actions.Log-Console");
 
-        plugin.getStarter().getEventLogger().logCrateEvent(player, crate, keyType, logFile, logConsole);
+        this.plugin.getEventLogger().logCrateEvent(player, crate, keyType, logFile, logConsole);
     }
 
     /**
@@ -1387,6 +1387,56 @@ public class CrazyManager {
             return min + ThreadLocalRandom.current().nextLong(max - min);
         } catch (IllegalArgumentException e) {
             return min;
+        }
+    }
+
+    public void janitor() {
+        // Clean files if we have to.
+        if (!Files.LOCATIONS.getFile().contains("Locations")) {
+            Files.LOCATIONS.getFile().set("Locations.Clear", null);
+            Files.LOCATIONS.saveFile();
+        }
+
+        if (!Files.DATA.getFile().contains("Players")) {
+            Files.DATA.getFile().set("Players.Clear", null);
+            Files.DATA.saveFile();
+        }
+
+        // Add extra messages.
+        Messages.addMissingMessages();
+
+        FileConfiguration config = Files.CONFIG.getFile();
+
+        String menu = config.getString("Settings.Enable-Crate-Menu");
+
+        String full = config.getString("Settings.Give-Virtual-Keys-When-Inventory-Full-Message");
+
+        String phys = config.getString("Settings.Physical-Accepts-Physical-Keys");
+
+        if (phys == null) {
+            config.set("Settings.Physical-Accepts-Physical-Keys", true);
+
+            Files.CONFIG.saveFile();
+        }
+
+        if (full == null) {
+            config.set("Settings.Give-Virtual-Keys-When-Inventory-Full-Message", false);
+
+            Files.CONFIG.saveFile();
+        }
+
+        if (menu == null) {
+            String oldBoolean = config.getString("Settings.Disable-Crate-Menu");
+            boolean switchBoolean = config.getBoolean("Settings.Disable-Crate-Menu");
+
+            if (oldBoolean != null) {
+                config.set("Settings.Enable-Crate-Menu", switchBoolean);
+                config.set("Settings.Disable-Crate-Menu", null);
+            } else {
+                config.set("Settings.Enable-Crate-Menu", true);
+            }
+
+            Files.CONFIG.saveFile();
         }
     }
 }

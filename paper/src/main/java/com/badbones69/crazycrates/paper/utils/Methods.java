@@ -1,7 +1,8 @@
-package com.badbones69.crazycrates.paper;
+package com.badbones69.crazycrates.paper.utils;
 
 import com.badbones69.crazycrates.api.enums.Permissions;
 import com.badbones69.crazycrates.api.utils.MiscUtils;
+import com.badbones69.crazycrates.paper.CrazyCrates;
 import com.badbones69.crazycrates.paper.api.CrazyManager;
 import com.badbones69.crazycrates.paper.api.FileManager;
 import com.badbones69.crazycrates.paper.api.enums.settings.Messages;
@@ -35,7 +36,7 @@ public class Methods {
 
     private static final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
 
-    private static final CrazyManager crazyManager = plugin.getStarter().getCrazyManager();
+    private static final CrazyManager crazyManager = plugin.getCrazyManager();
 
     public final static Pattern HEX_PATTERN = Pattern.compile("#[a-fA-F\\d]{6}");
 

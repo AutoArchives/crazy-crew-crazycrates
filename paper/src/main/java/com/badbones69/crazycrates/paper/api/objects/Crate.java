@@ -1,13 +1,13 @@
 package com.badbones69.crazycrates.paper.api.objects;
 
 import com.badbones69.crazycrates.paper.CrazyCrates;
-import com.badbones69.crazycrates.paper.Methods;
+import com.badbones69.crazycrates.paper.utils.Methods;
 import com.badbones69.crazycrates.paper.api.FileManager;
 import com.badbones69.crazycrates.paper.api.managers.CosmicCrateManager;
 import com.badbones69.crazycrates.paper.api.managers.CrateManager;
-import com.badbones69.crazycrates.api.enums.types.CrateType;
+import com.badbones69.crazycrates.api.crates.CrateType;
 import com.badbones69.crazycrates.paper.listeners.PreviewListener;
-import com.badbones69.crazycrates.api.objects.CrateHologram;
+import com.badbones69.crazycrates.api.crates.CrateHologram;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -18,7 +18,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -52,10 +51,10 @@ public class Crate {
 
     private final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
 
-    private final FileManager fileManager = plugin.getStarter().getFileManager();
-    private int maxMassOpen;
-    private int requiredKeys;
-    private List<String> prizeMessage;
+    private final FileManager fileManager = plugin.getFileManager();
+    private final int maxMassOpen;
+    private final int requiredKeys;
+    private final List<String> prizeMessage;
 
     /**
      * @param name The name of the crate.

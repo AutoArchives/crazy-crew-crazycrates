@@ -17,7 +17,7 @@ public class CrateCommandDebug extends BukkitCommandEngine {
 
     private final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
 
-    private final CrazyManager crazyManager = this.plugin.getStarter().getCrazyManager();
+    private final CrazyManager crazyManager = this.plugin.getCrazyManager();
 
     @SuppressWarnings("deprecation")
     public CrateCommandDebug() {
@@ -49,6 +49,6 @@ public class CrateCommandDebug extends BukkitCommandEngine {
     public @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String alias, @NotNull String[] args) throws IllegalArgumentException {
         if (args.length == 2) return Collections.emptyList();
 
-        return this.plugin.getStarter().getFileManager().getAllCratesNames().stream().toList();
+        return this.plugin.getFileManager().getAllCratesNames().stream().toList();
     }
 }
