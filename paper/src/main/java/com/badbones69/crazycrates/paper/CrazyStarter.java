@@ -1,9 +1,9 @@
-package com.badbones69.crazycrates.paper.plugin;
+package com.badbones69.crazycrates.paper;
 
 import com.badbones69.crazycrates.api.ConfigManager;
-import com.badbones69.crazycrates.paper.CrazyCrates;
 import com.badbones69.crazycrates.paper.api.FileManager;
 import com.badbones69.crazycrates.paper.commands.provider.BukkitLocaleProvider;
+import com.badbones69.crazycrates.paper.support.placeholders.PlaceholderManager;
 import com.ryderbelserion.lexicon.bukkit.BukkitImpl;
 import io.papermc.paper.plugin.bootstrap.BootstrapContext;
 import io.papermc.paper.plugin.bootstrap.PluginBootstrap;
@@ -17,11 +17,11 @@ public class CrazyStarter implements PluginBootstrap {
 
     private ConfigManager configManager;
     private FileManager fileManager;
+    private PlaceholderManager placeholderManager;
 
     @Override
     public void bootstrap(@NotNull BootstrapContext context) {
         this.configManager = new ConfigManager(context.getDataDirectory());
-
         this.configManager.load();
 
         this.fileManager = new FileManager();
@@ -40,6 +40,8 @@ public class CrazyStarter implements PluginBootstrap {
                 .registerCustomFilesFolder("/crates")
                 .registerCustomFilesFolder("/schematics")
                 .setup();
+
+        this.placeholderManager = new PlaceholderManager();
     }
 
     @Override
@@ -48,6 +50,6 @@ public class CrazyStarter implements PluginBootstrap {
 
         bukkit.setLocaleProvider(new BukkitLocaleProvider());
 
-        return new CrazyCrates(bukkit, this.configManager, this.fileManager);
+        return new CrazyCrates(bukkit, this.configManager, this.fileManager, this.placeholderManager);
     }
 }

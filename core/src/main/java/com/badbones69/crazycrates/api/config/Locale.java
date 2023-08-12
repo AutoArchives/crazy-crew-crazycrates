@@ -16,17 +16,12 @@ public class Locale implements SettingsHolder {
                 "https://docs.advntr.dev/minimessage/format.html#color"
         };
 
-        String[] deprecation = {
-                "",
-                "Warning: This section is subject to change so it is considered deprecated.",
-                "This is your warning before the change happens.",
-                ""
-        };
-
         conf.setComment("commands", header);
     }
 
     private static final String path = "commands.";
+
+    public static final Property<String> COMMAND_PREFIX = PropertyInitializer.newProperty(path + "prefix", "<gradient:#e91e63:#e03d74>CrazyCrates</gradient> ");
 
     public static final Property<String> REQUIRED_ARGUMENT = PropertyInitializer.newProperty(path + "required-argument", "{prefix}<red>This argument is not optional</red>");
 
@@ -35,4 +30,6 @@ public class Locale implements SettingsHolder {
     public static final Property<String> NOT_ENOUGH_ARGS = PropertyInitializer.newProperty(path + "not-enough-args", "{prefix}<red>You did not supply enough arguments.</red>");
 
     public static final Property<String> TOO_MANY_ARGS = PropertyInitializer.newProperty(path + "too-many-args", "{prefix}<red>You put more arguments then I can handle.</red>");
+
+    public static final Property<String> HOVER_FORMAT = PropertyInitializer.newProperty(path + "hover-message", "{prefix}<gray>Click me to run the command.</gray> <gold>{command}</gold>");
 }

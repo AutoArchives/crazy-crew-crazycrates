@@ -9,5 +9,6 @@ commands:
   arguments:
     optional-message: '{prefix}<green>This argument is optional</green>'
     required-message: '{prefix}<red>This argument is not optional</red>'
+    hover-message: '{prefix}<gray>Click me to run the command.</gray> <gold>{command}</gold>'
   too-many-args: '{prefix}<red>You put more arguments then I can handle.</red>'
   not-enough-args: '{prefix}<red>You did not supply enough arguments.</red>'

@@ -27,6 +27,7 @@ import com.badbones69.crazycrates.paper.listeners.MiscListener;
 import com.badbones69.crazycrates.paper.listeners.PreviewListener;
 import com.badbones69.crazycrates.paper.support.libraries.PluginSupport;
 import com.badbones69.crazycrates.paper.support.placeholders.PlaceholderAPISupport;
+import com.badbones69.crazycrates.paper.support.placeholders.PlaceholderManager;
 import com.badbones69.crazycrates.paper.support.structures.blocks.ChestStateHandler;
 import com.ryderbelserion.lexicon.bukkit.BukkitImpl;
 import org.bukkit.plugin.PluginManager;
@@ -40,16 +41,18 @@ public class CrazyCrates extends JavaPlugin {
     private final BukkitImpl bukkit;
     private final ConfigManager configManager;
     private final FileManager fileManager;
+    private final PlaceholderManager placeholderManager;
 
     private CrazyManager crazyManager;
     private EventLogger eventLogger;
     private ChestStateHandler chestHandler;
 
-    public CrazyCrates(BukkitImpl bukkit, ConfigManager configManager, FileManager fileManager) {
+    public CrazyCrates(BukkitImpl bukkit, ConfigManager configManager, FileManager fileManager, PlaceholderManager placeholderManager) {
         this.bukkit = bukkit;
 
         this.configManager = configManager;
         this.fileManager = fileManager;
+        this.placeholderManager = placeholderManager;
     }
 
     @Override
@@ -142,6 +145,10 @@ public class CrazyCrates extends JavaPlugin {
 
     public FileManager getFileManager() {
         return this.fileManager;
+    }
+
+    public PlaceholderManager getPlaceholderManager() {
+        return this.placeholderManager;
     }
 
     public CrazyManager getCrazyManager() {
