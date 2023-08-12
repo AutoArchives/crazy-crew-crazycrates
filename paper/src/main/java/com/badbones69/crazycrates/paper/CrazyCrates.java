@@ -6,6 +6,7 @@ import com.badbones69.crazycrates.paper.api.CrazyManager;
 import com.badbones69.crazycrates.paper.api.EventLogger;
 import com.badbones69.crazycrates.paper.api.FileManager;
 import com.badbones69.crazycrates.paper.api.managers.quadcrates.SessionManager;
+import com.badbones69.crazycrates.paper.commands.provider.BukkitCommandProvider;
 import com.badbones69.crazycrates.paper.commands.subs.CrateCommandHelp;
 import com.badbones69.crazycrates.paper.commands.subs.CrateCommandKey;
 import com.badbones69.crazycrates.paper.commands.subs.CrateCommandMenu;
@@ -39,6 +40,7 @@ import java.util.logging.Logger;
 public class CrazyCrates extends JavaPlugin {
 
     private final BukkitImpl bukkit;
+    private final BukkitCommandProvider provider;
     private final ConfigManager configManager;
 
     private FileManager fileManager;
@@ -46,8 +48,9 @@ public class CrazyCrates extends JavaPlugin {
     private EventLogger eventLogger;
     private ChestStateHandler chestHandler;
 
-    public CrazyCrates(BukkitImpl bukkit, ConfigManager configManager) {
+    public CrazyCrates(BukkitImpl bukkit, BukkitCommandProvider provider, ConfigManager configManager) {
         this.bukkit = bukkit;
+        this.provider = provider;
 
         this.configManager = configManager;
     }
@@ -97,7 +100,7 @@ public class CrazyCrates extends JavaPlugin {
                 new CrateCommandReload(),
                 new CrateCommandDebug(),
                 new CrateCommandMenu(),
-                new CrateCommandHelp(),
+                new CrateCommandHelp(this.provider),
                 new CrateCommandKey()
         ).forEach(this.bukkit.getManager()::addCommand);
 

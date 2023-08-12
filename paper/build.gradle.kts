@@ -12,6 +12,8 @@ base {
 
 repositories {
     flatDir { dirs("libs") }
+
+    mavenLocal()
 }
 
 dependencies {
@@ -23,7 +25,7 @@ dependencies {
     implementation("dev.triumphteam", "triumph-gui", "3.1.2")
     implementation("dev.triumphteam", "triumph-cmd-bukkit", "2.0.0-SNAPSHOT")
 
-    implementation("com.ryderbelserion.lexicon", "lexicon-bukkit-api", "2.4")
+    implementation("com.ryderbelserion.lexicon", "lexicon-bukkit-api", "2.5.5")
 
     compileOnly(fileTree("libs").include("*.jar"))
 

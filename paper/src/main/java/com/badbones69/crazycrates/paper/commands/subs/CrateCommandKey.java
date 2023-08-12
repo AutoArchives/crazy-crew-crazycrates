@@ -30,6 +30,8 @@ public class CrateCommandKey extends BukkitCommandEngine {
         setPermission(Permissions.PLAYER_HELP.getBuiltPermission());
 
         setPermissionMessage(Messages.NO_PERMISSION.getMessage());
+
+        //addOptionalArgument(new Argument("player", 0, new PlayerArgument()));
     }
 
     @Override

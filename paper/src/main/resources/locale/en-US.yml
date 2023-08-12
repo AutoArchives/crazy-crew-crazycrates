@@ -6,9 +6,23 @@
 # Translations: https://github.com/Crazy-Crew/CrazyCrates/discussions/categories/translations
 
 commands:
+  prefix: '<gradient:#e91e63:#e03d74>CrazyCrates</gradient> '
   arguments:
     optional-message: '{prefix}<green>This argument is optional</green>'
     required-message: '{prefix}<red>This argument is not optional</red>'
     hover-message: '{prefix}<gray>Click me to run the command.</gray> <gold>{command}</gold>'
   too-many-args: '{prefix}<red>You put more arguments then I can handle.</red>'
   not-enough-args: '{prefix}<red>You did not supply enough arguments.</red>'
+  help:
+    hover-message: '{prefix}<gray>Click me to run the command.</gray> <gold>{command}</gold>'
+    max-help-page-entries: 10
+    invalid-page: '{prefix}<red>The page</red> <gold>{page}</gold> <red>does not exist.</red>'
+    page:
+      format: '<gold>{command}</gold> <dark_gray>»</dark_gray> <reset>{description}'
+      header: '<dark_gray>────────</dark_gray> <gold>CrazyCrates Help {page}</gold> <dark_gray>────────</dark_gray>'
+      footer: '<dark_gray>────────</dark_gray> <gold>CrazyCrates Help {page}'
+      navigation:
+        next-button: ' <green>»»»</green>'
+        back-button: ' <red>«««</red>'
+        go-to-page: '<gray>Go to page</gray> <gold>{page}</gold>'
+    hover-action: 'copy_to_clipboard'

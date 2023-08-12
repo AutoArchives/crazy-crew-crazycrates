@@ -1,7 +1,7 @@
 package com.badbones69.crazycrates.paper.support.placeholders;
 
 import com.badbones69.crazycrates.api.ConfigManager;
-import com.badbones69.crazycrates.api.config.Locale;
+import com.badbones69.crazycrates.api.config.types.Locale;
 
 public class PlaceholderManager {
 

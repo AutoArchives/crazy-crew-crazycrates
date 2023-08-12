@@ -2,6 +2,7 @@ package com.badbones69.crazycrates.api;
 
 import ch.jalu.configme.SettingsManager;
 import ch.jalu.configme.SettingsManagerBuilder;
+import com.badbones69.crazycrates.api.config.ConfigBuilder;
 import com.ryderbelserion.lexicon.core.utils.FileUtils;
 import java.io.File;
 import java.nio.file.Path;
@@ -26,7 +27,7 @@ public class ConfigManager {
         locale = SettingsManagerBuilder
                 .withYamlFile(localeFile)
                 .useDefaultMigrationService()
-                .configurationData()
+                .configurationData(ConfigBuilder.buildLocale())
                 .create();
     }
 

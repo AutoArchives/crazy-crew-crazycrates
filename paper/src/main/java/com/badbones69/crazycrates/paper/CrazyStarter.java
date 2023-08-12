@@ -1,6 +1,8 @@
 package com.badbones69.crazycrates.paper;
 
 import com.badbones69.crazycrates.api.ConfigManager;
+import com.badbones69.crazycrates.api.config.types.Locale;
+import com.badbones69.crazycrates.paper.commands.provider.BukkitCommandProvider;
 import com.badbones69.crazycrates.paper.commands.provider.BukkitLocaleProvider;
 import com.ryderbelserion.lexicon.bukkit.BukkitImpl;
 import io.papermc.paper.plugin.bootstrap.BootstrapContext;
@@ -27,6 +29,12 @@ public class CrazyStarter implements PluginBootstrap {
 
         bukkit.setLocaleProvider(new BukkitLocaleProvider());
 
-        return new CrazyCrates(bukkit, this.configManager);
+        BukkitCommandProvider provider = new BukkitCommandProvider();
+
+        provider.updateHelpPerPage(ConfigManager.getLocale().getProperty(Locale.HELP_MAX_PAGE_ENTRIES));
+
+        bukkit.setCommandProvider(provider);
+
+        return new CrazyCrates(bukkit, provider, this.configManager);
     }
 }

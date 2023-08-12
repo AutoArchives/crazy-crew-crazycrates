@@ -8,10 +8,14 @@ base {
     archivesName.set(projectName)
 }
 
+repositories {
+    mavenLocal()
+}
+
 dependencies {
     compileOnly("io.papermc.paper", "paper-api","1.20.1-R0.1-SNAPSHOT")
 
-    compileOnly("com.ryderbelserion.lexicon", "lexicon-core-api", "2.4")
+    compileOnly("com.ryderbelserion.lexicon", "lexicon-core-api", "2.5.5")
 
     api("ch.jalu", "configme", "1.3.1")
 }
