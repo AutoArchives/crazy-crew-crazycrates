@@ -1,5 +1,6 @@
 package com.badbones69.crazycrates.paper.commands.subs;
 
+/*
 import com.badbones69.crazycrates.api.enums.Permissions;
 import com.badbones69.crazycrates.paper.api.FileManager.Files;
 import com.badbones69.crazycrates.paper.api.enums.settings.Messages;
@@ -38,3 +39,4 @@ public class CrateCommandMenu extends BukkitCommandEngine {
         context.sendLegacyMessage(Messages.FEATURE_DISABLED.getMessage());
     }
 }
+ */

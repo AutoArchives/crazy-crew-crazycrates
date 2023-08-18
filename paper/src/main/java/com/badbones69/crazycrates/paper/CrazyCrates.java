@@ -6,12 +6,6 @@ import com.badbones69.crazycrates.paper.api.CrazyManager;
 import com.badbones69.crazycrates.paper.api.EventLogger;
 import com.badbones69.crazycrates.paper.api.FileManager;
 import com.badbones69.crazycrates.paper.api.managers.quadcrates.SessionManager;
-import com.badbones69.crazycrates.paper.commands.provider.BukkitCommandProvider;
-import com.badbones69.crazycrates.paper.commands.subs.CrateCommandHelp;
-import com.badbones69.crazycrates.paper.commands.subs.CrateCommandKey;
-import com.badbones69.crazycrates.paper.commands.subs.CrateCommandMenu;
-import com.badbones69.crazycrates.paper.commands.subs.admin.CrateCommandDebug;
-import com.badbones69.crazycrates.paper.commands.subs.admin.CrateCommandReload;
 import com.badbones69.crazycrates.paper.cratetypes.CSGO;
 import com.badbones69.crazycrates.paper.cratetypes.Cosmic;
 import com.badbones69.crazycrates.paper.cratetypes.CrateOnTheGo;
@@ -30,16 +24,12 @@ import com.badbones69.crazycrates.paper.listeners.PreviewListener;
 import com.badbones69.crazycrates.paper.support.libraries.PluginSupport;
 import com.badbones69.crazycrates.paper.support.placeholders.PlaceholderAPISupport;
 import com.badbones69.crazycrates.paper.support.structures.blocks.ChestStateHandler;
-import com.ryderbelserion.lexicon.bukkit.BukkitImpl;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class CrazyCrates extends JavaPlugin {
 
-    private final BukkitImpl bukkit;
     private final ConfigManager configManager;
 
     private FileManager fileManager;
@@ -47,28 +37,21 @@ public class CrazyCrates extends JavaPlugin {
     private EventLogger eventLogger;
     private ChestStateHandler chestHandler;
 
-    public CrazyCrates(BukkitImpl bukkit, ConfigManager configManager) {
-        this.bukkit = bukkit;
-
+    public CrazyCrates(ConfigManager configManager) {
         this.configManager = configManager;
-    }
-
-    @Override
-    public @NotNull Logger getLogger() {
-        return this.bukkit.getLogUtils().getLogger();
     }
 
     @Override
     public void onEnable() {
         // Enable bukkit impl
-        this.bukkit.setPlugin(this);
-        this.bukkit.enable(true);
+        //this.bukkit.setPlugin(this);
+        //this.bukkit.enable(true);
 
         // Register permissions to server
         MiscUtils.registerPermissions(getServer().getPluginManager());
 
         // Set command namespace
-        this.bukkit.getManager().setNamespace("crazycrates");
+        //this.bukkit.getManager().setNamespace("crazycrates");
 
         this.fileManager = new FileManager();
 
@@ -94,20 +77,20 @@ public class CrazyCrates extends JavaPlugin {
         this.crazyManager.janitor();
 
         // Enable commands
-        List.of(
-                new CrateCommandReload(),
-                new CrateCommandDebug(),
-                new CrateCommandMenu(),
-                new CrateCommandHelp(),
-                new CrateCommandKey()
-        ).forEach(this.bukkit.getManager()::addCommand);
+        //List.of(
+        //        new CrateCommandReload(),
+        //        new CrateCommandDebug(),
+        //        new CrateCommandMenu(),
+        //        new CrateCommandHelp(),
+        //        new CrateCommandKey()
+        //).forEach(this.bukkit.getManager()::addCommand);
 
         enable();
     }
 
     @Override
     public void onDisable() {
-        this.bukkit.disable();
+        //this.bukkit.disable();
 
         SessionManager.endCrates();
 
@@ -150,9 +133,9 @@ public class CrazyCrates extends JavaPlugin {
         }
     }
 
-    public BukkitImpl getBukkit() {
-        return this.bukkit;
-    }
+    //public BukkitImpl getBukkit() {
+        //return this.bukkit;
+    //}
 
     public ConfigManager getConfigManager() {
         return this.configManager;

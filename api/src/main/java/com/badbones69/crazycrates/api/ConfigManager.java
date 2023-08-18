@@ -3,7 +3,6 @@ package com.badbones69.crazycrates.api;
 import ch.jalu.configme.SettingsManager;
 import ch.jalu.configme.SettingsManagerBuilder;
 import com.badbones69.crazycrates.api.config.ConfigBuilder;
-import com.ryderbelserion.lexicon.core.utils.FileUtils;
 import java.io.File;
 import java.nio.file.Path;
 
@@ -20,7 +19,7 @@ public class ConfigManager {
     public void load() {
         File localeDir = new File(this.path.toFile(), "locale");
 
-        FileUtils.extract("/locale/", this.path, false);
+        //FileUtils.extract("/locale/", this.path, false);
 
         File localeFile = new File(localeDir, "en-US.yml");
 

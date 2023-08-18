@@ -1,5 +1,6 @@
 package com.badbones69.crazycrates.paper.commands.subs;
 
+/*
 import com.badbones69.crazycrates.api.enums.Permissions;
 import com.badbones69.crazycrates.paper.api.enums.settings.Messages;
 import com.ryderbelserion.lexicon.bukkit.builders.commands.BukkitCommandContext;
@@ -56,3 +57,4 @@ public class CrateCommandHelp extends BukkitCommandEngine {
         return completions;
     }
 }
+ */

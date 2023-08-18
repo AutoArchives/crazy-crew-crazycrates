@@ -1,11 +1,16 @@
 .gradle
 .idea
-build
-
-core/.gradle
-core/build
 
 paper/.gradle
 paper/build
+
+folia/.gradle
+folia/build
+
+api/.gradle
+api/build
+
+buildSrc/.gradle
+buildSrc/build
 
 jars

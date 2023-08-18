@@ -1,5 +1,6 @@
 package com.badbones69.crazycrates.paper.commands.subs;
 
+/*
 import com.badbones69.crazycrates.api.enums.Permissions;
 import com.badbones69.crazycrates.paper.CrazyCrates;
 import com.badbones69.crazycrates.paper.api.CrazyManager;
@@ -109,3 +110,4 @@ public class CrateCommandKey extends BukkitCommandEngine {
         }
     }
 }
+ */
