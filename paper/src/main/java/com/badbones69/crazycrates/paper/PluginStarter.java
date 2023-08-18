@@ -8,7 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("UnstableApiUsage")
-public class CrazyStarter implements PluginBootstrap {
+public class PluginStarter implements PluginBootstrap {
 
     private ConfigManager configManager;
 

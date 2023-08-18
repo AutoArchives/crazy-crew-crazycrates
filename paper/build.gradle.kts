@@ -23,6 +23,8 @@ dependencies {
 
     compileOnly("me.clip", "placeholderapi", "2.11.3")
 
+    compileOnly("ch.jalu", "configme", "1.4.0")
+
     compileOnly(fileTree("libs").include("*.jar"))
 }
 

@@ -7,7 +7,7 @@ group = "${rootProject.group}.${project.name}"
 dependencies {
     compileOnly("io.papermc.paper", "paper-api","1.20.1-R0.1-SNAPSHOT")
 
-    api("ch.jalu", "configme", "1.3.1")
+    compileOnly("ch.jalu", "configme", "1.4.0")
 }
 
 val component: SoftwareComponent = components["java"]
