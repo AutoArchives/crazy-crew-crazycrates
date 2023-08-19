@@ -15,8 +15,10 @@ public class CrazyLoader implements PluginLoader {
     public void classloader(@NotNull PluginClasspathBuilder classpathBuilder) {
         MavenLibraryResolver resolver = new MavenLibraryResolver();
 
-        resolver.addRepository(new RemoteRepository.Builder("central", "default", "https://repo1.maven.org/maven2").build());
+        //resolver.addDependency(new Dependency(new DefaultArtifact("ch.jalu:configme:1.4.0"), null));
 
-        resolver.addDependency(new Dependency(new DefaultArtifact("ch.jalu:configme:1.4.0"), null));
+        resolver.addDependency(new Dependency(new DefaultArtifact("de.tr7zw:item-nbt-api:2.11.3"), null));
+
+        resolver.addRepository(new RemoteRepository.Builder("codemc-repo", "default", "https://repo.codemc.io/repository/maven-public/").build());
     }
 }

@@ -19,7 +19,7 @@ dependencies {
 
     implementation("org.bstats", "bstats-bukkit", "3.0.2")
 
-    implementation("de.tr7zw", "item-nbt-api", "2.11.3")
+    compileOnly("de.tr7zw", "item-nbt-api", "2.11.3")
 
     compileOnly("ch.jalu", "configme", "1.4.0")
 
@@ -48,9 +48,8 @@ tasks {
     shadowJar {
         listOf(
             "dev.triumphteam",
-            "org.jetbrains",
             "org.bstats",
-            "de.tr7zw"
+            //"de.tr7zw"
         ).forEach {
             relocate(it, "libs.$it")
         }
