@@ -5,8 +5,8 @@ version: '${version}'
 api-version: '${apiVersion}'
 description: '${description}'
 
-bootstrapper: '${group}.PluginStarter'
-loader: '${group}.PluginLoader'
+bootstrapper: 'com.badbones69.crazycrates.paper.PluginStarter'
+loader: 'com.badbones69.crazycrates.paper.CrazyLoader'
 
 dependencies:
   server:

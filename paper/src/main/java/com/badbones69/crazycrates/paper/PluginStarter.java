@@ -1,6 +1,5 @@
 package com.badbones69.crazycrates.paper;
 
-import com.badbones69.crazycrates.api.ConfigManager;
 import io.papermc.paper.plugin.bootstrap.BootstrapContext;
 import io.papermc.paper.plugin.bootstrap.PluginBootstrap;
 import io.papermc.paper.plugin.bootstrap.PluginProviderContext;
@@ -10,12 +9,12 @@ import org.jetbrains.annotations.NotNull;
 @SuppressWarnings("UnstableApiUsage")
 public class PluginStarter implements PluginBootstrap {
 
-    private ConfigManager configManager;
+    //private ConfigManager configManager;
 
     @Override
     public void bootstrap(@NotNull BootstrapContext context) {
-        this.configManager = new ConfigManager(context.getDataDirectory());
-        this.configManager.load();
+        //this.configManager = new ConfigManager(context.getDataDirectory());
+        //this.configManager.load();
     }
 
     @Override
@@ -30,6 +29,6 @@ public class PluginStarter implements PluginBootstrap {
 
         //bukkit.setCommandProvider(provider);
 
-        return new CrazyCrates(this.configManager);
+        return new CrazyCrates();
     }
 }

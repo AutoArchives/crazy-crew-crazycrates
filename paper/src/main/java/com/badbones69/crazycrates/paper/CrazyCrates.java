@@ -30,15 +30,15 @@ import java.util.List;
 
 public class CrazyCrates extends JavaPlugin {
 
-    private final ConfigManager configManager;
+    private ConfigManager configManager;
 
     private FileManager fileManager;
     private CrazyManager crazyManager;
     private EventLogger eventLogger;
     private ChestStateHandler chestHandler;
 
-    public CrazyCrates(ConfigManager configManager) {
-        this.configManager = configManager;
+    public CrazyCrates() {
+        //this.configManager = configManager;
     }
 
     @Override

@@ -13,17 +13,19 @@ dependencies {
 
     implementation("dev.triumphteam", "triumph-cmd-bukkit", "2.0.0-SNAPSHOT")
 
-    implementation("dev.triumphteam", "triumph-gui", "3.1.2")
+    //implementation("com.ryderbelserion.ruby", "ruby-paper-small", "1.0")
+
+    //implementation("dev.triumphteam", "triumph-gui", "3.1.2")
 
     implementation("org.bstats", "bstats-bukkit", "3.0.2")
 
     implementation("de.tr7zw", "item-nbt-api", "2.11.3")
 
+    compileOnly("ch.jalu", "configme", "1.4.0")
+
     compileOnly("com.github.decentsoftware-eu", "decentholograms","2.8.3")
 
     compileOnly("me.clip", "placeholderapi", "2.11.3")
-
-    compileOnly("ch.jalu", "configme", "1.4.0")
 
     compileOnly(fileTree("libs").include("*.jar"))
 }
