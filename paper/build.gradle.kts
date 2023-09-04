@@ -1,8 +1,9 @@
 import io.papermc.hangarpublishplugin.model.Platforms
 
 plugins {
-    alias(libs.plugins.modrinth)
-    alias(libs.plugins.hangar)
+    id("io.papermc.hangar-publish-plugin") version("0.1.0")
+
+    id("com.modrinth.minotaur") version("2.8.2")
 
     id("paper-plugin")
 }
@@ -32,7 +33,7 @@ repositories {
 }
 
 dependencies {
-    api(project(":core"))
+    api(project(":api"))
 
     implementation("de.tr7zw", "item-nbt-api", "2.11.3")
     implementation("org.bstats", "bstats-bukkit", "3.0.2")
@@ -142,8 +143,11 @@ modrinth {
 hangarPublish {
     publications.register("plugin") {
         version.set(rootProject.version as String)
-        namespace("CrazyCrew", rootProject.name)
+
+        id.set(rootProject.name)
+
         channel.set(other)
+
         changelog.set(description)
 
         apiKey.set(System.getenv("hangar_key"))

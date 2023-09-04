@@ -10,7 +10,7 @@ pluginManagement {
 rootProject.name = "CrazyCrates"
 
 listOf(
-    "core",
+    "api",
 
     "paper",
 ).forEach {
