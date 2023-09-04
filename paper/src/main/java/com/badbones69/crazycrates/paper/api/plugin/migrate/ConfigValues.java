@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public enum ConfigValues {
 
-    TOGGLE_METRICS(FileManager.Files.CONFIG.getFile(), "plugin-config.yml", "Settings.Toggle-Metrics", "toggle_metrics");
+    TOGGLE_METRICS(FileManager.Files.CONFIG.getFile(), "config.yml", "plugin-config.yml", "Settings.Toggle-Metrics", "toggle_metrics");
 
     private final FileConfiguration oldFileConfiguration;
     private final FileConfiguration newFileCOnfiguration;
@@ -21,12 +21,12 @@ public enum ConfigValues {
     private final String oldPath;
     private final String newPath;
 
-    ConfigValues(FileConfiguration oldFile, String newFile, String oldPath, String newPath) {
+    ConfigValues(FileConfiguration oldFile, String oldFileName, String newFile, String oldPath, String newPath) {
         this.oldFileConfiguration = oldFile;
 
         @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
 
-        this.oldFile = new File(plugin.getDataFolder(), FileManager.Files.CONFIG.getFileName());
+        this.oldFile = new File(plugin.getDataFolder(), oldFileName);
 
         this.newFile = new File(plugin.getDataFolder(), newFile);
 
