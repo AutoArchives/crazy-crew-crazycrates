@@ -9,7 +9,6 @@ import com.badbones69.crazycrates.paper.commands.subs.CrateBaseCommand;
 import com.badbones69.crazycrates.paper.commands.subs.player.BaseKeyCommand;
 import com.badbones69.crazycrates.paper.cratetypes.*;
 import com.badbones69.crazycrates.paper.listeners.*;
-import com.badbones69.crazycrates.paper.support.MetricsHandler;
 import com.badbones69.crazycrates.paper.support.libraries.PluginSupport;
 import com.badbones69.crazycrates.paper.support.placeholders.PlaceholderAPISupport;
 import com.ryderbelserion.cluster.api.adventure.FancyLogger;
@@ -20,16 +19,12 @@ import dev.triumphteam.cmd.core.suggestion.SuggestionKey;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CrazyCrates extends JavaPlugin implements Listener {
+public class CrazyCrates extends JavaPlugin {
 
     private final BukkitCommandManager<CommandSender> manager = BukkitCommandManager.create(this);
 
@@ -44,8 +39,6 @@ public class CrazyCrates extends JavaPlugin implements Listener {
         Messages.addMissingMessages();
 
         FileConfiguration config = Files.CONFIG.getFile();
-
-        boolean metricsEnabled = config.getBoolean("Settings.Toggle-Metrics");
 
         String menu = config.getString("Settings.Enable-Crate-Menu");
 
@@ -79,12 +72,6 @@ public class CrazyCrates extends JavaPlugin implements Listener {
             Files.CONFIG.saveFile();
         }
 
-        if (metricsEnabled) {
-            MetricsHandler metricsHandler = new MetricsHandler();
-
-            metricsHandler.start();
-        }
-
         enable();
     }
 
@@ -97,12 +84,6 @@ public class CrazyCrates extends JavaPlugin implements Listener {
         if (this.crazyCratesLoader.getCrazyManager().getHologramController() != null) this.crazyCratesLoader.getCrazyManager().getHologramController().removeAllHolograms();
 
         this.crazyCratesLoader.disable();
-    }
-
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onPlayerJoin(PlayerJoinEvent e) {
-        this.crazyCratesLoader.getCrazyManager().setNewPlayerKeys(e.getPlayer());
-        this.crazyCratesLoader.getCrazyManager().loadOfflinePlayersKeys(e.getPlayer());
     }
 
     private War war;
@@ -167,8 +148,6 @@ public class CrazyCrates extends JavaPlugin implements Listener {
         pluginManager.registerEvents(new QuadCrate(), this);
 
         this.fireCracker = new FireCracker();
-
-        pluginManager.registerEvents(this, this);
 
         this.crazyCratesLoader.getCrazyManager().load(true);
 

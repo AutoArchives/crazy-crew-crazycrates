@@ -5,8 +5,10 @@ import com.badbones69.crazycrates.api.enums.types.CrateType;
 import com.badbones69.crazycrates.paper.api.plugin.CrazyCratesPlugin;
 import com.badbones69.crazycrates.paper.api.plugin.registry.CrazyCratesProvider;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerAttemptPickupItemEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.jetbrains.annotations.NotNull;
 
 public class MiscListener implements Listener {
@@ -27,5 +29,11 @@ public class MiscListener implements Listener {
             // DrBot End
             event.setCancelled(true);
         }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onPlayerJoin(PlayerJoinEvent e) {
+        this.cratesPlugin.getCrazyManager().setNewPlayerKeys(e.getPlayer());
+        this.cratesPlugin.getCrazyManager().loadOfflinePlayersKeys(e.getPlayer());
     }
 }
