@@ -108,6 +108,8 @@ public class CrazyManager {
 
         }
 
+        this.cratesPlugin.getConfigManager().reload();
+
         boolean metrics = this.cratesPlugin.getConfigManager().getPluginConfig().getProperty(PluginConfig.TOGGLE_METRICS);
 
         if (metrics) {
