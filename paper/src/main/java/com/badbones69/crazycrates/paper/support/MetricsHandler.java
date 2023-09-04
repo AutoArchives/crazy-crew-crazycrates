@@ -45,5 +45,7 @@ public class MetricsHandler {
         }
 
         this.metrics.shutdown();
+
+        FancyLogger.success("Metrics has been turned off.");
     }
 }
