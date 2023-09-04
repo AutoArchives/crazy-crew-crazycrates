@@ -6,7 +6,8 @@ import com.badbones69.crazycrates.paper.api.FileManager;
 import com.badbones69.crazycrates.paper.api.managers.CosmicCrateManager;
 import com.badbones69.crazycrates.paper.api.managers.CrateManager;
 import com.badbones69.crazycrates.api.enums.types.CrateType;
-import com.badbones69.crazycrates.paper.listeners.PreviewListener;
+import com.badbones69.crazycrates.paper.api.plugin.CrazyCratesPlugin;
+import com.badbones69.crazycrates.paper.api.plugin.registry.CrazyCratesProvider;
 import com.badbones69.crazycrates.api.objects.CrateHologram;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import org.bukkit.Location;
@@ -17,6 +18,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -48,12 +51,14 @@ public class Crate {
     private final ArrayList<Tier> tiers;
     private final CrateHologram hologram;
 
-    private final CrazyCrates plugin = CrazyCrates.getPlugin();
+    private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
+    private final @NotNull CrazyCratesPlugin cratesPlugin = CrazyCratesProvider.get();
+    private final @NotNull FileManager fileManager = this.cratesPlugin.getFileManager();
+    private final @NotNull Methods methods = this.cratesPlugin.getMethods();
 
-    private final FileManager fileManager = plugin.getStarter().getFileManager();
-    private int maxMassOpen;
-    private int requiredKeys;
-    private List<String> prizeMessage;
+    private final int maxMassOpen;
+    private final int requiredKeys;
+    private final List<String> prizeMessage;
 
     /**
      * @param name The name of the crate.
@@ -83,15 +88,15 @@ public class Crate {
         this.previewToggle = file != null && (!file.contains("Crate.Preview.Toggle") || file.getBoolean("Crate.Preview.Toggle"));
         this.borderToggle = file != null && file.getBoolean("Crate.Preview.Glass.Toggle");
         setPreviewChestLines(file != null ? file.getInt("Crate.Preview.ChestLines", 6) : 6);
-        this.previewName = Methods.sanitizeColor(previewName);
+        this.previewName = methods.sanitizeColor(previewName);
         this.newPlayerKeys = newPlayerKeys;
         this.giveNewPlayerKeys = newPlayerKeys > 0;
         this.maxSlots = previewChestLines * 9;
 
         for (int amount = preview.size(); amount > maxSlots - (borderToggle ? 18 : maxSlots >= preview.size() ? 0 : maxSlots != 9 ? 9 : 0); amount -= maxSlots - (borderToggle ? 18 : maxSlots >= preview.size() ? 0 : maxSlots != 9 ? 9 : 0), maxPage++) ;
 
-        this.crateInventoryName = file != null ? Methods.sanitizeColor(file.getString("Crate.CrateName")) : "";
-        this.borderName = file != null && file.contains("Crate.Preview.Glass.Name") ? Methods.color(file.getString("Crate.Preview.Glass.Name")) : " ";
+        this.crateInventoryName = file != null ? methods.sanitizeColor(file.getString("Crate.CrateName")) : "";
+        this.borderName = file != null && file.contains("Crate.Preview.Glass.Name") ? methods.color(file.getString("Crate.Preview.Glass.Name")) : " ";
         this.boarderItem = file != null && file.contains("Crate.Preview.Glass.Item") ? new ItemBuilder().setMaterial(file.getString("Crate.Preview.Glass.Item")).setName(this.borderName) : new ItemBuilder().setMaterial(Material.AIR).setName(this.borderName);
 
         this.hologram = hologram != null ? hologram : new CrateHologram();
@@ -238,7 +243,7 @@ public class Crate {
     public Prize pickPrize(Player player, Location location) {
         Prize prize = pickPrize(player);
 
-        if (prize.useFireworks()) Methods.firework(location);
+        if (prize.useFireworks()) methods.firework(location);
 
         return prize;
     }
@@ -330,7 +335,7 @@ public class Crate {
      * @return The preview as an Inventory object.
      */
     public Inventory getPreview(Player player) {
-        return getPreview(player, PreviewListener.getPage(player));
+        return getPreview(player, this.plugin.getPreviewListener().getPage(player));
     }
     
     /**
@@ -338,7 +343,7 @@ public class Crate {
      * @return The preview as an Inventory object.
      */
     public Inventory getPreview(Player player, int page) {
-        Inventory inventory = player.getServer().createInventory(null, !borderToggle && (PreviewListener.playerInMenu(player) || maxPage > 1) && maxSlots == 9 ? maxSlots + 9 : maxSlots, previewName);
+        Inventory inventory = player.getServer().createInventory(null, !borderToggle && (this.plugin.getPreviewListener().playerInMenu(player) || maxPage > 1) && maxSlots == 9 ? maxSlots + 9 : maxSlots, previewName);
         setDefaultItems(inventory, player);
 
         for (ItemStack item : getPageItems(page)) {
@@ -547,7 +552,7 @@ public class Crate {
     }
     
     private boolean isInventoryNameSimilar(String inventory1, String inventory2) {
-        return Methods.removeColor(inventory1).equalsIgnoreCase(Methods.removeColor(inventory2));
+        return methods.removeColor(inventory1).equalsIgnoreCase(methods.removeColor(inventory2));
     }
     
     /**
@@ -605,20 +610,20 @@ public class Crate {
             }
         }
 
-        int page = PreviewListener.getPage(player);
+        int page = this.plugin.getPreviewListener().getPage(player);
 
-        if (PreviewListener.playerInMenu(player)) inventory.setItem(getAbsoluteItemPosition(4), PreviewListener.getMenuButton());
+        if (this.plugin.getPreviewListener().playerInMenu(player)) inventory.setItem(getAbsoluteItemPosition(4), this.plugin.getPreviewListener().getMenuButton());
 
         if (page == 1) {
             if (borderToggle) inventory.setItem(getAbsoluteItemPosition(3), boarderItem.build());
         } else {
-            inventory.setItem(getAbsoluteItemPosition(3), PreviewListener.getBackButton(player));
+            inventory.setItem(getAbsoluteItemPosition(3), this.plugin.getPreviewListener().getBackButton(player));
         }
 
         if (page == maxPage) {
             if (borderToggle) inventory.setItem(getAbsoluteItemPosition(5), boarderItem.build());
         } else {
-            inventory.setItem(getAbsoluteItemPosition(5), PreviewListener.getNextButton(player));
+            inventory.setItem(getAbsoluteItemPosition(5), this.plugin.getPreviewListener().getNextButton(player));
         }
     }
 }

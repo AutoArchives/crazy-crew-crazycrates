@@ -7,32 +7,38 @@ import com.badbones69.crazycrates.api.enums.types.KeyType;
 import com.badbones69.crazycrates.paper.api.objects.Crate;
 import com.badbones69.crazycrates.paper.api.objects.ItemBuilder;
 import com.badbones69.crazycrates.paper.api.objects.Prize;
+import com.badbones69.crazycrates.paper.api.plugin.CrazyCratesPlugin;
+import com.badbones69.crazycrates.paper.api.plugin.registry.CrazyCratesProvider;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Wheel implements Listener {
-    
-    public static Map<Player, HashMap<Integer, ItemStack>> rewards = new HashMap<>();
-    private static final CrazyCrates plugin = CrazyCrates.getPlugin();
 
-    private static final CrazyManager crazyManager = plugin.getStarter().getCrazyManager();
+    private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
+    private final @NotNull CrazyCratesPlugin cratesPlugin = CrazyCratesProvider.get();
+    private final @NotNull CrazyManager crazyManager = this.cratesPlugin.getCrazyManager();
+    private final @NotNull Methods methods = this.cratesPlugin.getMethods();
     
-    public static void startWheel(final Player player, Crate crate, KeyType keyType, boolean checkHand) {
+    private final Map<Player, HashMap<Integer, ItemStack>> rewards = new HashMap<>();
+    
+    public void startWheel(final Player player, Crate crate, KeyType keyType, boolean checkHand) {
         if (!crazyManager.takeKeys(1, player, crate, keyType, checkHand)) {
-            Methods.failedToTakeKey(player, crate);
+            methods.failedToTakeKey(player, crate);
             crazyManager.removePlayerFromOpeningList(player);
             return;
         }
 
-        final Inventory inv = plugin.getServer().createInventory(null, 54, Methods.sanitizeColor(crate.getFile().getString("Crate.CrateName")));
+        final Inventory inv = plugin.getServer().createInventory(null, 54, methods.sanitizeColor(crate.getFile().getString("Crate.CrateName")));
 
         for (int i = 0; i < 54; i++) {
             inv.setItem(i, new ItemBuilder().setMaterial(Material.BLACK_STAINED_GLASS_PANE).setName(" ").build());
@@ -54,7 +60,7 @@ public class Wheel implements Listener {
             int i = 0;
             int f = 17;
             int full = 0;
-            final int timer = Methods.randomNumber(42, 68);
+            final int timer = methods.randomNumber(42, 68);
             int slower = 0;
             int open = 0;
             int slow = 0;
@@ -69,7 +75,7 @@ public class Wheel implements Listener {
                 if (full < timer) checkLore();
 
                 if (full >= timer) {
-                    if (Methods.slowSpin().contains(slower)) checkLore();
+                    if (methods.slowSpin().contains(slower)) checkLore();
 
                     if (full == timer + 47) player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
 
@@ -77,7 +83,7 @@ public class Wheel implements Listener {
                         slow++;
 
                         if (slow >= 2) {
-                            ItemStack item = Methods.getRandomPaneColor().setName(" ").build();
+                            ItemStack item = methods.getRandomPaneColor().setName(" ").build();
 
                             for (int slot = 0; slot < 54; slot++) {
                                 if (!getBorder().contains(slot)) inv.setItem(slot, item);
@@ -92,7 +98,7 @@ public class Wheel implements Listener {
 
                         if (crazyManager.isInOpeningList(player)) prize = crate.getPrize(rewards.get(player).get(slots.get(f)));
 
-                        Methods.checkPrize(prize, crazyManager, plugin, player, crate);
+                        methods.checkPrize(prize, crazyManager, plugin, player, crate);
 
                         player.closeInventory();
                         crazyManager.removePlayerFromOpeningList(player);

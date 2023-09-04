@@ -9,7 +9,10 @@ import com.badbones69.crazycrates.paper.api.objects.Crate;
 import com.badbones69.crazycrates.paper.api.objects.ItemBuilder;
 import com.badbones69.crazycrates.paper.api.objects.Prize;
 import com.badbones69.crazycrates.api.enums.types.CrateType;
+import com.badbones69.crazycrates.paper.api.plugin.CrazyCratesPlugin;
+import com.badbones69.crazycrates.paper.api.plugin.registry.CrazyCratesProvider;
 import com.badbones69.crazycrates.paper.listeners.FireworkDamageListener;
+import com.ryderbelserion.cluster.api.adventure.FancyLogger;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
@@ -24,6 +27,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,13 +37,13 @@ import static java.util.regex.Matcher.quoteReplacement;
 @SuppressWarnings("deprecation")
 public class Methods {
 
-    private static final CrazyCrates plugin = CrazyCrates.getPlugin();
+    private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
 
-    private static final CrazyManager crazyManager = plugin.getStarter().getCrazyManager();
+    private final @NotNull CrazyCratesPlugin cratesPlugin = CrazyCratesProvider.get();
 
     public final static Pattern HEX_PATTERN = Pattern.compile("#[a-fA-F\\d]{6}");
 
-    public static String color(String message) {
+    public String color(String message) {
         Matcher matcher = HEX_PATTERN.matcher(message);
         StringBuilder buffer = new StringBuilder();
 
@@ -49,17 +54,17 @@ public class Methods {
         return ChatColor.translateAlternateColorCodes('&', matcher.appendTail(buffer).toString());
     }
 
-    public static void broadCastMessage(FileConfiguration crateFile, Player player) {
+    public void broadCastMessage(FileConfiguration crateFile, Player player) {
         String crateBroadcast = crateFile.getString("Crate.BroadCast");
         String crateBroadcastBooleanExists = crateFile.getString("Crate.OpeningBroadCast");
         boolean crateBroadcastBoolean = crateFile.getBoolean("Crate.OpeningBroadCast");
         if (crateBroadcastBoolean && crateBroadcastBooleanExists != null && crateBroadcast != null) {
             if (crateBroadcast.isEmpty()) return;
-            plugin.getServer().broadcastMessage(color(crateBroadcast.replaceAll("%prefix%", quoteReplacement(getPrefix())).replaceAll("%player%", player.getName()).replaceAll("%Prefix%", quoteReplacement(getPrefix())).replaceAll("%Player%", player.getName())));
+            this.plugin.getServer().broadcastMessage(color(crateBroadcast.replaceAll("%prefix%", quoteReplacement(getPrefix())).replaceAll("%player%", player.getName()).replaceAll("%Prefix%", quoteReplacement(getPrefix())).replaceAll("%Player%", player.getName())));
         }
     }
 
-    public static void sendMessage(CommandSender commandSender, String message, boolean prefixToggle) {
+    public void sendMessage(CommandSender commandSender, String message, boolean prefixToggle) {
         if (message == null || message.isEmpty()) return;
 
         String prefix = getPrefix();
@@ -73,23 +78,23 @@ public class Methods {
         if (!prefix.isEmpty() && prefixToggle) commandSender.sendMessage(color(message.replaceAll("%prefix%", quoteReplacement(prefix))).replaceAll("%Prefix%", quoteReplacement(prefix))); else commandSender.sendMessage(color(message));
     }
 
-    public static void sendCommand(String command) {
+    public void sendCommand(String command) {
         ConsoleCommandSender console = plugin.getServer().getConsoleSender();
 
         plugin.getServer().dispatchCommand(console, command);
     }
 
-    public static String sanitizeColor(String msg) {
+    public String sanitizeColor(String msg) {
         return sanitizeFormat(color(msg));
     }
 
-    public static String removeColor(String msg) {
+    public String removeColor(String msg) {
         return ChatColor.stripColor(msg);
     }
 
-    public static HashMap<ItemStack, String> getItems(Player player) {
+    public HashMap<ItemStack, String> getItems(Player player) {
         HashMap<ItemStack, String> items = new HashMap<>();
-        FileConfiguration file = crazyManager.getOpeningCrate(player).getFile();
+        FileConfiguration file = this.cratesPlugin.getCrazyManager().getOpeningCrate(player).getFile();
 
         for (String reward : file.getConfigurationSection("Crate.Prizes").getKeys(false)) {
             String id = file.getString("Crate.Prizes." + reward + ".DisplayItem");
@@ -116,7 +121,7 @@ public class Methods {
         return items;
     }
 
-    public static void firework(Location loc) {
+    public void firework(Location loc) {
         final Firework fw = loc.getWorld().spawn(loc, Firework.class);
         FireworkMeta fm = fw.getFireworkMeta();
         fm.addEffects(FireworkEffect.builder().with(FireworkEffect.Type.BALL_LARGE).withColor(Color.RED).withColor(Color.AQUA).withColor(Color.ORANGE).withColor(Color.YELLOW).trail(false).flicker(false).build());
@@ -127,7 +132,7 @@ public class Methods {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, fw :: detonate, 2);
     }
 
-    public static void firework(Location loc, Color color) {
+    public void firework(Location loc, Color color) {
         final Firework fw = (Firework) loc.getWorld().spawnEntity(loc, EntityType.FIREWORK);
         FireworkMeta fm = fw.getFireworkMeta();
         fm.addEffects(FireworkEffect.builder().with(FireworkEffect.Type.BALL).withColor(color).withColor(color).trail(false).flicker(false).build());
@@ -138,7 +143,7 @@ public class Methods {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, fw :: detonate, 2);
     }
 
-    public static boolean isInt(String s) {
+    public boolean isInt(String s) {
         try {
             Integer.parseInt(s);
         } catch (NumberFormatException nfe) {
@@ -148,11 +153,11 @@ public class Methods {
         return true;
     }
 
-    public static Player getPlayer(String name) {
+    public Player getPlayer(String name) {
         return plugin.getServer().getPlayerExact(name);
     }
 
-    public static boolean isOnline(String name, CommandSender sender) {
+    public boolean isOnline(String name, CommandSender sender) {
 
         for (Player player : plugin.getServer().getOnlinePlayers()) {
             if (player.getName().equalsIgnoreCase(name)) {
@@ -164,7 +169,7 @@ public class Methods {
         return false;
     }
 
-    public static void removeItem(ItemStack item, Player player) {
+    public void removeItem(ItemStack item, Player player) {
         try {
             if (item.getAmount() <= 1) {
                 player.getInventory().removeItem(item);
@@ -174,7 +179,7 @@ public class Methods {
         } catch (Exception ignored) {}
     }
 
-    public static boolean permCheck(CommandSender sender, Permissions permissions, boolean tabComplete) {
+    public boolean permCheck(CommandSender sender, Permissions permissions, boolean tabComplete) {
         if (sender instanceof ConsoleCommandSender || sender instanceof RemoteConsoleCommandSender) return true;
 
         Player player = (Player) sender;
@@ -191,23 +196,23 @@ public class Methods {
         }
     }
 
-    public static String getPrefix() {
+    public String getPrefix() {
         return color(FileManager.Files.CONFIG.getFile().getString("Settings.Prefix"));
     }
 
-    public static String getPrefix(String msg) {
+    public String getPrefix(String msg) {
         return color(FileManager.Files.CONFIG.getFile().getString("Settings.Prefix") + msg);
     }
 
-    public static boolean isInventoryFull(Player player) {
+    public boolean isInventoryFull(Player player) {
         return player.getInventory().firstEmpty() == -1;
     }
 
-    public static Integer randomNumber(int min, int max) {
+    public Integer randomNumber(int min, int max) {
         return min + new Random().nextInt(max - min);
     }
 
-    public static boolean isSimilar(ItemStack itemStack, Crate crate) {
+    public boolean isSimilar(ItemStack itemStack, Crate crate) {
         NBTItem nbtItem = new NBTItem(itemStack);
         return itemStack.isSimilar(crate.getKey()) || itemStack.isSimilar(crate.getKeyNoNBT()) ||
                 itemStack.isSimilar(crate.getAdminKey()) || stripNBT(itemStack).isSimilar(crate.getKeyNoNBT()) ||
@@ -278,7 +283,7 @@ public class Methods {
         }
     }
 
-    public static Enchantment getEnchantment(String enchantmentName) {
+    public Enchantment getEnchantment(String enchantmentName) {
         HashMap<String, String> enchantments = getEnchantmentList();
         enchantmentName = stripEnchantmentName(enchantmentName);
 
@@ -341,7 +346,7 @@ public class Methods {
         return enchantments;
     }
 
-    public static ItemBuilder getRandomPaneColor() {
+    public ItemBuilder getRandomPaneColor() {
         List<String> colors = Arrays.asList(
         Material.WHITE_STAINED_GLASS_PANE.toString(),
         Material.ORANGE_STAINED_GLASS_PANE.toString(),
@@ -365,7 +370,7 @@ public class Methods {
     /**
      * Decides when the crate should start to slow down.
      */
-    public static ArrayList<Integer> slowSpin() {
+    public ArrayList<Integer> slowSpin() {
         ArrayList<Integer> slow = new ArrayList<>();
         int full = 46;
         int cut = 9;
@@ -387,7 +392,19 @@ public class Methods {
      * @param crate - The crate the player is opening.
      * @param prize - The prize the player is being given.
      */
-    public static void pickPrize(Player player, Crate crate, Prize prize) {
+    public void pickPrize(Player player, Crate crate, Prize prize) {
+        if (prize != null) {
+            this.cratesPlugin.getCrazyManager().givePrize(player, prize, crate);
+
+            if (prize.useFireworks()) firework(player.getLocation().add(0, 1, 0));
+
+            plugin.getServer().getPluginManager().callEvent(new PlayerPrizeEvent(player, crate, crate.getName(), prize));
+        } else {
+            player.sendMessage(getPrefix("&cNo prize was found, please report this issue if you think this is an error."));
+        }
+    }
+
+    public void checkPrize(Prize prize, CrazyManager crazyManager, CrazyCrates plugin, Player player, Crate crate) {
         if (prize != null) {
             crazyManager.givePrize(player, prize, crate);
 
@@ -399,33 +416,23 @@ public class Methods {
         }
     }
 
-    public static void checkPrize(Prize prize, CrazyManager crazyManager, CrazyCrates plugin, Player player, Crate crate) {
-        if (prize != null) {
-            crazyManager.givePrize(player, prize, crate);
+    public void failedToTakeKey(CommandSender player, Crate crate) {
+        List.of(
+                "An error has occurred while trying to take a physical key from a player.",
+                "Player: " + player.getName(),
+                "Crate: " + crate.getName()
+        ).forEach(FancyLogger::warn);
 
-            if (prize.useFireworks()) Methods.firework(player.getLocation().add(0, 1, 0));
-
-            plugin.getServer().getPluginManager().callEvent(new PlayerPrizeEvent(player, crate, crate.getName(), prize));
-        } else {
-            player.sendMessage(Methods.getPrefix("&cNo prize was found, please report this issue if you think this is an error."));
-        }
+        player.sendMessage(getPrefix("&cAn issue has occurred when trying to take a key."));
+        player.sendMessage(getPrefix("&cCommon reasons includes not having enough keys."));
     }
 
-    public static void failedToTakeKey(CommandSender player, Crate crate) {
-        plugin.getServer().getLogger().warning("An error has occurred while trying to take a physical key from a player");
-        plugin.getServer().getLogger().warning("Player: " + player.getName());
-        plugin.getServer().getLogger().warning("Crate: " + crate.getName());
-
-        player.sendMessage(Methods.getPrefix("&cAn issue has occurred when trying to take a key."));
-        player.sendMessage(Methods.getPrefix("&cCommon reasons includes not having enough keys."));
-    }
-
-    public static String sanitizeFormat(String string) {
+    public String sanitizeFormat(String string) {
         return TextComponent.toLegacyText(TextComponent.fromLegacyText(string));
     }
 
     // Thanks ElectronicBoy
-    public static HashMap<Integer, ItemStack> removeItemAnySlot(Inventory inventory, ItemStack... items) {
+    public HashMap<Integer, ItemStack> removeItemAnySlot(Inventory inventory, ItemStack... items) {
         if (items != null) {
             HashMap<Integer, ItemStack> leftover = new HashMap<>();
 
@@ -471,7 +478,7 @@ public class Methods {
 
             return leftover;
         } else {
-            plugin.getLogger().info("Items cannot be null.");
+            FancyLogger.info("Items cannot be null.");
         }
 
         return null;

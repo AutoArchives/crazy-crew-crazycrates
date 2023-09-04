@@ -2,8 +2,16 @@ package com.badbones69.crazycrates.paper.api.enums.settings;
 
 import com.badbones69.crazycrates.paper.CrazyCrates;
 import com.badbones69.crazycrates.paper.Methods;
+import com.badbones69.crazycrates.paper.api.CrazyManager;
 import com.badbones69.crazycrates.paper.api.FileManager;
+import com.badbones69.crazycrates.paper.api.plugin.CrazyCratesPlugin;
+import com.badbones69.crazycrates.paper.api.plugin.registry.CrazyCratesProvider;
+import com.badbones69.crazycrates.paper.support.structures.blocks.ChestStateHandler;
+import com.ryderbelserion.cluster.api.adventure.FancyLogger;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -105,6 +113,10 @@ public enum Messages {
         this.defaultListMessage = defaultListMessage;
     }
 
+    private static final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
+    private static final @NotNull CrazyCratesPlugin cratesPlugin = CrazyCratesProvider.get();
+    private static final @NotNull Methods methods = cratesPlugin.getMethods();
+
     /**
      * A method that will "convert" a StringList meaning it'll loop
      * through the StringList then color the individual line and then
@@ -117,13 +129,11 @@ public enum Messages {
         StringBuilder message = new StringBuilder();
 
         for (String line : list) {
-            message.append(Methods.color(line)).append("\n");
+            message.append(methods.color(line)).append("\n");
         }
 
         return message.toString();
     }
-
-    private static final CrazyCrates plugin = CrazyCrates.getPlugin();
 
     /**
      * Adds any missing messages to the Messages.yml file based on values in the Messages enum.
@@ -147,16 +157,16 @@ public enum Messages {
         String tooFewArgs = messages.getString("Messages.Not-Enough-Args");
 
         if (tooManyArgs != null) {
-            plugin.getLogger().warning("Found outdated config entry: " + tooManyArgs);
-            plugin.getLogger().warning("Removing now, Please use `Correct-Usage` from now on." );
+            FancyLogger.warn("Found outdated config entry: " + tooManyArgs);
+            FancyLogger.warn("Removing now, Please use `Correct-Usage` from now on." );
 
             messages.set("Messages.Too-Many-Args", null);
             FileManager.Files.MESSAGES.saveFile();
         }
 
         if (tooFewArgs != null) {
-            plugin.getLogger().warning("Found outdated config entry: " + tooFewArgs);
-            plugin.getLogger().warning("Removing now, Please use `Correct-Usage` from now on." );
+            FancyLogger.warn("Found outdated config entry: " + tooFewArgs);
+            FancyLogger.warn("Removing now, Please use `Correct-Usage` from now on." );
 
             messages.set("Messages.Not-Enough-Args", null);
             FileManager.Files.MESSAGES.saveFile();
@@ -324,15 +334,15 @@ public enum Messages {
 
         if (isList) {
             if (exists) {
-                message = Methods.color(convertList(FileManager.Files.MESSAGES.getFile().getStringList("Messages." + path)));
+                message = methods.color(convertList(FileManager.Files.MESSAGES.getFile().getStringList("Messages." + path)));
             } else {
-                message = Methods.color(convertList(getDefaultListMessage()));
+                message = methods.color(convertList(getDefaultListMessage()));
             }
         } else {
             if (exists) {
-                message = Methods.color(FileManager.Files.MESSAGES.getFile().getString("Messages." + path));
+                message = methods.color(FileManager.Files.MESSAGES.getFile().getString("Messages." + path));
             } else {
-                message = Methods.color(getDefaultMessage());
+                message = methods.color(getDefaultMessage());
             }
         }
 
@@ -341,12 +351,12 @@ public enum Messages {
         }
 
         if (isList) { // Don't want to add a prefix to a list of messages.
-            return Methods.color(message);
+            return methods.color(message);
         } else { // If the message isn't a list.
             if (prefix) { // If the message needs a prefix.
-                return Methods.getPrefix(message);
+                return methods.getPrefix(message);
             } else { // If the message doesn't need a prefix.
-                return Methods.color(message);
+                return methods.color(message);
             }
         }
     }

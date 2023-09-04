@@ -4,17 +4,20 @@ import com.badbones69.crazycrates.paper.CrazyCrates;
 import com.badbones69.crazycrates.paper.api.CrazyManager;
 import com.badbones69.crazycrates.paper.api.objects.Crate;
 import com.badbones69.crazycrates.api.enums.types.CrateType;
+import com.badbones69.crazycrates.paper.api.plugin.CrazyCratesPlugin;
+import com.badbones69.crazycrates.paper.api.plugin.registry.CrazyCratesProvider;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import java.text.NumberFormat;
 
 public class PlaceholderAPISupport extends PlaceholderExpansion {
 
-    private final CrazyCrates plugin = CrazyCrates.getPlugin();
-
-    private final CrazyManager crazyManager = plugin.getStarter().getCrazyManager();
+    private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
+    private final @NotNull CrazyCratesPlugin cratesPlugin = CrazyCratesProvider.get();
+    private final @NotNull CrazyManager crazyManager = this.cratesPlugin.getCrazyManager();
     
     @Override
     public String onRequest(OfflinePlayer player, @NotNull String identifier) {

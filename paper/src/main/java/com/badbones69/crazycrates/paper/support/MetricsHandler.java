@@ -1,23 +1,49 @@
 package com.badbones69.crazycrates.paper.support;
 
+import com.badbones69.crazycrates.api.enums.types.CrateType;
 import com.badbones69.crazycrates.paper.CrazyCrates;
+import com.badbones69.crazycrates.paper.api.CrazyManager;
+import com.badbones69.crazycrates.paper.api.plugin.CrazyCratesPlugin;
+import com.badbones69.crazycrates.paper.api.plugin.registry.CrazyCratesProvider;
+import com.ryderbelserion.cluster.api.adventure.FancyLogger;
 import org.bstats.bukkit.Metrics;
+import org.bstats.charts.SimplePie;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 public class MetricsHandler {
 
-    private final CrazyCrates plugin = CrazyCrates.getPlugin();
+    private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
+    private final @NotNull CrazyCratesPlugin cratesPlugin = CrazyCratesProvider.get();
+    private final @NotNull CrazyManager crazyManager = this.cratesPlugin.getCrazyManager();
+
+    private Metrics metrics;
 
     public void start() {
-        new Metrics(plugin, 4514);
+        if (this.metrics != null) {
+            FancyLogger.info("Metrics is already enabled.");
+            return;
+        }
 
-        //crazyManager.getCrates().forEach(crate -> {
-       //     CrateType crateType = crate.getCrateType();
+        this.metrics = new Metrics(this.plugin, 4514);
 
-        //    SimplePie crateChart = new SimplePie("crate_types", crateType::getName);
+        this.crazyManager.getCrates().forEach(crate -> {
+            CrateType crateType = crate.getCrateType();
 
-        //    metrics.addCustomChart(crateChart);
-        //});
+            SimplePie chart = new SimplePie("crate_types", crateType::getName);
 
-        plugin.getLogger().info("Metrics has been enabled.");
+            this.metrics.addCustomChart(chart);
+        });
+
+        FancyLogger.info("Metrics has been enabled.");
+    }
+
+    public void stop() {
+        if (this.metrics == null) {
+            FancyLogger.info("Metrics isn't enabled.");
+            return;
+        }
+
+        this.metrics.shutdown();
     }
 }

@@ -6,22 +6,27 @@ import com.badbones69.crazycrates.paper.api.CrazyManager;
 import com.badbones69.crazycrates.api.enums.types.KeyType;
 import com.badbones69.crazycrates.paper.api.interfaces.HologramController;
 import com.badbones69.crazycrates.paper.api.objects.Crate;
+import com.badbones69.crazycrates.paper.api.plugin.CrazyCratesPlugin;
+import com.badbones69.crazycrates.paper.api.plugin.registry.CrazyCratesProvider;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class FireCracker {
 
-    private static final CrazyCrates plugin = CrazyCrates.getPlugin();
-
-    private static final CrazyManager crazyManager = plugin.getStarter().getCrazyManager();
+    private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
+    private final @NotNull CrazyCratesPlugin cratesPlugin = CrazyCratesProvider.get();
+    private final @NotNull CrazyManager crazyManager = this.cratesPlugin.getCrazyManager();
+    private final @NotNull Methods methods = this.cratesPlugin.getMethods();
     
-    public static void startFireCracker(final Player player, final Crate crate, KeyType keyType, final Location loc, HologramController hologramController) {
+    public void startFireCracker(final Player player, final Crate crate, KeyType keyType, final Location loc, HologramController hologramController) {
         if (!crazyManager.takeKeys(1, player, crate, keyType, true)) {
-            Methods.failedToTakeKey(player, crate);
+            methods.failedToTakeKey(player, crate);
             crazyManager.removePlayerFromOpeningList(player);
             return;
         }
@@ -47,13 +52,13 @@ public class FireCracker {
             @Override
             public void run() {
                 L.subtract(0, 1, 0);
-                Methods.firework(L, colors.get(color));
+                methods.firework(L, colors.get(color));
                 l++;
 
                 if (l == 25) {
                     crazyManager.endCrate(player);
                     // The key type is set to free because the key has already been taken above.
-                    QuickCrate.openCrate(player, loc, crate, KeyType.FREE_KEY, hologramController);
+                    plugin.getQuickCrate().openCrate(player, loc, crate, KeyType.FREE_KEY, hologramController);
                 }
             }
         }.runTaskTimer(plugin, 0, 2));

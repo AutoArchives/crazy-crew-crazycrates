@@ -7,6 +7,8 @@ import com.badbones69.crazycrates.paper.api.enums.settings.Messages;
 import com.badbones69.crazycrates.paper.api.objects.Crate;
 import com.badbones69.crazycrates.api.enums.types.KeyType;
 import com.badbones69.crazycrates.api.quadcrates.CrateParticles;
+import com.badbones69.crazycrates.paper.api.plugin.CrazyCratesPlugin;
+import com.badbones69.crazycrates.paper.api.plugin.registry.CrazyCratesProvider;
 import com.badbones69.crazycrates.paper.support.structures.QuadCrateSpiralHandler;
 import com.badbones69.crazycrates.paper.support.structures.StructureHandler;
 import com.badbones69.crazycrates.paper.support.structures.blocks.ChestStateHandler;
@@ -19,7 +21,9 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -29,11 +33,11 @@ import java.util.Random;
 
 public class QuadCrateManager {
 
-    private final CrazyCrates plugin = CrazyCrates.getPlugin();
-
-    private final ChestStateHandler chestStateHandler = plugin.getStarter().getChestStateHandler();
-
-    private final CrazyManager crazyManager = plugin.getStarter().getCrazyManager();
+    private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
+    private final @NotNull CrazyCratesPlugin cratesPlugin = CrazyCratesProvider.get();
+    private final @NotNull CrazyManager crazyManager = this.cratesPlugin.getCrazyManager();
+    private final @NotNull ChestStateHandler chestStateHandler = this.cratesPlugin.getChestManager();
+    private final @NotNull Methods methods = this.cratesPlugin.getMethods();
 
     private static final List<QuadCrateManager> crateSessions = new ArrayList<>();
 
@@ -172,7 +176,7 @@ public class QuadCrateManager {
         }
 
         if (!crazyManager.takeKeys(1, player, crate, keyType, checkHand)) {
-            Methods.failedToTakeKey(player, crate);
+            methods.failedToTakeKey(player, crate);
 
             crazyManager.removePlayerFromOpeningList(player);
             crateSessions.remove(instance);

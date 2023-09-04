@@ -7,23 +7,28 @@ import com.badbones69.crazycrates.api.enums.types.KeyType;
 import com.badbones69.crazycrates.paper.api.objects.Crate;
 import com.badbones69.crazycrates.paper.api.objects.ItemBuilder;
 import com.badbones69.crazycrates.paper.api.objects.Prize;
+import com.badbones69.crazycrates.paper.api.plugin.CrazyCratesPlugin;
+import com.badbones69.crazycrates.paper.api.plugin.registry.CrazyCratesProvider;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CSGO implements Listener {
 
-    private static final CrazyCrates plugin = CrazyCrates.getPlugin();
-
-    private static final CrazyManager crazyManager = plugin.getStarter().getCrazyManager();
+    private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
+    private final @NotNull CrazyCratesPlugin cratesPlugin = CrazyCratesProvider.get();
+    private final @NotNull CrazyManager crazyManager = this.cratesPlugin.getCrazyManager();
+    private final @NotNull Methods methods = this.cratesPlugin.getMethods();
     
-    private static void setGlass(Inventory inv) {
+    private void setGlass(Inventory inv) {
         HashMap<Integer, ItemStack> glass = new HashMap<>();
 
         for (int i = 0; i < 10; i++) {
@@ -32,7 +37,7 @@ public class CSGO implements Listener {
 
         for (int i : glass.keySet()) {
             if (inv.getItem(i) == null) {
-                ItemStack item = Methods.getRandomPaneColor().setName(" ").build();
+                ItemStack item = methods.getRandomPaneColor().setName(" ").build();
                 inv.setItem(i, item);
                 inv.setItem(i + 18, item);
             }
@@ -42,7 +47,7 @@ public class CSGO implements Listener {
             if (i < 9 && i != 4) glass.put(i, inv.getItem(i));
         }
 
-        ItemStack item = Methods.getRandomPaneColor().setName(" ").build();
+        ItemStack item = methods.getRandomPaneColor().setName(" ").build();
 
         inv.setItem(0, glass.get(1));
         inv.setItem(18, glass.get(1));
@@ -64,8 +69,8 @@ public class CSGO implements Listener {
         inv.setItem(8 + 18, item);
     }
     
-    public static void openCSGO(Player player, Crate crate, KeyType keyType, boolean checkHand) {
-        Inventory inv = plugin.getServer().createInventory(null, 27, Methods.sanitizeColor(crate.getFile().getString("Crate.CrateName")));
+    public void openCSGO(Player player, Crate crate, KeyType keyType, boolean checkHand) {
+        Inventory inv = plugin.getServer().createInventory(null, 27, methods.sanitizeColor(crate.getFile().getString("Crate.CrateName")));
         setGlass(inv);
 
         for (int i = 9; i > 8 && i < 18; i++) {
@@ -77,12 +82,12 @@ public class CSGO implements Listener {
         if (crazyManager.takeKeys(1, player, crate, keyType, checkHand)) {
             startCSGO(player, inv, crate);
         } else {
-            Methods.failedToTakeKey(player, crate);
+            methods.failedToTakeKey(player, crate);
             crazyManager.removePlayerFromOpeningList(player);
         }
     }
     
-    private static void startCSGO(final Player player, final Inventory inv, Crate crate) {
+    private void startCSGO(final Player player, final Inventory inv, Crate crate) {
         crazyManager.addCrateTask(player, new BukkitRunnable() {
             int time = 1;
             int full = 0;
@@ -119,7 +124,7 @@ public class CSGO implements Listener {
                         crazyManager.endCrate(player);
                         Prize prize = crate.getPrize(inv.getItem(13));
 
-                        Methods.checkPrize(prize, crazyManager, plugin, player, crate);
+                        methods.checkPrize(prize, crazyManager, plugin, player, crate);
 
                         crazyManager.removePlayerFromOpeningList(player);
                         cancel();

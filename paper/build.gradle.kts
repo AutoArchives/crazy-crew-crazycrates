@@ -36,9 +36,16 @@ dependencies {
     api(project(":api"))
 
     implementation("de.tr7zw", "item-nbt-api", "2.11.3")
+
     implementation("org.bstats", "bstats-bukkit", "3.0.2")
 
+    implementation("com.ryderbelserion.cluster", "cluster-bukkit", "0.1.3")
+
     implementation("dev.triumphteam", "triumph-cmd-bukkit", "2.0.0-SNAPSHOT")
+
+    implementation("com.zaxxer", "HikariCP", "5.0.1")
+
+    implementation("ch.jalu", "configme", "1.3.1")
 
     compileOnly(fileTree("libs").include("*.jar"))
 
@@ -70,8 +77,10 @@ tasks {
 
     shadowJar {
         listOf(
+            "ch.jalu",
             "de.tr7zw",
-            "org.bstats"
+            "org.bstats",
+            "com.zaxxer"
         ).forEach {
             relocate(it, "libs.$it")
         }

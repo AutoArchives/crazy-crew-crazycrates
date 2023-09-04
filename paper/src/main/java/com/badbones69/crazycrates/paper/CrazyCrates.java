@@ -4,21 +4,15 @@ import com.badbones69.crazycrates.paper.api.FileManager.Files;
 import com.badbones69.crazycrates.paper.api.enums.settings.Messages;
 import com.badbones69.crazycrates.paper.api.managers.quadcrates.SessionManager;
 import com.badbones69.crazycrates.paper.api.objects.CrateLocation;
+import com.badbones69.crazycrates.paper.api.plugin.CrazyCratesLoader;
 import com.badbones69.crazycrates.paper.commands.subs.CrateBaseCommand;
 import com.badbones69.crazycrates.paper.commands.subs.player.BaseKeyCommand;
-import com.badbones69.crazycrates.paper.cratetypes.CSGO;
-import com.badbones69.crazycrates.paper.cratetypes.Cosmic;
-import com.badbones69.crazycrates.paper.cratetypes.CrateOnTheGo;
-import com.badbones69.crazycrates.paper.cratetypes.QuadCrate;
-import com.badbones69.crazycrates.paper.cratetypes.QuickCrate;
-import com.badbones69.crazycrates.paper.cratetypes.Roulette;
-import com.badbones69.crazycrates.paper.cratetypes.War;
-import com.badbones69.crazycrates.paper.cratetypes.Wheel;
-import com.badbones69.crazycrates.paper.cratetypes.Wonder;
+import com.badbones69.crazycrates.paper.cratetypes.*;
 import com.badbones69.crazycrates.paper.listeners.*;
 import com.badbones69.crazycrates.paper.support.MetricsHandler;
 import com.badbones69.crazycrates.paper.support.libraries.PluginSupport;
 import com.badbones69.crazycrates.paper.support.placeholders.PlaceholderAPISupport;
+import com.ryderbelserion.cluster.api.adventure.FancyLogger;
 import dev.triumphteam.cmd.bukkit.BukkitCommandManager;
 import dev.triumphteam.cmd.bukkit.message.BukkitMessageKey;
 import dev.triumphteam.cmd.core.message.MessageKey;
@@ -37,21 +31,18 @@ import java.util.List;
 
 public class CrazyCrates extends JavaPlugin implements Listener {
 
-    private static CrazyCrates plugin;
+    private final BukkitCommandManager<CommandSender> manager = BukkitCommandManager.create(this);
 
-    private Starter starter;
-
-    BukkitCommandManager<CommandSender> manager = BukkitCommandManager.create(this);
+    private CrazyCratesLoader crazyCratesLoader;
+    private MenuListener menuListener;
+    private PreviewListener previewListener;
 
     @Override
     public void onEnable() {
-        plugin = this;
+        this.crazyCratesLoader = new CrazyCratesLoader();
+        this.crazyCratesLoader.enable();
 
-        starter = new Starter();
-
-        starter.run();
-
-        starter.getFileManager().setLog(true)
+        this.crazyCratesLoader.getFileManager().setLog(true)
                 .registerDefaultGenerateFiles("CrateExample.yml", "/crates", "/crates")
                 .registerDefaultGenerateFiles("QuadCrateExample.yml", "/crates", "/crates")
                 .registerDefaultGenerateFiles("CosmicCrateExample.yml", "/crates", "/crates")
@@ -116,22 +107,24 @@ public class CrazyCrates extends JavaPlugin implements Listener {
 
         enable();
 
-        starter.getCrazyManager().loadCrates();
+        this.crazyCratesLoader.getCrazyManager().loadCrates();
     }
 
     @Override
     public void onDisable() {
         SessionManager.endCrates();
 
-        QuickCrate.removeAllRewards();
+        getQuickCrate().removeAllRewards();
 
-        if (starter.getCrazyManager().getHologramController() != null) starter.getCrazyManager().getHologramController().removeAllHolograms();
+        if (this.crazyCratesLoader.getCrazyManager().getHologramController() != null) this.crazyCratesLoader.getCrazyManager().getHologramController().removeAllHolograms();
+
+        this.crazyCratesLoader.disable();
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerJoin(PlayerJoinEvent e) {
-        starter.getCrazyManager().setNewPlayerKeys(e.getPlayer());
-        starter.getCrazyManager().loadOfflinePlayersKeys(e.getPlayer());
+        this.crazyCratesLoader.getCrazyManager().setNewPlayerKeys(e.getPlayer());
+        this.crazyCratesLoader.getCrazyManager().loadOfflinePlayersKeys(e.getPlayer());
     }
 
     public void cleanFiles() {
@@ -146,30 +139,84 @@ public class CrazyCrates extends JavaPlugin implements Listener {
         }
     }
 
+    private War war;
+    private CSGO csgo;
+    private Wheel wheel;
+    private Wonder wonder;
+    private Cosmic cosmic;
+    private Roulette roulette;
+    private QuickCrate quickCrate;
+    private CrateOnTheGo crateOnTheGo;
+    private QuadCrate quadCrate;
+
+    public War getWar() {
+        return war;
+    }
+
+    public CSGO getCsgo() {
+        return csgo;
+    }
+
+    public Wheel getWheel() {
+        return wheel;
+    }
+
+    public Wonder getWonder() {
+        return wonder;
+    }
+
+    public Cosmic getCosmic() {
+        return cosmic;
+    }
+
+    public Roulette getRoulette() {
+        return roulette;
+    }
+
+    public QuickCrate getQuickCrate() {
+        return quickCrate;
+    }
+
+    public CrateOnTheGo getCrateOnTheGo() {
+        return crateOnTheGo;
+    }
+
+    public QuadCrate getQuadCrate() {
+        return quadCrate;
+    }
+
+    private FireCracker fireCracker;
+
+    public FireCracker getFireCracker() {
+        return fireCracker;
+    }
+
     private void enable() {
         PluginManager pluginManager = getServer().getPluginManager();
 
-        pluginManager.registerEvents(new MenuListener(), this);
-        pluginManager.registerEvents(new PreviewListener(), this);
+        pluginManager.registerEvents(this.menuListener = new MenuListener(), this);
+        pluginManager.registerEvents(this.previewListener = new PreviewListener(), this);
         pluginManager.registerEvents(new FireworkDamageListener(), this);
         pluginManager.registerEvents(new CrateControlListener(), this);
         pluginManager.registerEvents(new MiscListener(), this);
 
-        pluginManager.registerEvents(new War(), this);
-        pluginManager.registerEvents(new CSGO(), this);
-        pluginManager.registerEvents(new Wheel(), this);
-        pluginManager.registerEvents(new Wonder(), this);
-        pluginManager.registerEvents(new Cosmic(), this);
-        pluginManager.registerEvents(new Roulette(), this);
-        pluginManager.registerEvents(new QuickCrate(), this);
-        pluginManager.registerEvents(new CrateOnTheGo(), this);
-        pluginManager.registerEvents(new QuadCrate(), this);
+        pluginManager.registerEvents(this.war = new War(), this);
+        pluginManager.registerEvents(this.csgo = new CSGO(), this);
+        pluginManager.registerEvents(this.wheel = new Wheel(), this);
+        pluginManager.registerEvents(this.wonder = new Wonder(), this);
+        pluginManager.registerEvents(this.cosmic = new Cosmic(), this);
+        pluginManager.registerEvents(this.roulette = new Roulette(), this);
+        pluginManager.registerEvents(this.quickCrate = new QuickCrate(), this);
+        pluginManager.registerEvents(this.crateOnTheGo = new CrateOnTheGo(), this);
+        pluginManager.registerEvents(this.quadCrate = new QuadCrate(), this);
+
+        this.fireCracker = new FireCracker();
 
         pluginManager.registerEvents(this, this);
 
-        starter.getCrazyManager().loadCrates();
+        this.crazyCratesLoader.getCrazyManager().loadCrates();
 
-        if (!starter.getCrazyManager().getBrokeCrateLocations().isEmpty()) pluginManager.registerEvents(new BrokeLocationsListener(), this);
+        if (!this.crazyCratesLoader.getCrazyManager().getBrokeCrateLocations().isEmpty()) pluginManager.registerEvents(new BrokeLocationsListener(), this);
 
         if (PluginSupport.PLACEHOLDERAPI.isPluginEnabled()) new PlaceholderAPISupport().register();
 
@@ -219,18 +266,18 @@ public class CrazyCrates extends JavaPlugin implements Listener {
 
         manager.registerMessage(BukkitMessageKey.CONSOLE_ONLY, (sender, context) -> sender.sendMessage(Messages.MUST_BE_A_CONSOLE_SENDER.getMessage()));
 
-        manager.registerSuggestion(SuggestionKey.of("crates"), (sender, context) -> starter.getFileManager().getAllCratesNames(plugin).stream().toList());
+        manager.registerSuggestion(SuggestionKey.of("crates"), (sender, context) -> this.crazyCratesLoader.getFileManager().getAllCratesNames(this).stream().toList());
 
         manager.registerSuggestion(SuggestionKey.of("key-types"), (sender, context) -> KEYS);
 
         manager.registerSuggestion(SuggestionKey.of("online-players"), (sender, context) -> getServer().getOnlinePlayers().stream().map(Player::getName).toList());
 
-        manager.registerSuggestion(SuggestionKey.of("locations"), (sender, context) -> starter.getCrazyManager().getCrateLocations().stream().map(CrateLocation::getID).toList());
+        manager.registerSuggestion(SuggestionKey.of("locations"), (sender, context) -> this.crazyCratesLoader.getCrazyManager().getCrateLocations().stream().map(CrateLocation::getID).toList());
 
         manager.registerSuggestion(SuggestionKey.of("prizes"), (sender, context) -> {
             List<String> numbers = new ArrayList<>();
 
-            starter.getCrazyManager().getCrateFromName(context.getArgs().get(0)).getPrizes().forEach(prize -> numbers.add(prize.getName()));
+            this.crazyCratesLoader.getCrazyManager().getCrateFromName(context.getArgs().get(0)).getPrizes().forEach(prize -> numbers.add(prize.getName()));
 
             return numbers;
         });
@@ -243,9 +290,7 @@ public class CrazyCrates extends JavaPlugin implements Listener {
             return numbers;
         });
 
-        manager.registerArgument(CrateBaseCommand.CustomPlayer.class, (sender, context) -> {
-            return new CrateBaseCommand.CustomPlayer(context);
-        });
+        manager.registerArgument(CrateBaseCommand.CustomPlayer.class, (sender, context) -> new CrateBaseCommand.CustomPlayer(context));
 
         manager.registerCommand(new BaseKeyCommand());
         manager.registerCommand(new CrateBaseCommand());
@@ -273,21 +318,21 @@ public class CrazyCrates extends JavaPlugin implements Listener {
 
     private final List<String> KEYS = List.of("virtual", "v", "physical", "p");
 
-    public static CrazyCrates getPlugin() {
-        return plugin;
-    }
-
-    public void printHooks() {
+    private void printHooks() {
         for (PluginSupport value : PluginSupport.values()) {
             if (value.isPluginEnabled()) {
-                plugin.getLogger().info(Methods.color("&6&l" + value.name() + " &a&lFOUND"));
+                FancyLogger.info("<gold>" + value.name() + "</gold> <bold><green>FOUND</green></bold>");
             } else {
-                plugin.getLogger().info(Methods.color("&6&l" + value.name() + " &c&lNOT FOUND"));
+                FancyLogger.info("<gold>" + value.name() + "</gold> <bold><red>NOT FOUND</red></bold>");
             }
         }
     }
 
-    public Starter getStarter() {
-        return starter;
+    public MenuListener getMenuListener() {
+        return menuListener;
+    }
+
+    public PreviewListener getPreviewListener() {
+        return previewListener;
     }
 }

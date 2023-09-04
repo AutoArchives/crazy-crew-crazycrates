@@ -8,8 +8,11 @@ import com.badbones69.crazycrates.paper.api.interfaces.HologramController;
 import com.badbones69.crazycrates.paper.api.objects.Crate;
 import com.badbones69.crazycrates.paper.api.objects.Prize;
 import com.badbones69.crazycrates.api.enums.types.KeyType;
+import com.badbones69.crazycrates.paper.api.plugin.CrazyCratesPlugin;
+import com.badbones69.crazycrates.paper.api.plugin.registry.CrazyCratesProvider;
 import com.badbones69.crazycrates.paper.listeners.CrateControlListener;
 import com.badbones69.crazycrates.paper.support.structures.blocks.ChestStateHandler;
+import com.ryderbelserion.cluster.api.adventure.FancyLogger;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -20,25 +23,30 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
+import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 public class QuickCrate implements Listener {
-    
-    public static ArrayList<Entity> allRewards = new ArrayList<>();
-    public static HashMap<Player, Entity> rewards = new HashMap<>();
-    private static final CrazyCrates plugin = CrazyCrates.getPlugin();
 
-    private static final CrazyManager crazyManager = plugin.getStarter().getCrazyManager();
-    private static final HashMap<Player, BukkitTask> tasks = new HashMap<>();
+    private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
+    private final @NotNull CrazyCratesPlugin cratesPlugin = CrazyCratesProvider.get();
+    private final @NotNull CrazyManager crazyManager = this.cratesPlugin.getCrazyManager();
+    private final @NotNull ChestStateHandler chestStateHandler = this.cratesPlugin.getChestManager();
+    private final @NotNull Methods methods = this.cratesPlugin.getMethods();
 
-    private static final ChestStateHandler chestStateHandler = plugin.getStarter().getChestStateHandler();
+    private final ArrayList<Entity> allRewards = new ArrayList<>();
+    private final HashMap<Player, Entity> rewards = new HashMap<>();
 
-    public static void openCrate(final Player player, final Location loc, Crate crate, KeyType keyType, HologramController hologramController) {
+    private final HashMap<Player, BukkitTask> tasks = new HashMap<>();
+
+    public void openCrate(final Player player, final Location loc, Crate crate, KeyType keyType, HologramController hologramController) {
         int keys = switch (keyType) {
             case VIRTUAL_KEY -> crazyManager.getVirtualKeys(player, crate);
             case PHYSICAL_KEY -> crazyManager.getPhysicalKeys(player, crate);
@@ -50,20 +58,20 @@ public class QuickCrate implements Listener {
             
             // give the player the prizes
             for (;keys > 0; keys--) {
-                if (Methods.isInventoryFull(player)) break;
+                if (methods.isInventoryFull(player)) break;
                 if (keysUsed >= crate.getMaxMassOpen()) break;
 
                 Prize prize = crate.pickPrize(player);
                 crazyManager.givePrize(player, prize, crate);
                 plugin.getServer().getPluginManager().callEvent(new PlayerPrizeEvent(player, crate, crate.getName(), prize));
 
-                if (prize.useFireworks()) Methods.firework(loc.clone().add(.5, 1, .5));
+                if (prize.useFireworks()) methods.firework(loc.clone().add(.5, 1, .5));
                 
                 keysUsed++;
             }
             
             if (!crazyManager.takeKeys(keysUsed, player, crate, keyType, false)) {
-                Methods.failedToTakeKey(player, crate);
+                methods.failedToTakeKey(player, crate);
                 CrateControlListener.inUse.remove(player);
                 crazyManager.removePlayerFromOpeningList(player);
                 return;
@@ -72,7 +80,7 @@ public class QuickCrate implements Listener {
             endQuickCrate(player, loc, crate, hologramController, true);
         } else {
             if (!crazyManager.takeKeys(1, player, crate, keyType, true)) {
-                Methods.failedToTakeKey(player, crate);
+                methods.failedToTakeKey(player, crate);
                 CrateControlListener.inUse.remove(player);
                 crazyManager.removePlayerFromOpeningList(player);
                 return;
@@ -92,10 +100,12 @@ public class QuickCrate implements Listener {
             try {
                 reward = player.getWorld().dropItem(loc.clone().add(.5, 1, .5), displayItem);
             } catch (IllegalArgumentException e) {
-                plugin.getServer().getLogger().warning("A prize could not be given due to an invalid display item for this prize. ");
-                plugin.getServer().getLogger().warning("Crate: " + prize.getCrate() + " Prize: " + prize.getName());
+                List.of(
+                        "A prize could not be given due to an invalid display item for this prize.",
+                        "Crate: " + prize.getCrate() + " Prize: " + prize.getName()
+                ).forEach(FancyLogger::debug);
 
-                e.printStackTrace();
+                FancyLogger.warn(e.getMessage());
                 return;
             }
 
@@ -108,7 +118,7 @@ public class QuickCrate implements Listener {
             allRewards.add(reward);
             chestStateHandler.openChest(loc.getBlock(), true);
 
-            if (prize.useFireworks()) Methods.firework(loc.clone().add(.5, 1, .5));
+            if (prize.useFireworks()) methods.firework(loc.clone().add(.5, 1, .5));
 
             tasks.put(player, new BukkitRunnable() {
                 @Override
@@ -119,7 +129,7 @@ public class QuickCrate implements Listener {
         }
     }
     
-    public static void endQuickCrate(Player player, Location loc, Crate crate, HologramController hologramController, boolean useQuickCrate) {
+    public void endQuickCrate(Player player, Location loc, Crate crate, HologramController hologramController, boolean useQuickCrate) {
         if (tasks.containsKey(player)) {
             tasks.get(player).cancel();
             tasks.remove(player);
@@ -140,7 +150,7 @@ public class QuickCrate implements Listener {
         }
     }
     
-    public static void removeAllRewards() {
+    public void removeAllRewards() {
         allRewards.stream().filter(Objects :: nonNull).forEach(Entity :: remove);
     }
     

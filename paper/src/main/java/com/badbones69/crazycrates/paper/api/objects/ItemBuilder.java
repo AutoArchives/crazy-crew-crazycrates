@@ -1,6 +1,8 @@
 package com.badbones69.crazycrates.paper.api.objects;
 
 import com.badbones69.crazycrates.paper.Methods;
+import com.badbones69.crazycrates.paper.api.plugin.CrazyCratesPlugin;
+import com.badbones69.crazycrates.paper.api.plugin.registry.CrazyCratesProvider;
 import com.badbones69.crazycrates.paper.support.SkullCreator;
 import com.badbones69.crazycrates.paper.support.libraries.PluginSupport;
 import de.tr7zw.changeme.nbtapi.NBTItem;
@@ -21,10 +23,14 @@ import org.bukkit.inventory.meta.trim.TrimPattern;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
+import org.jetbrains.annotations.NotNull;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class ItemBuilder {
+
+    private final @NotNull CrazyCratesPlugin cratesPlugin = CrazyCratesProvider.get();
+    private final @NotNull Methods methods = this.cratesPlugin.getMethods();
 
     private NBTItem nbtItem;
 
@@ -579,7 +585,7 @@ public class ItemBuilder {
      * @return The ItemBuilder with an updated name.
      */
     public ItemBuilder setName(String itemName) {
-        if (itemName != null) this.itemName = Methods.color(itemName);
+        if (itemName != null) this.itemName = methods.color(itemName);
 
         return this;
     }
@@ -627,7 +633,7 @@ public class ItemBuilder {
             this.itemLore.clear();
 
             for (String line : lore) {
-                this.itemLore.add(Methods.color(line));
+                this.itemLore.add(methods.color(line));
             }
         }
 
@@ -641,7 +647,7 @@ public class ItemBuilder {
      * @return The ItemBuilder with updated info.
      */
     public ItemBuilder addLore(String lore) {
-        if (lore != null) this.itemLore.add(Methods.color(lore));
+        if (lore != null) this.itemLore.add(methods.color(lore));
         return this;
     }
 
