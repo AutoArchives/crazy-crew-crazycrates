@@ -103,11 +103,8 @@ public class CrazyCratesLoader extends CrazyCratesPlugin {
     public void disable() {
         this.crazyManager.reload(true);
 
-        this.metricsHandler.stop();
-
         // Disabling the plugin must go last.
         super.disable();
-
         this.bukkitPlugin.disable();
     }
 

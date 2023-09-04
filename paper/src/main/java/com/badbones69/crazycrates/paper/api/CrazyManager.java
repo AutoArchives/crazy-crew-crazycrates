@@ -105,7 +105,8 @@ public class CrazyManager {
 
     public void reload(boolean serverStop) {
         if (serverStop) {
-
+            this.cratesPlugin.getMetrics().stop();
+            return;
         }
 
         this.cratesPlugin.getConfigManager().reload();
@@ -117,8 +118,6 @@ public class CrazyManager {
         } else {
             this.cratesPlugin.getMetrics().stop();
         }
-
-        this.cratesPlugin.getConfigManager().reload();
 
         loadCrates();
     }
