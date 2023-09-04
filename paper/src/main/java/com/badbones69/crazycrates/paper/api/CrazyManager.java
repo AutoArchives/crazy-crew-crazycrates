@@ -5,6 +5,7 @@ import com.badbones69.crazycrates.api.enums.types.CrateType;
 import com.badbones69.crazycrates.paper.CrazyCrates;
 import com.badbones69.crazycrates.paper.Methods;
 import com.badbones69.crazycrates.paper.api.FileManager.Files;
+import com.badbones69.crazycrates.paper.api.config.PluginConfig;
 import com.badbones69.crazycrates.paper.api.enums.BrokeLocation;
 import com.badbones69.crazycrates.paper.api.enums.settings.Messages;
 import com.badbones69.crazycrates.paper.api.events.PlayerReceiveKeyEvent;
@@ -94,8 +95,34 @@ public class CrazyManager {
     // Schematic locations for 1.13+.
     private final HashMap<UUID, Location[]> schemLocations = new HashMap<>();
 
+    public void load(boolean serverStart) {
+        if (serverStart) {
+
+        }
+
+        loadCrates();
+    }
+
+    public void reload(boolean serverStop) {
+        if (serverStop) {
+
+        }
+
+        boolean metrics = this.cratesPlugin.getConfigManager().getPluginConfig().getProperty(PluginConfig.TOGGLE_METRICS);
+
+        if (metrics) {
+            this.cratesPlugin.getMetrics().start();
+        } else {
+            this.cratesPlugin.getMetrics().stop();
+        }
+
+        this.cratesPlugin.getConfigManager().reload();
+
+        loadCrates();
+    }
+
     // Loads all the information the plugin needs to run.
-    public void loadCrates() {
+    private void loadCrates() {
         giveNewPlayersKeys = false;
         crates.clear();
         brokecrates.clear();
@@ -273,8 +300,6 @@ public class CrazyManager {
         if (fileManager.isLogging()) FancyLogger.info("All schematics were found and loaded.");
 
         cleanDataFile();
-
-        this.plugin.getPreviewListener().loadButtons();
     }
 
     /**
@@ -358,7 +383,7 @@ public class CrazyManager {
             case MENU -> {
                 boolean openMenu = config.getBoolean("Settings.Enable-Crate-Menu");
 
-                if (openMenu) this.plugin.getMenuListener().openGUI(player); else player.sendMessage(Messages.FEATURE_DISABLED.getMessage());
+                if (openMenu) this.cratesPlugin.getMenuManager().openMainMenu(player); else player.sendMessage(Messages.FEATURE_DISABLED.getMessage());
             }
             case COSMIC -> this.plugin.getCosmic().openCosmic(player, crate, keyType, checkHand);
             case CSGO -> this.plugin.getCsgo().openCSGO(player, crate, keyType, checkHand);

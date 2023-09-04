@@ -335,7 +335,7 @@ public class Crate {
      * @return The preview as an Inventory object.
      */
     public Inventory getPreview(Player player) {
-        return getPreview(player, this.plugin.getPreviewListener().getPage(player));
+        return getPreview(player, this.cratesPlugin.getMenuManager().getPage(player));
     }
     
     /**
@@ -343,7 +343,7 @@ public class Crate {
      * @return The preview as an Inventory object.
      */
     public Inventory getPreview(Player player, int page) {
-        Inventory inventory = player.getServer().createInventory(null, !borderToggle && (this.plugin.getPreviewListener().playerInMenu(player) || maxPage > 1) && maxSlots == 9 ? maxSlots + 9 : maxSlots, previewName);
+        Inventory inventory = player.getServer().createInventory(null, !borderToggle && (this.cratesPlugin.getMenuManager().playerInMenu(player) || maxPage > 1) && maxSlots == 9 ? maxSlots + 9 : maxSlots, previewName);
         setDefaultItems(inventory, player);
 
         for (ItemStack item : getPageItems(page)) {
@@ -610,20 +610,20 @@ public class Crate {
             }
         }
 
-        int page = this.plugin.getPreviewListener().getPage(player);
+        int page =  this.cratesPlugin.getMenuManager().getPage(player);
 
-        if (this.plugin.getPreviewListener().playerInMenu(player)) inventory.setItem(getAbsoluteItemPosition(4), this.plugin.getPreviewListener().getMenuButton());
+        if ( this.cratesPlugin.getMenuManager().playerInMenu(player)) inventory.setItem(getAbsoluteItemPosition(4),  this.cratesPlugin.getMenuManager().getMenuButton());
 
         if (page == 1) {
             if (borderToggle) inventory.setItem(getAbsoluteItemPosition(3), boarderItem.build());
         } else {
-            inventory.setItem(getAbsoluteItemPosition(3), this.plugin.getPreviewListener().getBackButton(player));
+            inventory.setItem(getAbsoluteItemPosition(3),  this.cratesPlugin.getMenuManager().getBackButton(player));
         }
 
         if (page == maxPage) {
             if (borderToggle) inventory.setItem(getAbsoluteItemPosition(5), boarderItem.build());
         } else {
-            inventory.setItem(getAbsoluteItemPosition(5), this.plugin.getPreviewListener().getNextButton(player));
+            inventory.setItem(getAbsoluteItemPosition(5),  this.cratesPlugin.getMenuManager().getNextButton(player));
         }
     }
 }

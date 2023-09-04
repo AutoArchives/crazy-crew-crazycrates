@@ -23,7 +23,7 @@ public class BrokeLocation {
 
     /**
      * Builds a location that represents a broken crate.
-     * Usually never activates.......
+     * Usually never activates...
      *
      * @param locationName the location name
      * @param crate the crate object

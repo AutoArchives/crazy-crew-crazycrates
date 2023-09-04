@@ -14,6 +14,7 @@ import com.badbones69.crazycrates.paper.api.objects.Prize;
 import com.badbones69.crazycrates.api.enums.Permissions;
 import com.badbones69.crazycrates.api.enums.types.CrateType;
 import com.badbones69.crazycrates.api.enums.types.KeyType;
+import com.badbones69.crazycrates.paper.api.plugin.CrazyCratesLoader;
 import com.badbones69.crazycrates.paper.api.plugin.CrazyCratesPlugin;
 import com.badbones69.crazycrates.paper.api.plugin.registry.CrazyCratesProvider;
 import com.badbones69.crazycrates.paper.listeners.CrateControlListener;
@@ -55,7 +56,7 @@ public class CrateBaseCommand extends BaseCommand {
 
         boolean openMenu = config.getBoolean("Settings.Enable-Crate-Menu");
 
-        if (openMenu) this.plugin.getMenuListener().openGUI(player); else player.sendMessage(Messages.FEATURE_DISABLED.getMessage());
+        if (openMenu) this.cratesPlugin.getMenuManager().openMainMenu(player); else player.sendMessage(Messages.FEATURE_DISABLED.getMessage());
     }
 
     @SubCommand("help")
@@ -120,8 +121,11 @@ public class CrateBaseCommand extends BaseCommand {
         fileManager.reloadAllFiles();
         fileManager.setup();
 
-        plugin.cleanFiles();
-        crazyManager.loadCrates();
+        CrazyCratesLoader.janitor();
+
+        crazyManager.reload(false);
+
+        this.cratesPlugin.getMenuManager().loadButtons();
 
         sender.sendMessage(Messages.RELOAD.getMessage());
     }
@@ -250,7 +254,7 @@ public class CrateBaseCommand extends BaseCommand {
                     FancyLogger.debug(e.getMessage());
                 }
 
-                crazyManager.loadCrates();
+                crazyManager.load(false);
 
                 HashMap<String, String> placeholders = new HashMap<>();
 
@@ -285,8 +289,8 @@ public class CrateBaseCommand extends BaseCommand {
             }
 
             if (crate.getCrateType() != CrateType.MENU) {
-                this.plugin.getPreviewListener().setPlayerInMenu(player, false);
-                this.plugin.getPreviewListener().openNewPreview(player, crate);
+                this.cratesPlugin.getMenuManager().setPlayerInMenu(player, false);
+                this.cratesPlugin.getMenuManager().openNewPreview(player, crate);
             }
         }
     }

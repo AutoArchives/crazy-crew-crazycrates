@@ -1,13 +1,11 @@
 package com.badbones69.crazycrates.paper.listeners;
 
-import com.badbones69.crazycrates.paper.CrazyCrates;
 import com.badbones69.crazycrates.paper.Methods;
 import com.badbones69.crazycrates.paper.api.CrazyManager;
 import com.badbones69.crazycrates.api.enums.types.CrateType;
 import com.badbones69.crazycrates.api.enums.types.KeyType;
 import com.badbones69.crazycrates.paper.api.enums.settings.Messages;
 import com.badbones69.crazycrates.paper.api.objects.Crate;
-import com.badbones69.crazycrates.paper.api.objects.ItemBuilder;
 import com.badbones69.crazycrates.paper.api.FileManager.Files;
 import com.badbones69.crazycrates.paper.api.plugin.CrazyCratesPlugin;
 import com.badbones69.crazycrates.paper.api.plugin.registry.CrazyCratesProvider;
@@ -21,123 +19,14 @@ import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.List;
 
 public class MenuListener implements Listener {
 
     private final @NotNull CrazyCratesPlugin cratesPlugin = CrazyCratesProvider.get();
     private final @NotNull CrazyManager crazyManager = this.cratesPlugin.getCrazyManager();
     private final @NotNull Methods methods = this.cratesPlugin.getMethods();
-    
-    public void openGUI(Player player) {
-        int size = Files.CONFIG.getFile().getInt("Settings.InventorySize");
-        Inventory inv = player.getServer().createInventory(null, size, methods.sanitizeColor(Files.CONFIG.getFile().getString("Settings.InventoryName")));
-
-        if (Files.CONFIG.getFile().contains("Settings.Filler.Toggle")) {
-            if (Files.CONFIG.getFile().getBoolean("Settings.Filler.Toggle")) {
-                String id = Files.CONFIG.getFile().getString("Settings.Filler.Item");
-                String name = Files.CONFIG.getFile().getString("Settings.Filler.Name");
-                List<String> lore = Files.CONFIG.getFile().getStringList("Settings.Filler.Lore");
-                ItemStack item = new ItemBuilder().setMaterial(id).setName(name).setLore(lore).build();
-
-                for (int i = 0; i < size; i++) {
-                    inv.setItem(i, item.clone());
-                }
-            }
-        }
-
-        if (Files.CONFIG.getFile().contains("Settings.GUI-Customizer")) {
-            for (String custom : Files.CONFIG.getFile().getStringList("Settings.GUI-Customizer")) {
-                int slot = 0;
-                ItemBuilder item = new ItemBuilder();
-                String[] split = custom.split(", ");
-
-                for (String option : split) {
-
-                    if (option.contains("Item:")) item.setMaterial(option.replace("Item:", ""));
-
-                    if (option.contains("Name:")) {
-                        option = option.replace("Name:", "");
-
-                        option = getCrates(player, option);
-
-                        item.setName(option.replaceAll("%player%", player.getName()));
-                    }
-
-                    if (option.contains("Lore:")) {
-                        option = option.replace("Lore:", "");
-                        String[] d = option.split(",");
-
-                        for (String l : d) {
-                            option = getCrates(player, option);
-
-                            item.addLore(option.replaceAll("%player%", player.getName()));
-                        }
-                    }
-
-                    if (option.contains("Glowing:")) item.setGlow(Boolean.parseBoolean(option.replace("Glowing:", "")));
-
-                    if (option.contains("Player:")) item.setPlayerName(option.replaceAll("%player%", player.getName()));
-
-                    if (option.contains("Slot:")) slot = Integer.parseInt(option.replace("Slot:", ""));
-
-                    if (option.contains("Unbreakable-Item")) item.setUnbreakable(Boolean.parseBoolean(option.replace("Unbreakable-Item:", "")));
-
-                    if (option.contains("Hide-Item-Flags")) item.hideItemFlags(Boolean.parseBoolean(option.replace("Hide-Item-Flags:", "")));
-                }
-
-                if (slot > size) continue;
-
-                slot--;
-                inv.setItem(slot, item.build());
-            }
-        }
-
-        for (Crate crate : crazyManager.getCrates()) {
-            FileConfiguration file = crate.getFile();
-
-            if (file != null) {
-                if (file.getBoolean("Crate.InGUI")) {
-                    String path = "Crate.";
-                    int slot = file.getInt(path + "Slot");
-
-                    if (slot > size) continue;
-
-                    slot--;
-                    inv.setItem(slot, new ItemBuilder()
-                    .setMaterial(file.getString(path + "Item"))
-                    .setName(file.getString(path + "Name"))
-                    .setLore(file.getStringList(path + "Lore"))
-                    .setCrateName(crate.getName())
-                    .setPlayerName(file.getString(path + "Player"))
-                    .setGlow(file.getBoolean(path + "Glowing"))
-                    .addLorePlaceholder("%Keys%", NumberFormat.getNumberInstance().format(crazyManager.getVirtualKeys(player, crate)))
-                    .addLorePlaceholder("%Keys_Physical%", NumberFormat.getNumberInstance().format(crazyManager.getPhysicalKeys(player, crate)))
-                    .addLorePlaceholder("%Keys_Total%", NumberFormat.getNumberInstance().format(crazyManager.getTotalKeys(player, crate)))
-                    .addLorePlaceholder("%Player%", player.getName())
-                    .build());
-                }
-            }
-        }
-
-        player.openInventory(inv);
-    }
-
-    private String getCrates(Player player, String option) {
-        for (Crate crate : crazyManager.getCrates()) {
-            if (crate.getCrateType() != CrateType.MENU) {
-                option = option.replaceAll("%" + crate.getName().toLowerCase() + "%", crazyManager.getVirtualKeys(player, crate) + "")
-                .replaceAll("%" + crate.getName().toLowerCase() + "_physical%", crazyManager.getPhysicalKeys(player, crate) + "")
-                .replaceAll("%" + crate.getName().toLowerCase() + "_total%", crazyManager.getTotalKeys(player, crate) + "");
-            }
-        }
-
-        return option;
-    }
 
     @EventHandler
     public void onInvClick(InventoryClickEvent e) {
@@ -168,10 +57,8 @@ public class MenuListener implements Listener {
                                 if (crate.isPreviewEnabled()) {
                                     player.closeInventory();
 
-                                    @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
-
-                                    plugin.getPreviewListener().setPlayerInMenu(player, true);
-                                    plugin.getPreviewListener().openNewPreview(player, crate);
+                                    this.cratesPlugin.getMenuManager().setPlayerInMenu(player, true);
+                                    this.cratesPlugin.getMenuManager().openNewPreview(player, crate);
                                 } else {
                                     player.sendMessage(Messages.PREVIEW_DISABLED.getMessage());
                                 }

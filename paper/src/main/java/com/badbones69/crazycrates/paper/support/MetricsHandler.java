@@ -40,7 +40,7 @@ public class MetricsHandler {
 
     public void stop() {
         if (this.metrics == null) {
-            FancyLogger.info("Metrics isn't enabled.");
+            FancyLogger.info("Metrics isn't enabled so we do nothing.");
             return;
         }
 

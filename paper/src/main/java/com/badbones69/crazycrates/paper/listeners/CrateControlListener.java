@@ -89,8 +89,8 @@ public class CrateControlListener implements Listener { // Crate Control
 
                     if (loc.getCrateType() != CrateType.MENU) {
                         if (loc.getCrate().isPreviewEnabled()) {
-                            this.plugin.getPreviewListener().setPlayerInMenu(player, false);
-                            this.plugin.getPreviewListener().openNewPreview(player, loc.getCrate());
+                             this.cratesPlugin.getMenuManager().setPlayerInMenu(player, false);
+                             this.cratesPlugin.getMenuManager().openNewPreview(player, loc.getCrate());
                         } else {
                             player.sendMessage(Messages.PREVIEW_DISABLED.getMessage());
                         }
@@ -120,7 +120,7 @@ public class CrateControlListener implements Listener { // Crate Control
                     boolean openMenu = config.getBoolean("Settings.Enable-Crate-Menu");
 
                     //This is to stop players in QuadCrate to not be able to try and open a crate set to menu.
-                    if (!crazyManager.isInOpeningList(player) && openMenu) this.plugin.getMenuListener().openGUI(player);
+                    if (!crazyManager.isInOpeningList(player) && openMenu) this.cratesPlugin.getMenuManager().openMainMenu(player);
 
                     return;
                 }

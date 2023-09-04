@@ -34,31 +34,11 @@ public class CrazyCrates extends JavaPlugin implements Listener {
     private final BukkitCommandManager<CommandSender> manager = BukkitCommandManager.create(this);
 
     private CrazyCratesLoader crazyCratesLoader;
-    private MenuListener menuListener;
-    private PreviewListener previewListener;
 
     @Override
     public void onEnable() {
         this.crazyCratesLoader = new CrazyCratesLoader();
         this.crazyCratesLoader.enable();
-
-        this.crazyCratesLoader.getFileManager().setLog(true)
-                .registerDefaultGenerateFiles("CrateExample.yml", "/crates", "/crates")
-                .registerDefaultGenerateFiles("QuadCrateExample.yml", "/crates", "/crates")
-                .registerDefaultGenerateFiles("CosmicCrateExample.yml", "/crates", "/crates")
-                .registerDefaultGenerateFiles("QuickCrateExample.yml", "/crates", "/crates")
-                .registerDefaultGenerateFiles("classic.nbt", "/schematics", "/schematics")
-                .registerDefaultGenerateFiles("nether.nbt", "/schematics", "/schematics")
-                .registerDefaultGenerateFiles("outdoors.nbt", "/schematics", "/schematics")
-                .registerDefaultGenerateFiles("sea.nbt", "/schematics", "/schematics")
-                .registerDefaultGenerateFiles("soul.nbt", "/schematics", "/schematics")
-                .registerDefaultGenerateFiles("wooden.nbt", "/schematics", "/schematics")
-                .registerCustomFilesFolder("/crates")
-                .registerCustomFilesFolder("/schematics")
-                .setup();
-
-        // Clean files if we have to.
-        cleanFiles();
 
         // Add extra messages.
         Messages.addMissingMessages();
@@ -106,8 +86,6 @@ public class CrazyCrates extends JavaPlugin implements Listener {
         }
 
         enable();
-
-        this.crazyCratesLoader.getCrazyManager().loadCrates();
     }
 
     @Override
@@ -127,18 +105,6 @@ public class CrazyCrates extends JavaPlugin implements Listener {
         this.crazyCratesLoader.getCrazyManager().loadOfflinePlayersKeys(e.getPlayer());
     }
 
-    public void cleanFiles() {
-        if (!Files.LOCATIONS.getFile().contains("Locations")) {
-            Files.LOCATIONS.getFile().set("Locations.Clear", null);
-            Files.LOCATIONS.saveFile();
-        }
-
-        if (!Files.DATA.getFile().contains("Players")) {
-            Files.DATA.getFile().set("Players.Clear", null);
-            Files.DATA.saveFile();
-        }
-    }
-
     private War war;
     private CSGO csgo;
     private Wheel wheel;
@@ -146,8 +112,6 @@ public class CrazyCrates extends JavaPlugin implements Listener {
     private Cosmic cosmic;
     private Roulette roulette;
     private QuickCrate quickCrate;
-    private CrateOnTheGo crateOnTheGo;
-    private QuadCrate quadCrate;
 
     public War getWar() {
         return war;
@@ -177,14 +141,6 @@ public class CrazyCrates extends JavaPlugin implements Listener {
         return quickCrate;
     }
 
-    public CrateOnTheGo getCrateOnTheGo() {
-        return crateOnTheGo;
-    }
-
-    public QuadCrate getQuadCrate() {
-        return quadCrate;
-    }
-
     private FireCracker fireCracker;
 
     public FireCracker getFireCracker() {
@@ -194,8 +150,8 @@ public class CrazyCrates extends JavaPlugin implements Listener {
     private void enable() {
         PluginManager pluginManager = getServer().getPluginManager();
 
-        pluginManager.registerEvents(this.menuListener = new MenuListener(), this);
-        pluginManager.registerEvents(this.previewListener = new PreviewListener(), this);
+        pluginManager.registerEvents(new PreviewListener(), this);
+        pluginManager.registerEvents(new MenuListener(), this);
         pluginManager.registerEvents(new FireworkDamageListener(), this);
         pluginManager.registerEvents(new CrateControlListener(), this);
         pluginManager.registerEvents(new MiscListener(), this);
@@ -207,14 +163,14 @@ public class CrazyCrates extends JavaPlugin implements Listener {
         pluginManager.registerEvents(this.cosmic = new Cosmic(), this);
         pluginManager.registerEvents(this.roulette = new Roulette(), this);
         pluginManager.registerEvents(this.quickCrate = new QuickCrate(), this);
-        pluginManager.registerEvents(this.crateOnTheGo = new CrateOnTheGo(), this);
-        pluginManager.registerEvents(this.quadCrate = new QuadCrate(), this);
+        pluginManager.registerEvents(new CrateOnTheGo(), this);
+        pluginManager.registerEvents(new QuadCrate(), this);
 
         this.fireCracker = new FireCracker();
 
         pluginManager.registerEvents(this, this);
 
-        this.crazyCratesLoader.getCrazyManager().loadCrates();
+        this.crazyCratesLoader.getCrazyManager().load(true);
 
         if (!this.crazyCratesLoader.getCrazyManager().getBrokeCrateLocations().isEmpty()) pluginManager.registerEvents(new BrokeLocationsListener(), this);
 
@@ -326,13 +282,5 @@ public class CrazyCrates extends JavaPlugin implements Listener {
                 FancyLogger.info("<gold>" + value.name() + "</gold> <bold><red>NOT FOUND</red></bold>");
             }
         }
-    }
-
-    public MenuListener getMenuListener() {
-        return menuListener;
-    }
-
-    public PreviewListener getPreviewListener() {
-        return previewListener;
     }
 }
