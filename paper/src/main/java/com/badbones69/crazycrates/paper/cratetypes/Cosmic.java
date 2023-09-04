@@ -224,8 +224,8 @@ public class Cosmic implements Listener {
 
                                         player.sendMessage(methods.getPrefix("&cAn issue has occurred and so a key refund was given."));
 
-                                        FancyLogger.debug("An issue occurred when the user " + player.getName() + " was using the " + crate.getName() + " crate and so they were issued a key refund.");
-                                        FancyLogger.warn(e.getMessage());
+                                        FancyLogger.error("An issue occurred when the user " + player.getName() + " was using the " + crate.getName() + " crate and so they were issued a key refund.");
+                                        FancyLogger.debug(e.getMessage());
                                     }
 
                                     return;

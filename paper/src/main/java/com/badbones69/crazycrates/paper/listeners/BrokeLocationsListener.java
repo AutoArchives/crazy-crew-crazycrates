@@ -46,9 +46,9 @@ public class BrokeLocationsListener implements Listener {
             crazyManager.getBrokeCrateLocations().removeAll(fixedWorlds);
 
             if (fileManager.isLogging()) {
-                FancyLogger.warn("Fixed " + fixedAmount + " broken crate locations.");
+                FancyLogger.debug("Fixed " + fixedAmount + " broken crate locations.");
 
-                if (crazyManager.getBrokeCrateLocations().isEmpty()) FancyLogger.warn("All broken crate locations have been fixed.");
+                if (crazyManager.getBrokeCrateLocations().isEmpty()) FancyLogger.success("All broken crate locations have been fixed.");
             }
         }
     }

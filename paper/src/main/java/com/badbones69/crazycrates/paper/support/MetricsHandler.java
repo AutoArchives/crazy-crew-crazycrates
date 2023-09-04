@@ -21,7 +21,7 @@ public class MetricsHandler {
 
     public void start() {
         if (this.metrics != null) {
-            FancyLogger.info("Metrics is already enabled.");
+            FancyLogger.error("Metrics is already enabled.");
             return;
         }
 
@@ -35,12 +35,12 @@ public class MetricsHandler {
             this.metrics.addCustomChart(chart);
         });
 
-        FancyLogger.info("Metrics has been enabled.");
+        FancyLogger.success("Metrics has been enabled.");
     }
 
     public void stop() {
         if (this.metrics == null) {
-            FancyLogger.info("Metrics isn't enabled so we do nothing.");
+            FancyLogger.error("Metrics isn't enabled so we do nothing.");
             return;
         }
 

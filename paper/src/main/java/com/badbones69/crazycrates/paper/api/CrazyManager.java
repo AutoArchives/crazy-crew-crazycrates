@@ -226,8 +226,9 @@ public class CrazyManager {
                 crates.add(new Crate(crateName, previewName, crateType, getKey(file), prizes, file, newPlayersKeys, tiers, maxMassOpen, requiredKeys, prizeMessage, holo));
             } catch (Exception e) {
                 brokecrates.add(crateName);
-                FancyLogger.warn("There was an error while loading the " + crateName + ".yml file.");
-                e.printStackTrace();
+
+                FancyLogger.error("There was an error while loading the " + crateName + ".yml file.");
+                FancyLogger.debug(e.getMessage());
             }
         }
 
@@ -265,9 +266,9 @@ public class CrazyManager {
                         brokeLocations.add(new BrokeLocation(locationName, crate, x, y, z, worldName));
                         brokeAmount++;
                     }
-
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    FancyLogger.error("Failed to create crate locations.");
+                    FancyLogger.debug(e.getMessage());
                 }
             }
         }
@@ -276,10 +277,10 @@ public class CrazyManager {
         if (fileManager.isLogging()) {
             if (loadedAmount > 0 || brokeAmount > 0) {
                 if (brokeAmount <= 0) {
-                    FancyLogger.info("All physical crate locations have been loaded.");
+                    FancyLogger.success("All physical crate locations have been loaded.");
                 } else {
                     FancyLogger.info("Loaded " + loadedAmount + " physical crate locations.");
-                    FancyLogger.info("Failed to load " + brokeAmount + " physical crate locations.");
+                    FancyLogger.error("Failed to load " + brokeAmount + " physical crate locations.");
                 }
             }
         }
@@ -293,11 +294,11 @@ public class CrazyManager {
             if (schematicName.endsWith(".nbt")) {
                 crateSchematics.add(new CrateSchematic(schematicName.replace(".nbt", ""), new File(plugin.getDataFolder() + "/schematics/" + schematicName)));
 
-                if (fileManager.isLogging()) FancyLogger.info(schematicName + " was successfully found and loaded.");
+                if (fileManager.isLogging()) FancyLogger.success(schematicName + " was successfully found and loaded.");
             }
         }
 
-        if (fileManager.isLogging()) FancyLogger.info("All schematics were found and loaded.");
+        if (fileManager.isLogging()) FancyLogger.success("All schematics were found and loaded.");
 
         cleanDataFile();
     }
@@ -342,14 +343,14 @@ public class CrazyManager {
             }
 
             if (!removePlayers.isEmpty()) {
-                if (logging) FancyLogger.info(removePlayers.size() + " player's data has been marked to be removed.");
+                if (logging) FancyLogger.warn(removePlayers.size() + " player's data has been marked to be removed.");
 
                 removePlayers.forEach(uuid -> data.set("Players." + uuid, null));
 
-                if (logging) FancyLogger.info("All empty player data has been removed.");
+                if (logging) FancyLogger.success("All empty player data has been removed.");
             }
 
-            if (logging) FancyLogger.info("The data.yml file has been cleaned.");
+            if (logging) FancyLogger.success("The data.yml file has been cleaned.");
             
             Files.DATA.saveFile();
         }
@@ -746,8 +747,8 @@ public class CrazyManager {
                                 commandBuilder.append(pickNumber(min, max)).append(" ");
                             } catch (Exception e) {
                                 commandBuilder.append("1 ");
-                                FancyLogger.warn("The prize " + prize.getName() + " in the " + prize.getCrate() + " crate has caused an error when trying to run a command.");
-                                FancyLogger.warn("Command: " + cmd);
+                                FancyLogger.error("The prize " + prize.getName() + " in the " + prize.getCrate() + " crate has caused an error when trying to run a command.");
+                                FancyLogger.debug("Command: " + cmd);
                             }
                         } else {
                             commandBuilder.append(word).append(" ");
@@ -809,7 +810,8 @@ public class CrazyManager {
 
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            FancyLogger.error("Could not add keys to offline player.");
+            FancyLogger.debug(e.getMessage());
             return false;
         }
     }
@@ -837,7 +839,8 @@ public class CrazyManager {
 
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            FancyLogger.error("Could not take keys to offline player.");
+            FancyLogger.debug(e.getMessage());
             return false;
         }
     }
@@ -1197,11 +1200,13 @@ public class CrazyManager {
                 int keys = getVirtualKeys(player, crate);
                 Files.DATA.getFile().set("Players." + uuid + ".Name", player.getName());
                 int newAmount = Math.max((keys - amount), 0);
+
                 if (newAmount == 0) {
                     Files.DATA.getFile().set("Players." + uuid + "." + crate.getName(), null);
                 } else {
                     Files.DATA.getFile().set("Players." + uuid + "." + crate.getName(), newAmount);
                 }
+
                 Files.DATA.saveFile();
                 return true;
             }

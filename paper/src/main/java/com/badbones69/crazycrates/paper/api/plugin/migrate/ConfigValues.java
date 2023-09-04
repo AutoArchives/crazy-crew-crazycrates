@@ -39,7 +39,7 @@ public enum ConfigValues {
     public static void convert() {
         for (ConfigValues values : ConfigValues.values()) {
             if (values.oldFileConfiguration.contains(values.oldPath)) {
-                FancyLogger.warn("Attempting to migrate " + values.oldFileConfiguration.get(values.oldPath) + " to " + values.newPath);
+                FancyLogger.warn("Attempting to migrate " + values.oldPath + " from " + values.oldFile.getName() +" to " + values.newPath + " in " + values.newFile.getName());
 
                 values.newFileCOnfiguration.set(values.newPath, values.oldFileConfiguration.get(values.oldPath));
 
@@ -49,11 +49,11 @@ public enum ConfigValues {
                     values.oldFileConfiguration.set(values.oldPath, null);
                     values.oldFileConfiguration.save(values.oldFile);
                 } catch (IOException e) {
-                    FancyLogger.debug("Failed to save file.");
+                    FancyLogger.error("Failed to save file.");
                     FancyLogger.warn(e.getMessage());
                 }
 
-                FancyLogger.debug("Migration successful!");
+                FancyLogger.success("Migration successful!");
 
                 return;
             }

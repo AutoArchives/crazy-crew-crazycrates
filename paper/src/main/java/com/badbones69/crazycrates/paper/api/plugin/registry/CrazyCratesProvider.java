@@ -35,7 +35,7 @@ public class CrazyCratesProvider {
     @Internal
     static void stop() {
         if (CrazyCratesProvider.plugin == null) {
-            FancyLogger.warn("CrazyCrates cannot be set as null because it is already null.");
+            FancyLogger.error("CrazyCrates cannot be set as null because it is already null.");
             return;
         }
 

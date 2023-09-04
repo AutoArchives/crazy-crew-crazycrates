@@ -9,6 +9,7 @@ import com.badbones69.crazycrates.api.enums.types.CrateType;
 import com.badbones69.crazycrates.paper.api.plugin.CrazyCratesPlugin;
 import com.badbones69.crazycrates.paper.api.plugin.registry.CrazyCratesProvider;
 import com.badbones69.crazycrates.api.objects.CrateHologram;
+import com.ryderbelserion.cluster.api.adventure.FancyLogger;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -182,7 +183,9 @@ public class Crate {
         try {
             return prizes.get(new Random().nextInt(prizes.size()));
         } catch (IllegalArgumentException e) {
-            plugin.getLogger().warning("Failed to find prize from the " + name + " crate for player " + player.getName() + ".");
+            FancyLogger.error("Failed to find prize from the " + name + " crate for player " + player.getName() + ".");
+            FancyLogger.debug(e.getMessage());
+
             return null;
         }
     }
@@ -343,7 +346,7 @@ public class Crate {
      * @return The preview as an Inventory object.
      */
     public Inventory getPreview(Player player, int page) {
-        Inventory inventory = player.getServer().createInventory(null, !borderToggle && (this.cratesPlugin.getMenuManager().playerInMenu(player) || maxPage > 1) && maxSlots == 9 ? maxSlots + 9 : maxSlots, previewName);
+        Inventory inventory = this.plugin.getServer().createInventory(null, !borderToggle && (this.cratesPlugin.getMenuManager().playerInMenu(player) || maxPage > 1) && maxSlots == 9 ? maxSlots + 9 : maxSlots, previewName);
         setDefaultItems(inventory, player);
 
         for (ItemStack item : getPageItems(page)) {

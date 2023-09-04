@@ -52,8 +52,8 @@ public class StructureHandler {
 
             getStructureBlocks(location);
         } catch (Exception e) {
-            FancyLogger.debug("Failed to paste structure: " + this.file.getName());
-            FancyLogger.warn(e.getMessage());
+            FancyLogger.error("Failed to paste structure: " + this.file.getName());
+            FancyLogger.debug(e.getMessage());
         }
     }
 
@@ -108,8 +108,8 @@ public class StructureHandler {
         try {
             return getStructureSize().getX();
         } catch (Exception e) {
-            FancyLogger.debug("Failed to get structure x: " + this.file.getName());
-            FancyLogger.warn(e.getMessage());
+            FancyLogger.error("Failed to get structure x: " + this.file.getName());
+            FancyLogger.debug(e.getMessage());
         }
 
         return 0;
@@ -119,8 +119,8 @@ public class StructureHandler {
         try {
             return getStructureSize().getY();
         } catch (Exception e) {
-            FancyLogger.debug("Failed to get structure y: " + this.file.getName());
-            FancyLogger.warn(e.getMessage());
+            FancyLogger.error("Failed to get structure y: " + this.file.getName());
+            FancyLogger.debug(e.getMessage());
         }
 
         return 0;
@@ -130,8 +130,8 @@ public class StructureHandler {
         try {
             return getStructureSize().getZ();
         } catch (Exception e) {
-            FancyLogger.debug("Failed to get structure z: " + this.file.getName());
-            FancyLogger.warn(e.getMessage());
+            FancyLogger.error("Failed to get structure z: " + this.file.getName());
+            FancyLogger.debug(e.getMessage());
         }
 
         return 0;

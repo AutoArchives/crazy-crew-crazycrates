@@ -27,7 +27,7 @@ public class CrazyCratesRegistry {
         try {
             start.invoke(null, plugin);
         } catch (Exception exception) {
-            FancyLogger.warn("Failed to enable CrazyCrates.");
+            FancyLogger.error("Failed to enable CrazyCrates.");
             FancyLogger.debug(exception.getMessage());
         }
     }
@@ -37,7 +37,7 @@ public class CrazyCratesRegistry {
         try {
             stop.invoke(null);
         } catch (Exception exception) {
-            FancyLogger.warn("Failed to disable CrazyCrates.");
+            FancyLogger.error("Failed to disable CrazyCrates.");
             FancyLogger.debug(exception.getMessage());
         }
     }

@@ -39,7 +39,7 @@ dependencies {
 
     implementation("org.bstats", "bstats-bukkit", "3.0.2")
 
-    implementation("com.ryderbelserion.cluster", "cluster-bukkit", "0.1.3")
+    implementation("com.ryderbelserion.cluster", "cluster-bukkit", "0.2")
 
     implementation("dev.triumphteam", "triumph-cmd-bukkit", "2.0.0-SNAPSHOT")
 

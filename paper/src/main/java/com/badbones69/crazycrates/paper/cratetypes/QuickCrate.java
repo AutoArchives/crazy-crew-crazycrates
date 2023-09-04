@@ -103,9 +103,9 @@ public class QuickCrate implements Listener {
                 List.of(
                         "A prize could not be given due to an invalid display item for this prize.",
                         "Crate: " + prize.getCrate() + " Prize: " + prize.getName()
-                ).forEach(FancyLogger::debug);
+                ).forEach(FancyLogger::error);
 
-                FancyLogger.warn(e.getMessage());
+                FancyLogger.debug(e.getMessage());
                 return;
             }
 

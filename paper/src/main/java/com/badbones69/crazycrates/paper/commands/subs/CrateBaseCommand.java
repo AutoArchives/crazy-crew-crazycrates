@@ -250,7 +250,7 @@ public class CrateBaseCommand extends BaseCommand {
                 try {
                     crate.addEditorItem(prize, item);
                 } catch (Exception e) {
-                    FancyLogger.warn("Failed to add a new prize to the " + crate.getName() + " crate.");
+                    FancyLogger.error("Failed to add a new prize to the " + crate.getName() + " crate.");
                     FancyLogger.debug(e.getMessage());
                 }
 

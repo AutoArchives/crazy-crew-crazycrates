@@ -421,7 +421,7 @@ public class Methods {
                 "An error has occurred while trying to take a physical key from a player.",
                 "Player: " + player.getName(),
                 "Crate: " + crate.getName()
-        ).forEach(FancyLogger::warn);
+        ).forEach(FancyLogger::error);
 
         player.sendMessage(getPrefix("&cAn issue has occurred when trying to take a key."));
         player.sendMessage(getPrefix("&cCommon reasons includes not having enough keys."));
@@ -478,7 +478,7 @@ public class Methods {
 
             return leftover;
         } else {
-            FancyLogger.info("Items cannot be null.");
+            FancyLogger.warn("Items cannot be null.");
         }
 
         return null;
