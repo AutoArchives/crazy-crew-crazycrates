@@ -61,6 +61,9 @@ public class CrazyCratesLoader extends CrazyCratesPlugin {
         // convert old values to new configs.
         ConfigValues.convert();
 
+        // Reload just in case.
+        this.configManager.reload();
+
         // Clean files if we have to.
         janitor();
 
