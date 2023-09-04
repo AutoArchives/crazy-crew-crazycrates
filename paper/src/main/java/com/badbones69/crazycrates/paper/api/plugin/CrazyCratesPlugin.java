@@ -22,7 +22,7 @@ public abstract class CrazyCratesPlugin {
 
     public abstract @NotNull CrazyManager getCrazyManager();
 
-    public abstract MenuManager getMenuManager();
+    public abstract @NotNull MenuManager getMenuManager();
 
     public abstract @NotNull FileManager getFileManager();
 

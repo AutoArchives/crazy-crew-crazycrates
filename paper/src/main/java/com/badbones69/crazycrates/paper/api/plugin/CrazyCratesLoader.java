@@ -129,7 +129,7 @@ public class CrazyCratesLoader extends CrazyCratesPlugin {
     }
 
     @Override
-    public MenuManager getMenuManager() {
+    public @NotNull MenuManager getMenuManager() {
         return this.menuManager;
     }
 
