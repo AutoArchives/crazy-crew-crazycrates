@@ -121,7 +121,6 @@ public class QuadCrateManager {
      * Start the crate session
      */
     public void startCrate() {
-
         // Check if it is on a block.
         if (spawnLocation.clone().subtract(0, 1, 0).getBlock().getType() == Material.AIR) {
             player.sendMessage(Messages.NOT_ON_BLOCK.getMessage());
@@ -418,7 +417,7 @@ public class QuadCrateManager {
      *
      * @return true if yes otherwise false
      */
-    public Boolean allCratesOpened() {
+    public boolean allCratesOpened() {
         for (Map.Entry<Location, Boolean> location : cratesOpened.entrySet()) {
             if (!location.getValue()) return false;
         }

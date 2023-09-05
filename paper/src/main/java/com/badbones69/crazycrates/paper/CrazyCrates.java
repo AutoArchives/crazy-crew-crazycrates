@@ -2,7 +2,7 @@ package com.badbones69.crazycrates.paper;
 
 import com.badbones69.crazycrates.paper.api.FileManager.Files;
 import com.badbones69.crazycrates.paper.api.enums.settings.Messages;
-import com.badbones69.crazycrates.paper.api.managers.quadcrates.SessionManager;
+import com.badbones69.crazycrates.paper.api.managers.QuadCrateManager;
 import com.badbones69.crazycrates.paper.api.objects.CrateLocation;
 import com.badbones69.crazycrates.paper.api.plugin.CrazyCratesLoader;
 import com.badbones69.crazycrates.paper.commands.subs.CrateBaseCommand;
@@ -77,7 +77,8 @@ public class CrazyCrates extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        SessionManager.endCrates();
+        QuadCrateManager.getCrateSessions().forEach(session -> session.endCrateForce(false));
+        QuadCrateManager.getCrateSessions().clear();
 
         getQuickCrate().removeAllRewards();
 

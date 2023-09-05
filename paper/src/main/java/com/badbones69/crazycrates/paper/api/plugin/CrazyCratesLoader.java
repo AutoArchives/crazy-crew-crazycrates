@@ -37,7 +37,7 @@ public class CrazyCratesLoader extends CrazyCratesPlugin {
         super.enable();
         
         this.bukkitPlugin = new BukkitPlugin(this.plugin);
-        this.bukkitPlugin.enable();
+        this.bukkitPlugin.enable("<white>[<gradient:#FE5F55:#6b55b5>CrazyCrates</gradient>]</white>");
 
         this.configManager = new ConfigManager();
         this.configManager.load();
