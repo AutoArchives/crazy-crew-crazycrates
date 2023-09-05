@@ -1,10 +1,14 @@
 package com.badbones69.crazycrates.paper.api.objects;
 
+import com.badbones69.crazycrates.paper.CrazyCrates;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Prize {
     
@@ -195,8 +199,9 @@ public class Prize {
     /**
      * @return Returns true if they prize has blacklist permissions and false if not.
      */
-    public boolean hasBlacklistPermission(Player player) {
-        if (!player.isOp()) {
+    public boolean hasBlacklistPermission(UUID uuid) {
+        Player player = JavaPlugin.getPlugin(CrazyCrates.class).getServer().getPlayer(uuid);
+        if (player != null && !player.isOp()) {
             for (String blackListPermission : blackListPermissions) {
                 if (player.hasPermission(blackListPermission)) return true;
             }

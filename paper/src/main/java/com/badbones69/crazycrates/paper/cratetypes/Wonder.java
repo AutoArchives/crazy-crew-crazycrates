@@ -19,6 +19,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class Wonder implements Listener {
 
@@ -27,10 +28,15 @@ public class Wonder implements Listener {
     private final @NotNull CrazyManager crazyManager = this.cratesPlugin.getCrazyManager();
     private final @NotNull Methods methods = this.cratesPlugin.getMethods();
     
-    public void startWonder(final Player player, Crate crate, KeyType keyType, boolean checkHand) {
-        if (!crazyManager.takeKeys(1, player, crate, keyType, checkHand)) {
-            methods.failedToTakeKey(player, crate);
-            crazyManager.removePlayerFromOpeningList(player);
+    public void startWonder(UUID uuid, Crate crate, KeyType keyType, boolean checkHand) {
+        Player player = this.plugin.getServer().getPlayer(uuid);
+
+        if (!crazyManager.takeKeys(1, uuid, crate, keyType, checkHand)) {
+            if (player != null) {
+                methods.failedToTakeKey(player.getName(), crate);
+            }
+
+            crazyManager.removePlayerFromOpeningList(uuid);
             return;
         }
 
@@ -38,15 +44,15 @@ public class Wonder implements Listener {
         final ArrayList<String> slots = new ArrayList<>();
 
         for (int i = 0; i < 45; i++) {
-            Prize prize = crate.pickPrize(player);
+            Prize prize = crate.pickPrize(uuid);
             slots.add(i + "");
             inv.setItem(i, prize.getDisplayItem());
         }
 
-        player.openInventory(inv);
+        if (player != null) player.openInventory(inv);
 
-        crazyManager.addCrateTask(player, new BukkitRunnable() {
-            int fulltime = 0;
+        crazyManager.addCrateTask(uuid, new BukkitRunnable() {
+            int fullTime = 0;
             int timer = 0;
             int slot1 = 0;
             int slot2 = 44;
@@ -55,7 +61,7 @@ public class Wonder implements Listener {
             
             @Override
             public void run() {
-                if (timer >= 2 && fulltime <= 65) {
+                if (timer >= 2 && fullTime <= 65) {
                     slots.remove(slot1 + "");
                     slots.remove(slot2 + "");
                     Slots.add(slot1);
@@ -64,7 +70,7 @@ public class Wonder implements Listener {
                     inv.setItem(slot2, new ItemBuilder().setMaterial(Material.BLACK_STAINED_GLASS_PANE).setName(" ").build());
 
                     for (String slot : slots) {
-                        prize = crate.pickPrize(player);
+                        prize = crate.pickPrize(uuid);
                         inv.setItem(Integer.parseInt(slot), prize.getDisplayItem());
                     }
 
@@ -72,7 +78,7 @@ public class Wonder implements Listener {
                     slot2--;
                 }
 
-                if (fulltime > 67) {
+                if (fullTime > 67) {
                     ItemStack item = methods.getRandomPaneColor().setName(" ").build();
 
                     for (int slot : Slots) {
@@ -80,22 +86,27 @@ public class Wonder implements Listener {
                     }
                 }
 
-                player.openInventory(inv);
+                if (player != null) player.openInventory(inv);
 
-                if (fulltime > 100) {
-                    crazyManager.endCrate(player);
-                    player.closeInventory();
-                    crazyManager.givePrize(player, prize, crate);
+                if (fullTime > 100) {
+                    crazyManager.endCrate(uuid);
 
-                    if (prize.useFireworks()) methods.firework(player.getLocation().add(0, 1, 0));
+                    // Only run this code if the player isn't null.
+                    if (player != null) {
+                        player.closeInventory();
+                        crazyManager.givePrize(uuid, prize, crate);
 
-                    plugin.getServer().getPluginManager().callEvent(new PlayerPrizeEvent(player, crate, crate.getName(), prize));
-                    crazyManager.removePlayerFromOpeningList(player);
+                        if (prize.useFireworks()) methods.firework(player.getLocation().add(0, 1, 0));
+
+                        plugin.getServer().getPluginManager().callEvent(new PlayerPrizeEvent(uuid, crate, crate.getName(), prize));
+                    }
+
+                    crazyManager.removePlayerFromOpeningList(uuid);
 
                     return;
                 }
 
-                fulltime++;
+                fullTime++;
                 timer++;
 
                 if (timer > 2) timer = 0;

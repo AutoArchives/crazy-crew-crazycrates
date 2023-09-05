@@ -1,24 +1,31 @@
 package com.badbones69.crazycrates.paper.api.events;
 
+import com.badbones69.crazycrates.paper.CrazyCrates;
 import com.badbones69.crazycrates.paper.api.objects.Crate;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
+import java.util.UUID;
 
 public class PlayerReceiveKeyEvent extends Event implements Cancellable {
+
+    private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
     
     private static final HandlerList handlers = new HandlerList();
-    
+
+    private final UUID uuid;
     private final Player player;
     private final Crate crate;
     private final KeyReceiveReason reason;
     private final int amount;
     private boolean isCancelled;
     
-    public PlayerReceiveKeyEvent(Player player, Crate crate, KeyReceiveReason reason, int amount) {
-        this.player = player;
+    public PlayerReceiveKeyEvent(UUID uuid, Crate crate, KeyReceiveReason reason, int amount) {
+        this.uuid = uuid;
+        this.player = this.plugin.getServer().getPlayer(uuid);
         this.crate = crate;
         this.reason = reason;
         this.amount = amount;
@@ -28,9 +35,14 @@ public class PlayerReceiveKeyEvent extends Event implements Cancellable {
     public static HandlerList getHandlerList() {
         return handlers;
     }
-    
+
+
+    public UUID getUuid() {
+        return this.uuid;
+    }
+
     public Player getPlayer() {
-        return player;
+        return this.player;
     }
     
     public Crate getCrate() {

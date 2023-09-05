@@ -31,6 +31,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import java.util.Random;
+import java.util.UUID;
 
 /**
  * Controller class for the quad-crate crate type.
@@ -45,20 +46,24 @@ public class QuadCrate implements Listener {
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
-        if (inSession(e.getPlayer())) e.setCancelled(true);
+        final Player player = e.getPlayer();
+        final UUID uuid = player.getUniqueId();
+
+        if (inSession(uuid)) e.setCancelled(true);
     }
 
     @EventHandler
     public void onChestClick(PlayerInteractEvent e) {
-        Player player = e.getPlayer();
+        final Player player = e.getPlayer();
+        final UUID uuid = player.getUniqueId();
 
-        if (inSession(player)) {
-            QuadCrateManager session = getSession(player);
+        if (inSession(uuid)) {
+            QuadCrateManager session = getSession(uuid);
 
             if (e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.LEFT_CLICK_BLOCK) {
                 Block block = e.getClickedBlock();
 
-                if (session.getCrateLocations().contains(block.getLocation())) {
+                if (block != null && session != null && session.getCrateLocations().contains(block.getLocation())) {
                     e.setCancelled(true);
 
                     if (!session.getCratesOpened().get(block.getLocation())) {
@@ -66,8 +71,8 @@ public class QuadCrate implements Listener {
                         chestStateHandler.openChest(block, true);
 
                         Crate crate = session.getCrate();
-                        Prize prize = crate.pickPrize(player, block.getLocation().add(.5, 1.3, .5));
-                        crazyManager.givePrize(player, prize, crate);
+                        Prize prize = crate.pickPrize(uuid, block.getLocation().add(.5, 1.3, .5));
+                        crazyManager.givePrize(uuid, prize, crate);
 
                         ItemBuilder itemBuilder = ItemBuilder.convertItemStack(prize.getDisplayItem());
                         itemBuilder.addLore(new Random().nextInt(Integer.MAX_VALUE) + ""); // Makes sure items don't merge
@@ -87,7 +92,7 @@ public class QuadCrate implements Listener {
 
                         session.getCratesOpened().put(block.getLocation(), true);
 
-                        session.getDisplayedRewards().add(reward);
+                        session.addReward(reward);
 
                         if (session.allCratesOpened()) { // All 4 crates have been opened
                             new BukkitRunnable() {
@@ -106,9 +111,10 @@ public class QuadCrate implements Listener {
 
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent e) {
-        Player player = e.getPlayer();
+        final Player player = e.getPlayer();
+        final UUID uuid = player.getUniqueId();
 
-        if (inSession(player)) { // Player tries to walk away from the crate area
+        if (inSession(uuid)) { // Player tries to walk away from the crate area
             Location from = e.getFrom();
             Location to = e.getTo();
 
@@ -121,7 +127,7 @@ public class QuadCrate implements Listener {
 
         for (Entity en : player.getNearbyEntities(2, 2, 2)) { // Someone tries to enter the crate area
             if (en instanceof Player p) {
-                if (inSession(p)) {
+                if (inSession(p.getUniqueId())) {
                     Vector v = player.getLocation().toVector().subtract(p.getLocation().toVector()).normalize().setY(1);
 
                     if (player.isInsideVehicle() && player.getVehicle() != null) {
@@ -138,14 +144,18 @@ public class QuadCrate implements Listener {
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent e) {
-        if (inSession(e.getPlayer())) e.setCancelled(true);
+        final Player player = e.getPlayer();
+        final UUID uuid = player.getUniqueId();
+
+        if (inSession(uuid)) e.setCancelled(true);
     }
 
     @EventHandler
     public void omCommand(PlayerCommandPreprocessEvent e) {
-        Player player = e.getPlayer();
+        final Player player = e.getPlayer();
+        final UUID uuid = player.getUniqueId();
 
-        if (inSession(player) && !player.hasPermission("crazycrates.admin")) {
+        if (inSession(uuid) && !player.hasPermission("crazycrates.admin")) {
             player.sendMessage(Messages.NO_COMMANDS_WHILE_CRATE_OPENED.getMessage("%Player%", player.getName()));
             e.setCancelled(true);
         }
@@ -153,9 +163,10 @@ public class QuadCrate implements Listener {
 
     @EventHandler
     public void onTeleport(PlayerTeleportEvent e) {
-        Player player = e.getPlayer();
+        final Player player = e.getPlayer();
+        final UUID uuid = player.getUniqueId();
 
-        if (inSession(player) && e.getCause() == TeleportCause.ENDER_PEARL) {
+        if (inSession(uuid) && e.getCause() == TeleportCause.ENDER_PEARL) {
             player.sendMessage(Messages.NO_TELEPORTING.getMessage("%Player%", player.getName()));
             e.setCancelled(true);
         }
@@ -163,24 +174,25 @@ public class QuadCrate implements Listener {
 
     @EventHandler
     public void onLeave(PlayerQuitEvent e) {
-        Player player = e.getPlayer();
+        final Player player = e.getPlayer();
+        final UUID uuid = player.getUniqueId();
 
-        QuadCrateManager session = getSession(player);
+        QuadCrateManager session = getSession(uuid);
 
-        if (inSession(player) && session != null) session.endCrate();
+        if (inSession(uuid) && session != null) session.endCrate();
     }
 
-    private boolean inSession(Player player) {
+    private boolean inSession(UUID uuid) {
         for (QuadCrateManager quadCrateManager : QuadCrateManager.getCrateSessions()) {
-            if (quadCrateManager.getPlayer() == player) return true;
+            if (quadCrateManager.getPlayer().getUniqueId() == uuid) return true;
         }
 
         return false;
     }
 
-    private QuadCrateManager getSession(Player player) {
+    private QuadCrateManager getSession(UUID uuid) {
         for (QuadCrateManager quadCrateManager : QuadCrateManager.getCrateSessions()) {
-            if (quadCrateManager.getPlayer() == player) return quadCrateManager;
+            if (quadCrateManager.getPlayer().getUniqueId() == uuid) return quadCrateManager;
         }
 
         return null;

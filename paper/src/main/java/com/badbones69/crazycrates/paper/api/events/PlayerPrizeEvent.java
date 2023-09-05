@@ -1,22 +1,30 @@
 package com.badbones69.crazycrates.paper.api.events;
 
+import com.badbones69.crazycrates.paper.CrazyCrates;
 import com.badbones69.crazycrates.paper.api.objects.Crate;
 import com.badbones69.crazycrates.paper.api.objects.Prize;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.UUID;
+
 public class PlayerPrizeEvent extends Event {
+
+    private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
     
     private static final HandlerList handlers = new HandlerList();
+    private final UUID uuid;
     private final Player player;
     private final Crate crate;
     private final Prize prize;
     private final String crateName;
     
-    public PlayerPrizeEvent(Player player, Crate crate, String crateName, Prize prize) {
-        this.player = player;
+    public PlayerPrizeEvent(UUID uuid, Crate crate, String crateName, Prize prize) {
+        this.uuid = uuid;
+        this.player = this.plugin.getServer().getPlayer(uuid);
         this.crate = crate;
         this.prize = prize;
         this.crateName = crateName;
@@ -29,7 +37,11 @@ public class PlayerPrizeEvent extends Event {
     public @NotNull HandlerList getHandlers() {
         return handlers;
     }
-    
+
+    public UUID getUuid() {
+        return this.uuid;
+    }
+
     public Player getPlayer() {
         return player;
     }

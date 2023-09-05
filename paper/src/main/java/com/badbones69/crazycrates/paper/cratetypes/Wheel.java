@@ -21,6 +21,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class Wheel implements Listener {
 
@@ -29,12 +30,17 @@ public class Wheel implements Listener {
     private final @NotNull CrazyManager crazyManager = this.cratesPlugin.getCrazyManager();
     private final @NotNull Methods methods = this.cratesPlugin.getMethods();
     
-    private final Map<Player, HashMap<Integer, ItemStack>> rewards = new HashMap<>();
+    private final Map<UUID, HashMap<Integer, ItemStack>> rewards = new HashMap<>();
     
-    public void startWheel(final Player player, Crate crate, KeyType keyType, boolean checkHand) {
-        if (!crazyManager.takeKeys(1, player, crate, keyType, checkHand)) {
-            methods.failedToTakeKey(player, crate);
-            crazyManager.removePlayerFromOpeningList(player);
+    public void startWheel(UUID uuid, Crate crate, KeyType keyType, boolean checkHand) {
+        Player player = this.plugin.getServer().getPlayer(uuid);
+
+        if (!crazyManager.takeKeys(1, uuid, crate, keyType, checkHand)) {
+            if (player != null) {
+                methods.failedToTakeKey(player.getName() , crate);
+            }
+
+            crazyManager.removePlayerFromOpeningList(uuid);
             return;
         }
 
@@ -47,15 +53,18 @@ public class Wheel implements Listener {
         HashMap<Integer, ItemStack> items = new HashMap<>();
 
         for (int i : getBorder()) {
-            Prize prize = crate.pickPrize(player);
+            Prize prize = crate.pickPrize(uuid);
             inv.setItem(i, prize.getDisplayItem());
             items.put(i, prize.getDisplayItem());
         }
 
-        rewards.put(player, items);
-        player.openInventory(inv);
+        rewards.put(uuid, items);
 
-        crazyManager.addCrateTask(player, new BukkitRunnable() {
+        if (player != null) {
+            player.openInventory(inv);
+        }
+
+        crazyManager.addCrateTask(uuid, new BukkitRunnable() {
             final ArrayList<Integer> slots = getBorder();
             int i = 0;
             int f = 17;
@@ -77,7 +86,11 @@ public class Wheel implements Listener {
                 if (full >= timer) {
                     if (methods.slowSpin().contains(slower)) checkLore();
 
-                    if (full == timer + 47) player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+                    if (full == timer + 47) {
+                        if (player != null) {
+                            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+                        }
+                    }
 
                     if (full >= timer + 47) {
                         slow++;
@@ -96,13 +109,16 @@ public class Wheel implements Listener {
                     if (full >= (timer + 55 + 47)) {
                         Prize prize = null;
 
-                        if (crazyManager.isInOpeningList(player)) prize = crate.getPrize(rewards.get(player).get(slots.get(f)));
+                        if (crazyManager.isInOpeningList(uuid)) prize = crate.getPrize(rewards.get(uuid).get(slots.get(f)));
 
-                        methods.checkPrize(prize, crazyManager, plugin, player, crate);
+                        methods.pickPrize(uuid, crate, prize);
 
-                        player.closeInventory();
-                        crazyManager.removePlayerFromOpeningList(player);
-                        crazyManager.endCrate(player);
+                        if (player != null) {
+                            player.closeInventory();
+                        }
+
+                        crazyManager.removePlayerFromOpeningList(uuid);
+                        crazyManager.endCrate(uuid);
                     }
 
                     slower++;
@@ -112,27 +128,33 @@ public class Wheel implements Listener {
                 open++;
 
                 if (open > 5) {
-                    player.openInventory(inv);
+                    if (player != null) {
+                        player.openInventory(inv);
+                    }
                     open = 0;
                 }
             }
 
             private void checkLore() {
-                if (rewards.get(player).get(slots.get(i)).getItemMeta().hasLore()) {
-                    inv.setItem(slots.get(i), new ItemBuilder().setMaterial(Material.LIME_STAINED_GLASS_PANE).setName(rewards.get(player).get(slots.get(i)).getItemMeta().getDisplayName()).setLore(rewards.get(player).get(slots.get(i)).getItemMeta().getLore()).build());
+                if (rewards.get(uuid).get(slots.get(i)).getItemMeta().hasLore()) {
+                    inv.setItem(slots.get(i), new ItemBuilder().setMaterial(Material.LIME_STAINED_GLASS_PANE).setName(rewards.get(uuid).get(slots.get(i)).getItemMeta().getDisplayName()).setLore(rewards.get(uuid).get(slots.get(i)).getItemMeta().getLore()).build());
                 } else {
-                    inv.setItem(slots.get(i), new ItemBuilder().setMaterial(Material.LIME_STAINED_GLASS_PANE).setName(rewards.get(player).get(slots.get(i)).getItemMeta().getDisplayName()).build());
+                    inv.setItem(slots.get(i), new ItemBuilder().setMaterial(Material.LIME_STAINED_GLASS_PANE).setName(rewards.get(uuid).get(slots.get(i)).getItemMeta().getDisplayName()).build());
                 }
 
-                inv.setItem(slots.get(f), rewards.get(player).get(slots.get(f)));
-                player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+                inv.setItem(slots.get(f), rewards.get(uuid).get(slots.get(f)));
+
+                if (player != null) {
+                    player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+                }
+
                 i++;
                 f++;
             }
         }.runTaskTimer(plugin, 1, 1));
     }
 
-    private static ArrayList<Integer> getBorder() {
+    private ArrayList<Integer> getBorder() {
         ArrayList<Integer> slots = new ArrayList<>();
 
         slots.add(13);

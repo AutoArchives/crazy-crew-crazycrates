@@ -20,6 +20,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class CSGO implements Listener {
 
@@ -69,26 +70,35 @@ public class CSGO implements Listener {
         inv.setItem(8 + 18, item);
     }
     
-    public void openCSGO(Player player, Crate crate, KeyType keyType, boolean checkHand) {
+    public void openCSGO(UUID uuid, Crate crate, KeyType keyType, boolean checkHand) {
         Inventory inv = plugin.getServer().createInventory(null, 27, methods.sanitizeColor(crate.getFile().getString("Crate.CrateName")));
         setGlass(inv);
 
+        Player player = this.plugin.getServer().getPlayer(uuid);
+
         for (int i = 9; i > 8 && i < 18; i++) {
-            inv.setItem(i, crate.pickPrize(player).getDisplayItem());
+            inv.setItem(i, crate.pickPrize(uuid).getDisplayItem());
         }
 
-        player.openInventory(inv);
+        if (player != null) {
+            player.openInventory(inv);
+        }
 
-        if (crazyManager.takeKeys(1, player, crate, keyType, checkHand)) {
-            startCSGO(player, inv, crate);
+        if (crazyManager.takeKeys(1, uuid, crate, keyType, checkHand)) {
+            startCSGO(uuid, inv, crate);
         } else {
-            methods.failedToTakeKey(player, crate);
-            crazyManager.removePlayerFromOpeningList(player);
+            if (player != null) {
+                methods.failedToTakeKey(player.getName(), crate);
+            }
+
+            crazyManager.removePlayerFromOpeningList(uuid);
         }
     }
     
-    private void startCSGO(final Player player, final Inventory inv, Crate crate) {
-        crazyManager.addCrateTask(player, new BukkitRunnable() {
+    private void startCSGO(UUID uuid, final Inventory inv, Crate crate) {
+        Player player = this.plugin.getServer().getPlayer(uuid);
+
+        crazyManager.addCrateTask(uuid, new BukkitRunnable() {
             int time = 1;
             int full = 0;
             int open = 0;
@@ -96,15 +106,21 @@ public class CSGO implements Listener {
             @Override
             public void run() {
                 if (full <= 50) { // When Spinning
-                    moveItems(inv, player, crate);
+                    moveItems(inv, uuid, crate);
                     setGlass(inv);
-                    player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+
+                    if (player != null) {
+                        player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+                    }
                 }
 
                 open++;
 
                 if (open >= 5) {
-                    player.openInventory(inv);
+                    if (player != null) {
+                        player.openInventory(inv);
+                    }
+
                     open = 0;
                 }
 
@@ -112,27 +128,33 @@ public class CSGO implements Listener {
                 if (full > 51) {
 
                     if (slowSpin().contains(time)) { // When Slowing Down
-                        moveItems(inv, player, crate);
+                        moveItems(inv, uuid, crate);
                         setGlass(inv);
-                        player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+
+                        if (player != null) {
+                            player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+                        }
                     }
 
                     time++;
 
                     if (time == 60) { // When done
-                        player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
-                        crazyManager.endCrate(player);
+                        if (player != null) {
+                            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+                        }
+
+                        crazyManager.endCrate(uuid);
                         Prize prize = crate.getPrize(inv.getItem(13));
 
-                        methods.checkPrize(prize, crazyManager, plugin, player, crate);
+                        methods.pickPrize(uuid, crate, prize);
 
-                        crazyManager.removePlayerFromOpeningList(player);
+                        crazyManager.removePlayerFromOpeningList(uuid);
                         cancel();
 
                         new BukkitRunnable() {
                             @Override
                             public void run() {
-                                if (player.getOpenInventory().getTopInventory().equals(inv)) player.closeInventory();
+                                if (player != null && player.getOpenInventory().getTopInventory().equals(inv)) player.closeInventory();
                             }
                         }.runTaskLater(plugin, 40);
                     } else if (time > 60) { // Added this due reports of the prizes spamming when low tps.
@@ -142,8 +164,8 @@ public class CSGO implements Listener {
             }
         }.runTaskTimer(plugin, 1, 1));
     }
-    
-    private static ArrayList<Integer> slowSpin() {
+
+    private ArrayList<Integer> slowSpin() {
         ArrayList<Integer> slow = new ArrayList<>();
         int full = 120;
         int cut = 15;
@@ -159,14 +181,14 @@ public class CSGO implements Listener {
         return slow;
     }
     
-    private static void moveItems(Inventory inv, Player player, Crate crate) {
+    private void moveItems(Inventory inv, UUID uuid, Crate crate) {
         ArrayList<ItemStack> items = new ArrayList<>();
 
         for (int i = 9; i > 8 && i < 17; i++) {
             items.add(inv.getItem(i));
         }
 
-        inv.setItem(9, crate.pickPrize(player).getDisplayItem());
+        inv.setItem(9, crate.pickPrize(uuid).getDisplayItem());
 
         for (int i = 0; i < 8; i++) {
             inv.setItem(i + 10, items.get(i));

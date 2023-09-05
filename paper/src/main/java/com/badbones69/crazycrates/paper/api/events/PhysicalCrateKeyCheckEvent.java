@@ -1,15 +1,21 @@
 package com.badbones69.crazycrates.paper.api.events;
 
+import com.badbones69.crazycrates.paper.CrazyCrates;
 import com.badbones69.crazycrates.paper.api.objects.CrateLocation;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
+import java.util.UUID;
 
 public class PhysicalCrateKeyCheckEvent extends Event implements Cancellable {
+
+    private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
     
     private static final HandlerList handlers = new HandlerList();
+    private final UUID uuid;
     private final Player player;
     private final CrateLocation crateLocation;
     private boolean isCancelled;
@@ -18,11 +24,12 @@ public class PhysicalCrateKeyCheckEvent extends Event implements Cancellable {
      * Used to be able to disabled CrazyCrates CrateControl.onCrateOpen# event listener to be able to implement a custom one.
      * This does not disable the preview opener and the menu opener.
      *
-     * @param player being checked.
+     * @param uuid of the player being checked.
      * @param crateLocation that is being used.
      */
-    public PhysicalCrateKeyCheckEvent(Player player, CrateLocation crateLocation) {
-        this.player = player;
+    public PhysicalCrateKeyCheckEvent(UUID uuid, CrateLocation crateLocation) {
+        this.uuid = uuid;
+        this.player = this.plugin.getServer().getPlayer(uuid);
         this.crateLocation = crateLocation;
         this.isCancelled = false;
     }
@@ -33,6 +40,10 @@ public class PhysicalCrateKeyCheckEvent extends Event implements Cancellable {
     
     public @NotNull HandlerList getHandlers() {
         return handlers;
+    }
+
+    public UUID getUuid() {
+        return this.uuid;
     }
     
     public Player getPlayer() {

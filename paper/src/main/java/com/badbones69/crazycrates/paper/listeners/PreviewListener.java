@@ -10,6 +10,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.UUID;
+
 public class PreviewListener implements Listener {
 
     private final @NotNull CrazyCratesPlugin cratesPlugin = CrazyCratesProvider.get();
@@ -18,9 +20,11 @@ public class PreviewListener implements Listener {
     @EventHandler
     public void onPlayerClick(InventoryClickEvent e) {
         Player player = (Player) e.getWhoClicked();
+        UUID uuid = player.getUniqueId();
 
-        e.getInventory();
-        if (menuManager.getPlayerCrate().get(player.getUniqueId()) != null) {
+        if (e.getClickedInventory() == null) return;
+
+        if (menuManager.getPlayerCrate().get(uuid) != null) {
             Crate crate = menuManager.getPlayerCrate().get(player.getUniqueId());
 
             if (crate.isPreview(e.getView())) {
@@ -28,16 +32,16 @@ public class PreviewListener implements Listener {
 
                 if (e.getCurrentItem() != null) {
                     if (e.getRawSlot() == crate.getAbsoluteItemPosition(4)) { // Clicked the menu button.
-                        if (menuManager.playerInMenu(player)) this.cratesPlugin.getMenuManager().openMainMenu(player);
+                        if (menuManager.playerInMenu(uuid)) this.cratesPlugin.getMenuManager().openMainMenu(uuid);
                     } else if (e.getRawSlot() == crate.getAbsoluteItemPosition(5)) { // Clicked the next button.
-                        if (menuManager.getPage(player) < crate.getMaxPage()) {
-                            nextPage(player);
-                            menuManager.openPreview(player, crate);
+                        if (menuManager.getPage(uuid) < crate.getMaxPage()) {
+                            nextPage(uuid);
+                            menuManager.openPreview(uuid, crate);
                         }
                     } else if (e.getRawSlot() == crate.getAbsoluteItemPosition(3)) { // Clicked the back button.
-                        if (menuManager.getPage(player) > 1 && menuManager.getPage(player) <= crate.getMaxPage()) {
-                            backPage(player);
-                            menuManager.openPreview(player, crate);
+                        if (menuManager.getPage(uuid) > 1 && menuManager.getPage(uuid) <= crate.getMaxPage()) {
+                            backPage(uuid);
+                            menuManager.openPreview(uuid, crate);
                         }
                     }
                 }
@@ -45,11 +49,11 @@ public class PreviewListener implements Listener {
         }
     }
 
-    private void nextPage(Player player) {
-        menuManager.setPage(player, menuManager.getPage(player) + 1);
+    private void nextPage(UUID uuid) {
+        menuManager.setPage(uuid, menuManager.getPage(uuid) + 1);
     }
 
-    private void backPage(Player player) {
-        menuManager.setPage(player, menuManager.getPage(player) - 1);
+    private void backPage(UUID uuid) {
+        menuManager.setPage(uuid, menuManager.getPage(UUID.randomUUID()) - 1);
     }
 }

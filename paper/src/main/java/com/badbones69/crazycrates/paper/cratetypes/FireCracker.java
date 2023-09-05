@@ -16,6 +16,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.UUID;
 
 public class FireCracker {
 
@@ -24,10 +25,15 @@ public class FireCracker {
     private final @NotNull CrazyManager crazyManager = this.cratesPlugin.getCrazyManager();
     private final @NotNull Methods methods = this.cratesPlugin.getMethods();
     
-    public void startFireCracker(final Player player, final Crate crate, KeyType keyType, final Location loc, HologramController hologramController) {
-        if (!crazyManager.takeKeys(1, player, crate, keyType, true)) {
-            methods.failedToTakeKey(player, crate);
-            crazyManager.removePlayerFromOpeningList(player);
+    public void startFireCracker(UUID uuid, final Crate crate, KeyType keyType, final Location loc, HologramController hologramController) {
+        if (!crazyManager.takeKeys(1, uuid, crate, keyType, true)) {
+            Player player = this.plugin.getServer().getPlayer(uuid);
+
+            if (player != null) {
+                methods.failedToTakeKey(player.getName(), crate);
+            }
+
+            crazyManager.removePlayerFromOpeningList(uuid);
             return;
         }
 
@@ -43,7 +49,7 @@ public class FireCracker {
         colors.add(Color.MAROON);
         colors.add(Color.PURPLE);
 
-        crazyManager.addCrateTask(player, new BukkitRunnable() {
+        crazyManager.addCrateTask(uuid, new BukkitRunnable() {
             final Random r = new Random();
             final int color = r.nextInt(colors.size());
             int l = 0;
@@ -56,9 +62,9 @@ public class FireCracker {
                 l++;
 
                 if (l == 25) {
-                    crazyManager.endCrate(player);
+                    crazyManager.endCrate(uuid);
                     // The key type is set to free because the key has already been taken above.
-                    plugin.getQuickCrate().openCrate(player, loc, crate, KeyType.FREE_KEY, hologramController);
+                    plugin.getQuickCrate().openCrate(uuid, loc, crate, KeyType.FREE_KEY, hologramController);
                 }
             }
         }.runTaskTimer(plugin, 0, 2));

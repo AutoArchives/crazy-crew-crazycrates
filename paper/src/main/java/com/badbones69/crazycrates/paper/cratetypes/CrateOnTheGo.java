@@ -19,6 +19,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.UUID;
+
 public class CrateOnTheGo implements Listener {
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
@@ -28,7 +30,8 @@ public class CrateOnTheGo implements Listener {
     
     @EventHandler
     public void onCrateOpen(PlayerInteractEvent e) {
-        Player player = e.getPlayer();
+        final Player player = e.getPlayer();
+        final UUID uuid = player.getUniqueId();
 
         if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
             ItemStack item = player.getInventory().getItemInMainHand();
@@ -38,18 +41,18 @@ public class CrateOnTheGo implements Listener {
             for (Crate crate : crazyManager.getCrates()) {
                 if (crate.getCrateType() == CrateType.CRATE_ON_THE_GO && methods.isSimilar(item, crate)) {
                     e.setCancelled(true);
-                    crazyManager.addPlayerToOpeningList(player, crate);
+                    crazyManager.addPlayerToOpeningList(uuid, crate);
 
                     methods.removeItem(item, player);
 
-                    Prize prize = crate.pickPrize(player);
+                    Prize prize = crate.pickPrize(uuid);
 
-                    crazyManager.givePrize(player, prize, crate);
-                    plugin.getServer().getPluginManager().callEvent(new PlayerPrizeEvent(player, crate, crazyManager.getOpeningCrate(player).getName(), prize));
+                    crazyManager.givePrize(uuid, prize, crate);
+                    plugin.getServer().getPluginManager().callEvent(new PlayerPrizeEvent(uuid, crate, crazyManager.getOpeningCrate(uuid).getName(), prize));
 
                     if (prize.useFireworks()) methods.firework(player.getLocation().add(0, 1, 0));
 
-                    crazyManager.removePlayerFromOpeningList(player);
+                    crazyManager.removePlayerFromOpeningList(uuid);
                 }
             }
         }

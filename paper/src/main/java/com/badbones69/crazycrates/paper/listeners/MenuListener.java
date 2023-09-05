@@ -21,6 +21,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class MenuListener implements Listener {
 
@@ -31,6 +32,8 @@ public class MenuListener implements Listener {
     @EventHandler
     public void onInvClick(InventoryClickEvent e) {
         Player player = (Player) e.getWhoClicked();
+        UUID uuid = player.getUniqueId();
+
         Inventory inv = e.getInventory();
         FileConfiguration config = Files.CONFIG.getFile();
 
@@ -57,8 +60,8 @@ public class MenuListener implements Listener {
                                 if (crate.isPreviewEnabled()) {
                                     player.closeInventory();
 
-                                    this.cratesPlugin.getMenuManager().setPlayerInMenu(player, true);
-                                    this.cratesPlugin.getMenuManager().openNewPreview(player, crate);
+                                    this.cratesPlugin.getMenuManager().setPlayerInMenu(uuid, true);
+                                    this.cratesPlugin.getMenuManager().openNewPreview(uuid, crate);
                                 } else {
                                     player.sendMessage(Messages.PREVIEW_DISABLED.getMessage());
                                 }
@@ -66,7 +69,7 @@ public class MenuListener implements Listener {
                                 return;
                             }
 
-                            if (crazyManager.isInOpeningList(player)) {
+                            if (crazyManager.isInOpeningList(uuid)) {
                                 player.sendMessage(Messages.CRATE_ALREADY_OPENED.getMessage());
                                 return;
                             }
@@ -74,10 +77,10 @@ public class MenuListener implements Listener {
                             boolean hasKey = false;
                             KeyType keyType = KeyType.VIRTUAL_KEY;
 
-                            if (crazyManager.getVirtualKeys(player, crate) >= 1) {
+                            if (crazyManager.getVirtualKeys(uuid, crate) >= 1) {
                                 hasKey = true;
                             } else {
-                                if (Files.CONFIG.getFile().getBoolean("Settings.Virtual-Accepts-Physical-Keys") && crazyManager.hasPhysicalKey(player, crate, false)) {
+                                if (Files.CONFIG.getFile().getBoolean("Settings.Virtual-Accepts-Physical-Keys") && crazyManager.hasPhysicalKey(uuid, crate, false)) {
                                     hasKey = true;
                                     keyType = KeyType.PHYSICAL_KEY;
                                 }
@@ -101,12 +104,12 @@ public class MenuListener implements Listener {
                                 }
                             }
 
-                            if (methods.isInventoryFull(player)) {
+                            if (methods.isInventoryFull(uuid)) {
                                 player.sendMessage(Messages.INVENTORY_FULL.getMessage());
                                 return;
                             }
 
-                            crazyManager.openCrate(player, crate, keyType, player.getLocation(), true, false);
+                            crazyManager.openCrate(uuid, crate, keyType, player.getLocation(), true, false);
                         }
                     }
                 }

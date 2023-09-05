@@ -21,10 +21,7 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Crate {
     
@@ -144,11 +141,11 @@ public class Crate {
     
     /**
      * Check to see if a player can win a prize from a crate.
-     * @param player The player you are checking.
+     * @param uuid the uuid of the player you are checking.
      * @return True if they can win at least 1 prize and false if they can't win any.
      */
-    public boolean canWinPrizes(Player player) {
-        return pickPrize(player) != null;
+    public boolean canWinPrizes(UUID uuid) {
+        return pickPrize(uuid) != null;
     }
 
     public List<String> getPrizeMessage() {
@@ -157,23 +154,27 @@ public class Crate {
 
     /**
      * Picks a random prize based on BlackList Permissions and the Chance System.
-     * @param player The player that will be winning the prize.
+     * @param uuid the uuid of the player that will be winning the prize.
      * @return The winning prize.
      */
-    public Prize pickPrize(Player player) {
+    public Prize pickPrize(UUID uuid) {
         ArrayList<Prize> prizes = new ArrayList<>();
         ArrayList<Prize> usablePrizes = new ArrayList<>();
 
-        // ================= Blacklist Check ================= //
-        if (player.isOp()) {
-            usablePrizes.addAll(getPrizes());
-        } else {
-            for (Prize prize : getPrizes()) {
-                if (prize.hasBlacklistPermission(player)) {
-                    if (!prize.hasAltPrize()) continue;
-                }
+        Player player = this.plugin.getServer().getPlayer(uuid);
 
-                usablePrizes.add(prize);
+        if (player != null) {
+            // ================= Blacklist Check ================= //
+            if (player.isOp()) {
+                usablePrizes.addAll(getPrizes());
+            } else {
+                for (Prize prize : getPrizes()) {
+                    if (prize.hasBlacklistPermission(uuid)) {
+                        if (!prize.hasAltPrize()) continue;
+                    }
+
+                    usablePrizes.add(prize);
+                }
             }
         }
 
@@ -183,7 +184,7 @@ public class Crate {
         try {
             return prizes.get(new Random().nextInt(prizes.size()));
         } catch (IllegalArgumentException e) {
-            FancyLogger.error("Failed to find prize from the " + name + " crate for player " + player.getName() + ".");
+            if (player != null) FancyLogger.error("Failed to find prize from the " + name + " crate for player " + player.getName() + ".");
             FancyLogger.debug(e.getMessage());
 
             return null;
@@ -191,7 +192,7 @@ public class Crate {
     }
 
     private void chanceCheck(ArrayList<Prize> prizes, ArrayList<Prize> usablePrizes) {
-        for (int stop = 0; prizes.size() == 0 && stop <= 2000; stop++) {
+        for (int stop = 0; prizes.isEmpty() && stop <= 2000; stop++) {
             for (Prize prize : usablePrizes) {
                 int max = prize.getMaxRange();
                 int chance = prize.getChance();
@@ -208,26 +209,30 @@ public class Crate {
 
     /**
      * Picks a random prize based on BlackList Permissions and the Chance System. Only used in the Cosmic Crate Type since it is the only one with tiers.
-     * @param player The player that will be winning the prize.
+     * @param uuid the uuid of the player that will be winning the prize.
      * @param tier The tier you wish the prize to be from.
      * @return The winning prize based on the crate's tiers.
      */
-    public Prize pickPrize(Player player, Tier tier) {
+    public Prize pickPrize(UUID uuid, Tier tier) {
         ArrayList<Prize> prizes = new ArrayList<>();
         ArrayList<Prize> usablePrizes = new ArrayList<>();
 
-        // ================= Blacklist Check ================= //
-        if (player.isOp()) {
-            for (Prize prize : getPrizes()) {
-                if (prize.getTiers().contains(tier)) usablePrizes.add(prize);
-            }
-        } else {
-            for (Prize prize : getPrizes()) {
-                if (prize.hasBlacklistPermission(player)) {
-                    if (!prize.hasAltPrize()) continue;
-                }
+        Player player = this.plugin.getServer().getPlayer(uuid);
 
-                if (prize.getTiers().contains(tier)) usablePrizes.add(prize);
+        if (player != null) {
+            // ================= Blacklist Check ================= //
+            if (player.isOp()) {
+                for (Prize prize : getPrizes()) {
+                    if (prize.getTiers().contains(tier)) usablePrizes.add(prize);
+                }
+            } else {
+                for (Prize prize : getPrizes()) {
+                    if (prize.hasBlacklistPermission(uuid)) {
+                        if (!prize.hasAltPrize()) continue;
+                    }
+
+                    if (prize.getTiers().contains(tier)) usablePrizes.add(prize);
+                }
             }
         }
 
@@ -239,12 +244,12 @@ public class Crate {
     
     /**
      * Picks a random prize based on BlackList Permissions and the Chance System. Spawns the display item at the location.
-     * @param player The player that will be winning the prize.
+     * @param uuid the uuid of the player that will be winning the prize.
      * @param location The location the firework will spawn at.
      * @return The winning prize.
      */
-    public Prize pickPrize(Player player, Location location) {
-        Prize prize = pickPrize(player);
+    public Prize pickPrize(UUID uuid, Location location) {
+        Prize prize = pickPrize(uuid);
 
         if (prize.useFireworks()) methods.firework(location);
 
@@ -337,17 +342,17 @@ public class Crate {
      * Gets the inventory of a preview of prizes for the crate.
      * @return The preview as an Inventory object.
      */
-    public Inventory getPreview(Player player) {
-        return getPreview(player, this.cratesPlugin.getMenuManager().getPage(player));
+    public Inventory getPreview(UUID uuid) {
+        return getPreview(uuid, this.cratesPlugin.getMenuManager().getPage(uuid));
     }
     
     /**
      * Gets the inventory of a preview of prizes for the crate.
      * @return The preview as an Inventory object.
      */
-    public Inventory getPreview(Player player, int page) {
-        Inventory inventory = this.plugin.getServer().createInventory(null, !borderToggle && (this.cratesPlugin.getMenuManager().playerInMenu(player) || maxPage > 1) && maxSlots == 9 ? maxSlots + 9 : maxSlots, previewName);
-        setDefaultItems(inventory, player);
+    public Inventory getPreview(UUID uuid, int page) {
+        Inventory inventory = this.plugin.getServer().createInventory(null, !borderToggle && (this.cratesPlugin.getMenuManager().playerInMenu(uuid) || maxPage > 1) && maxSlots == 9 ? maxSlots + 9 : maxSlots, previewName);
+        setDefaultItems(inventory, uuid);
 
         for (ItemStack item : getPageItems(page)) {
             int nextSlot = inventory.firstEmpty();
@@ -595,10 +600,11 @@ public class Crate {
                 if (index < list.size()) items.add(list.get(index));
             }
         }
+
         return items;
     }
     
-    private void setDefaultItems(Inventory inventory, Player player) {
+    private void setDefaultItems(Inventory inventory, UUID uuid) {
         if (borderToggle) {
             List<Integer> borderItems = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8);
 
@@ -613,20 +619,20 @@ public class Crate {
             }
         }
 
-        int page =  this.cratesPlugin.getMenuManager().getPage(player);
+        int page =  this.cratesPlugin.getMenuManager().getPage(uuid);
 
-        if ( this.cratesPlugin.getMenuManager().playerInMenu(player)) inventory.setItem(getAbsoluteItemPosition(4),  this.cratesPlugin.getMenuManager().getMenuButton());
+        if ( this.cratesPlugin.getMenuManager().playerInMenu(uuid)) inventory.setItem(getAbsoluteItemPosition(4),  this.cratesPlugin.getMenuManager().getMenuButton());
 
         if (page == 1) {
             if (borderToggle) inventory.setItem(getAbsoluteItemPosition(3), boarderItem.build());
         } else {
-            inventory.setItem(getAbsoluteItemPosition(3),  this.cratesPlugin.getMenuManager().getBackButton(player));
+            inventory.setItem(getAbsoluteItemPosition(3),  this.cratesPlugin.getMenuManager().getBackButton(uuid));
         }
 
         if (page == maxPage) {
             if (borderToggle) inventory.setItem(getAbsoluteItemPosition(5), boarderItem.build());
         } else {
-            inventory.setItem(getAbsoluteItemPosition(5),  this.cratesPlugin.getMenuManager().getNextButton(player));
+            inventory.setItem(getAbsoluteItemPosition(5),  this.cratesPlugin.getMenuManager().getNextButton(uuid));
         }
     }
 }

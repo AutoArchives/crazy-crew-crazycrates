@@ -14,6 +14,8 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 @Command(value = "keys", alias = {"key"})
 public class BaseKeyCommand extends BaseCommand {
@@ -28,7 +30,7 @@ public class BaseKeyCommand extends BaseCommand {
 
         String noKeys = Messages.PERSONAL_NO_VIRTUAL_KEYS.getMessage();
 
-        getKeys(player, player, header, noKeys);
+        getKeys(player.getUniqueId(), player, header, noKeys);
     }
 
     @SubCommand("view")
@@ -43,15 +45,15 @@ public class BaseKeyCommand extends BaseCommand {
 
         String otherPlayer = Messages.OTHER_PLAYER_NO_VIRTUAL_KEYS.getMessage("%Player%", target.getName());
 
-        getKeys(target, sender, header, otherPlayer);
+        getKeys(target.getUniqueId(), sender, header, otherPlayer);
     }
 
-    private void getKeys(Player target, CommandSender sender, String header, String messageContent) {
+    private void getKeys(UUID uuid, CommandSender sender, String header, String messageContent) {
         List<String> message = Lists.newArrayList();
 
         message.add(header);
 
-        HashMap<Crate, Integer> keys = crazyManager.getVirtualKeys(target);
+        Map<Crate, Integer> keys = crazyManager.getVirtualKeys(uuid);
 
         boolean hasKeys = false;
 

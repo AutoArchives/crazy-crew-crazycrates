@@ -34,11 +34,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class CrateControlListener implements Listener { // Crate Control
     
     // A list of crate locations that are in use.
-    public static HashMap<Player, Location> inUse = new HashMap<>();
+    public static HashMap<UUID, Location> inUse = new HashMap<>();
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
     private final @NotNull CrazyCratesPlugin cratesPlugin = CrazyCratesProvider.get();
@@ -59,6 +60,7 @@ public class CrateControlListener implements Listener { // Crate Control
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onCrateOpen(PlayerInteractEvent e) {
         Player player = e.getPlayer();
+        UUID uuid = player.getUniqueId();
         FileConfiguration config = Files.CONFIG.getFile();
 
         if (e.getHand() == EquipmentSlot.OFF_HAND) {
@@ -89,8 +91,8 @@ public class CrateControlListener implements Listener { // Crate Control
 
                     if (loc.getCrateType() != CrateType.MENU) {
                         if (loc.getCrate().isPreviewEnabled()) {
-                             this.cratesPlugin.getMenuManager().setPlayerInMenu(player, false);
-                             this.cratesPlugin.getMenuManager().openNewPreview(player, loc.getCrate());
+                             this.cratesPlugin.getMenuManager().setPlayerInMenu(uuid, false);
+                             this.cratesPlugin.getMenuManager().openNewPreview(uuid, loc.getCrate());
                         } else {
                             player.sendMessage(Messages.PREVIEW_DISABLED.getMessage());
                         }
@@ -120,13 +122,13 @@ public class CrateControlListener implements Listener { // Crate Control
                     boolean openMenu = config.getBoolean("Settings.Enable-Crate-Menu");
 
                     //This is to stop players in QuadCrate to not be able to try and open a crate set to menu.
-                    if (!crazyManager.isInOpeningList(player) && openMenu) this.cratesPlugin.getMenuManager().openMainMenu(player);
+                    if (!crazyManager.isInOpeningList(uuid) && openMenu) this.cratesPlugin.getMenuManager().openMainMenu(uuid);
 
                     return;
                 }
 
-                PhysicalCrateKeyCheckEvent event = new PhysicalCrateKeyCheckEvent(player, crateLocation);
-                player.getServer().getPluginManager().callEvent(event);
+                PhysicalCrateKeyCheckEvent event = new PhysicalCrateKeyCheckEvent(uuid, crateLocation);
+                this.plugin.getServer().getPluginManager().callEvent(event);
 
                 if (!event.isCancelled()) {
                     boolean hasKey = false;
@@ -137,7 +139,7 @@ public class CrateControlListener implements Listener { // Crate Control
 
                     int requiredKeys = crazyManager.getCrateFromName(crate.getName()).getRequiredKeys();
 
-                    int totalKeys = crazyManager.getTotalKeys(player, crate);
+                    int totalKeys = crazyManager.getTotalKeys(uuid, crate);
 
                     if (requiredKeys > 0 && totalKeys < requiredKeys) {
                         player.sendMessage(Messages.REQUIRED_KEYS.getMessage().replaceAll("%key-amount%", String.valueOf(requiredKeys)).replaceAll("%crate%", crate.getPreviewName()).replaceAll("%amount%", String.valueOf(totalKeys)));
@@ -149,16 +151,16 @@ public class CrateControlListener implements Listener { // Crate Control
                         isPhysical = true;
                     }
 
-                    if (config.getBoolean("Settings.Physical-Accepts-Virtual-Keys") && crazyManager.getVirtualKeys(player, crate) >= 1) hasKey = true;
+                    if (config.getBoolean("Settings.Physical-Accepts-Virtual-Keys") && crazyManager.getVirtualKeys(uuid, crate) >= 1) hasKey = true;
 
                     if (hasKey) {
                         // Checks if the player uses the quick crate again.
-                        if (crazyManager.isInOpeningList(player) && crazyManager.getOpeningCrate(player).getCrateType() == CrateType.QUICK_CRATE && inUse.containsKey(player) && inUse.get(player).equals(crateLocation.getLocation())) {
+                        if (crazyManager.isInOpeningList(uuid) && crazyManager.getOpeningCrate(uuid).getCrateType() == CrateType.QUICK_CRATE && inUse.containsKey(uuid) && inUse.get(uuid).equals(crateLocation.getLocation())) {
                             useQuickCrateAgain = true;
                         }
 
                         if (!useQuickCrateAgain) {
-                            if (crazyManager.isInOpeningList(player)) {
+                            if (crazyManager.isInOpeningList(uuid)) {
                                 player.sendMessage(Messages.ALREADY_OPENING_CRATE.getMessage("%Key%", keyName));
                                 return;
                             }
@@ -169,20 +171,20 @@ public class CrateControlListener implements Listener { // Crate Control
                             }
                         }
 
-                        if (this.methods.isInventoryFull(player)) {
+                        if (this.methods.isInventoryFull(uuid)) {
                             player.sendMessage(Messages.INVENTORY_FULL.getMessage());
                             return;
                         }
 
-                        if (useQuickCrateAgain) this.plugin.getQuickCrate().endQuickCrate(player, crateLocation.getLocation(), crate, crazyManager.getHologramController(), true);
+                        if (useQuickCrateAgain) this.plugin.getQuickCrate().endQuickCrate(uuid, crateLocation.getLocation(), crate, crazyManager.getHologramController(), true);
 
                         KeyType keyType = isPhysical ? KeyType.PHYSICAL_KEY : KeyType.VIRTUAL_KEY;
 
                         // Only cosmic crate type uses this method.
-                        if (crate.getCrateType() == CrateType.COSMIC) crazyManager.addPlayerKeyType(player, keyType);
+                        if (crate.getCrateType() == CrateType.COSMIC) crazyManager.addPlayerKeyType(uuid, keyType);
 
-                        crazyManager.addPlayerToOpeningList(player, crate);
-                        crazyManager.openCrate(player, crate, keyType, crateLocation.getLocation(), false, true);
+                        crazyManager.addPlayerToOpeningList(uuid, crate);
+                        crazyManager.openCrate(uuid, crate, keyType, crateLocation.getLocation(), false, true);
                     } else {
                         if (crate.getCrateType() != CrateType.CRATE_ON_THE_GO) {
                             if (config.getBoolean("Settings.KnockBack")) knockBack(player, clickedBlock.getLocation());
@@ -223,7 +225,7 @@ public class CrateControlListener implements Listener { // Crate Control
                     if (e.getAction() == InventoryAction.PICKUP_ALL) {
                         player.getInventory().addItem(crate.getKey());
                     } else if (e.getAction() == InventoryAction.PICKUP_HALF) {
-                        crazyManager.addKeys(1, player, crate, KeyType.VIRTUAL_KEY);
+                        crazyManager.addKeys(1, player.getUniqueId(), crate, KeyType.VIRTUAL_KEY);
                         String name = null;
                         ItemStack key = crate.getKey();
 
@@ -239,12 +241,13 @@ public class CrateControlListener implements Listener { // Crate Control
     @EventHandler
     public void onLeave(PlayerQuitEvent e) {
         Player player = e.getPlayer();
+        UUID uuid = player.getUniqueId();
 
-        if (crazyManager.hasCrateTask(player)) crazyManager.endCrate(player);
+        if (crazyManager.hasCrateTask(uuid)) crazyManager.endCrate(uuid);
 
-        if (crazyManager.hasQuadCrateTask(player)) crazyManager.endQuadCrate(player);
+        if (crazyManager.hasQuadCrateTask(uuid)) crazyManager.endQuadCrate(uuid);
 
-        if (crazyManager.isInOpeningList(player)) crazyManager.removePlayerFromOpeningList(player);
+        if (crazyManager.isInOpeningList(uuid)) crazyManager.removePlayerFromOpeningList(uuid);
     }
     
     public static void knockBack(Player player, Location location) {
