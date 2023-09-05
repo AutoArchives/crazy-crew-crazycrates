@@ -374,7 +374,6 @@ public class Methods {
             HashMap<Integer, ItemStack> leftover = new HashMap<>();
 
             // TODO: optimization
-
             for (int i = 0; i < items.length; i++) {
                 ItemStack item = items[i];
                 int toDelete = item.getAmount();
