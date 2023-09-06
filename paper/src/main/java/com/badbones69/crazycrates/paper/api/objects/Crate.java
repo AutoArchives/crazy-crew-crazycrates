@@ -8,7 +8,7 @@ import com.badbones69.crazycrates.paper.api.managers.CrateManager;
 import com.badbones69.crazycrates.api.enums.types.CrateType;
 import com.badbones69.crazycrates.paper.api.plugin.CrazyCratesPlugin;
 import com.badbones69.crazycrates.paper.api.plugin.registry.CrazyCratesProvider;
-import com.badbones69.crazycrates.api.objects.CrateHologram;
+import com.badbones69.crazycrates.common.objects.CrateHologram;
 import com.ryderbelserion.cluster.api.adventure.FancyLogger;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import org.bukkit.Location;

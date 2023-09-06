@@ -1,6 +1,6 @@
 package com.badbones69.crazycrates.paper;
 
-import com.badbones69.crazycrates.api.enums.Permissions;
+import com.badbones69.crazycrates.common.enums.Permissions;
 import com.badbones69.crazycrates.paper.api.FileManager;
 import com.badbones69.crazycrates.paper.api.enums.settings.Messages;
 import com.badbones69.crazycrates.paper.api.events.PlayerPrizeEvent;

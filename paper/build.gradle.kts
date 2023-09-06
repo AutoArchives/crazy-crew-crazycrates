@@ -33,7 +33,7 @@ repositories {
 }
 
 dependencies {
-    api(project(":api"))
+    implementation(project(":common"))
 
     implementation("de.tr7zw", "item-nbt-api", "2.11.3")
 

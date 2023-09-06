@@ -10,6 +10,8 @@ pluginManagement {
 rootProject.name = "CrazyCrates"
 
 listOf(
+    "common",
+
     "api",
 
     "paper",

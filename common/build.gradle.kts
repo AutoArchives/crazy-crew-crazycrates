@@ -2,7 +2,12 @@ plugins {
     id("root-plugin")
 }
 
-project.group = "${rootProject.group}.api"
+project.group = "${rootProject.group}.common"
+
+
+dependencies {
+    api(project(":api"))
+}
 
 val component: SoftwareComponent = components["java"]
 
