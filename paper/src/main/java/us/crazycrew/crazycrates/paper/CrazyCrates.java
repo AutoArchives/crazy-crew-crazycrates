@@ -37,7 +37,7 @@ public class CrazyCrates extends JavaPlugin {
         // Add extra messages.
         Messages.addMissingMessages();
 
-        //enable();
+        enable();
     }
 
     @Override
