@@ -21,7 +21,7 @@ tasks {
 
                 if (project.name == "common" || project.name == "api") return@doLast
 
-                val file = file("${project.layout.buildDirectory}/libs/${rootProject.name}-${rootProject.version}.jar")
+                val file = file("${project.layout.buildDirectory.get()}/libs/${rootProject.name}-${rootProject.version}.jar")
 
                 copy {
                     from(file)

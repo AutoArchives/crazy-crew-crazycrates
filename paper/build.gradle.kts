@@ -56,9 +56,12 @@ dependencies {
 tasks {
     shadowJar {
         listOf(
-            "ch.jalu",
+            "com.ryderbelserion.cluster",
+            "dev.triumphteam",
+            "org.jetbrains",
+            "org.bstats",
             "de.tr7zw",
-            "org.bstats"
+            "ch.jalu"
         ).forEach {
             relocate(it, "libs.$it")
         }
