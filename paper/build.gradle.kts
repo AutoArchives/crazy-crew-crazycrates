@@ -45,10 +45,6 @@ dependencies {
 
     implementation("com.zaxxer", "HikariCP", "5.0.1")
 
-    implementation("ch.jalu", "configme", "1.4.1") {
-        exclude("org.yaml", "snakeyaml")
-    }
-
     compileOnly(fileTree("libs").include("*.jar"))
 
     compileOnly("me.filoghost.holographicdisplays", "holographicdisplays-api", "3.0.0")

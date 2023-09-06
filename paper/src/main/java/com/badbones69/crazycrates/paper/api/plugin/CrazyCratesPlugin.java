@@ -4,7 +4,7 @@ import com.badbones69.crazycrates.paper.Methods;
 import com.badbones69.crazycrates.paper.api.CrazyManager;
 import com.badbones69.crazycrates.paper.api.EventLogger;
 import com.badbones69.crazycrates.paper.api.FileManager;
-import com.badbones69.crazycrates.paper.api.config.ConfigManager;
+import com.badbones69.crazycrates.common.config.ConfigManager;
 import com.badbones69.crazycrates.paper.api.plugin.registry.CrazyCratesRegistry;
 import com.badbones69.crazycrates.paper.api.managers.MenuManager;
 import com.badbones69.crazycrates.paper.support.MetricsHandler;

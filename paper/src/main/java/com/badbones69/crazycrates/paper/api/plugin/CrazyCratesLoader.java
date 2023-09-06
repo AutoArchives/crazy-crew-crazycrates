@@ -6,8 +6,8 @@ import com.badbones69.crazycrates.paper.api.CrazyManager;
 import com.badbones69.crazycrates.paper.api.EventLogger;
 import com.badbones69.crazycrates.paper.api.FileManager;
 import com.badbones69.crazycrates.paper.api.FileManager.Files;
-import com.badbones69.crazycrates.paper.api.config.ConfigManager;
-import com.badbones69.crazycrates.paper.api.config.PluginConfig;
+import com.badbones69.crazycrates.common.config.ConfigManager;
+import com.badbones69.crazycrates.common.config.PluginConfig;
 import com.badbones69.crazycrates.paper.api.plugin.migrate.ConfigValues;
 import com.badbones69.crazycrates.paper.api.managers.MenuManager;
 import com.badbones69.crazycrates.paper.support.MetricsHandler;
@@ -39,7 +39,7 @@ public class CrazyCratesLoader extends CrazyCratesPlugin {
         this.bukkitPlugin = new BukkitPlugin(this.plugin);
         this.bukkitPlugin.enable("<white>[<gradient:#FE5F55:#6b55b5>CrazyCrates</gradient>]</white>");
 
-        this.configManager = new ConfigManager();
+        this.configManager = new ConfigManager(this.plugin.getDataFolder());
         this.configManager.load();
 
         this.fileManager = new FileManager();

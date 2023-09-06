@@ -7,6 +7,10 @@ project.group = "${rootProject.group}.common"
 
 dependencies {
     api(project(":api"))
+
+    api("ch.jalu", "configme", "1.4.1") {
+        exclude("org.yaml", "snakeyaml")
+    }
 }
 
 val component: SoftwareComponent = components["java"]

@@ -1,23 +1,24 @@
-package com.badbones69.crazycrates.paper.api.config;
+package com.badbones69.crazycrates.common.config;
 
 import ch.jalu.configme.SettingsManager;
 import ch.jalu.configme.SettingsManagerBuilder;
 import ch.jalu.configme.configurationdata.ConfigurationData;
 import ch.jalu.configme.configurationdata.ConfigurationDataBuilder;
-import com.badbones69.crazycrates.paper.CrazyCrates;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
 import java.io.File;
 
 public class ConfigManager {
 
-    private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
+    private final File dataFolder;
+
+    public ConfigManager(File dataFolder) {
+        this.dataFolder = dataFolder;
+    }
 
     private SettingsManager pluginConfig;
 
     public void load() {
-        // Create the plugin-support.yml file object.
-        File pluginConfig = new File(this.plugin.getDataFolder(), "plugin-config.yml");
+        // Create the plugin-support.yml file.
+        File pluginConfig = new File(this.dataFolder, "plugin-config.yml");
 
         // Bind it to settings manager
         this.pluginConfig = SettingsManagerBuilder
