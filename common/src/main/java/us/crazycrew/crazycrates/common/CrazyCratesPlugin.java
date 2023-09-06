@@ -1,5 +1,6 @@
 package us.crazycrew.crazycrates.common;
 
+import com.ryderbelserion.cluster.api.adventure.FancyLogger;
 import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.api.CrazyCrates;
 import us.crazycrew.crazycrates.api.CrazyCratesProvider;
@@ -24,6 +25,8 @@ public class CrazyCratesPlugin extends CrazyCrates {
 
         this.configManager = new ConfigManager(this.dataFolder);
         this.configManager.load();
+
+        FancyLogger.setName("<white>[<gradient:#FE5F55:#6b55b5>CrazyCrates</gradient>]</white>");
     }
 
     public void disable() {

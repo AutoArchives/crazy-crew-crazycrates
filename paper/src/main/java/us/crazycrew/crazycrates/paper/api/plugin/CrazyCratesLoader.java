@@ -40,7 +40,7 @@ public class CrazyCratesLoader {
 
         // Enable cluster bukkit api
         this.bukkitPlugin = new BukkitPlugin(this.plugin);
-        this.bukkitPlugin.enable("<white>[<gradient:#FE5F55:#6b55b5>CrazyCrates</gradient>]</white>");
+        this.bukkitPlugin.enable();
 
         this.fileManager = new FileManager();
         this.fileManager.setLog(true)

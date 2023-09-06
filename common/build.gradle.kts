@@ -12,7 +12,7 @@ dependencies {
         exclude("org.yaml", "snakeyaml")
     }
 
-    api("com.ryderbelserion.cluster", "cluster-api", "0.3")
+    api("com.ryderbelserion.cluster", "cluster-api", "0.4")
 
     compileOnly("org.jetbrains", "annotations", "24.0.1")
 }

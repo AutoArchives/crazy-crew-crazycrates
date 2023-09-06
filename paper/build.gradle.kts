@@ -34,7 +34,7 @@ dependencies {
 
     implementation("org.bstats", "bstats-bukkit", "3.0.2")
 
-    implementation("com.ryderbelserion.cluster", "cluster-bukkit", "0.3") {
+    implementation("com.ryderbelserion.cluster", "cluster-bukkit", "0.4") {
         exclude("com.ryderbelserion.cluster", "cluster-api")
     }
 
