@@ -12,5 +12,7 @@ dependencies {
         exclude("org.yaml", "snakeyaml")
     }
 
-    //api("com.zaxxer", "HikariCP", "5.0.1")
+    api("com.ryderbelserion.cluster", "cluster-api", "0.3")
+
+    compileOnly("org.jetbrains", "annotations", "24.0.1")
 }

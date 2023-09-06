@@ -6,7 +6,7 @@ import us.crazycrew.crazycrates.paper.api.CrazyManager;
 import us.crazycrew.crazycrates.paper.api.enums.settings.Messages;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
 import us.crazycrew.crazycrates.common.crates.quadcrates.CrateParticles;
-import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesPlugin;
+import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
 import us.crazycrew.crazycrates.paper.support.structures.blocks.ChestManager;
 import us.crazycrew.crazycrates.api.enums.types.KeyType;
 import us.crazycrew.crazycrates.paper.support.structures.QuadCrateSpiralHandler;
@@ -36,10 +36,10 @@ import java.util.UUID;
 public class QuadCrateManager {
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
-    private final @NotNull CrazyCratesPlugin cratesPlugin = null;
-    private final @NotNull CrazyManager crazyManager = this.cratesPlugin.getCrazyManager();
-    private final @NotNull ChestManager chestManager = this.cratesPlugin.getChestManager();
-    private final @NotNull Methods methods = this.cratesPlugin.getMethods();
+    private final @NotNull CrazyCratesLoader cratesLoader = this.plugin.getCratesLoader();
+    private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
+    private final @NotNull ChestManager chestManager = this.cratesLoader.getChestManager();
+    private final @NotNull Methods methods = this.cratesLoader.getMethods();
 
     private static final List<QuadCrateManager> crateSessions = new ArrayList<>();
 

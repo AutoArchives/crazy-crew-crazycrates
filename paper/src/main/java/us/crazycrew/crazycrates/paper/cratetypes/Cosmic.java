@@ -10,7 +10,6 @@ import us.crazycrew.crazycrates.paper.api.managers.CosmicCrateManager;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
 import us.crazycrew.crazycrates.paper.api.objects.Prize;
 import us.crazycrew.crazycrates.paper.api.objects.Tier;
-import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesPlugin;
 import us.crazycrew.crazycrates.api.enums.types.KeyType;
 import com.ryderbelserion.cluster.api.adventure.FancyLogger;
 import de.tr7zw.changeme.nbtapi.NBTItem;
@@ -26,6 +25,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
+import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -34,9 +34,9 @@ import java.util.UUID;
 public class Cosmic implements Listener {
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
-    private final @NotNull CrazyCratesPlugin cratesPlugin = null;
-    private final @NotNull CrazyManager crazyManager = this.cratesPlugin.getCrazyManager();
-    private final @NotNull Methods methods = this.cratesPlugin.getMethods();
+    private final @NotNull CrazyCratesLoader cratesLoader = this.plugin.getCratesLoader();
+    private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
+    private final @NotNull Methods methods = this.cratesLoader.getMethods();
 
     private final HashMap<UUID, ArrayList<Integer>> glass = new HashMap<>();
     private final HashMap<UUID, ArrayList<Integer>> picks = new HashMap<>();

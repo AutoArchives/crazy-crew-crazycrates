@@ -1,12 +1,12 @@
 package us.crazycrew.crazycrates.paper.listeners;
 
+import org.bukkit.plugin.java.JavaPlugin;
+import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.Methods;
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
 import us.crazycrew.crazycrates.paper.api.FileManager;
 import us.crazycrew.crazycrates.paper.api.enums.settings.Messages;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
-import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesPlugin;
-
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
 import us.crazycrew.crazycrates.api.enums.types.KeyType;
 import de.tr7zw.changeme.nbtapi.NBTItem;
@@ -20,14 +20,16 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
 import java.util.ArrayList;
 import java.util.UUID;
 
 public class MenuListener implements Listener {
 
-    private final @NotNull CrazyCratesPlugin cratesPlugin = null;
-    private final @NotNull CrazyManager crazyManager = this.cratesPlugin.getCrazyManager();
-    private final @NotNull Methods methods = this.cratesPlugin.getMethods();
+    private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
+    private final @NotNull CrazyCratesLoader cratesLoader = this.plugin.getCratesLoader();
+    private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
+    private final @NotNull Methods methods = this.cratesLoader.getMethods();
 
     @EventHandler
     public void onInvClick(InventoryClickEvent e) {
@@ -60,8 +62,8 @@ public class MenuListener implements Listener {
                                 if (crate.isPreviewEnabled()) {
                                     player.closeInventory();
 
-                                    this.cratesPlugin.getMenuManager().setPlayerInMenu(uuid, true);
-                                    this.cratesPlugin.getMenuManager().openNewPreview(uuid, crate);
+                                    this.cratesLoader.getMenuManager().setPlayerInMenu(uuid, true);
+                                    this.cratesLoader.getMenuManager().openNewPreview(uuid, crate);
                                 } else {
                                     player.sendMessage(Messages.PREVIEW_DISABLED.getMessage());
                                 }

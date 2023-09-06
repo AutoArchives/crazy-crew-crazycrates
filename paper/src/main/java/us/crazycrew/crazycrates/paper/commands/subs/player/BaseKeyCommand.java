@@ -1,9 +1,10 @@
 package us.crazycrew.crazycrates.paper.commands.subs.player;
 
+import org.bukkit.plugin.java.JavaPlugin;
+import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
 import us.crazycrew.crazycrates.paper.api.enums.settings.Messages;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
-import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesPlugin;
 import com.google.common.collect.Lists;
 import dev.triumphteam.cmd.bukkit.annotation.Permission;
 import dev.triumphteam.cmd.core.BaseCommand;
@@ -11,6 +12,7 @@ import dev.triumphteam.cmd.core.annotation.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,8 +21,9 @@ import java.util.UUID;
 @Command(value = "keys", alias = {"key"})
 public class BaseKeyCommand extends BaseCommand {
 
-    private final @NotNull CrazyCratesPlugin cratesPlugin = null;
-    private final @NotNull CrazyManager crazyManager = this.cratesPlugin.getCrazyManager();
+    private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
+    private final @NotNull CrazyCratesLoader cratesLoader = this.plugin.getCratesLoader();
+    private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
 
     @Default
     @Permission("crazycrates.command.player.key")

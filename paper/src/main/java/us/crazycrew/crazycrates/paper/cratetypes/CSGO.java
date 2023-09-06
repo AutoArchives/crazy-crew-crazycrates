@@ -3,7 +3,6 @@ package us.crazycrew.crazycrates.paper.cratetypes;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.Methods;
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
-import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesPlugin;
 import us.crazycrew.crazycrates.api.enums.types.KeyType;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
 import us.crazycrew.crazycrates.paper.api.objects.ItemBuilder;
@@ -17,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
+import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
@@ -24,9 +24,9 @@ import java.util.UUID;
 public class CSGO implements Listener {
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
-    private final @NotNull CrazyCratesPlugin cratesPlugin = null;
-    private final @NotNull CrazyManager crazyManager = this.cratesPlugin.getCrazyManager();
-    private final @NotNull Methods methods = this.cratesPlugin.getMethods();
+    private final @NotNull CrazyCratesLoader cratesLoader = this.plugin.getCratesLoader();
+    private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
+    private final @NotNull Methods methods = this.cratesLoader.getMethods();
     
     private void setGlass(Inventory inv) {
         HashMap<Integer, ItemStack> glass = new HashMap<>();

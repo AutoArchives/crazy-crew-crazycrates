@@ -10,7 +10,7 @@ import org.bukkit.World;
 import us.crazycrew.crazycrates.common.config.PluginConfig;
 import us.crazycrew.crazycrates.paper.api.enums.settings.Messages;
 import us.crazycrew.crazycrates.paper.api.objects.*;
-import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesPlugin;
+import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
 import us.crazycrew.crazycrates.paper.support.holograms.CMIHologramsSupport;
 import us.crazycrew.crazycrates.paper.support.holograms.HolographicDisplaysSupport;
 import us.crazycrew.crazycrates.paper.support.libraries.PluginSupport;
@@ -56,9 +56,9 @@ public class CrazyManager {
     
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
     
-    private final @NotNull CrazyCratesPlugin cratesPlugin = null;
-    private final @NotNull FileManager fileManager = this.cratesPlugin.getFileManager();
-    private final @NotNull Methods methods = this.cratesPlugin.getMethods();
+    private final @NotNull CrazyCratesLoader cratesLoader = this.plugin.getCratesLoader();
+    private final @NotNull FileManager fileManager = this.cratesLoader.getFileManager();
+    private final @NotNull Methods methods = this.cratesLoader.getMethods();
 
     // All the crates that have been loaded.
     private final ArrayList<Crate> crates = new ArrayList<>();
@@ -112,18 +112,18 @@ public class CrazyManager {
 
     public void reload(boolean serverStop) {
         if (serverStop) {
-            this.cratesPlugin.getMetrics().stop();
+            this.cratesLoader.getMetrics().stop();
             return;
         }
 
-        this.cratesPlugin.getConfigManager().reload();
+        this.cratesLoader.getConfigManager().reload();
 
-        boolean metrics = this.cratesPlugin.getConfigManager().getPluginConfig().getProperty(PluginConfig.TOGGLE_METRICS);
+        boolean metrics = this.cratesLoader.getConfigManager().getPluginConfig().getProperty(PluginConfig.TOGGLE_METRICS);
 
         if (metrics) {
-            this.cratesPlugin.getMetrics().start();
+            this.cratesLoader.getMetrics().start();
         } else {
-            this.cratesPlugin.getMetrics().stop();
+            this.cratesLoader.getMetrics().stop();
         }
 
         loadCrates();
@@ -396,7 +396,7 @@ public class CrazyManager {
                 case MENU -> {
                     boolean openMenu = config.getBoolean("Settings.Enable-Crate-Menu");
 
-                    if (openMenu) this.cratesPlugin.getMenuManager().openMainMenu(uuid);
+                    if (openMenu) this.cratesLoader.getMenuManager().openMainMenu(uuid);
                     else player.sendMessage(Messages.FEATURE_DISABLED.getMessage());
                 }
                 case COSMIC -> this.plugin.getCosmic().openCosmic(uuid, crate, keyType, checkHand);
@@ -470,7 +470,7 @@ public class CrazyManager {
             boolean logFile = FileManager.Files.CONFIG.getFile().getBoolean("Settings.Crate-Actions.Log-File");
             boolean logConsole = FileManager.Files.CONFIG.getFile().getBoolean("Settings.Crate-Actions.Log-Console");
 
-            this.cratesPlugin.getEventLogger().logCrateEvent(player, crate, keyType, logFile, logConsole);
+            this.cratesLoader.getEventLogger().logCrateEvent(player, crate, keyType, logFile, logConsole);
         }
     }
 

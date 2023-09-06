@@ -1,6 +1,5 @@
 package us.crazycrew.crazycrates.paper.commands.subs;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -19,7 +18,6 @@ import us.crazycrew.crazycrates.paper.api.objects.CrateLocation;
 import us.crazycrew.crazycrates.paper.api.objects.Prize;
 import us.crazycrew.crazycrates.common.enums.Permissions;
 import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
-import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesPlugin;
 import us.crazycrew.crazycrates.paper.listeners.CrateControlListener;
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
 import us.crazycrew.crazycrates.api.enums.types.KeyType;
@@ -44,11 +42,11 @@ import java.util.concurrent.CompletableFuture;
 public class CrateBaseCommand extends BaseCommand {
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
-    private final @NotNull CrazyCratesPlugin cratesPlugin = null;
-    private final @NotNull FileManager fileManager = this.cratesPlugin.getFileManager();
-    private final @NotNull CrazyManager crazyManager = this.cratesPlugin.getCrazyManager();
-    private final @NotNull EventLogger eventLogger = this.cratesPlugin.getEventLogger();
-    private final @NotNull Methods methods = this.cratesPlugin.getMethods();
+    private final @NotNull CrazyCratesLoader cratesLoader = this.plugin.getCratesLoader();
+    private final @NotNull FileManager fileManager = this.cratesLoader.getFileManager();
+    private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
+    private final @NotNull EventLogger eventLogger = this.cratesLoader.getEventLogger();
+    private final @NotNull Methods methods = this.cratesLoader.getMethods();
 
     @Default
     @Permission(value = "crazycrates.command.player.menu", def = PermissionDefault.TRUE)
@@ -57,7 +55,7 @@ public class CrateBaseCommand extends BaseCommand {
 
         boolean openMenu = config.getBoolean("Settings.Enable-Crate-Menu");
 
-        if (openMenu) this.cratesPlugin.getMenuManager().openMainMenu(player.getUniqueId()); else player.sendMessage(Messages.FEATURE_DISABLED.getMessage());
+        if (openMenu) this.cratesLoader.getMenuManager().openMainMenu(player.getUniqueId()); else player.sendMessage(Messages.FEATURE_DISABLED.getMessage());
     }
 
     @SubCommand("help")
@@ -126,7 +124,7 @@ public class CrateBaseCommand extends BaseCommand {
 
         crazyManager.reload(false);
 
-        this.cratesPlugin.getMenuManager().loadButtons();
+        this.cratesLoader.getMenuManager().loadButtons();
 
         sender.sendMessage(Messages.RELOAD.getMessage());
     }
@@ -289,8 +287,8 @@ public class CrateBaseCommand extends BaseCommand {
             UUID uuid = player.getUniqueId();
 
             if (crate.getCrateType() != CrateType.MENU) {
-                this.cratesPlugin.getMenuManager().setPlayerInMenu(uuid, false);
-                this.cratesPlugin.getMenuManager().openNewPreview(uuid, crate);
+                this.cratesLoader.getMenuManager().setPlayerInMenu(uuid, false);
+                this.cratesLoader.getMenuManager().openNewPreview(uuid, crate);
             }
         }
     }

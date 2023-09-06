@@ -1,5 +1,6 @@
 package us.crazycrew.crazycrates.paper;
 
+import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.paper.api.enums.settings.Messages;
 import us.crazycrew.crazycrates.paper.api.managers.QuadCrateManager;
 import us.crazycrew.crazycrates.paper.api.objects.CrateLocation;
@@ -14,11 +15,9 @@ import dev.triumphteam.cmd.bukkit.message.BukkitMessageKey;
 import dev.triumphteam.cmd.core.message.MessageKey;
 import dev.triumphteam.cmd.core.suggestion.SuggestionKey;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import us.crazycrew.crazycrates.paper.api.FileManager;
 import us.crazycrew.crazycrates.paper.cratetypes.*;
 import us.crazycrew.crazycrates.paper.listeners.*;
 import java.util.ArrayList;
@@ -28,51 +27,17 @@ public class CrazyCrates extends JavaPlugin {
 
     private final BukkitCommandManager<CommandSender> manager = BukkitCommandManager.create(this);
 
-    private CrazyCratesLoader crazyCratesLoader;
+    private CrazyCratesLoader cratesLoader;
 
     @Override
     public void onEnable() {
-        this.crazyCratesLoader = new CrazyCratesLoader();
-        this.crazyCratesLoader.enable();
+        this.cratesLoader = new CrazyCratesLoader();
+        getCratesLoader().enable();
 
         // Add extra messages.
         Messages.addMissingMessages();
 
-        FileConfiguration config = FileManager.Files.CONFIG.getFile();
-
-        String menu = config.getString("Settings.Enable-Crate-Menu");
-
-        String full = config.getString("Settings.Give-Virtual-Keys-When-Inventory-Full-Message");
-
-        String phys = config.getString("Settings.Physical-Accepts-Physical-Keys");
-
-        if (phys == null) {
-            config.set("Settings.Physical-Accepts-Physical-Keys", true);
-
-            FileManager.Files.CONFIG.saveFile();
-        }
-
-        if (full == null) {
-            config.set("Settings.Give-Virtual-Keys-When-Inventory-Full-Message", false);
-
-            FileManager.Files.CONFIG.saveFile();
-        }
-
-        if (menu == null) {
-            String oldBoolean = config.getString("Settings.Disable-Crate-Menu");
-            boolean switchBoolean = config.getBoolean("Settings.Disable-Crate-Menu");
-
-            if (oldBoolean != null) {
-                config.set("Settings.Enable-Crate-Menu", switchBoolean);
-                config.set("Settings.Disable-Crate-Menu", null);
-            } else {
-                config.set("Settings.Enable-Crate-Menu", true);
-            }
-
-            FileManager.Files.CONFIG.saveFile();
-        }
-
-        enable();
+        //enable();
     }
 
     @Override
@@ -82,9 +47,11 @@ public class CrazyCrates extends JavaPlugin {
 
         getQuickCrate().removeAllRewards();
 
-        if (this.crazyCratesLoader.getCrazyManager().getHologramController() != null) this.crazyCratesLoader.getCrazyManager().getHologramController().removeAllHolograms();
+        if (getCratesLoader().getCrazyManager().getHologramController() != null) getCratesLoader().getCrazyManager().getHologramController().removeAllHolograms();
+    }
 
-        this.crazyCratesLoader.disable();
+    public @NotNull CrazyCratesLoader getCratesLoader() {
+        return this.cratesLoader;
     }
 
     private War war;
@@ -150,9 +117,9 @@ public class CrazyCrates extends JavaPlugin {
 
         this.fireCracker = new FireCracker();
 
-        this.crazyCratesLoader.getCrazyManager().load(true);
+        getCratesLoader().getCrazyManager().load(true);
 
-        if (!this.crazyCratesLoader.getCrazyManager().getBrokeCrateLocations().isEmpty()) pluginManager.registerEvents(new BrokeLocationsListener(), this);
+        if (!getCratesLoader().getCrazyManager().getBrokeCrateLocations().isEmpty()) pluginManager.registerEvents(new BrokeLocationsListener(), this);
 
         if (PluginSupport.PLACEHOLDERAPI.isPluginEnabled()) new PlaceholderAPISupport().register();
 
@@ -202,18 +169,18 @@ public class CrazyCrates extends JavaPlugin {
 
         manager.registerMessage(BukkitMessageKey.CONSOLE_ONLY, (sender, context) -> sender.sendMessage(Messages.MUST_BE_A_CONSOLE_SENDER.getMessage()));
 
-        manager.registerSuggestion(SuggestionKey.of("crates"), (sender, context) -> this.crazyCratesLoader.getFileManager().getAllCratesNames(this).stream().toList());
+        manager.registerSuggestion(SuggestionKey.of("crates"), (sender, context) -> getCratesLoader().getFileManager().getAllCratesNames(this).stream().toList());
 
         manager.registerSuggestion(SuggestionKey.of("key-types"), (sender, context) -> KEYS);
 
         manager.registerSuggestion(SuggestionKey.of("online-players"), (sender, context) -> getServer().getOnlinePlayers().stream().map(Player::getName).toList());
 
-        manager.registerSuggestion(SuggestionKey.of("locations"), (sender, context) -> this.crazyCratesLoader.getCrazyManager().getCrateLocations().stream().map(CrateLocation::getID).toList());
+        manager.registerSuggestion(SuggestionKey.of("locations"), (sender, context) -> getCratesLoader().getCrazyManager().getCrateLocations().stream().map(CrateLocation::getID).toList());
 
         manager.registerSuggestion(SuggestionKey.of("prizes"), (sender, context) -> {
             List<String> numbers = new ArrayList<>();
 
-            this.crazyCratesLoader.getCrazyManager().getCrateFromName(context.getArgs().get(0)).getPrizes().forEach(prize -> numbers.add(prize.getName()));
+            getCratesLoader().getCrazyManager().getCrateFromName(context.getArgs().get(0)).getPrizes().forEach(prize -> numbers.add(prize.getName()));
 
             return numbers;
         });
@@ -252,7 +219,7 @@ public class CrazyCrates extends JavaPlugin {
         return correctUsage;
     }
 
-    private final List<String> KEYS = List.of("virtual", "v", "physical", "p");
+    private static final List<String> KEYS = List.of("virtual", "v", "physical", "p");
 
     private void printHooks() {
         for (PluginSupport value : PluginSupport.values()) {

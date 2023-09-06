@@ -5,8 +5,10 @@ import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
+import org.bukkit.plugin.java.JavaPlugin;
+import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.Methods;
-import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesPlugin;
+import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
 import us.crazycrew.crazycrates.paper.support.SkullCreator;
 import us.crazycrew.crazycrates.paper.support.libraries.PluginSupport;
 import de.tr7zw.changeme.nbtapi.NBTItem;
@@ -32,13 +34,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class ItemBuilder {
 
-    private final @NotNull CrazyCratesPlugin cratesPlugin = null;
-    private final @NotNull Methods methods = this.cratesPlugin.getMethods();
+    private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
+    private final @NotNull CrazyCratesLoader cratesLoader = this.plugin.getCratesLoader();
+    private final @NotNull Methods methods = this.cratesLoader.getMethods();
 
     private NBTItem nbtItem;
 

@@ -20,12 +20,6 @@ repositories {
 
     maven("https://repo.triumphteam.dev/snapshots/")
 
-    maven("https://repo.crazycrew.us/first-party/")
-
-    maven("https://repo.crazycrew.us/third-party/")
-
-    maven("https://repo.crazycrew.us/releases/")
-
     maven("https://jitpack.io/")
 
     mavenCentral()
@@ -40,7 +34,9 @@ dependencies {
 
     implementation("org.bstats", "bstats-bukkit", "3.0.2")
 
-    implementation("com.ryderbelserion.cluster", "cluster-bukkit", "0.3")
+    implementation("com.ryderbelserion.cluster", "cluster-bukkit", "0.3") {
+        exclude("com.ryderbelserion.cluster", "cluster-api")
+    }
 
     implementation("dev.triumphteam", "triumph-cmd-bukkit", "2.0.0-SNAPSHOT")
 

@@ -6,7 +6,6 @@ import us.crazycrew.crazycrates.paper.api.FileManager;
 import us.crazycrew.crazycrates.paper.api.managers.CosmicCrateManager;
 import us.crazycrew.crazycrates.paper.api.managers.CrateManager;
 import us.crazycrew.crazycrates.common.crates.CrateHologram;
-import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesPlugin;
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
 import com.ryderbelserion.cluster.api.adventure.FancyLogger;
 import de.tr7zw.changeme.nbtapi.NBTItem;
@@ -20,6 +19,7 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
+import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -54,9 +54,9 @@ public class Crate {
     private final CrateHologram hologram;
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
-    private final @NotNull CrazyCratesPlugin cratesPlugin = null;
-    private final @NotNull FileManager fileManager = this.cratesPlugin.getFileManager();
-    private final @NotNull Methods methods = this.cratesPlugin.getMethods();
+    private final @NotNull CrazyCratesLoader cratesLoader = this.plugin.getCratesLoader();
+    private final @NotNull FileManager fileManager = this.cratesLoader.getFileManager();
+    private final @NotNull Methods methods = this.cratesLoader.getMethods();
 
     private final int maxMassOpen;
     private final int requiredKeys;
@@ -347,7 +347,7 @@ public class Crate {
      * @return The preview as an Inventory object.
      */
     public Inventory getPreview(UUID uuid) {
-        return getPreview(uuid, this.cratesPlugin.getMenuManager().getPage(uuid));
+        return getPreview(uuid, this.cratesLoader.getMenuManager().getPage(uuid));
     }
     
     /**
@@ -355,7 +355,7 @@ public class Crate {
      * @return The preview as an Inventory object.
      */
     public Inventory getPreview(UUID uuid, int page) {
-        Inventory inventory = this.plugin.getServer().createInventory(null, !borderToggle && (this.cratesPlugin.getMenuManager().playerInMenu(uuid) || maxPage > 1) && maxSlots == 9 ? maxSlots + 9 : maxSlots, previewName);
+        Inventory inventory = this.plugin.getServer().createInventory(null, !borderToggle && (this.cratesLoader.getMenuManager().playerInMenu(uuid) || maxPage > 1) && maxSlots == 9 ? maxSlots + 9 : maxSlots, previewName);
         setDefaultItems(inventory, uuid);
 
         for (ItemStack item : getPageItems(page)) {
@@ -623,20 +623,20 @@ public class Crate {
             }
         }
 
-        int page =  this.cratesPlugin.getMenuManager().getPage(uuid);
+        int page =  this.cratesLoader.getMenuManager().getPage(uuid);
 
-        if ( this.cratesPlugin.getMenuManager().playerInMenu(uuid)) inventory.setItem(getAbsoluteItemPosition(4),  this.cratesPlugin.getMenuManager().getMenuButton());
+        if ( this.cratesLoader.getMenuManager().playerInMenu(uuid)) inventory.setItem(getAbsoluteItemPosition(4),  this.cratesLoader.getMenuManager().getMenuButton());
 
         if (page == 1) {
             if (borderToggle) inventory.setItem(getAbsoluteItemPosition(3), boarderItem.build());
         } else {
-            inventory.setItem(getAbsoluteItemPosition(3),  this.cratesPlugin.getMenuManager().getBackButton(uuid));
+            inventory.setItem(getAbsoluteItemPosition(3),  this.cratesLoader.getMenuManager().getBackButton(uuid));
         }
 
         if (page == maxPage) {
             if (borderToggle) inventory.setItem(getAbsoluteItemPosition(5), boarderItem.build());
         } else {
-            inventory.setItem(getAbsoluteItemPosition(5),  this.cratesPlugin.getMenuManager().getNextButton(uuid));
+            inventory.setItem(getAbsoluteItemPosition(5),  this.cratesLoader.getMenuManager().getNextButton(uuid));
         }
     }
 }

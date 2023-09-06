@@ -3,7 +3,6 @@ package us.crazycrew.crazycrates.paper.cratetypes;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.Methods;
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
-import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesPlugin;
 import us.crazycrew.crazycrates.api.enums.types.KeyType;
 import us.crazycrew.crazycrates.paper.api.interfaces.HologramController;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
@@ -13,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
+import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.UUID;
@@ -20,9 +20,9 @@ import java.util.UUID;
 public class FireCracker {
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
-    private final @NotNull CrazyCratesPlugin cratesPlugin = null;
-    private final @NotNull CrazyManager crazyManager = this.cratesPlugin.getCrazyManager();
-    private final @NotNull Methods methods = this.cratesPlugin.getMethods();
+    private final @NotNull CrazyCratesLoader cratesLoader = this.plugin.getCratesLoader();
+    private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
+    private final @NotNull Methods methods = this.cratesLoader.getMethods();
     
     public void startFireCracker(UUID uuid, final Crate crate, KeyType keyType, final Location loc, HologramController hologramController) {
         if (!crazyManager.takeKeys(1, uuid, crate, keyType, true)) {

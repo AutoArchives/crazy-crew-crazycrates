@@ -1,11 +1,14 @@
 package us.crazycrew.crazycrates.paper.api.enums.settings;
 
+import org.bukkit.plugin.java.JavaPlugin;
+import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.Methods;
 import us.crazycrew.crazycrates.paper.api.FileManager;
-import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesPlugin;
 import com.ryderbelserion.cluster.api.adventure.FancyLogger;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.jetbrains.annotations.NotNull;
+import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -112,8 +115,9 @@ public enum Messages {
         this.defaultListMessage = defaultListMessage;
     }
 
-    private static final @NotNull CrazyCratesPlugin cratesPlugin = null;
-    private static final @NotNull Methods methods = cratesPlugin.getMethods();
+    private static final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
+    private static final @NotNull CrazyCratesLoader cratesLoader = plugin.getCratesLoader();
+    private static final @NotNull Methods methods = cratesLoader.getMethods();
 
     /**
      * A method that will "convert" a StringList meaning it'll loop

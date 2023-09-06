@@ -3,17 +3,17 @@ package us.crazycrew.crazycrates.api;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
-public class ApiProvider {
+public class CrazyCratesProvider {
 
     @ApiStatus.Internal
-    private ApiProvider() {
+    private CrazyCratesProvider() {
         throw new UnsupportedOperationException("This class cannot be instantiated");
     }
 
     private static CrazyCrates plugin = null;
 
     public static @NotNull CrazyCrates get() {
-        CrazyCrates instance = ApiProvider.plugin;
+        CrazyCrates instance = CrazyCratesProvider.plugin;
 
         if (instance == null) throw new NotYetAvailable();
 
@@ -21,17 +21,17 @@ public class ApiProvider {
     }
 
     @ApiStatus.Internal
-    static void start(CrazyCrates plugin) {
-        if (ApiProvider.plugin != null) return;
+    public static void start(CrazyCrates plugin) {
+        if (CrazyCratesProvider.plugin != null) return;
 
-        ApiProvider.plugin = plugin;
+        CrazyCratesProvider.plugin = plugin;
     }
 
     @ApiStatus.Internal
-    static void stop() {
-        if (ApiProvider.plugin == null) return;
+    public static void stop() {
+        if (CrazyCratesProvider.plugin == null) return;
 
-        ApiProvider.plugin = null;
+        CrazyCratesProvider.plugin = null;
     }
 
     private static final class NotYetAvailable extends IllegalStateException {

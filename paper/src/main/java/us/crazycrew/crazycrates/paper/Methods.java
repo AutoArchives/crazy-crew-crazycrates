@@ -365,7 +365,7 @@ public class Methods {
         if (player == null) return;
 
         if (prize != null) {
-            //this.cratesPlugin.getCrazyManager().givePrize(uuid, prize, crate);
+            //this.cratesLoader.getCrazyManager().givePrize(uuid, prize, crate);
 
             if (prize.useFireworks()) firework(player.getLocation().add(0, 1, 0));
 

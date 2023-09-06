@@ -18,11 +18,11 @@ public class ConfigManager {
 
     public void load() {
         // Create the plugin-support.yml file.
-        File pluginConfig = new File(this.dataFolder, "plugin-config.yml");
+        File pluginConfigFile = new File(this.dataFolder, "plugin-config.yml");
 
         // Bind it to settings manager
         this.pluginConfig = SettingsManagerBuilder
-                .withYamlFile(pluginConfig)
+                .withYamlFile(pluginConfigFile)
                 .useDefaultMigrationService()
                 .configurationData(createPluginConfig())
                 .create();

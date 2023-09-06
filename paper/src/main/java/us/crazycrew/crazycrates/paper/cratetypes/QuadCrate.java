@@ -7,7 +7,7 @@ import us.crazycrew.crazycrates.paper.api.managers.QuadCrateManager;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
 import us.crazycrew.crazycrates.paper.api.objects.ItemBuilder;
 import us.crazycrew.crazycrates.paper.api.objects.Prize;
-import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesPlugin;
+import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
 import us.crazycrew.crazycrates.paper.support.structures.blocks.ChestManager;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import org.bukkit.Location;
@@ -39,9 +39,9 @@ import java.util.UUID;
 public class QuadCrate implements Listener {
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
-    private final @NotNull CrazyCratesPlugin cratesPlugin = null;
-    private final @NotNull CrazyManager crazyManager = this.cratesPlugin.getCrazyManager();
-    private final @NotNull ChestManager chestManager = this.cratesPlugin.getChestManager();
+    private final @NotNull CrazyCratesLoader cratesLoader = this.plugin.getCratesLoader();
+    private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
+    private final @NotNull ChestManager chestManager = this.cratesLoader.getChestManager();
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {

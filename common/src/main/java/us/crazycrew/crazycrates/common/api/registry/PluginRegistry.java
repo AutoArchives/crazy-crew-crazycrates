@@ -1,6 +1,7 @@
-package us.crazycrew.crazycrates.common.api;
+package us.crazycrew.crazycrates.common.api.registry;
 
-import us.crazycrew.crazycrates.api.ApiProvider;
+import org.jetbrains.annotations.ApiStatus;
+import us.crazycrew.crazycrates.api.CrazyCratesProvider;
 import us.crazycrew.crazycrates.api.CrazyCrates;
 import java.lang.reflect.Method;
 
@@ -11,17 +12,17 @@ public class PluginRegistry {
 
     static {
         try {
-            start = ApiProvider.class.getDeclaredMethod("start", CrazyCrates.class);
+            start = CrazyCratesProvider.class.getDeclaredMethod("start", CrazyCrates.class);
             start.setAccessible(true);
 
-            stop = ApiProvider.class.getDeclaredMethod("stop");
+            stop = CrazyCratesProvider.class.getDeclaredMethod("stop");
             stop.setAccessible(true);
         } catch (NoSuchMethodException exception) {
             throw new ExceptionInInitializerError(exception);
         }
     }
 
-    //@ApiStatus.Internal
+    @ApiStatus.Internal
     public static void start(CrazyCrates plugin) {
         try {
             start.invoke(null, plugin);
@@ -30,7 +31,7 @@ public class PluginRegistry {
         }
     }
 
-    //@ApiStatus.Internal
+    @ApiStatus.Internal
     public static void stop() {
         try {
             stop.invoke(null);

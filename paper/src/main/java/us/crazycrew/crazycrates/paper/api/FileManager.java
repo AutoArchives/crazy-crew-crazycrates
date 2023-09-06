@@ -1,12 +1,13 @@
 package us.crazycrew.crazycrates.paper.api;
 
 import us.crazycrew.crazycrates.paper.CrazyCrates;
-import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesPlugin;
 import com.ryderbelserion.cluster.api.adventure.FancyLogger;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
+import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -341,8 +342,9 @@ public class FileManager {
         private final String fileJar;
         private final String fileLocation;
 
-        private final @NotNull CrazyCratesPlugin cratesPlugin = null;
-        private final @NotNull FileManager fileManager = this.cratesPlugin.getFileManager();
+        private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
+        private final @NotNull CrazyCratesLoader cratesLoader = this.plugin.getCratesLoader();
+        private final @NotNull FileManager fileManager = this.cratesLoader.getFileManager();
 
         /**
          * The files that the server will try and load.

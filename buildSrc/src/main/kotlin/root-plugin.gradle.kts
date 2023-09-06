@@ -6,6 +6,12 @@ plugins {
 }
 
 repositories {
+    maven("https://repo.crazycrew.us/first-party/")
+
+    maven("https://repo.crazycrew.us/third-party/")
+
+    maven("https://repo.crazycrew.us/releases/")
+
     maven("https://jitpack.io")
 
     mavenCentral()
@@ -29,7 +35,7 @@ publishing {
     repositories {
         maven {
             val releases = "https://repo.crazycrew.us/releases/"
-            val snapshots = "https://repo.crazycrew.us/snapshots"
+            val snapshots = "https://repo.crazycrew.us/snapshots/"
 
             url = if (!isSnapshot) uri(releases) else uri(snapshots)
 
