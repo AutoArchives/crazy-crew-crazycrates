@@ -43,8 +43,6 @@ dependencies {
 
     implementation("dev.triumphteam", "triumph-cmd-bukkit", "2.0.0-SNAPSHOT")
 
-    implementation("com.zaxxer", "HikariCP", "5.0.1")
-
     compileOnly(fileTree("libs").include("*.jar"))
 
     compileOnly("me.filoghost.holographicdisplays", "holographicdisplays-api", "3.0.0")
@@ -58,27 +56,12 @@ dependencies {
     compileOnly("me.clip", "placeholderapi", "2.11.3")
 }
 
-val component: SoftwareComponent = components["java"]
-
 tasks {
-    publishing {
-        publications {
-            create<MavenPublication>("maven") {
-                groupId = project.group.toString()
-                artifactId = "${rootProject.name.lowercase()}-${project.name.lowercase()}-api"
-                version = rootProject.version.toString()
-
-                from(component)
-            }
-        }
-    }
-
     shadowJar {
         listOf(
             "ch.jalu",
             "de.tr7zw",
-            "org.bstats",
-            "com.zaxxer"
+            "org.bstats"
         ).forEach {
             relocate(it, "libs.$it")
         }

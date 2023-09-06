@@ -11,20 +11,6 @@ dependencies {
     api("ch.jalu", "configme", "1.4.1") {
         exclude("org.yaml", "snakeyaml")
     }
-}
 
-val component: SoftwareComponent = components["java"]
-
-tasks {
-    publishing {
-        publications {
-            create<MavenPublication>("maven") {
-                groupId = project.group.toString()
-                artifactId = "${rootProject.name.lowercase()}-${project.name.lowercase()}-api"
-                version = project.version.toString()
-
-                from(component)
-            }
-        }
-    }
+    //api("com.zaxxer", "HikariCP", "5.0.1")
 }
