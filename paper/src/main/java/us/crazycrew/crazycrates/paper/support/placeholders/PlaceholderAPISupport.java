@@ -4,7 +4,6 @@ import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
 import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesPlugin;
-import us.crazycrew.crazycrates.paper.api.plugin.registry.CrazyCratesProvider;
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.OfflinePlayer;
@@ -16,8 +15,8 @@ import java.text.NumberFormat;
 public class PlaceholderAPISupport extends PlaceholderExpansion {
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
-    private final @NotNull CrazyCratesPlugin cratesPlugin = CrazyCratesProvider.get();
-    private final @NotNull CrazyManager crazyManager = this.cratesPlugin.getCrazyManager();
+    private final @NotNull CrazyCratesPlugin cratesPlugin = null;
+    private final @NotNull CrazyManager crazyManager = null;
     
     @Override
     public String onRequest(OfflinePlayer player, @NotNull String identifier) {

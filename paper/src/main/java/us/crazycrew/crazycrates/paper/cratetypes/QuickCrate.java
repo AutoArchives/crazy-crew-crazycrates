@@ -8,9 +8,8 @@ import us.crazycrew.crazycrates.paper.api.interfaces.HologramController;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
 import us.crazycrew.crazycrates.paper.api.objects.Prize;
 import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesPlugin;
-import us.crazycrew.crazycrates.paper.api.plugin.registry.CrazyCratesProvider;
 import us.crazycrew.crazycrates.paper.listeners.CrateControlListener;
-import us.crazycrew.crazycrates.paper.support.structures.blocks.ChestStateHandler;
+import us.crazycrew.crazycrates.paper.support.structures.blocks.ChestManager;
 import us.crazycrew.crazycrates.api.enums.types.KeyType;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -21,15 +20,17 @@ import org.bukkit.event.inventory.InventoryPickupItemEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
+import java.util.UUID;
 
 public class QuickCrate implements Listener {
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
-    private final @NotNull CrazyCratesPlugin cratesPlugin = CrazyCratesProvider.get();
+    private final @NotNull CrazyCratesPlugin cratesPlugin = null;
     private final @NotNull CrazyManager crazyManager = this.cratesPlugin.getCrazyManager();
-    private final @NotNull ChestStateHandler chestStateHandler = this.cratesPlugin.getChestManager();
+    private final @NotNull ChestManager chestManager = this.cratesPlugin.getChestManager();
     private final @NotNull Methods methods = this.cratesPlugin.getMethods();
 
     private final ArrayList<Entity> allRewards = new ArrayList<>();
@@ -86,7 +87,7 @@ public class QuickCrate implements Listener {
             rewards.remove(uuid);
         }
 
-        chestStateHandler.closeChest(loc.getBlock(), false);
+        chestManager.closeChest(loc.getBlock(), false);
         CrateControlListener.inUse.remove(uuid);
         crazyManager.removePlayerFromOpeningList(uuid);
 
@@ -96,7 +97,7 @@ public class QuickCrate implements Listener {
     }
     
     public void removeAllRewards() {
-        allRewards.stream().filter(Objects :: nonNull).forEach(Entity :: remove);
+        allRewards.stream().filter(Objects::nonNull).forEach(Entity :: remove);
     }
     
     @EventHandler

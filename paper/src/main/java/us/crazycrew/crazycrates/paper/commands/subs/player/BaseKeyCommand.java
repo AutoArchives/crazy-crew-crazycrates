@@ -4,7 +4,6 @@ import us.crazycrew.crazycrates.paper.api.CrazyManager;
 import us.crazycrew.crazycrates.paper.api.enums.settings.Messages;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
 import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesPlugin;
-import us.crazycrew.crazycrates.paper.api.plugin.registry.CrazyCratesProvider;
 import com.google.common.collect.Lists;
 import dev.triumphteam.cmd.bukkit.annotation.Permission;
 import dev.triumphteam.cmd.core.BaseCommand;
@@ -12,7 +11,6 @@ import dev.triumphteam.cmd.core.annotation.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +19,7 @@ import java.util.UUID;
 @Command(value = "keys", alias = {"key"})
 public class BaseKeyCommand extends BaseCommand {
 
-    private final @NotNull CrazyCratesPlugin cratesPlugin = CrazyCratesProvider.get();
+    private final @NotNull CrazyCratesPlugin cratesPlugin = null;
     private final @NotNull CrazyManager crazyManager = this.cratesPlugin.getCrazyManager();
 
     @Default

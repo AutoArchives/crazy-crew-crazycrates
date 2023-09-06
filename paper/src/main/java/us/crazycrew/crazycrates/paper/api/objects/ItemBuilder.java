@@ -1,14 +1,17 @@
 package us.crazycrew.crazycrates.paper.api.objects;
 
+import org.bukkit.Color;
+import org.bukkit.DyeColor;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.Registry;
 import us.crazycrew.crazycrates.paper.Methods;
 import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesPlugin;
-import us.crazycrew.crazycrates.paper.api.plugin.registry.CrazyCratesProvider;
 import us.crazycrew.crazycrates.paper.support.SkullCreator;
 import us.crazycrew.crazycrates.paper.support.libraries.PluginSupport;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import dev.lone.itemsadder.api.CustomStack;
 import io.th0rgal.oraxen.api.OraxenItems;
-import org.bukkit.*;
 import org.bukkit.block.Banner;
 import org.bukkit.block.banner.Pattern;
 import org.bukkit.block.banner.PatternType;
@@ -25,12 +28,16 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class ItemBuilder {
 
-    private final @NotNull CrazyCratesPlugin cratesPlugin = CrazyCratesProvider.get();
+    private final @NotNull CrazyCratesPlugin cratesPlugin = null;
     private final @NotNull Methods methods = this.cratesPlugin.getMethods();
 
     private NBTItem nbtItem;
@@ -943,33 +950,6 @@ public class ItemBuilder {
      */
     public ItemBuilder setGlow(boolean glow) {
         this.glowing = glow;
-        return this;
-    }
-
-    /**
-     * The text that will be displayed on the item.
-     *
-     * @param texture The skull texture.
-     * @param profileUUID The uuid of the profile.
-     * @return The ItemBuilder.
-     */
-    public ItemBuilder texture(String texture, UUID profileUUID) {
-        return this;
-    }
-
-    /**
-     * @param texture The skull texture.
-     * @return The ItemBuilder.
-     */
-    public ItemBuilder texture(String texture) {
-        return this;
-    }
-
-    /**
-     * @param texture The owner of the skull.
-     * @return The ItemBuilder.
-     */
-    public ItemBuilder owner(String texture) {
         return this;
     }
 

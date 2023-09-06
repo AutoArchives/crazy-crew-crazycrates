@@ -3,12 +3,15 @@ package us.crazycrew.crazycrates.paper.api.enums.settings;
 import us.crazycrew.crazycrates.paper.Methods;
 import us.crazycrew.crazycrates.paper.api.FileManager;
 import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesPlugin;
-import us.crazycrew.crazycrates.paper.api.plugin.registry.CrazyCratesProvider;
 import com.ryderbelserion.cluster.api.adventure.FancyLogger;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 public enum Messages {
@@ -109,7 +112,7 @@ public enum Messages {
         this.defaultListMessage = defaultListMessage;
     }
 
-    private static final @NotNull CrazyCratesPlugin cratesPlugin = CrazyCratesProvider.get();
+    private static final @NotNull CrazyCratesPlugin cratesPlugin = null;
     private static final @NotNull Methods methods = cratesPlugin.getMethods();
 
     /**

@@ -3,7 +3,7 @@ plugins {
 }
 
 project.group = "${rootProject.group}.common"
-
+project.version = "${rootProject.version}"
 
 dependencies {
     api(project(":api"))

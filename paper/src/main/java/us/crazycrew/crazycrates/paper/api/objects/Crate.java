@@ -5,9 +5,8 @@ import us.crazycrew.crazycrates.paper.Methods;
 import us.crazycrew.crazycrates.paper.api.FileManager;
 import us.crazycrew.crazycrates.paper.api.managers.CosmicCrateManager;
 import us.crazycrew.crazycrates.paper.api.managers.CrateManager;
-import us.crazycrew.crazycrates.common.objects.CrateHologram;
+import us.crazycrew.crazycrates.common.crates.CrateHologram;
 import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesPlugin;
-import us.crazycrew.crazycrates.paper.api.plugin.registry.CrazyCratesProvider;
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
 import com.ryderbelserion.cluster.api.adventure.FancyLogger;
 import de.tr7zw.changeme.nbtapi.NBTItem;
@@ -21,7 +20,12 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
 public class Crate {
     
@@ -50,7 +54,7 @@ public class Crate {
     private final CrateHologram hologram;
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
-    private final @NotNull CrazyCratesPlugin cratesPlugin = CrazyCratesProvider.get();
+    private final @NotNull CrazyCratesPlugin cratesPlugin = null;
     private final @NotNull FileManager fileManager = this.cratesPlugin.getFileManager();
     private final @NotNull Methods methods = this.cratesPlugin.getMethods();
 

@@ -6,7 +6,6 @@ import us.crazycrew.crazycrates.paper.api.CrazyManager;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
 import us.crazycrew.crazycrates.paper.api.objects.Prize;
 import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesPlugin;
-import us.crazycrew.crazycrates.paper.api.plugin.registry.CrazyCratesProvider;
 import us.crazycrew.crazycrates.api.enums.types.KeyType;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -21,7 +20,7 @@ import java.util.UUID;
 public class Roulette implements Listener {
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
-    private final @NotNull CrazyCratesPlugin cratesPlugin = CrazyCratesProvider.get();
+    private final @NotNull CrazyCratesPlugin cratesPlugin = null;
     private final @NotNull CrazyManager crazyManager = this.cratesPlugin.getCrazyManager();
     private final @NotNull Methods methods = this.cratesPlugin.getMethods();
     

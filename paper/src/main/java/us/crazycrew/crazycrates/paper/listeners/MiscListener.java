@@ -2,7 +2,7 @@ package us.crazycrew.crazycrates.paper.listeners;
 
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
 import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesPlugin;
-import us.crazycrew.crazycrates.paper.api.plugin.registry.CrazyCratesProvider;
+
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,7 +16,7 @@ import java.util.UUID;
 
 public class MiscListener implements Listener {
 
-    private final @NotNull CrazyCratesPlugin cratesPlugin = CrazyCratesProvider.get();
+    private final @NotNull CrazyCratesPlugin cratesPlugin = null;
     private final @NotNull CrazyManager crazyManager = this.cratesPlugin.getCrazyManager();
 
     @EventHandler

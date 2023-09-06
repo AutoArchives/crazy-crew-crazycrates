@@ -1,5 +1,11 @@
 package us.crazycrew.crazycrates.paper.commands.subs;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.Sound;
+import org.bukkit.World;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.Methods;
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
@@ -14,7 +20,6 @@ import us.crazycrew.crazycrates.paper.api.objects.Prize;
 import us.crazycrew.crazycrates.common.enums.Permissions;
 import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
 import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesPlugin;
-import us.crazycrew.crazycrates.paper.api.plugin.registry.CrazyCratesProvider;
 import us.crazycrew.crazycrates.paper.listeners.CrateControlListener;
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
 import us.crazycrew.crazycrates.api.enums.types.KeyType;
@@ -22,7 +27,6 @@ import com.ryderbelserion.cluster.api.adventure.FancyLogger;
 import dev.triumphteam.cmd.bukkit.annotation.Permission;
 import dev.triumphteam.cmd.core.BaseCommand;
 import dev.triumphteam.cmd.core.annotation.*;
-import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -32,7 +36,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-
 import java.util.HashMap;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -41,7 +44,7 @@ import java.util.concurrent.CompletableFuture;
 public class CrateBaseCommand extends BaseCommand {
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
-    private final @NotNull CrazyCratesPlugin cratesPlugin = CrazyCratesProvider.get();
+    private final @NotNull CrazyCratesPlugin cratesPlugin = null;
     private final @NotNull FileManager fileManager = this.cratesPlugin.getFileManager();
     private final @NotNull CrazyManager crazyManager = this.cratesPlugin.getCrazyManager();
     private final @NotNull EventLogger eventLogger = this.cratesPlugin.getEventLogger();
@@ -216,13 +219,13 @@ public class CrateBaseCommand extends BaseCommand {
 
         for (String name : FileManager.Files.LOCATIONS.getFile().getConfigurationSection("Locations").getKeys(false)) {
             if (name.equalsIgnoreCase(id)) {
-                World W = plugin.getServer().getWorld(FileManager.Files.LOCATIONS.getFile().getString("Locations." + name + ".World"));
+                World world = plugin.getServer().getWorld(FileManager.Files.LOCATIONS.getFile().getString("Locations." + name + ".World"));
 
-                int X = FileManager.Files.LOCATIONS.getFile().getInt("Locations." + name + ".X");
-                int Y = FileManager.Files.LOCATIONS.getFile().getInt("Locations." + name + ".Y");
-                int Z = FileManager.Files.LOCATIONS.getFile().getInt("Locations." + name + ".Z");
+                int x = FileManager.Files.LOCATIONS.getFile().getInt("Locations." + name + ".X");
+                int y = FileManager.Files.LOCATIONS.getFile().getInt("Locations." + name + ".Y");
+                int z = FileManager.Files.LOCATIONS.getFile().getInt("Locations." + name + ".Z");
 
-                Location loc = new Location(W, X, Y, Z);
+                Location loc = new Location(world, x, y, z);
 
                 player.teleport(loc.add(.5, 0, .5));
                 player.sendMessage(methods.color(methods.getPrefix() + "&7You have been teleported to &6" + name + "&7."));
@@ -510,7 +513,7 @@ public class CrateBaseCommand extends BaseCommand {
         private static final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
 
         public @NotNull OfflinePlayer getOfflinePlayer() {
-            CompletableFuture<UUID> future = CompletableFuture.supplyAsync(() -> Bukkit.getServer().getOfflinePlayer(name)).thenApply(OfflinePlayer::getUniqueId);
+            CompletableFuture<UUID> future = CompletableFuture.supplyAsync(() -> plugin.getServer().getOfflinePlayer(name)).thenApply(OfflinePlayer::getUniqueId);
 
             return plugin.getServer().getOfflinePlayer(future.join());
         }

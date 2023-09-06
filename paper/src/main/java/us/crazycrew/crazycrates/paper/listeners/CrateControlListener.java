@@ -9,7 +9,6 @@ import us.crazycrew.crazycrates.paper.api.enums.settings.Messages;
 import us.crazycrew.crazycrates.paper.api.events.PhysicalCrateKeyCheckEvent;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
 import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesPlugin;
-import us.crazycrew.crazycrates.paper.api.plugin.registry.CrazyCratesProvider;
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
 import us.crazycrew.crazycrates.api.enums.types.KeyType;
 import us.crazycrew.crazycrates.paper.api.objects.CrateLocation;
@@ -42,7 +41,7 @@ public class CrateControlListener implements Listener { // Crate Control
     public static HashMap<UUID, Location> inUse = new HashMap<>();
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
-    private final @NotNull CrazyCratesPlugin cratesPlugin = CrazyCratesProvider.get();
+    private final @NotNull CrazyCratesPlugin cratesPlugin = null;
     private final @NotNull CrazyManager crazyManager = this.cratesPlugin.getCrazyManager();
     private final @NotNull Methods methods = this.cratesPlugin.getMethods();
     

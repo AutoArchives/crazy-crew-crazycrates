@@ -5,7 +5,6 @@ import us.crazycrew.crazycrates.paper.api.FileManager;
 import us.crazycrew.crazycrates.paper.api.enums.BrokeLocation;
 import us.crazycrew.crazycrates.paper.api.objects.CrateLocation;
 import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesPlugin;
-import us.crazycrew.crazycrates.paper.api.plugin.registry.CrazyCratesProvider;
 import com.ryderbelserion.cluster.api.adventure.FancyLogger;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
@@ -16,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 // Only use for this class is to check if for broken locations and to try and fix them when the server loads the world.
 public class BrokeLocationsListener implements Listener {
 
-    private final @NotNull CrazyCratesPlugin cratesPlugin = CrazyCratesProvider.get();
+    private final @NotNull CrazyCratesPlugin cratesPlugin = null;
     private final @NotNull FileManager fileManager = this.cratesPlugin.getFileManager();
     private final @NotNull CrazyManager crazyManager = this.cratesPlugin.getCrazyManager();
     

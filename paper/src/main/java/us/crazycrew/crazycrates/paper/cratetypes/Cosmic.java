@@ -11,7 +11,6 @@ import us.crazycrew.crazycrates.paper.api.objects.Crate;
 import us.crazycrew.crazycrates.paper.api.objects.Prize;
 import us.crazycrew.crazycrates.paper.api.objects.Tier;
 import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesPlugin;
-import us.crazycrew.crazycrates.paper.api.plugin.registry.CrazyCratesProvider;
 import us.crazycrew.crazycrates.api.enums.types.KeyType;
 import com.ryderbelserion.cluster.api.adventure.FancyLogger;
 import de.tr7zw.changeme.nbtapi.NBTItem;
@@ -35,7 +34,7 @@ import java.util.UUID;
 public class Cosmic implements Listener {
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
-    private final @NotNull CrazyCratesPlugin cratesPlugin = CrazyCratesProvider.get();
+    private final @NotNull CrazyCratesPlugin cratesPlugin = null;
     private final @NotNull CrazyManager crazyManager = this.cratesPlugin.getCrazyManager();
     private final @NotNull Methods methods = this.cratesPlugin.getMethods();
 

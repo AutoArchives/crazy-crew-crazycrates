@@ -1,5 +1,14 @@
 package us.crazycrew.crazycrates.paper;
 
+import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Color;
+import org.bukkit.FireworkEffect;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Entity;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import us.crazycrew.crazycrates.common.enums.Permissions;
 import us.crazycrew.crazycrates.paper.api.FileManager;
 import us.crazycrew.crazycrates.paper.api.enums.settings.Messages;
@@ -7,13 +16,9 @@ import us.crazycrew.crazycrates.paper.api.events.PlayerPrizeEvent;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
 import us.crazycrew.crazycrates.paper.api.objects.ItemBuilder;
 import us.crazycrew.crazycrates.paper.api.objects.Prize;
-import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesPlugin;
-import us.crazycrew.crazycrates.paper.api.plugin.registry.CrazyCratesProvider;
-import us.crazycrew.crazycrates.paper.listeners.FireworkDamageListener;
 import com.ryderbelserion.cluster.api.adventure.FancyLogger;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.RemoteConsoleCommandSender;
@@ -27,8 +32,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import static java.util.regex.Matcher.quoteReplacement;
@@ -38,9 +47,7 @@ public class Methods {
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
 
-    private final @NotNull CrazyCratesPlugin cratesPlugin = CrazyCratesProvider.get();
-
-    public final static Pattern HEX_PATTERN = Pattern.compile("#[a-fA-F\\d]{6}");
+    public final Pattern HEX_PATTERN = Pattern.compile("#[a-fA-F\\d]{6}");
 
     public String color(String message) {
         Matcher matcher = HEX_PATTERN.matcher(message);
@@ -99,9 +106,20 @@ public class Methods {
         fm.addEffects(FireworkEffect.builder().with(FireworkEffect.Type.BALL_LARGE).withColor(Color.RED).withColor(Color.AQUA).withColor(Color.ORANGE).withColor(Color.YELLOW).trail(false).flicker(false).build());
         fm.setPower(0);
         fw.setFireworkMeta(fm);
-        FireworkDamageListener.addFirework(fw);
+        addFirework(fw);
 
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, fw :: detonate, 2);
+    }
+
+    /**
+     * @param firework The firework you want to add.
+     */
+    private void addFirework(Entity firework) {
+        NamespacedKey noDamage = new NamespacedKey(plugin, "no-damage");
+
+        PersistentDataContainer container = firework.getPersistentDataContainer();
+
+        container.set(noDamage, PersistentDataType.STRING, "no-damage");
     }
 
     public void firework(Location loc, Color color) {
@@ -110,7 +128,7 @@ public class Methods {
         fm.addEffects(FireworkEffect.builder().with(FireworkEffect.Type.BALL).withColor(color).withColor(color).trail(false).flicker(false).build());
         fm.setPower(0);
         fw.setFireworkMeta(fm);
-        FireworkDamageListener.addFirework(fw);
+        addFirework(fw);
 
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, fw :: detonate, 2);
     }
@@ -157,7 +175,7 @@ public class Methods {
         return player.getInventory().firstEmpty() == -1;
     }
 
-    public Integer randomNumber(int min, int max) {
+    public int randomNumber(int min, int max) {
         return min + new Random().nextInt(max - min);
     }
 
@@ -168,7 +186,7 @@ public class Methods {
                 isSimilarCustom(crate.getKeyNoNBT(), itemStack) || (nbtItem.hasKey("CrazyCrates-Crate") && crate.getName().equals(nbtItem.getString("CrazyCrates-Crate")));
     }
 
-    private static boolean isSimilarCustom(ItemStack one, ItemStack two) {
+    private boolean isSimilarCustom(ItemStack one, ItemStack two) {
         if (one != null && two != null) {
             if (one.getType() == two.getType()) {
                 if (one.hasItemMeta() && two.hasItemMeta()) {
@@ -216,7 +234,7 @@ public class Methods {
         return false;
     }
 
-    private static ItemStack stripNBT(ItemStack item) {
+    private ItemStack stripNBT(ItemStack item) {
         try {
             NBTItem nbtItem = new NBTItem(item.clone());
 
@@ -252,7 +270,7 @@ public class Methods {
         return null;
     }
 
-    private static String stripEnchantmentName(String enchantmentName) {
+    private String stripEnchantmentName(String enchantmentName) {
         return enchantmentName != null ? enchantmentName.replace("-", "").replace("_", "").replace(" ", "") : null;
     }
 
@@ -347,7 +365,7 @@ public class Methods {
         if (player == null) return;
 
         if (prize != null) {
-            this.cratesPlugin.getCrazyManager().givePrize(uuid, prize, crate);
+            //this.cratesPlugin.getCrazyManager().givePrize(uuid, prize, crate);
 
             if (prize.useFireworks()) firework(player.getLocation().add(0, 1, 0));
 

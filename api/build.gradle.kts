@@ -2,7 +2,8 @@ plugins {
     id("root-plugin")
 }
 
-project.group = "${rootProject.group}.api"
+project.group = "${rootProject.group}"
+project.version = "${rootProject.version}"
 
 dependencies {
     compileOnly("org.jetbrains", "annotations", "23.1.0")

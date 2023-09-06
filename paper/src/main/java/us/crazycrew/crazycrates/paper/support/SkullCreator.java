@@ -1,5 +1,6 @@
 package us.crazycrew.crazycrates.paper.support;
 
+import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -8,7 +9,6 @@ import org.bukkit.block.Skull;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.java.JavaPlugin;
-
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Base64;
@@ -23,7 +23,7 @@ import java.util.UUID;
  */
 public class SkullCreator {
 
-    private static final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
+    private static final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
     
     /**
      * Creates a player skull based on a player's name.

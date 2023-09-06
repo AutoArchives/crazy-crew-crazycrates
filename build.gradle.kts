@@ -19,7 +19,7 @@ tasks {
             doLast {
                 if (!jarsDir.exists()) jarsDir.mkdirs()
 
-                if (project.name == "core") return@doLast
+                if (project.name == "common" || project.name == "api") return@doLast
 
                 val file = file("${project.layout.buildDirectory}/libs/${rootProject.name}-${rootProject.version}.jar")
 

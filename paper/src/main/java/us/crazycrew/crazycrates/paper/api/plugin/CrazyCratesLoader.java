@@ -10,7 +10,7 @@ import us.crazycrew.crazycrates.common.config.PluginConfig;
 import us.crazycrew.crazycrates.paper.api.plugin.migrate.ConfigValues;
 import us.crazycrew.crazycrates.paper.api.managers.MenuManager;
 import us.crazycrew.crazycrates.paper.support.MetricsHandler;
-import us.crazycrew.crazycrates.paper.support.structures.blocks.ChestStateHandler;
+import us.crazycrew.crazycrates.paper.support.structures.blocks.ChestManager;
 import com.ryderbelserion.cluster.bukkit.BukkitPlugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -26,15 +26,11 @@ public class CrazyCratesLoader extends CrazyCratesPlugin {
     private FileManager fileManager;
     private CrazyManager crazyManager;
     private MenuManager menuManager;
-    private ChestStateHandler chestManager;
+    private ChestManager chestManager;
     private EventLogger eventLogger;
     private Methods methods;
 
-    @Override
     public void enable() {
-        // Must go first.
-        super.enable();
-        
         this.bukkitPlugin = new BukkitPlugin(this.plugin);
         this.bukkitPlugin.enable("<white>[<gradient:#FE5F55:#6b55b5>CrazyCrates</gradient>]</white>");
 
@@ -82,7 +78,7 @@ public class CrazyCratesLoader extends CrazyCratesPlugin {
             this.metricsHandler.start();
         }
 
-        this.chestManager = new ChestStateHandler();
+        this.chestManager = new ChestManager();
         this.eventLogger = new EventLogger();
     }
 
@@ -98,17 +94,14 @@ public class CrazyCratesLoader extends CrazyCratesPlugin {
         }
     }
 
-    @Override
     public void disable() {
         this.crazyManager.reload(true);
 
-        // Disabling the plugin must go last.
-        super.disable();
         this.bukkitPlugin.disable();
     }
 
     @Override
-    public @NotNull ChestStateHandler getChestManager() {
+    public @NotNull ChestManager getChestManager() {
         return this.chestManager;
     }
 

@@ -5,10 +5,9 @@ import us.crazycrew.crazycrates.paper.Methods;
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
 import us.crazycrew.crazycrates.paper.api.enums.settings.Messages;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
-import us.crazycrew.crazycrates.common.quadcrates.CrateParticles;
+import us.crazycrew.crazycrates.common.crates.quadcrates.CrateParticles;
 import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesPlugin;
-import us.crazycrew.crazycrates.paper.api.plugin.registry.CrazyCratesProvider;
-import us.crazycrew.crazycrates.paper.support.structures.blocks.ChestStateHandler;
+import us.crazycrew.crazycrates.paper.support.structures.blocks.ChestManager;
 import us.crazycrew.crazycrates.api.enums.types.KeyType;
 import us.crazycrew.crazycrates.paper.support.structures.QuadCrateSpiralHandler;
 import us.crazycrew.crazycrates.paper.support.structures.StructureHandler;
@@ -24,14 +23,22 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
 
 public class QuadCrateManager {
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
-    private final @NotNull CrazyCratesPlugin cratesPlugin = CrazyCratesProvider.get();
+    private final @NotNull CrazyCratesPlugin cratesPlugin = null;
     private final @NotNull CrazyManager crazyManager = this.cratesPlugin.getCrazyManager();
-    private final @NotNull ChestStateHandler chestStateHandler = this.cratesPlugin.getChestManager();
+    private final @NotNull ChestManager chestManager = this.cratesPlugin.getChestManager();
     private final @NotNull Methods methods = this.cratesPlugin.getMethods();
 
     private static final List<QuadCrateManager> crateSessions = new ArrayList<>();
@@ -225,7 +232,7 @@ public class QuadCrateManager {
                     Block chest = crateLocations.get(crateNumber).getBlock();
 
                     chest.setType(Material.CHEST);
-                    chestStateHandler.rotateChest(chest, crateNumber);
+                    chestManager.rotateChest(chest, crateNumber);
 
                     if (crateNumber == 3) { // Last crate has spawned.
                         crazyManager.endQuadCrate(uuid); // Cancelled when method is called.

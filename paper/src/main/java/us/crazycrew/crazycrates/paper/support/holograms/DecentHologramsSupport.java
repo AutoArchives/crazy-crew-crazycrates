@@ -2,14 +2,12 @@ package us.crazycrew.crazycrates.paper.support.holograms;
 
 import us.crazycrew.crazycrates.paper.api.interfaces.HologramController;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
-import us.crazycrew.crazycrates.common.objects.CrateHologram;
+import us.crazycrew.crazycrates.common.crates.CrateHologram;
 import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesPlugin;
-import us.crazycrew.crazycrates.paper.api.plugin.registry.CrazyCratesProvider;
 import eu.decentsoftware.holograms.api.DHAPI;
 import eu.decentsoftware.holograms.api.holograms.Hologram;
 import org.bukkit.block.Block;
 import org.jetbrains.annotations.NotNull;
-
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -17,7 +15,7 @@ public class DecentHologramsSupport implements HologramController {
 
     private final HashMap<Block, Hologram> holograms = new HashMap<>();
 
-    private final @NotNull CrazyCratesPlugin cratesPlugin = CrazyCratesProvider.get();
+    private final @NotNull CrazyCratesPlugin cratesPlugin = null;
     
     public void createHologram(Block block, Crate crate) {
         CrateHologram crateHologram = crate.getHologram();

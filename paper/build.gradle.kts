@@ -9,6 +9,7 @@ plugins {
 }
 
 project.group = "${rootProject.group}.paper"
+project.version = "${rootProject.version}"
 
 repositories {
     maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
@@ -85,8 +86,6 @@ tasks {
 }
 
 val isSnapshot = rootProject.version.toString().contains("snapshot")
-val type = if (isSnapshot) "beta" else "release"
-val other = if (isSnapshot) "Beta" else "Release"
 
 val file = file("${rootProject.rootDir}/jars/${rootProject.name}-${rootProject.version}.jar")
 
@@ -106,7 +105,7 @@ val description = """
 val versions = listOf(
     "1.20",
     "1.20.1",
-    //"1.20.2"
+    "1.20.2"
 )
 
 modrinth {
@@ -119,7 +118,7 @@ modrinth {
     versionName.set("${rootProject.name} ${rootProject.version}")
     versionNumber.set("${rootProject.version}")
 
-    versionType.set(type)
+    versionType.set(if (isSnapshot) "beta" else "release")
 
     uploadFile.set(file)
 
@@ -136,7 +135,7 @@ hangarPublish {
 
         id.set(rootProject.name)
 
-        channel.set(other)
+        channel.set(if (isSnapshot) "Beta" else "Release")
 
         changelog.set(description)
 

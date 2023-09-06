@@ -2,7 +2,6 @@ package us.crazycrew.crazycrates.paper.api;
 
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesPlugin;
-import us.crazycrew.crazycrates.paper.api.plugin.registry.CrazyCratesProvider;
 import com.ryderbelserion.cluster.api.adventure.FancyLogger;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -342,7 +341,7 @@ public class FileManager {
         private final String fileJar;
         private final String fileLocation;
 
-        private final @NotNull CrazyCratesPlugin cratesPlugin = CrazyCratesProvider.get();
+        private final @NotNull CrazyCratesPlugin cratesPlugin = null;
         private final @NotNull FileManager fileManager = this.cratesPlugin.getFileManager();
 
         /**

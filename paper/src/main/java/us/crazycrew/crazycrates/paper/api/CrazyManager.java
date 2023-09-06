@@ -1,11 +1,16 @@
 package us.crazycrew.crazycrates.paper.api;
 
 import com.Zrips.CMI.Modules.ModuleHandling.CMIModule;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.Registry;
+import org.bukkit.World;
 import us.crazycrew.crazycrates.common.config.PluginConfig;
 import us.crazycrew.crazycrates.paper.api.enums.settings.Messages;
 import us.crazycrew.crazycrates.paper.api.objects.*;
 import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesPlugin;
-import us.crazycrew.crazycrates.paper.api.plugin.registry.CrazyCratesProvider;
 import us.crazycrew.crazycrates.paper.support.holograms.CMIHologramsSupport;
 import us.crazycrew.crazycrates.paper.support.holograms.HolographicDisplaysSupport;
 import us.crazycrew.crazycrates.paper.support.libraries.PluginSupport;
@@ -17,17 +22,15 @@ import us.crazycrew.crazycrates.paper.api.events.PlayerReceiveKeyEvent;
 import us.crazycrew.crazycrates.paper.api.events.PlayerReceiveKeyEvent.KeyReceiveReason;
 import us.crazycrew.crazycrates.paper.api.interfaces.HologramController;
 import us.crazycrew.crazycrates.paper.api.managers.QuadCrateManager;
-import com.badbones69.crazycrates.paper.api.objects.*;
 import us.crazycrew.crazycrates.api.enums.types.KeyType;
 import us.crazycrew.crazycrates.paper.listeners.CrateControlListener;
-import us.crazycrew.crazycrates.common.objects.CrateHologram;
-import us.crazycrew.crazycrates.common.quadcrates.CrateSchematic;
+import us.crazycrew.crazycrates.common.crates.CrateHologram;
+import us.crazycrew.crazycrates.common.crates.quadcrates.CrateSchematic;
 import us.crazycrew.crazycrates.paper.support.holograms.DecentHologramsSupport;
 import us.crazycrew.crazycrates.paper.support.structures.StructureHandler;
 import com.ryderbelserion.cluster.api.adventure.FancyLogger;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import me.clip.placeholderapi.PlaceholderAPI;
-import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
@@ -38,7 +41,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import static java.util.regex.Matcher.quoteReplacement;
 
@@ -46,7 +56,7 @@ public class CrazyManager {
     
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
     
-    private final @NotNull CrazyCratesPlugin cratesPlugin = CrazyCratesProvider.get();
+    private final @NotNull CrazyCratesPlugin cratesPlugin = null;
     private final @NotNull FileManager fileManager = this.cratesPlugin.getFileManager();
     private final @NotNull Methods methods = this.cratesPlugin.getMethods();
 

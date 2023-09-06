@@ -12,7 +12,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.structure.StructureManager;
 import org.bukkit.util.BlockVector;
 import org.jetbrains.annotations.NotNull;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;

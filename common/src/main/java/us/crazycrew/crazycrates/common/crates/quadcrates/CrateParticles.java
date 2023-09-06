@@ -1,4 +1,4 @@
-package us.crazycrew.crazycrates.common.quadcrates;
+package us.crazycrew.crazycrates.common.crates.quadcrates;
 
 public enum CrateParticles {
     
