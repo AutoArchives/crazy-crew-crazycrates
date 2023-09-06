@@ -31,14 +31,11 @@ public class Wheel implements Listener {
     
     private final Map<UUID, HashMap<Integer, ItemStack>> rewards = new HashMap<>();
     
-    public void startWheel(UUID uuid, Crate crate, KeyType keyType, boolean checkHand) {
-        Player player = this.plugin.getServer().getPlayer(uuid);
+    public void startWheel(Player player, Crate crate, KeyType keyType, boolean checkHand) {
+        UUID uuid = player.getUniqueId();
 
-        if (!crazyManager.takeKeys(1, uuid, crate, keyType, checkHand)) {
-            if (player != null) {
-                methods.failedToTakeKey(player.getName() , crate);
-            }
-
+        if (!crazyManager.takeKeys(1, player, crate, keyType, checkHand)) {
+            methods.failedToTakeKey(player.getName(), crate);
             crazyManager.removePlayerFromOpeningList(uuid);
             return;
         }
@@ -52,16 +49,14 @@ public class Wheel implements Listener {
         HashMap<Integer, ItemStack> items = new HashMap<>();
 
         for (int i : getBorder()) {
-            Prize prize = crate.pickPrize(uuid);
+            Prize prize = crate.pickPrize(player);
             inv.setItem(i, prize.getDisplayItem());
             items.put(i, prize.getDisplayItem());
         }
 
         rewards.put(uuid, items);
 
-        if (player != null) {
-            player.openInventory(inv);
-        }
+        player.openInventory(inv);
 
         crazyManager.addCrateTask(uuid, new BukkitRunnable() {
             final ArrayList<Integer> slots = getBorder();
@@ -86,9 +81,7 @@ public class Wheel implements Listener {
                     if (methods.slowSpin().contains(slower)) checkLore();
 
                     if (full == timer + 47) {
-                        if (player != null) {
-                            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
-                        }
+                        player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
                     }
 
                     if (full >= timer + 47) {
@@ -112,9 +105,7 @@ public class Wheel implements Listener {
 
                         methods.pickPrize(uuid, crate, prize);
 
-                        if (player != null) {
-                            player.closeInventory();
-                        }
+                        player.closeInventory();
 
                         crazyManager.removePlayerFromOpeningList(uuid);
                         crazyManager.endCrate(uuid);
@@ -127,9 +118,7 @@ public class Wheel implements Listener {
                 open++;
 
                 if (open > 5) {
-                    if (player != null) {
-                        player.openInventory(inv);
-                    }
+                    player.openInventory(inv);
                     open = 0;
                 }
             }
@@ -143,9 +132,7 @@ public class Wheel implements Listener {
 
                 inv.setItem(slots.get(f), rewards.get(uuid).get(slots.get(f)));
 
-                if (player != null) {
-                    player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
-                }
+                player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
 
                 i++;
                 f++;

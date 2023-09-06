@@ -14,7 +14,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
-
 import java.text.NumberFormat;
 import java.util.Collections;
 import java.util.HashMap;
@@ -66,25 +65,19 @@ public class MenuManager {
                 .setLore(config.contains(path + "Back.Lore") ? config.getStringList(path + "Back.Lore") : Collections.singletonList("&7&lPage: &b%page%"));
     }
 
-    public void openNewPreview(UUID uuid, Crate crate) {
-        playerCrate.put(uuid, crate);
-        setPage(uuid, 1);
+    public void openNewPreview(Player player, Crate crate) {
+        playerCrate.put(player.getUniqueId(), crate);
+        setPage(player.getUniqueId(), 1);
 
-        Player player = this.plugin.getServer().getPlayer(uuid);
-        if (player != null) player.openInventory(crate.getPreview(uuid));
+        player.openInventory(crate.getPreview(player));
     }
 
-    public void openPreview(UUID uuid) {
-        Player player = this.plugin.getServer().getPlayer(uuid);
-        if (player != null) player.openInventory(playerCrate.get(uuid).getPreview(uuid));
-    }
+    public void openPreview(Player player, Crate crate) {
+        UUID uuid = player.getUniqueId();
 
-    public void openPreview(UUID uuid, Crate crate) {
         playerCrate.put(uuid, crate);
 
-        Player player = this.plugin.getServer().getPlayer(uuid);
-
-        if (player != null) player.openInventory(crate.getPreview(uuid));
+        player.openInventory(crate.getPreview(player));
     }
 
     public int getPage(UUID uuid) {
@@ -131,15 +124,15 @@ public class MenuManager {
         return button.build();
     }
 
-    public boolean playerInMenu(UUID uuid) {
-        return playerInMenu.getOrDefault(uuid, false);
+    public boolean playerInMenu(Player player) {
+        return playerInMenu.getOrDefault(player.getUniqueId(), false);
     }
 
-    public void setPlayerInMenu(UUID uuid, boolean inMenu) {
-        playerInMenu.put(uuid, inMenu);
+    public void setPlayerInMenu(Player player, boolean inMenu) {
+        playerInMenu.put(player.getUniqueId(), inMenu);
     }
 
-    public void openMainMenu(UUID uuid) {
+    public void openMainMenu(Player player) {
         int size = FileManager.Files.CONFIG.getFile().getInt("Settings.InventorySize");
         Inventory inv = this.plugin.getServer().createInventory(null, size, methods.sanitizeColor(FileManager.Files.CONFIG.getFile().getString("Settings.InventoryName")));
 
@@ -156,54 +149,54 @@ public class MenuManager {
             }
         }
 
-        Player player = this.plugin.getServer().getPlayer(uuid);
+        UUID uuid = player.getUniqueId();
 
-        if (player != null) {
-            if (FileManager.Files.CONFIG.getFile().contains("Settings.GUI-Customizer")) {
-                for (String custom : FileManager.Files.CONFIG.getFile().getStringList("Settings.GUI-Customizer")) {
-                    int slot = 0;
-                    ItemBuilder item = new ItemBuilder();
-                    String[] split = custom.split(", ");
+        if (FileManager.Files.CONFIG.getFile().contains("Settings.GUI-Customizer")) {
+            for (String custom : FileManager.Files.CONFIG.getFile().getStringList("Settings.GUI-Customizer")) {
+                int slot = 0;
+                ItemBuilder item = new ItemBuilder();
+                String[] split = custom.split(", ");
 
-                    for (String option : split) {
+                for (String option : split) {
 
-                        if (option.contains("Item:")) item.setMaterial(option.replace("Item:", ""));
+                    if (option.contains("Item:")) item.setMaterial(option.replace("Item:", ""));
 
-                        if (option.contains("Name:")) {
-                            option = option.replace("Name:", "");
+                    if (option.contains("Name:")) {
+                        option = option.replace("Name:", "");
 
-                            option = getCrates(uuid, option);
+                        option = getCrates(player, option);
 
-                            item.setName(option.replaceAll("%player%", player.getName()));
-                        }
-
-                        if (option.contains("Lore:")) {
-                            option = option.replace("Lore:", "");
-                            String[] d = option.split(",");
-
-                            for (String l : d) {
-                                option = getCrates(uuid, option);
-
-                                item.addLore(option.replaceAll("%player%", player.getName()));
-                            }
-                        }
-
-                        if (option.contains("Glowing:")) item.setGlow(Boolean.parseBoolean(option.replace("Glowing:", "")));
-
-                        if (option.contains("Player:")) item.setPlayerName(option.replaceAll("%player%", player.getName()));
-
-                        if (option.contains("Slot:")) slot = Integer.parseInt(option.replace("Slot:", ""));
-
-                        if (option.contains("Unbreakable-Item")) item.setUnbreakable(Boolean.parseBoolean(option.replace("Unbreakable-Item:", "")));
-
-                        if (option.contains("Hide-Item-Flags")) item.hideItemFlags(Boolean.parseBoolean(option.replace("Hide-Item-Flags:", "")));
+                        item.setName(option.replaceAll("%player%", player.getName()));
                     }
 
-                    if (slot > size) continue;
+                    if (option.contains("Lore:")) {
+                        option = option.replace("Lore:", "");
+                        String[] d = option.split(",");
 
-                    slot--;
-                    inv.setItem(slot, item.build());
+                        for (String l : d) {
+                            option = getCrates(player, option);
+
+                            item.addLore(option.replaceAll("%player%", player.getName()));
+                        }
+                    }
+
+                    if (option.contains("Glowing:")) item.setGlow(Boolean.parseBoolean(option.replace("Glowing:", "")));
+
+                    if (option.contains("Player:")) item.setPlayerName(option.replaceAll("%player%", player.getName()));
+
+                    if (option.contains("Slot:")) slot = Integer.parseInt(option.replace("Slot:", ""));
+
+                    if (option.contains("Unbreakable-Item"))
+                        item.setUnbreakable(Boolean.parseBoolean(option.replace("Unbreakable-Item:", "")));
+
+                    if (option.contains("Hide-Item-Flags"))
+                        item.hideItemFlags(Boolean.parseBoolean(option.replace("Hide-Item-Flags:", "")));
                 }
+
+                if (slot > size) continue;
+
+                slot--;
+                inv.setItem(slot, item.build());
             }
 
             for (Crate crate : crazyManager.getCrates()) {
@@ -225,8 +218,8 @@ public class MenuManager {
                                 .setPlayerName(file.getString(path + "Player"))
                                 .setGlow(file.getBoolean(path + "Glowing"))
                                 .addLorePlaceholder("%Keys%", NumberFormat.getNumberInstance().format(crazyManager.getVirtualKeys(uuid, crate)))
-                                .addLorePlaceholder("%Keys_Physical%", NumberFormat.getNumberInstance().format(crazyManager.getPhysicalKeys(uuid, crate)))
-                                .addLorePlaceholder("%Keys_Total%", NumberFormat.getNumberInstance().format(crazyManager.getTotalKeys(uuid, crate)))
+                                .addLorePlaceholder("%Keys_Physical%", NumberFormat.getNumberInstance().format(crazyManager.getPhysicalKeys(player, crate)))
+                                .addLorePlaceholder("%Keys_Total%", NumberFormat.getNumberInstance().format(crazyManager.getTotalKeys(player, crate)))
                                 .addLorePlaceholder("%Player%", player.getName())
                                 .build());
                     }
@@ -237,12 +230,14 @@ public class MenuManager {
         }
     }
 
-    private String getCrates(UUID uuid, String option) {
+    private String getCrates(Player player, String option) {
+        UUID uuid = player.getUniqueId();
+
         for (Crate crate : crazyManager.getCrates()) {
             if (crate.getCrateType() != CrateType.MENU) {
                 option = option.replaceAll("%" + crate.getName().toLowerCase() + "%", crazyManager.getVirtualKeys(uuid, crate) + "")
-                        .replaceAll("%" + crate.getName().toLowerCase() + "_physical%", crazyManager.getPhysicalKeys(uuid, crate) + "")
-                        .replaceAll("%" + crate.getName().toLowerCase() + "_total%", crazyManager.getTotalKeys(uuid, crate) + "");
+                        .replaceAll("%" + crate.getName().toLowerCase() + "_physical%", crazyManager.getPhysicalKeys(player, crate) + "")
+                        .replaceAll("%" + crate.getName().toLowerCase() + "_total%", crazyManager.getTotalKeys(player, crate) + "");
             }
         }
 

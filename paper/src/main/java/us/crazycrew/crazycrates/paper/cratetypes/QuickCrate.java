@@ -38,16 +38,16 @@ public class QuickCrate implements Listener {
 
     private final HashMap<UUID, BukkitTask> tasks = new HashMap<>();
 
-    public void openCrate(final UUID uuid, final Location loc, Crate crate, KeyType keyType, HologramController hologramController) {
+    public void openCrate(Player player, final Location loc, Crate crate, KeyType keyType, HologramController hologramController) {
+        UUID uuid = player.getUniqueId();
+
         int keys = switch (keyType) {
             case VIRTUAL_KEY -> crazyManager.getVirtualKeys(uuid, crate);
-            case PHYSICAL_KEY -> crazyManager.getPhysicalKeys(uuid, crate);
+            case PHYSICAL_KEY -> crazyManager.getPhysicalKeys(player, crate);
             default -> 1;
         }; // If the key is free it is set to one.
 
-        Player player = this.plugin.getServer().getPlayer(uuid);
-
-        if (player != null && player.isSneaking() && keys > 1) {
+        if (player.isSneaking() && keys > 1) {
             int keysUsed = 0;
 
             // give the player the prizes
@@ -55,8 +55,8 @@ public class QuickCrate implements Listener {
                 if (methods.isInventoryFull(uuid)) break;
                 if (keysUsed >= crate.getMaxMassOpen()) break;
 
-                Prize prize = crate.pickPrize(uuid);
-                crazyManager.givePrize(uuid, prize, crate);
+                Prize prize = crate.pickPrize(player);
+                crazyManager.givePrize(player, prize, crate);
                 plugin.getServer().getPluginManager().callEvent(new PlayerPrizeEvent(uuid, crate, crate.getName(), prize));
 
                 if (prize.useFireworks()) methods.firework(loc.clone().add(.5, 1, .5));
@@ -64,7 +64,7 @@ public class QuickCrate implements Listener {
                 keysUsed++;
             }
 
-            if (!crazyManager.takeKeys(keysUsed, uuid, crate, keyType, false)) {
+            if (!crazyManager.takeKeys(keysUsed, player, crate, keyType, false)) {
                 methods.failedToTakeKey(player.getName(), crate);
                 CrateControlListener.inUse.remove(uuid);
                 crazyManager.removePlayerFromOpeningList(uuid);

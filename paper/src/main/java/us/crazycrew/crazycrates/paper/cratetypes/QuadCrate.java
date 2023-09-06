@@ -70,8 +70,8 @@ public class QuadCrate implements Listener {
                         chestManager.openChest(block, true);
 
                         Crate crate = session.getCrate();
-                        Prize prize = crate.pickPrize(uuid, block.getLocation().add(.5, 1.3, .5));
-                        crazyManager.givePrize(uuid, prize, crate);
+                        Prize prize = crate.pickPrize(player, block.getLocation().add(.5, 1.3, .5));
+                        crazyManager.givePrize(player, prize, crate);
 
                         ItemBuilder itemBuilder = ItemBuilder.convertItemStack(prize.getDisplayItem());
                         itemBuilder.addLore(new Random().nextInt(Integer.MAX_VALUE) + ""); // Makes sure items don't merge

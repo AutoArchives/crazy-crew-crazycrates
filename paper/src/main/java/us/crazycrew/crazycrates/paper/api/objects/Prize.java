@@ -198,9 +198,8 @@ public class Prize {
     /**
      * @return Returns true if they prize has blacklist permissions and false if not.
      */
-    public boolean hasBlacklistPermission(UUID uuid) {
-        Player player = JavaPlugin.getPlugin(CrazyCrates.class).getServer().getPlayer(uuid);
-        if (player != null && !player.isOp()) {
+    public boolean hasBlacklistPermission(Player player) {
+        if (!player.isOp()) {
             for (String blackListPermission : blackListPermissions) {
                 if (player.hasPermission(blackListPermission)) return true;
             }

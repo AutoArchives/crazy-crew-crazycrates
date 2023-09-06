@@ -33,31 +33,28 @@ public class Roulette implements Listener {
         }
     }
     
-    public void openRoulette(UUID uuid, Crate crate, KeyType keyType, boolean checkHand) {
+    public void openRoulette(Player player, Crate crate, KeyType keyType, boolean checkHand) {
         Inventory inv = plugin.getServer().createInventory(null, 27, methods.sanitizeColor(crate.getFile().getString("Crate.CrateName")));
         setGlass(inv);
-        inv.setItem(13, crate.pickPrize(uuid).getDisplayItem());
 
-        Player player = this.plugin.getServer().getPlayer(uuid);
+        UUID uuid = player.getUniqueId();
 
-        if (player != null) {
-            player.openInventory(inv);
-        }
+        inv.setItem(13, crate.pickPrize(player).getDisplayItem());
 
-        if (!crazyManager.takeKeys(1, uuid, crate, keyType, checkHand)) {
-            if (player != null) {
-                methods.failedToTakeKey(player.getName(), crate);
-            }
+        player.openInventory(inv);
+
+        if (!crazyManager.takeKeys(1, player, crate, keyType, checkHand)) {
+            methods.failedToTakeKey(player.getName(), crate);
 
             crazyManager.removePlayerFromOpeningList(uuid);
             return;
         }
 
-        startRoulette(uuid, inv, crate);
+        startRoulette(player, inv, crate);
     }
     
-    private void startRoulette(UUID uuid, final Inventory inv, final Crate crate) {
-        Player player = this.plugin.getServer().getPlayer(uuid);
+    private void startRoulette(Player player, final Inventory inv, final Crate crate) {
+        UUID uuid = player.getUniqueId();
 
         crazyManager.addCrateTask(uuid, new BukkitRunnable() {
             int time = 1;
@@ -68,27 +65,23 @@ public class Roulette implements Listener {
             @Override
             public void run() {
                 if (full <= 15) {
-                    inv.setItem(13, crate.pickPrize(uuid).getDisplayItem());
+                    inv.setItem(13, crate.pickPrize(player).getDisplayItem());
                     setGlass(inv);
 
-                    if (player != null) {
-                        player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
-                    }
+                    player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
 
                     even++;
 
                     if (even >= 4) {
                         even = 0;
-                        inv.setItem(13, crate.pickPrize(uuid).getDisplayItem());
+                        inv.setItem(13, crate.pickPrize(player).getDisplayItem());
                     }
                 }
 
                 open++;
 
                 if (open >= 5) {
-                    if (player != null) {
-                        player.openInventory(inv);
-                    }
+                    player.openInventory(inv);
 
                     open = 0;
                 }
@@ -98,19 +91,15 @@ public class Roulette implements Listener {
                 if (full > 16) {
                     if (methods.slowSpin().contains(time)) {
                         setGlass(inv);
-                        inv.setItem(13, crate.pickPrize(uuid).getDisplayItem());
+                        inv.setItem(13, crate.pickPrize(player).getDisplayItem());
 
-                        if (player != null) {
-                            player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
-                        }
+                        player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
                     }
 
                     time++;
 
                     if (time >= 23) {
-                        if (player != null) {
-                            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
-                        }
+                        player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
 
                         crazyManager.endCrate(uuid);
                         Prize prize = crate.getPrize(inv.getItem(13));
@@ -122,7 +111,7 @@ public class Roulette implements Listener {
                         new BukkitRunnable() {
                             @Override
                             public void run() {
-                                if (player != null && player.getOpenInventory().getTopInventory().equals(inv)) player.closeInventory();
+                                if (player.getOpenInventory().getTopInventory().equals(inv)) player.closeInventory();
                             }
                         }.runTaskLater(plugin, 40);
                     }

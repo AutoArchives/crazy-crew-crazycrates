@@ -27,14 +27,11 @@ public class Wonder implements Listener {
     private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
     private final @NotNull Methods methods = this.cratesLoader.getMethods();
     
-    public void startWonder(UUID uuid, Crate crate, KeyType keyType, boolean checkHand) {
-        Player player = this.plugin.getServer().getPlayer(uuid);
+    public void startWonder(Player player, Crate crate, KeyType keyType, boolean checkHand) {
+        UUID uuid = player.getUniqueId();
 
-        if (!crazyManager.takeKeys(1, uuid, crate, keyType, checkHand)) {
-            if (player != null) {
-                methods.failedToTakeKey(player.getName(), crate);
-            }
-
+        if (!crazyManager.takeKeys(1, player, crate, keyType, checkHand)) {
+            methods.failedToTakeKey(player.getName(), crate);
             crazyManager.removePlayerFromOpeningList(uuid);
             return;
         }
@@ -43,12 +40,12 @@ public class Wonder implements Listener {
         final ArrayList<String> slots = new ArrayList<>();
 
         for (int i = 0; i < 45; i++) {
-            Prize prize = crate.pickPrize(uuid);
+            Prize prize = crate.pickPrize(player);
             slots.add(i + "");
             inv.setItem(i, prize.getDisplayItem());
         }
 
-        if (player != null) player.openInventory(inv);
+        player.openInventory(inv);
 
         crazyManager.addCrateTask(uuid, new BukkitRunnable() {
             int fullTime = 0;
@@ -69,7 +66,7 @@ public class Wonder implements Listener {
                     inv.setItem(slot2, new ItemBuilder().setMaterial(Material.BLACK_STAINED_GLASS_PANE).setName(" ").build());
 
                     for (String slot : slots) {
-                        prize = crate.pickPrize(uuid);
+                        prize = crate.pickPrize(player);
                         inv.setItem(Integer.parseInt(slot), prize.getDisplayItem());
                     }
 
@@ -85,20 +82,18 @@ public class Wonder implements Listener {
                     }
                 }
 
-                if (player != null) player.openInventory(inv);
+                player.openInventory(inv);
 
                 if (fullTime > 100) {
                     crazyManager.endCrate(uuid);
 
                     // Only run this code if the player isn't null.
-                    if (player != null) {
-                        player.closeInventory();
-                        crazyManager.givePrize(uuid, prize, crate);
+                    player.closeInventory();
+                    crazyManager.givePrize(player, prize, crate);
 
-                        if (prize.useFireworks()) methods.firework(player.getLocation().add(0, 1, 0));
+                    if (prize.useFireworks()) methods.firework(player.getLocation().add(0, 1, 0));
 
-                        plugin.getServer().getPluginManager().callEvent(new PlayerPrizeEvent(uuid, crate, crate.getName(), prize));
-                    }
+                    plugin.getServer().getPluginManager().callEvent(new PlayerPrizeEvent(uuid, crate, crate.getName(), prize));
 
                     crazyManager.removePlayerFromOpeningList(uuid);
 

@@ -42,30 +42,25 @@ public class Cosmic implements Listener {
     private final HashMap<UUID, ArrayList<Integer>> picks = new HashMap<>();
     private final HashMap<UUID, Boolean> checkHands = new HashMap<>();
     
-    private void showRewards(UUID uuid, Crate crate) {
+    private void showRewards(Player player, Crate crate) {
         Inventory inv = plugin.getServer().createInventory(null, 27, methods.sanitizeColor(crate.getFile().getString("Crate.CrateName") + " - Prizes"));
 
-        Player player = this.plugin.getServer().getPlayer(uuid);
+        UUID uuid = player.getUniqueId();
 
-        if (player != null) {
-            picks.get(uuid).forEach(i -> inv.setItem(i, pickTier(uuid).getTierPane()));
-            player.openInventory(inv);
-        }
+        picks.get(uuid).forEach(i -> inv.setItem(i, pickTier(uuid).getTierPane()));
+        player.openInventory(inv);
     }
     
-    private void startRoll(UUID uuid, Crate crate) {
+    private void startRoll(Player player, Crate crate) {
         Inventory inv = plugin.getServer().createInventory(null, 27, methods.sanitizeColor(crate.getFile().getString("Crate.CrateName") + " - Shuffling"));
 
-        Player player = this.plugin.getServer().getPlayer(uuid);
-
-        if (player != null) {
-            for (int i = 0; i < 27; i++) {
-                inv.setItem(i, pickTier(uuid).getTierPane());
-            }
-
-            player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
-            player.openInventory(inv);
+        UUID uuid = player.getUniqueId();
+        for (int i = 0; i < 27; i++) {
+            inv.setItem(i, pickTier(uuid).getTierPane());
         }
+
+        player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+        player.openInventory(inv);
     }
     
     private void setChests(Inventory inv, Crate crate) {
@@ -78,16 +73,15 @@ public class Cosmic implements Listener {
         }
     }
     
-    public void openCosmic(UUID uuid, Crate crate, KeyType keyType, boolean checkHand) {
+    public void openCosmic(Player player, Crate crate, KeyType keyType, boolean checkHand) {
         Inventory inv = plugin.getServer().createInventory(null, 27, methods.sanitizeColor(crate.getFile().getString("Crate.CrateName") + " - Choose"));
         setChests(inv, crate);
-        Player player = this.plugin.getServer().getPlayer(uuid);
 
-        if (player != null) {
-            crazyManager.addPlayerKeyType(uuid, keyType);
-            checkHands.put(uuid, checkHand);
-            player.openInventory(inv);
-        }
+        UUID uuid = player.getUniqueId();
+
+        crazyManager.addPlayerKeyType(uuid, keyType);
+        checkHands.put(uuid, checkHand);
+        player.openInventory(inv);
     }
     
     private Tier pickTier(UUID uuid) {
@@ -136,14 +130,14 @@ public class Cosmic implements Listener {
                         Tier tier = getTier(crate, item);
 
                         if (item != null && tier != null) {
-                            Prize prize = crate.pickPrize(uuid, tier);
+                            Prize prize = crate.pickPrize(player, tier);
 
                             for (int stop = 0; prize == null && stop <= 2000; stop++) {
-                                prize = crate.pickPrize(uuid, tier);
+                                prize = crate.pickPrize(player, tier);
                             }
 
                             if (prize != null) {
-                                crazyManager.givePrize(uuid, prize, crate);
+                                crazyManager.givePrize(player, prize, crate);
                                 plugin.getServer().getPluginManager().callEvent(new PlayerPrizeEvent(uuid, crate, crazyManager.getOpeningCrate(uuid).getName(), prize));
                                 e.setCurrentItem(prize.getDisplayItem());
                                 player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
@@ -211,7 +205,7 @@ public class Cosmic implements Listener {
                             return;
                         }
 
-                        if (crazyManager.hasPlayerKeyType(uuid) && !crazyManager.takeKeys(1, uuid, crate, keyType, checkHands.get(uuid))) {
+                        if (crazyManager.hasPlayerKeyType(uuid) && !crazyManager.takeKeys(1, player, crate, keyType, checkHands.get(uuid))) {
                             methods.failedToTakeKey(player.getName(), crate);
                             crazyManager.removePlayerFromOpeningList(uuid);
                             crazyManager.removePlayerKeyType(uuid);
@@ -226,13 +220,13 @@ public class Cosmic implements Listener {
                             @Override
                             public void run() {
                                 try {
-                                    startRoll(uuid, crate);
+                                    startRoll(player, crate);
                                 } catch (Exception e) {
                                     PlayerReceiveKeyEvent event = new PlayerReceiveKeyEvent(uuid, crate, PlayerReceiveKeyEvent.KeyReceiveReason.REFUND, 1);
                                     plugin.getServer().getPluginManager().callEvent(event);
 
                                     if (!event.isCancelled()) {
-                                        crazyManager.addKeys(1, uuid, crate, keyType);
+                                        crazyManager.addKeys(1, player, crate, keyType);
                                         crazyManager.endCrate(uuid);
                                         cancel();
 
@@ -249,7 +243,7 @@ public class Cosmic implements Listener {
 
                                 if (time == 40) {
                                     crazyManager.endCrate(uuid);
-                                    showRewards(uuid, crate);
+                                    showRewards(player, crate);
                                     player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_PLACE, 1, 1);
 
                                     new BukkitRunnable() {
@@ -293,13 +287,13 @@ public class Cosmic implements Listener {
                     Tier tier = getTier(crate, inv.getItem(i));
 
                     if (tier != null) {
-                        Prize prize = crate.pickPrize(uuid, tier);
+                        Prize prize = crate.pickPrize(player, tier);
 
                         for (int stop = 0; prize == null && stop <= 2000; stop++) {
-                            prize = crate.pickPrize(uuid, tier);
+                            prize = crate.pickPrize(player, tier);
                         }
 
-                        crazyManager.givePrize(uuid, prize, crate);
+                        crazyManager.givePrize(player, prize, crate);
                         playSound = true;
                     }
                 }

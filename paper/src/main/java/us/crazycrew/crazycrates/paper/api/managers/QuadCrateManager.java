@@ -93,7 +93,7 @@ public class QuadCrateManager {
     /**
      * A constructor to build the quad crate session
      *
-     * @param uuid of the player opening the crate
+     * @param player the player opening the crate
      * @param crate the player is opening
      * @param keyType the player has
      * @param spawnLocation of the schematic
@@ -101,10 +101,10 @@ public class QuadCrateManager {
      * @param inHand check the hand of the player
      * @param handler the structure handler instance
      */
-    public QuadCrateManager(UUID uuid, Crate crate, KeyType keyType, Location spawnLocation, Location lastLocation, boolean inHand, StructureHandler handler) {
+    public QuadCrateManager(Player player, Crate crate, KeyType keyType, Location spawnLocation, Location lastLocation, boolean inHand, StructureHandler handler) {
         this.instance = this;
-        this.uuid = uuid;
-        this.player = this.plugin.getServer().getPlayer(uuid);
+        this.player = player;
+        this.uuid = player.getUniqueId();
         this.crate = crate;
         this.keyType = keyType;
         this.checkHand = inHand;
@@ -178,7 +178,7 @@ public class QuadCrateManager {
             }
         }
 
-        if (!crazyManager.takeKeys(1, uuid, crate, keyType, checkHand)) {
+        if (!crazyManager.takeKeys(1, player, crate, keyType, checkHand)) {
             methods.failedToTakeKey(player.getName(), crate);
 
             crazyManager.removePlayerFromOpeningList(uuid);

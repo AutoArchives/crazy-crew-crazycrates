@@ -28,9 +28,9 @@ public class PlaceholderAPISupport extends PlaceholderExpansion {
                     if (identifier.equalsIgnoreCase(crate.getName())) {
                         return NumberFormat.getNumberInstance().format(crazyManager.getVirtualKeys(playerOnline.getUniqueId(), crate));
                     } else if (identifier.equalsIgnoreCase(crate.getName() + "_physical")) {
-                        return NumberFormat.getNumberInstance().format(crazyManager.getPhysicalKeys(playerOnline.getUniqueId(), crate));
+                        return NumberFormat.getNumberInstance().format(crazyManager.getPhysicalKeys(playerOnline, crate));
                     } else if (identifier.equalsIgnoreCase(crate.getName() + "_total")) {
-                        return NumberFormat.getNumberInstance().format(crazyManager.getTotalKeys(playerOnline.getUniqueId(), crate));
+                        return NumberFormat.getNumberInstance().format(crazyManager.getTotalKeys(playerOnline, crate));
                     }
                 }
             }

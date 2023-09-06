@@ -47,7 +47,7 @@ public class PhysicalCrateKeyCheckEvent extends Event implements Cancellable {
     }
     
     public Player getPlayer() {
-        return player;
+        return this.player;
     }
     
     public CrateLocation getCrateLocation() {

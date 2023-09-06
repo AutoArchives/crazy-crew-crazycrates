@@ -36,7 +36,7 @@ public class MenuListener implements Listener {
         Player player = (Player) e.getWhoClicked();
         UUID uuid = player.getUniqueId();
 
-        Inventory inv = e.getInventory();
+        Inventory inv = e.getClickedInventory();
         FileConfiguration config = FileManager.Files.CONFIG.getFile();
 
         if (inv == null) return;
@@ -62,8 +62,8 @@ public class MenuListener implements Listener {
                                 if (crate.isPreviewEnabled()) {
                                     player.closeInventory();
 
-                                    this.cratesLoader.getMenuManager().setPlayerInMenu(uuid, true);
-                                    this.cratesLoader.getMenuManager().openNewPreview(uuid, crate);
+                                    this.cratesLoader.getMenuManager().setPlayerInMenu(player, true);
+                                    this.cratesLoader.getMenuManager().openNewPreview(player, crate);
                                 } else {
                                     player.sendMessage(Messages.PREVIEW_DISABLED.getMessage());
                                 }
@@ -111,7 +111,7 @@ public class MenuListener implements Listener {
                                 return;
                             }
 
-                            crazyManager.openCrate(uuid, crate, keyType, player.getLocation(), true, false);
+                            crazyManager.openCrate(player, crate, keyType, player.getLocation(), true, false);
                         }
                     }
                 }

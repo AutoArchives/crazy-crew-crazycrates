@@ -55,7 +55,7 @@ public class CrateBaseCommand extends BaseCommand {
 
         boolean openMenu = config.getBoolean("Settings.Enable-Crate-Menu");
 
-        if (openMenu) this.cratesLoader.getMenuManager().openMainMenu(player.getUniqueId()); else player.sendMessage(Messages.FEATURE_DISABLED.getMessage());
+        if (openMenu) this.cratesLoader.getMenuManager().openMainMenu(player); else player.sendMessage(Messages.FEATURE_DISABLED.getMessage());
     }
 
     @SubCommand("help")
@@ -77,8 +77,8 @@ public class CrateBaseCommand extends BaseCommand {
                     plugin.getServer().getPluginManager().callEvent(event);
 
                     if (!event.isCancelled()) {
-                        crazyManager.takeKeys(amount, sender.getUniqueId(), crate, KeyType.VIRTUAL_KEY, false);
-                        crazyManager.addKeys(amount, player.getUniqueId(), crate, KeyType.VIRTUAL_KEY);
+                        crazyManager.takeKeys(amount, sender, crate, KeyType.VIRTUAL_KEY, false);
+                        crazyManager.addKeys(amount, player, crate, KeyType.VIRTUAL_KEY);
 
                         HashMap<String, String> placeholders = new HashMap<>();
 
@@ -135,7 +135,7 @@ public class CrateBaseCommand extends BaseCommand {
         Crate crate = crazyManager.getCrateFromName(crateName);
 
         if (crate != null) {
-            crate.getPrizes().forEach(prize -> crazyManager.givePrize(player.getUniqueId(), prize, crate));
+            crate.getPrizes().forEach(prize -> crazyManager.givePrize(player, prize, crate));
         } else {
             player.sendMessage(Messages.NOT_A_CRATE.getMessage("%Crate%", crateName));
         }
@@ -284,11 +284,9 @@ public class CrateBaseCommand extends BaseCommand {
                 return;
             }
 
-            UUID uuid = player.getUniqueId();
-
             if (crate.getCrateType() != CrateType.MENU) {
-                this.cratesLoader.getMenuManager().setPlayerInMenu(uuid, false);
-                this.cratesLoader.getMenuManager().openNewPreview(uuid, crate);
+                this.cratesLoader.getMenuManager().setPlayerInMenu(player, false);
+                this.cratesLoader.getMenuManager().openNewPreview(player, crate);
             }
         }
     }
@@ -354,7 +352,7 @@ public class CrateBaseCommand extends BaseCommand {
                     }
 
                     if (type != CrateType.CRATE_ON_THE_GO && type != CrateType.QUICK_CRATE && type != CrateType.FIRE_CRACKER && type != CrateType.QUAD_CRATE) {
-                        crazyManager.openCrate(uuid, crate, keyType, player.getLocation(), true, false);
+                        crazyManager.openCrate(player, crate, keyType, player.getLocation(), true, false);
 
                         HashMap<String, String> placeholders = new HashMap<>();
 
@@ -408,8 +406,8 @@ public class CrateBaseCommand extends BaseCommand {
             if (keysUsed > amount) break;
             if (keysUsed >= crate.getMaxMassOpen()) break;
 
-            Prize prize = crate.pickPrize(uuid);
-            crazyManager.givePrize(uuid, prize, crate);
+            Prize prize = crate.pickPrize(player);
+            crazyManager.givePrize(player, prize, crate);
             plugin.getServer().getPluginManager().callEvent(new PlayerPrizeEvent(uuid, crate, crate.getName(), prize));
 
             if (prize.useFireworks()) methods.firework(((Player) sender).getLocation().clone().add(.5, 1, .5));
@@ -417,7 +415,7 @@ public class CrateBaseCommand extends BaseCommand {
             keysUsed++;
         }
 
-        if (!crazyManager.takeKeys(keysUsed, uuid, crate, KeyType.VIRTUAL_KEY, false)) {
+        if (!crazyManager.takeKeys(keysUsed, player, crate, KeyType.VIRTUAL_KEY, false)) {
             methods.failedToTakeKey(player.getName(), crate);
             CrateControlListener.inUse.remove(uuid);
             crazyManager.removePlayerFromOpeningList(uuid);
@@ -443,7 +441,7 @@ public class CrateBaseCommand extends BaseCommand {
 
                     if (type != null) {
                         if (type != CrateType.CRATE_ON_THE_GO && type != CrateType.QUICK_CRATE && type != CrateType.FIRE_CRACKER) {
-                            crazyManager.openCrate(player.getUniqueId(), crate, KeyType.FREE_KEY, player.getLocation(), true, false);
+                            crazyManager.openCrate(player, crate, KeyType.FREE_KEY, player.getLocation(), true, false);
 
                             HashMap<String, String> placeholders = new HashMap<>();
 
@@ -551,7 +549,7 @@ public class CrateBaseCommand extends BaseCommand {
                     person.getInventory().addItem(crate.getKey(amount));
                 } else {
                     if (person.isOnline()) {
-                        crazyManager.addKeys(amount, uuid, crate, type);
+                        crazyManager.addKeys(amount, person, crate, type);
                     } else {
                         OfflinePlayer offlinePlayer = target.getOfflinePlayer();
 
@@ -615,7 +613,7 @@ public class CrateBaseCommand extends BaseCommand {
         if (crate != null) {
             if (crate.getCrateType() != CrateType.MENU) {
 
-                if (!crazyManager.takeKeys(amount, target.getUniqueId(), crate, type, false)) {
+                if (!crazyManager.takeKeys(amount, target, crate, type, false)) {
                     methods.failedToTakeKey(target.getName(), crate);
                     return;
                 }
@@ -675,7 +673,7 @@ public class CrateBaseCommand extends BaseCommand {
                             return;
                         }
 
-                        crazyManager.addKeys(amount, onlinePlayer.getUniqueId(), crate, type);
+                        crazyManager.addKeys(amount, onlinePlayer, crate, type);
 
                         boolean logFile = FileManager.Files.CONFIG.getFile().getBoolean("Settings.Crate-Actions.Log-File");
                         boolean logConsole = FileManager.Files.CONFIG.getFile().getBoolean("Settings.Crate-Actions.Log-Console");

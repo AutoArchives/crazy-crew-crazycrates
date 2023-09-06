@@ -42,9 +42,8 @@ public class MiscListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerJoin(PlayerJoinEvent e) {
         final Player player = e.getPlayer();
-        final UUID uuid = player.getUniqueId();
 
-        this.cratesLoader.getCrazyManager().setNewPlayerKeys(uuid);
-        this.cratesLoader.getCrazyManager().loadOfflinePlayersKeys(uuid);
+        this.cratesLoader.getCrazyManager().setNewPlayerKeys(player);
+        this.cratesLoader.getCrazyManager().loadOfflinePlayersKeys(player);
     }
 }

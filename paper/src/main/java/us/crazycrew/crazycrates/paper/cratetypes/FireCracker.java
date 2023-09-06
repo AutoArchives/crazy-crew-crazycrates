@@ -24,13 +24,11 @@ public class FireCracker {
     private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
     private final @NotNull Methods methods = this.cratesLoader.getMethods();
     
-    public void startFireCracker(UUID uuid, final Crate crate, KeyType keyType, final Location loc, HologramController hologramController) {
-        if (!crazyManager.takeKeys(1, uuid, crate, keyType, true)) {
-            Player player = this.plugin.getServer().getPlayer(uuid);
+    public void startFireCracker(Player player, final Crate crate, KeyType keyType, final Location loc, HologramController hologramController) {
+        UUID uuid = player.getUniqueId();
 
-            if (player != null) {
-                methods.failedToTakeKey(player.getName(), crate);
-            }
+        if (!crazyManager.takeKeys(1, player, crate, keyType, true)) {
+            methods.failedToTakeKey(player.getName(), crate);
 
             crazyManager.removePlayerFromOpeningList(uuid);
             return;
@@ -63,7 +61,7 @@ public class FireCracker {
                 if (l == 25) {
                     crazyManager.endCrate(uuid);
                     // The key type is set to free because the key has already been taken above.
-                    plugin.getQuickCrate().openCrate(uuid, loc, crate, KeyType.FREE_KEY, hologramController);
+                    plugin.getQuickCrate().openCrate(player, loc, crate, KeyType.FREE_KEY, hologramController);
                 }
             }
         }.runTaskTimer(plugin, 0, 2));
