@@ -366,6 +366,10 @@ public class QuadCrateManager {
         return Collections.unmodifiableList(crateSessions);
     }
 
+    public static void clearSessions() {
+        if (!crateSessions.isEmpty()) crateSessions.clear();
+    }
+
     /**
      * Get the player opening the crate
      *

@@ -78,7 +78,7 @@ public class CrazyCrates extends JavaPlugin {
     @Override
     public void onDisable() {
         QuadCrateManager.getCrateSessions().forEach(session -> session.endCrateForce(false));
-        QuadCrateManager.getCrateSessions().clear();
+        QuadCrateManager.clearSessions();
 
         getQuickCrate().removeAllRewards();
 
