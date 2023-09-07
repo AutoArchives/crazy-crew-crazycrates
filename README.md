@@ -89,6 +89,10 @@ Check our public [trello board](https://trello.com/b/bzQ5TwXo) for our current p
 
 Distributed under the MIT License. See [`LICENSE`](/LICENSE) for more information.
 
+## Credit
+Lucko (LuckPerms)
+ - The class loader verification to ensure only our jar starts the api or to check if it is shaded properly and the provider classes.
+
 [discord-shield]: https://img.shields.io/discord/182615261403283459.svg?style=flat&logo=appveyor
 [discord-url]: https://discord.gg/crazycrew
 

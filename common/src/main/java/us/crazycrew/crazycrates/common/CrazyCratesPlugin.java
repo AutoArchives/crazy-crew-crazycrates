@@ -7,7 +7,7 @@ import us.crazycrew.crazycrates.common.api.AbstractPlugin;
 import us.crazycrew.crazycrates.common.config.ConfigManager;
 import java.io.File;
 
-public class CrazyCratesPlugin extends AbstractPlugin {
+public abstract class CrazyCratesPlugin extends AbstractPlugin {
 
     private ConfigManager configManager;
 
@@ -22,10 +22,14 @@ public class CrazyCratesPlugin extends AbstractPlugin {
         this.configManager.load();
 
         FancyLogger.setName("<white>[<gradient:#FE5F55:#6b55b5>CrazyCrates</gradient>]</white>");
+
+        super.apiWasLoadedByOurPlugin();
     }
 
     public void disable() {
         super.disable();
+
+        this.configManager.reload();
     }
 
     @NotNull

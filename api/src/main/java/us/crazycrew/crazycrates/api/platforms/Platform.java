@@ -4,23 +4,20 @@ import org.jetbrains.annotations.NotNull;
 
 public interface Platform {
 
-    Platform.@NotNull Type getType();
+    @NotNull Type getType();
 
     enum Type {
 
-        PAPER("Paper"),
-        FOLIA("Folia"),
+        PAPER("paper");
 
-        FABRIC("Fabric");
+        private final String platformType;
 
-        private final String type;
-
-        Type(String type) {
-            this.type = type;
+        Type(String platformType) {
+            this.platformType = platformType;
         }
 
-        public String getType() {
-            return this.type;
+        public @NotNull String getPlatformType() {
+            return this.platformType;
         }
     }
 }
