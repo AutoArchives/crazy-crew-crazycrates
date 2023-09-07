@@ -2,8 +2,6 @@ package us.crazycrew.crazycrates.api.frame;
 
 import net.kyori.adventure.audience.Audience;
 import us.crazycrew.crazycrates.api.enums.types.KeyType;
-
-import java.util.Map;
 import java.util.UUID;
 
 public abstract class UserManager {
