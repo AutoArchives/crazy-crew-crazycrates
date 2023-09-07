@@ -6,6 +6,7 @@ import us.crazycrew.crazycrates.paper.api.CrazyManager;
 import us.crazycrew.crazycrates.paper.api.enums.settings.Messages;
 import us.crazycrew.crazycrates.paper.api.events.PlayerPrizeEvent;
 import us.crazycrew.crazycrates.paper.api.events.PlayerReceiveKeyEvent;
+import us.crazycrew.crazycrates.paper.api.frame.BukkitUserManager;
 import us.crazycrew.crazycrates.paper.api.managers.CosmicCrateManager;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
 import us.crazycrew.crazycrates.paper.api.objects.Prize;
@@ -35,6 +36,7 @@ public class Cosmic implements Listener {
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
     private final @NotNull CrazyCratesLoader cratesLoader = this.plugin.getCratesLoader();
+    private final @NotNull BukkitUserManager userManager = this.cratesLoader.getUserManager();
     private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
     private final @NotNull Methods methods = this.cratesLoader.getMethods();
 
@@ -191,7 +193,7 @@ public class Cosmic implements Listener {
                     if (glass.get(uuid).size() >= totalPrizes) {
                         KeyType keyType = crazyManager.getPlayerKeyType(uuid);
 
-                        if (keyType == KeyType.PHYSICAL_KEY && !crazyManager.hasPhysicalKey(uuid, crate, checkHands.get(uuid))) {
+                        if (keyType == KeyType.PHYSICAL_KEY && !this.userManager.hasPhysicalKey(uuid, crate.getName(), checkHands.get(uuid))) {
                             player.closeInventory();
                             player.sendMessage(Messages.NO_KEY.getMessage());
 
@@ -205,8 +207,7 @@ public class Cosmic implements Listener {
                             return;
                         }
 
-                        if (crazyManager.hasPlayerKeyType(uuid) && !crazyManager.takeKeys(1, player, crate, keyType, checkHands.get(uuid))) {
-                            methods.failedToTakeKey(player.getName(), crate);
+                        if (crazyManager.hasPlayerKeyType(uuid) && !this.userManager.takeKeys(1, player.getUniqueId(), crate.getName(), keyType, checkHands.get(uuid))) {
                             crazyManager.removePlayerFromOpeningList(uuid);
                             crazyManager.removePlayerKeyType(uuid);
                             checkHands.remove(uuid);
@@ -226,7 +227,7 @@ public class Cosmic implements Listener {
                                     plugin.getServer().getPluginManager().callEvent(event);
 
                                     if (!event.isCancelled()) {
-                                        crazyManager.addKeys(1, player, crate, keyType);
+                                        userManager.addKeys(1, player.getUniqueId(), crate.getName(), keyType);
                                         crazyManager.endCrate(uuid);
                                         cancel();
 

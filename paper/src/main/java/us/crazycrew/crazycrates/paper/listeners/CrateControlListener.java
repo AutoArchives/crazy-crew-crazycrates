@@ -7,6 +7,7 @@ import us.crazycrew.crazycrates.common.enums.Permissions;
 import us.crazycrew.crazycrates.paper.api.FileManager;
 import us.crazycrew.crazycrates.paper.api.enums.settings.Messages;
 import us.crazycrew.crazycrates.paper.api.events.PhysicalCrateKeyCheckEvent;
+import us.crazycrew.crazycrates.paper.api.frame.BukkitUserManager;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
 import us.crazycrew.crazycrates.api.enums.types.KeyType;
@@ -42,6 +43,7 @@ public class CrateControlListener implements Listener { // Crate Control
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
     private final @NotNull CrazyCratesLoader cratesLoader = this.plugin.getCratesLoader();
+    private final @NotNull BukkitUserManager userManager = this.cratesLoader.getUserManager();
     private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
     private final @NotNull Methods methods = this.cratesLoader.getMethods();
     
@@ -138,7 +140,7 @@ public class CrateControlListener implements Listener { // Crate Control
 
                     int requiredKeys = crazyManager.getCrateFromName(crate.getName()).getRequiredKeys();
 
-                    int totalKeys = crazyManager.getTotalKeys(player, crate);
+                    int totalKeys = this.userManager.getTotalKeys(uuid, crate.getName());
 
                     if (requiredKeys > 0 && totalKeys < requiredKeys) {
                         player.sendMessage(Messages.REQUIRED_KEYS.getMessage().replaceAll("%key-amount%", String.valueOf(requiredKeys)).replaceAll("%crate%", crate.getPreviewName()).replaceAll("%amount%", String.valueOf(totalKeys)));
@@ -150,7 +152,7 @@ public class CrateControlListener implements Listener { // Crate Control
                         isPhysical = true;
                     }
 
-                    if (config.getBoolean("Settings.Physical-Accepts-Virtual-Keys") && crazyManager.getVirtualKeys(uuid, crate) >= 1) hasKey = true;
+                    if (config.getBoolean("Settings.Physical-Accepts-Virtual-Keys") && this.userManager.getVirtualKeys(uuid, crate.getName()) >= 1) hasKey = true;
 
                     if (hasKey) {
                         // Checks if the player uses the quick crate again.
@@ -170,7 +172,7 @@ public class CrateControlListener implements Listener { // Crate Control
                             }
                         }
 
-                        if (this.methods.isInventoryFull(uuid)) {
+                        if (this.methods.isInventoryFull(player)) {
                             player.sendMessage(Messages.INVENTORY_FULL.getMessage());
                             return;
                         }
@@ -224,7 +226,8 @@ public class CrateControlListener implements Listener { // Crate Control
                     if (e.getAction() == InventoryAction.PICKUP_ALL) {
                         player.getInventory().addItem(crate.getKey());
                     } else if (e.getAction() == InventoryAction.PICKUP_HALF) {
-                        crazyManager.addKeys(1, player, crate, KeyType.VIRTUAL_KEY);
+                        this.userManager.addVirtualKeys(1, player.getUniqueId(), crate.getName());
+
                         String name = null;
                         ItemStack key = crate.getKey();
 

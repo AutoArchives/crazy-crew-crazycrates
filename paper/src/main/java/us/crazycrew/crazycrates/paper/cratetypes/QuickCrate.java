@@ -4,6 +4,7 @@ import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.Methods;
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
 import us.crazycrew.crazycrates.paper.api.events.PlayerPrizeEvent;
+import us.crazycrew.crazycrates.paper.api.frame.BukkitUserManager;
 import us.crazycrew.crazycrates.paper.api.interfaces.HologramController;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
 import us.crazycrew.crazycrates.paper.api.objects.Prize;
@@ -30,6 +31,7 @@ public class QuickCrate implements Listener {
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
     private final @NotNull CrazyCratesLoader cratesLoader = this.plugin.getCratesLoader();
     private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
+    private final @NotNull BukkitUserManager userManager = this.cratesLoader.getUserManager();
     private final @NotNull ChestManager chestManager = this.cratesLoader.getChestManager();
     private final @NotNull Methods methods = this.cratesLoader.getMethods();
 
@@ -42,8 +44,8 @@ public class QuickCrate implements Listener {
         UUID uuid = player.getUniqueId();
 
         int keys = switch (keyType) {
-            case VIRTUAL_KEY -> crazyManager.getVirtualKeys(uuid, crate);
-            case PHYSICAL_KEY -> crazyManager.getPhysicalKeys(player, crate);
+            case VIRTUAL_KEY -> this.userManager.getVirtualKeys(uuid, crate.getName());
+            case PHYSICAL_KEY -> this.userManager.getPhysicalKeys(uuid, crate.getName());
             default -> 1;
         }; // If the key is free it is set to one.
 
@@ -52,7 +54,7 @@ public class QuickCrate implements Listener {
 
             // give the player the prizes
             for (; keys > 0; keys--) {
-                if (methods.isInventoryFull(uuid)) break;
+                if (methods.isInventoryFull(player)) break;
                 if (keysUsed >= crate.getMaxMassOpen()) break;
 
                 Prize prize = crate.pickPrize(player);
@@ -64,8 +66,7 @@ public class QuickCrate implements Listener {
                 keysUsed++;
             }
 
-            if (!crazyManager.takeKeys(keysUsed, player, crate, keyType, false)) {
-                methods.failedToTakeKey(player.getName(), crate);
+            if (!this.userManager.takeKeys(keysUsed, player.getUniqueId(), crate.getName(), keyType, false)) {
                 CrateControlListener.inUse.remove(uuid);
                 crazyManager.removePlayerFromOpeningList(uuid);
                 return;

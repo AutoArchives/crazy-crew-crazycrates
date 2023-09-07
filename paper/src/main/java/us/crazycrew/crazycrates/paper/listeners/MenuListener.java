@@ -6,6 +6,7 @@ import us.crazycrew.crazycrates.paper.Methods;
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
 import us.crazycrew.crazycrates.paper.api.FileManager;
 import us.crazycrew.crazycrates.paper.api.enums.settings.Messages;
+import us.crazycrew.crazycrates.paper.api.frame.BukkitUserManager;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
 import us.crazycrew.crazycrates.api.enums.types.KeyType;
@@ -29,6 +30,7 @@ public class MenuListener implements Listener {
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
     private final @NotNull CrazyCratesLoader cratesLoader = this.plugin.getCratesLoader();
     private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
+    private final @NotNull BukkitUserManager userManager = this.cratesLoader.getUserManager();
     private final @NotNull Methods methods = this.cratesLoader.getMethods();
 
     @EventHandler
@@ -79,10 +81,10 @@ public class MenuListener implements Listener {
                             boolean hasKey = false;
                             KeyType keyType = KeyType.VIRTUAL_KEY;
 
-                            if (crazyManager.getVirtualKeys(uuid, crate) >= 1) {
+                            if (this.userManager.getVirtualKeys(uuid, crate.getName()) >= 1) {
                                 hasKey = true;
                             } else {
-                                if (FileManager.Files.CONFIG.getFile().getBoolean("Settings.Virtual-Accepts-Physical-Keys") && crazyManager.hasPhysicalKey(uuid, crate, false)) {
+                                if (FileManager.Files.CONFIG.getFile().getBoolean("Settings.Virtual-Accepts-Physical-Keys") && this.userManager.hasPhysicalKey(uuid, crate.getName(), false)) {
                                     hasKey = true;
                                     keyType = KeyType.PHYSICAL_KEY;
                                 }
@@ -106,7 +108,7 @@ public class MenuListener implements Listener {
                                 }
                             }
 
-                            if (methods.isInventoryFull(uuid)) {
+                            if (methods.isInventoryFull(player)) {
                                 player.sendMessage(Messages.INVENTORY_FULL.getMessage());
                                 return;
                             }

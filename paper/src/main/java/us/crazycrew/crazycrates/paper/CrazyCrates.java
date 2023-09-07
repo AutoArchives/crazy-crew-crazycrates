@@ -31,7 +31,7 @@ public class CrazyCrates extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        this.cratesLoader = new CrazyCratesLoader();
+        this.cratesLoader = new CrazyCratesLoader(getDataFolder());
         getCratesLoader().enable();
 
         // Add extra messages.

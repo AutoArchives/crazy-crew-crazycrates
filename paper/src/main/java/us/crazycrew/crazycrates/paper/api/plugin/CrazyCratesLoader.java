@@ -1,5 +1,7 @@
 package us.crazycrew.crazycrates.paper.api.plugin;
 
+import org.jetbrains.annotations.Nullable;
+import us.crazycrew.crazycrates.api.frame.UserManager;
 import us.crazycrew.crazycrates.api.platforms.Platform;
 import us.crazycrew.crazycrates.common.CrazyCratesPlugin;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
@@ -10,6 +12,7 @@ import us.crazycrew.crazycrates.paper.api.FileManager.Files;
 import us.crazycrew.crazycrates.paper.api.FileManager;
 import us.crazycrew.crazycrates.common.config.ConfigManager;
 import us.crazycrew.crazycrates.common.config.PluginConfig;
+import us.crazycrew.crazycrates.paper.api.frame.BukkitUserManager;
 import us.crazycrew.crazycrates.paper.api.managers.MenuManager;
 import us.crazycrew.crazycrates.paper.api.plugin.migrate.ConfigValues;
 import us.crazycrew.crazycrates.paper.support.MetricsHandler;
@@ -17,16 +20,16 @@ import com.ryderbelserion.cluster.bukkit.BukkitPlugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.paper.support.structures.blocks.ChestManager;
+import java.io.File;
 
-public class CrazyCratesLoader {
+public class CrazyCratesLoader extends CrazyCratesPlugin {
     
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
-
-    private CrazyCratesPlugin cratesLoader;
     private BukkitPlugin bukkitPlugin;
     private MetricsHandler metrics;
 
     private FileManager fileManager;
+    private BukkitUserManager userManager;
     private CrazyManager crazyManager;
     private MenuManager menuManager;
     private ChestManager chestManager;
@@ -34,13 +37,17 @@ public class CrazyCratesLoader {
 
     private Methods methods;
 
-    public void enable() {
-        this.cratesLoader = new CrazyCratesPlugin(this.plugin.getDataFolder(), Platform.Type.PAPER);
-        this.cratesLoader.enable();
+    public CrazyCratesLoader(File dataFolder) {
+        super(dataFolder, Platform.Type.PAPER);
+    }
 
+    public void enable() {
         // Enable cluster bukkit api
         this.bukkitPlugin = new BukkitPlugin(this.plugin);
         this.bukkitPlugin.enable();
+
+        // Enable crazycrates api
+        super.enable();
 
         this.fileManager = new FileManager();
         this.fileManager.setLog(true)
@@ -70,6 +77,8 @@ public class CrazyCratesLoader {
         this.methods = new Methods();
 
         this.crazyManager = new CrazyManager();
+        this.userManager = new BukkitUserManager();
+
         getCrazyManager().load(true);
 
         this.menuManager = new MenuManager();
@@ -97,16 +106,35 @@ public class CrazyCratesLoader {
     }
 
     public void disable() {
+        // Reload plugin
         this.crazyManager.reload(true);
 
-        this.cratesLoader.disable();
+        // Disable crazycrates api
+        super.disable();
 
         // Disable cluster bukkit api
         this.bukkitPlugin.disable();
     }
 
+    @Override
+    public @Nullable String identifyClassLoader(ClassLoader classLoader) throws Exception {
+        Class<?> classLoaderClass = Class.forName("org.bukkit.plugin.java.PluginClassLoader");
+
+        if (classLoaderClass.isInstance(classLoader)) {
+            return this.plugin.getName();
+        }
+
+        return null;
+    }
+
+    @Override
     public @NotNull ConfigManager getConfigManager() {
-        return this.cratesLoader.getConfigManager();
+        return super.getConfigManager();
+    }
+
+    @Override
+    public @NotNull BukkitUserManager getUserManager() {
+        return this.userManager;
     }
 
     public @NotNull FileManager getFileManager() {

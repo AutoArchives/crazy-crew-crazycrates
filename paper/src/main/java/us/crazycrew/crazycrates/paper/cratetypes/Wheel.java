@@ -3,6 +3,7 @@ package us.crazycrew.crazycrates.paper.cratetypes;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.Methods;
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
+import us.crazycrew.crazycrates.paper.api.frame.BukkitUserManager;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
 import us.crazycrew.crazycrates.paper.api.objects.ItemBuilder;
 import us.crazycrew.crazycrates.paper.api.objects.Prize;
@@ -26,6 +27,7 @@ public class Wheel implements Listener {
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
     private final @NotNull CrazyCratesLoader cratesLoader = this.plugin.getCratesLoader();
+    private final @NotNull BukkitUserManager userManager = this.cratesLoader.getUserManager();
     private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
     private final @NotNull Methods methods = this.cratesLoader.getMethods();
     
@@ -34,8 +36,7 @@ public class Wheel implements Listener {
     public void startWheel(Player player, Crate crate, KeyType keyType, boolean checkHand) {
         UUID uuid = player.getUniqueId();
 
-        if (!crazyManager.takeKeys(1, player, crate, keyType, checkHand)) {
-            methods.failedToTakeKey(player.getName(), crate);
+        if (!this.userManager.takeKeys(1, player.getUniqueId(), crate.getName(), keyType, checkHand)) {
             crazyManager.removePlayerFromOpeningList(uuid);
             return;
         }

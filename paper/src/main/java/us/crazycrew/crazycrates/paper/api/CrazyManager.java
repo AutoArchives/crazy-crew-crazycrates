@@ -4,11 +4,11 @@ import com.Zrips.CMI.Modules.ModuleHandling.CMIModule;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.Registry;
 import org.bukkit.World;
 import us.crazycrew.crazycrates.common.config.PluginConfig;
 import us.crazycrew.crazycrates.paper.api.enums.settings.Messages;
+import us.crazycrew.crazycrates.paper.api.frame.BukkitUserManager;
 import us.crazycrew.crazycrates.paper.api.objects.*;
 import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
 import us.crazycrew.crazycrates.paper.support.holograms.CMIHologramsSupport;
@@ -53,11 +53,12 @@ import java.util.concurrent.ThreadLocalRandom;
 import static java.util.regex.Matcher.quoteReplacement;
 
 public class CrazyManager {
-    
+
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
     
     private final @NotNull CrazyCratesLoader cratesLoader = this.plugin.getCratesLoader();
     private final @NotNull FileManager fileManager = this.cratesLoader.getFileManager();
+    private final @NotNull BukkitUserManager userManager = this.cratesLoader.getUserManager();
     private final @NotNull Methods methods = this.cratesLoader.getMethods();
 
     // All the crates that have been loaded.
@@ -89,9 +90,6 @@ public class CrazyManager {
 
     // A list of current crate schematics for Quad Crate.
     private final List<CrateSchematic> crateSchematics = new ArrayList<>();
-
-    // If the player's inventory is full when given a physical key it will instead give them virtual keys. If false it will drop the keys on the ground.
-    private boolean giveVirtualKeysWhenInventoryFull;
 
     // True if at least one crate gives new players keys and false if none give new players keys.
     private boolean giveNewPlayersKeys;
@@ -139,7 +137,6 @@ public class CrazyManager {
         crateSchematics.clear();
 
         quadCrateTimer = FileManager.Files.CONFIG.getFile().getInt("Settings.QuadCrate.Timer") * 20;
-        giveVirtualKeysWhenInventoryFull = FileManager.Files.CONFIG.getFile().getBoolean("Settings.Give-Virtual-Keys-When-Inventory-Full");
 
         // Removes all holograms so that they can be replaced.
         if (hologramController != null) hologramController.removeAllHolograms();
@@ -313,15 +310,6 @@ public class CrazyManager {
         cleanDataFile();
     }
 
-    /**
-     * If the player's inventory is full when given a physical key it will instead give them virtual keys. If false it will drop the keys on the ground.
-     *
-     * @return True if the player will get a virtual key and false if it drops on the floor.
-     */
-    public boolean getGiveVirtualKeysWhenInventoryFull() {
-        return giveVirtualKeysWhenInventoryFull;
-    }
-
     // This method is deigned to help clean the data.yml file of any useless info that it may have.
     public void cleanDataFile() {
         FileConfiguration data = FileManager.Files.DATA.getFile();
@@ -453,7 +441,7 @@ public class CrazyManager {
                     removePlayerFromOpeningList(uuid);
                     return;
                 } else {
-                    if (takeKeys(1, player, crate, keyType, true)) {
+                    if (this.userManager.takeKeys(1, player.getUniqueId(), crate.getName(), keyType, true)) {
                         Prize prize = crate.pickPrize(player);
                         givePrize(player, prize, crate);
 
@@ -722,8 +710,6 @@ public class CrazyManager {
      * @param prize The prize the player has won.
      */
     public void givePrize(Player player, Prize prize, Crate crate) {
-        UUID uuid = player.getUniqueId();
-
         if (prize != null) {
             prize = prize.hasBlacklistPermission(player) ? prize.getAltPrize() : prize;
 
@@ -737,7 +723,7 @@ public class CrazyManager {
                     continue;
                 }
 
-                if (!this.methods.isInventoryFull(uuid)) {
+                if (!this.methods.isInventoryFull(player)) {
                     player.getInventory().addItem(item);
                 } else {
                     player.getWorld().dropItemNaturally(player.getLocation(), item);
@@ -752,7 +738,7 @@ public class CrazyManager {
                     clone.setLore(PlaceholderAPI.setPlaceholders(player, clone.getLore()));
                 }
 
-                if (!this.methods.isInventoryFull(uuid)) {
+                if (!this.methods.isInventoryFull(player)) {
                     player.getInventory().addItem(clone.build());
                 } else {
                     player.getWorld().dropItemNaturally(player.getLocation(), clone.build());
@@ -816,34 +802,6 @@ public class CrazyManager {
     }
 
     /**
-     * Give keys to an offline player.
-     *
-     * @param player The uuid of the offline player you wish to give keys to.
-     * @param crate The Crate of which key you are giving to the player.
-     * @param keys The amount of keys you wish to give to the player.
-     * @return Returns true if it successfully gave the offline player a key and false if there was an error.
-     */
-    public boolean addOfflineKeys(String player, Crate crate, int keys) {
-        try {
-            FileConfiguration data = FileManager.Files.DATA.getFile();
-            player = player.toLowerCase();
-
-            if (data.contains("Offline-Players." + player + "." + crate.getName())) {
-                keys += data.getInt("Offline-Players." + player + "." + crate.getName());
-            }
-
-            data.set("Offline-Players." + player + "." + crate.getName(), keys);
-            FileManager.Files.DATA.saveFile();
-
-            return true;
-        } catch (Exception e) {
-            FancyLogger.error("Could not add keys to offline player.");
-            FancyLogger.debug(e.getMessage());
-            return false;
-        }
-    }
-
-    /**
      * Load the offline keys of a player who has come online.
      *
      * @param player The player which you would like to load the offline keys for.
@@ -862,7 +820,7 @@ public class CrazyManager {
                     plugin.getServer().getPluginManager().callEvent(event);
 
                     if (!event.isCancelled()) {
-                        addKeys(data.getInt("Offline-Players." + name + "." + crate.getName()), player, crate, KeyType.VIRTUAL_KEY);
+                        this.userManager.addVirtualKeys(data.getInt("Offline-Players." + name + "." + crate.getName()), uuid, crate.getName());
                     }
                 }
             }
@@ -1000,63 +958,6 @@ public class CrazyManager {
     }
 
     /**
-     * Checks to see if the player has a physical key of the crate in their main hand or inventory.
-     *
-     * @param uuid The uuid of the player being checked.
-     * @param crate The crate that has the key you are checking.
-     * @param checkHand If it just checks the players hand or if it checks their inventory.
-     * @return True if they have the key and false if not.
-     */
-    public boolean hasPhysicalKey(UUID uuid, Crate crate, boolean checkHand) {
-        List<ItemStack> items = new ArrayList<>();
-
-        Player player = this.plugin.getServer().getPlayer(uuid);
-
-        if (player != null) {
-            if (checkHand) {
-                items.add(player.getEquipment().getItemInMainHand());
-                items.add(player.getEquipment().getItemInOffHand());
-            } else {
-                items.addAll(Arrays.asList(player.getInventory().getContents()));
-                items.removeAll(Arrays.asList(player.getInventory().getArmorContents()));
-            }
-        }
-
-        for (ItemStack item : items) {
-            if (item != null) {
-                if (isKeyFromCrate(item, crate)) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Get a physical key from a players inventory.
-     *
-     * @param uuid The uuid of the player you are checking.
-     * @param crate The Crate of whose key you are getting.
-     * @return The ItemStack in the player's inventory. This will return null if not found.
-     */
-    public ItemStack getPhysicalKey(UUID uuid, Crate crate) {
-        Player player = this.plugin.getServer().getPlayer(uuid);
-
-        if (player != null) {
-            for (ItemStack item : player.getOpenInventory().getBottomInventory().getContents()) {
-                if (item == null || item.getType() == Material.AIR) continue;
-
-                if (this.methods.isSimilar(item, crate)) {
-                    return item;
-                }
-            }
-        }
-
-        return null;
-    }
-
-    /**
      * Get the amount of virtual keys a player has.
      *
      * @param uuid The uuid of the player you are checking.
@@ -1066,7 +967,7 @@ public class CrazyManager {
         HashMap<Crate, Integer> keys = new HashMap<>();
 
         for (Crate crate : getCrates()) {
-            keys.put(crate, getVirtualKeys(uuid, crate));
+            keys.put(crate, this.userManager.getVirtualKeys(uuid, crate.getName()));
         }
 
         return Collections.unmodifiableMap(keys);
@@ -1079,194 +980,6 @@ public class CrazyManager {
      */
     public HashMap<UUID, Location[]> getSchematicLocations() {
         return schemLocations;
-    }
-
-    /**
-     * Get the amount of virtual keys a player has.
-     */
-    public int getVirtualKeys(UUID uuid, Crate crate) {
-        return FileManager.Files.DATA.getFile().getInt("Players." + uuid + "." + crate.getName());
-    }
-
-    /**
-     * Get the amount of physical keys a player has.
-     */
-    public int getPhysicalKeys(Player player, Crate crate) {
-        int keys = 0;
-
-        for (ItemStack item : player.getOpenInventory().getBottomInventory().getContents()) {
-            if (item == null || item.getType() == Material.AIR) continue;
-
-            if (this.methods.isSimilar(item, crate)) {
-                keys += item.getAmount();
-            }
-        }
-
-        return keys;
-    }
-
-    /**
-     * Get the total amount of keys a player has.
-     */
-    public int getTotalKeys(Player player, Crate crate) {
-        return getVirtualKeys(player.getUniqueId(), crate) + getPhysicalKeys(player, crate);
-    }
-
-    /**
-     * Take a key from a player.
-     *
-     * @param amount The amount of keys you wish to take.
-     * @param player The player you wish to take keys from.
-     * @param crate The crate key you are taking.
-     * @param keyType The type of key you are taking from the player.
-     * @param checkHand If it just checks the players hand or if it checks their inventory.
-     * @return Returns true if successfully taken keys and false if not.
-     */
-    public boolean takeKeys(int amount, Player player, Crate crate, KeyType keyType, boolean checkHand) {
-        UUID uuid = player.getUniqueId();
-
-        switch (keyType) {
-            case PHYSICAL_KEY -> {
-                int takeAmount = amount;
-                try {
-                    List<ItemStack> items = new ArrayList<>();
-
-                    if (checkHand) {
-                        items.add(player.getEquipment().getItemInMainHand());
-                        items.add(player.getEquipment().getItemInOffHand());
-                    } else {
-                        items.addAll(Arrays.asList(player.getInventory().getContents()));
-                        items.remove(player.getEquipment().getItemInOffHand());
-                    }
-
-                    for (ItemStack item : items) {
-                        if (item != null) {
-                            if (isKeyFromCrate(item, crate)) {
-                                int keyAmount = item.getAmount();
-
-                                if ((takeAmount - keyAmount) >= 0) {
-                                    this.methods.removeItemAnySlot(player.getInventory(), item);
-                                    takeAmount -= keyAmount;
-                                } else {
-                                    item.setAmount(keyAmount - takeAmount);
-                                    takeAmount = 0;
-                                }
-
-                                if (takeAmount <= 0) return true;
-                            }
-                        }
-                    }
-
-                    // This needs to be done as player.getInventory().removeItem(ItemStack); does NOT remove from the offhand.
-                    if (takeAmount > 0) {
-                        ItemStack item = player.getEquipment().getItemInOffHand();
-
-                        if (item != null) {
-                            if (isKeyFromCrate(item, crate)) {
-                                int keyAmount = item.getAmount();
-
-                                if ((takeAmount - keyAmount) >= 0) {
-                                    player.getEquipment().setItemInOffHand(new ItemStack(Material.AIR, 1));
-                                    takeAmount -= keyAmount;
-                                } else {
-                                    item.setAmount(keyAmount - takeAmount);
-                                    takeAmount = 0;
-                                }
-
-                                if (takeAmount <= 0) return true;
-                            }
-                        }
-                    }
-                } catch (Exception e) {
-                    this.methods.failedToTakeKey(player.getName(), crate);
-                    return false;
-                }
-
-                // Returns true because it was able to take some keys.
-                if (takeAmount < amount) return true;
-            }
-
-            case VIRTUAL_KEY -> {
-                int keys = getVirtualKeys(uuid, crate);
-
-                FileManager.Files.DATA.getFile().set("Players." + uuid + ".Name", player.getName());
-
-                int newAmount = Math.max((keys - amount), 0);
-
-                if (newAmount == 0) {
-                    FileManager.Files.DATA.getFile().set("Players." + uuid + "." + crate.getName(), null);
-                } else {
-                    FileManager.Files.DATA.getFile().set("Players." + uuid + "." + crate.getName(), newAmount);
-                }
-
-                FileManager.Files.DATA.saveFile();
-                return true;
-            }
-
-            case FREE_KEY -> { // Returns true because it's FREE
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public void addVirtualKeys(int amount, Player player, Crate crate) {
-        UUID uuid = player.getUniqueId();
-
-        int keys = getVirtualKeys(uuid, crate);
-
-        FileManager.Files.DATA.getFile().set("Players." + uuid + ".Name", player.getName());
-
-        FileManager.Files.DATA.getFile().set("Players." + uuid + "." + crate.getName(), (Math.max((keys + amount), 0)));
-        FileManager.Files.DATA.saveFile();
-    }
-
-    /**
-     * Give a player keys to a Crate.
-     *
-     * @param amount The amount of keys you are giving them.
-     * @param player The player you want to give the keys to.
-     * @param crate The Crate of whose keys you are giving.
-     * @param keyType The type of key you are giving to the player.
-     */
-    public void addKeys(int amount, Player player, Crate crate, KeyType keyType) {
-        UUID uuid = player.getUniqueId();
-
-        switch (keyType) {
-            case PHYSICAL_KEY -> {
-                if (this.methods.isInventoryFull(uuid)) {
-                    if (giveVirtualKeysWhenInventoryFull) {
-                        addVirtualKeys(amount, player, crate);
-
-                        boolean fullMessage = FileManager.Files.CONFIG.getFile().getBoolean("Settings.Give-Virtual-Keys-When-Inventory-Full-Message");
-
-                        if (fullMessage)
-                            player.sendMessage(Messages.CANNOT_GIVE_PLAYER_KEYS.getMessage().replaceAll("%amount%", String.valueOf(amount)).replaceAll("%key%", crate.getName()));
-                    } else {
-                        player.getWorld().dropItem(player.getLocation(), crate.getKey(amount));
-                    }
-                } else {
-                    player.getInventory().addItem(crate.getKey(amount));
-                }
-            }
-            case VIRTUAL_KEY -> addVirtualKeys(amount, player, crate);
-        }
-    }
-
-    /**
-     * Set the amount of virtual keys a player has.
-     *
-     * @param amount The amount the player will have.
-     * @param uuid The uuid of the player you are setting the keys to.
-     * @param crate The Crate of whose keys are being set.
-     */
-    public void setKeys(int amount, UUID uuid, Crate crate) {
-        Player player = this.plugin.getServer().getPlayer(uuid);
-
-        if (player != null) FileManager.Files.DATA.getFile().set("Players." + uuid + ".Name", player.getName());
-        FileManager.Files.DATA.getFile().set("Players." + uuid + "." + crate.getName(), amount);
-        FileManager.Files.DATA.saveFile();
     }
 
     /**

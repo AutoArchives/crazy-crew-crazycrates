@@ -168,10 +168,7 @@ public class Methods {
         return color(FileManager.Files.CONFIG.getFile().getString("Settings.Prefix") + msg);
     }
 
-    public boolean isInventoryFull(UUID uuid) {
-        Player player = this.plugin.getServer().getPlayer(uuid);
-
-        assert player != null;
+    public boolean isInventoryFull(Player player) {
         return player.getInventory().firstEmpty() == -1;
     }
 

@@ -4,6 +4,7 @@ import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.Methods;
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
 import us.crazycrew.crazycrates.paper.api.enums.settings.Messages;
+import us.crazycrew.crazycrates.paper.api.frame.BukkitUserManager;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
 import us.crazycrew.crazycrates.common.crates.quadcrates.CrateParticles;
 import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
@@ -38,6 +39,7 @@ public class QuadCrateManager {
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
     private final @NotNull CrazyCratesLoader cratesLoader = this.plugin.getCratesLoader();
     private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
+    private final @NotNull BukkitUserManager userManager = this.cratesLoader.getUserManager();
     private final @NotNull ChestManager chestManager = this.cratesLoader.getChestManager();
     private final @NotNull Methods methods = this.cratesLoader.getMethods();
 
@@ -178,7 +180,7 @@ public class QuadCrateManager {
             }
         }
 
-        if (!crazyManager.takeKeys(1, player, crate, keyType, checkHand)) {
+        if (!this.userManager.takeKeys(1, player.getUniqueId(), crate.getName(), keyType, checkHand)) {
             methods.failedToTakeKey(player.getName(), crate);
 
             crazyManager.removePlayerFromOpeningList(uuid);

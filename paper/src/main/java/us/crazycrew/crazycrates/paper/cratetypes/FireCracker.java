@@ -4,6 +4,7 @@ import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.Methods;
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
 import us.crazycrew.crazycrates.api.enums.types.KeyType;
+import us.crazycrew.crazycrates.paper.api.frame.BukkitUserManager;
 import us.crazycrew.crazycrates.paper.api.interfaces.HologramController;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
 import org.bukkit.Color;
@@ -22,14 +23,13 @@ public class FireCracker {
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
     private final @NotNull CrazyCratesLoader cratesLoader = this.plugin.getCratesLoader();
     private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
+    private final @NotNull BukkitUserManager userManager = this.cratesLoader.getUserManager();
     private final @NotNull Methods methods = this.cratesLoader.getMethods();
     
     public void startFireCracker(Player player, final Crate crate, KeyType keyType, final Location loc, HologramController hologramController) {
         UUID uuid = player.getUniqueId();
 
-        if (!crazyManager.takeKeys(1, player, crate, keyType, true)) {
-            methods.failedToTakeKey(player.getName(), crate);
-
+        if (!this.userManager.takeKeys(1, player.getUniqueId(), crate.getName(), keyType, true)) {
             crazyManager.removePlayerFromOpeningList(uuid);
             return;
         }

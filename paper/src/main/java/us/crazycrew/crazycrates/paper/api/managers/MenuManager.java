@@ -2,6 +2,7 @@ package us.crazycrew.crazycrates.paper.api.managers;
 
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
 import us.crazycrew.crazycrates.paper.api.FileManager;
+import us.crazycrew.crazycrates.paper.api.frame.BukkitUserManager;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
@@ -26,6 +27,7 @@ public class MenuManager {
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
     private final @NotNull CrazyCratesLoader cratesLoader = this.plugin.getCratesLoader();
     private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
+    private final @NotNull BukkitUserManager userManager = this.cratesLoader.getUserManager();
     private final @NotNull Methods methods = this.cratesLoader.getMethods();
 
     private final HashMap<UUID, Integer> playerPage = new HashMap<>();
@@ -217,9 +219,9 @@ public class MenuManager {
                                 .setCrateName(crate.getName())
                                 .setPlayerName(file.getString(path + "Player"))
                                 .setGlow(file.getBoolean(path + "Glowing"))
-                                .addLorePlaceholder("%Keys%", NumberFormat.getNumberInstance().format(crazyManager.getVirtualKeys(uuid, crate)))
-                                .addLorePlaceholder("%Keys_Physical%", NumberFormat.getNumberInstance().format(crazyManager.getPhysicalKeys(player, crate)))
-                                .addLorePlaceholder("%Keys_Total%", NumberFormat.getNumberInstance().format(crazyManager.getTotalKeys(player, crate)))
+                                .addLorePlaceholder("%Keys%", NumberFormat.getNumberInstance().format(this.userManager.getVirtualKeys(uuid, crate.getName())))
+                                .addLorePlaceholder("%Keys_Physical%", NumberFormat.getNumberInstance().format(this.userManager.getPhysicalKeys(uuid, crate.getName())))
+                                .addLorePlaceholder("%Keys_Total%", NumberFormat.getNumberInstance().format(this.userManager.getTotalKeys(uuid, crate.getName())))
                                 .addLorePlaceholder("%Player%", player.getName())
                                 .build());
                     }
@@ -235,9 +237,9 @@ public class MenuManager {
 
         for (Crate crate : crazyManager.getCrates()) {
             if (crate.getCrateType() != CrateType.MENU) {
-                option = option.replaceAll("%" + crate.getName().toLowerCase() + "%", crazyManager.getVirtualKeys(uuid, crate) + "")
-                        .replaceAll("%" + crate.getName().toLowerCase() + "_physical%", crazyManager.getPhysicalKeys(player, crate) + "")
-                        .replaceAll("%" + crate.getName().toLowerCase() + "_total%", crazyManager.getTotalKeys(player, crate) + "");
+                option = option.replaceAll("%" + crate.getName().toLowerCase() + "%", this.userManager.getVirtualKeys(uuid, crate.getName()) + "")
+                        .replaceAll("%" + crate.getName().toLowerCase() + "_physical%", this.userManager.getPhysicalKeys(uuid, crate.getName()) + "")
+                        .replaceAll("%" + crate.getName().toLowerCase() + "_total%", this.userManager.getTotalKeys(uuid, crate.getName()) + "");
             }
         }
 
