@@ -1,7 +1,6 @@
 package us.crazycrew.crazycrates.paper.api.plugin;
 
 import org.jetbrains.annotations.Nullable;
-import us.crazycrew.crazycrates.api.frame.UserManager;
 import us.crazycrew.crazycrates.api.platforms.Platform;
 import us.crazycrew.crazycrates.common.CrazyCratesPlugin;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
