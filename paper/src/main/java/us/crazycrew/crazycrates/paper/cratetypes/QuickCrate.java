@@ -49,31 +49,46 @@ public class QuickCrate implements Listener {
             default -> 1;
         }; // If the key is free it is set to one.
 
-        if (player.isSneaking() && keys > 1) {
-            int keysUsed = 0;
+        if (keys >= 1) {
+            if (player.isSneaking()) {
+                int keysUsed = 0;
 
-            // give the player the prizes
-            for (; keys > 0; keys--) {
-                if (methods.isInventoryFull(player)) break;
-                if (keysUsed >= crate.getMaxMassOpen()) break;
+                // give the player the prizes
+                for (;keys > 0; keys--) {
+                    if (methods.isInventoryFull(player)) break;
+                    if (keysUsed >= crate.getMaxMassOpen()) break;
 
-                Prize prize = crate.pickPrize(player);
-                crazyManager.givePrize(player, prize, crate);
-                plugin.getServer().getPluginManager().callEvent(new PlayerPrizeEvent(uuid, crate, crate.getName(), prize));
+                    givePrize(player, crate, loc);
 
-                if (prize.useFireworks()) methods.firework(loc.clone().add(.5, 1, .5));
+                    keysUsed++;
+                }
 
-                keysUsed++;
-            }
+                if (!this.userManager.takeKeys(keysUsed, player.getUniqueId(), crate.getName(), keyType, false)) {
+                    CrateControlListener.inUse.remove(uuid);
+                    crazyManager.removePlayerFromOpeningList(uuid);
+                    return;
+                }
+            } else {
+                if (methods.isInventoryFull(player)) return;
 
-            if (!this.userManager.takeKeys(keysUsed, player.getUniqueId(), crate.getName(), keyType, false)) {
-                CrateControlListener.inUse.remove(uuid);
-                crazyManager.removePlayerFromOpeningList(uuid);
-                return;
+                givePrize(player, crate, loc);
+
+                if (!this.userManager.takeKeys(1, player.getUniqueId(), crate.getName(), keyType, false)) {
+                    CrateControlListener.inUse.remove(uuid);
+                    crazyManager.removePlayerFromOpeningList(uuid);
+                }
             }
 
             endQuickCrate(uuid, loc, crate, hologramController, true);
         }
+    }
+
+    private void givePrize(Player player, Crate crate, Location loc) {
+        Prize prize = crate.pickPrize(player);
+        crazyManager.givePrize(player, prize, crate);
+        plugin.getServer().getPluginManager().callEvent(new PlayerPrizeEvent(player.getUniqueId(), crate, crate.getName(), prize));
+
+        if (prize.useFireworks()) methods.firework(loc.clone().add(.5, 1, .5));
     }
     
     public void endQuickCrate(UUID uuid, Location loc, Crate crate, HologramController hologramController, boolean useQuickCrate) {

@@ -60,15 +60,14 @@ public class Methods {
         return ChatColor.translateAlternateColorCodes('&', matcher.appendTail(buffer).toString());
     }
 
-    public void broadCastMessage(FileConfiguration crateFile, UUID uuid) {
+    public void broadCastMessage(FileConfiguration crateFile, Player player) {
         String crateBroadcast = crateFile.getString("Crate.BroadCast");
         String crateBroadcastBooleanExists = crateFile.getString("Crate.OpeningBroadCast");
         boolean crateBroadcastBoolean = crateFile.getBoolean("Crate.OpeningBroadCast");
         if (crateBroadcastBoolean && crateBroadcastBooleanExists != null && crateBroadcast != null) {
             if (crateBroadcast.isEmpty()) return;
 
-            Player player = this.plugin.getServer().getPlayer(uuid);
-            if (player != null) this.plugin.getServer().broadcastMessage(color(crateBroadcast.replaceAll("%prefix%", quoteReplacement(getPrefix())).replaceAll("%player%", player.getName()).replaceAll("%Prefix%", quoteReplacement(getPrefix())).replaceAll("%Player%", player.getName())));
+            this.plugin.getServer().broadcastMessage(color(crateBroadcast.replaceAll("%prefix%", quoteReplacement(getPrefix())).replaceAll("%player%", player.getName()).replaceAll("%Prefix%", quoteReplacement(getPrefix())).replaceAll("%Player%", player.getName())));
         }
     }
 

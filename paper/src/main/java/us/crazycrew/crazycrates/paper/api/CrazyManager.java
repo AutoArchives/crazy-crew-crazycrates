@@ -376,7 +376,7 @@ public class CrazyManager {
 
         addPlayerToOpeningList(uuid, crate);
 
-        if (crate.getFile() != null) this.methods.broadCastMessage(crate.getFile(), uuid);
+        if (crate.getFile() != null) this.methods.broadCastMessage(crate.getFile(), player);
 
         FileConfiguration config = FileManager.Files.CONFIG.getFile();
 
