@@ -9,17 +9,20 @@ import org.bukkit.World;
 import us.crazycrew.crazycrates.common.config.PluginConfig;
 import us.crazycrew.crazycrates.paper.api.enums.settings.Messages;
 import us.crazycrew.crazycrates.paper.api.frame.BukkitUserManager;
-import us.crazycrew.crazycrates.paper.api.objects.*;
+import us.crazycrew.crazycrates.paper.api.objects.Crate;
+import us.crazycrew.crazycrates.paper.api.objects.CrateLocation;
+import us.crazycrew.crazycrates.paper.api.objects.ItemBuilder;
+import us.crazycrew.crazycrates.paper.api.objects.Prize;
+import us.crazycrew.crazycrates.paper.api.objects.Tier;
 import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
 import us.crazycrew.crazycrates.paper.support.holograms.CMIHologramsSupport;
 import us.crazycrew.crazycrates.paper.support.holograms.HolographicDisplaysSupport;
 import us.crazycrew.crazycrates.paper.support.libraries.PluginSupport;
+import us.crazycrew.crazycrates.paper.api.FileManager.Files;
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.Methods;
 import us.crazycrew.crazycrates.paper.api.enums.BrokeLocation;
-import us.crazycrew.crazycrates.paper.api.events.PlayerReceiveKeyEvent;
-import us.crazycrew.crazycrates.paper.api.events.PlayerReceiveKeyEvent.KeyReceiveReason;
 import us.crazycrew.crazycrates.paper.api.interfaces.HologramController;
 import us.crazycrew.crazycrates.paper.api.managers.QuadCrateManager;
 import us.crazycrew.crazycrates.api.enums.types.KeyType;
@@ -135,7 +138,7 @@ public class CrazyManager {
         crateLocations.clear();
         crateSchematics.clear();
 
-        quadCrateTimer = FileManager.Files.CONFIG.getFile().getInt("Settings.QuadCrate.Timer") * 20;
+        quadCrateTimer = Files.CONFIG.getFile().getInt("Settings.QuadCrate.Timer") * 20;
 
         // Removes all holograms so that they can be replaced.
         if (hologramController != null) hologramController.removeAllHolograms();
@@ -244,7 +247,7 @@ public class CrazyManager {
             FancyLogger.info("Loading all the physical crate locations.");
         }
 
-        FileConfiguration locations = FileManager.Files.LOCATIONS.getFile();
+        FileConfiguration locations = Files.LOCATIONS.getFile();
         int loadedAmount = 0;
         int brokeAmount = 0;
 
@@ -311,7 +314,7 @@ public class CrazyManager {
 
     // This method is deigned to help clean the data.yml file of any useless info that it may have.
     public void cleanDataFile() {
-        FileConfiguration data = FileManager.Files.DATA.getFile();
+        FileConfiguration data = Files.DATA.getFile();
 
         if (data.contains("Players")) {
             boolean logging = fileManager.isLogging();
@@ -349,7 +352,7 @@ public class CrazyManager {
 
             if (logging) FancyLogger.success("The data.yml file has been cleaned.");
             
-            FileManager.Files.DATA.saveFile();
+            Files.DATA.saveFile();
         }
     }
 
@@ -377,7 +380,7 @@ public class CrazyManager {
 
         if (crate.getFile() != null) this.methods.broadCastMessage(crate.getFile(), player);
 
-        FileConfiguration config = FileManager.Files.CONFIG.getFile();
+        FileConfiguration config = Files.CONFIG.getFile();
 
         switch (crate.getCrateType()) {
             case MENU -> {
@@ -454,8 +457,8 @@ public class CrazyManager {
             }
         }
 
-        boolean logFile = FileManager.Files.CONFIG.getFile().getBoolean("Settings.Crate-Actions.Log-File");
-        boolean logConsole = FileManager.Files.CONFIG.getFile().getBoolean("Settings.Crate-Actions.Log-Console");
+        boolean logFile = Files.CONFIG.getFile().getBoolean("Settings.Crate-Actions.Log-File");
+        boolean logConsole = Files.CONFIG.getFile().getBoolean("Settings.Crate-Actions.Log-Console");
 
         this.cratesLoader.getEventLogger().logCrateEvent(player, crate, keyType, logFile, logConsole);
     }
@@ -609,7 +612,7 @@ public class CrazyManager {
      * @param crate The crate which you would like to set it to.
      */
     public void addCrateLocation(Location location, Crate crate) {
-        FileConfiguration locations = FileManager.Files.LOCATIONS.getFile();
+        FileConfiguration locations = Files.LOCATIONS.getFile();
         String id = "1"; // Location ID
 
         for (int i = 1; locations.contains("Locations." + i); i++) {
@@ -628,7 +631,7 @@ public class CrazyManager {
         locations.set("Locations." + id + ".X", location.getBlockX());
         locations.set("Locations." + id + ".Y", location.getBlockY());
         locations.set("Locations." + id + ".Z", location.getBlockZ());
-        FileManager.Files.LOCATIONS.saveFile();
+        Files.LOCATIONS.saveFile();
 
         crateLocations.add(new CrateLocation(id, crate, location));
 
@@ -641,8 +644,8 @@ public class CrazyManager {
      * @param id The id of the location.
      */
     public void removeCrateLocation(String id) {
-        FileManager.Files.LOCATIONS.getFile().set("Locations." + id, null);
-        FileManager.Files.LOCATIONS.saveFile();
+        Files.LOCATIONS.getFile().set("Locations." + id, null);
+        Files.LOCATIONS.saveFile();
         CrateLocation location = null;
 
         for (CrateLocation crateLocation : getCrateLocations()) {
@@ -949,8 +952,8 @@ public class CrazyManager {
                 crates.stream()
                 .filter(Crate::doNewPlayersGetKeys)
                 .forEach(crate -> {
-                    FileManager.Files.DATA.getFile().set("Players." + uuid + "." + crate.getName(), crate.getNewPlayerKeys());
-                    FileManager.Files.DATA.saveFile();
+                    Files.DATA.getFile().set("Players." + uuid + "." + crate.getName(), crate.getNewPlayerKeys());
+                    Files.DATA.saveFile();
                 });
             }
         }
