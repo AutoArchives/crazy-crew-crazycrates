@@ -14,5 +14,8 @@ dependencies {
         exclude("org.yaml", "snakeyaml")
     }
 
+    compileOnly(libs.adventure.api)
+    compileOnly(libs.adventure.mm)
+
     compileOnly(libs.annotations)
 }
