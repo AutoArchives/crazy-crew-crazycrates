@@ -35,7 +35,7 @@ public class CrazyCratesLoader {
     private Methods methods;
 
     public void enable() {
-        this.cratesLoader = new CrazyCratesPlugin(Platform.Type.PAPER, this.plugin.getDataFolder());
+        this.cratesLoader = new CrazyCratesPlugin(this.plugin.getDataFolder(), Platform.Type.PAPER);
         this.cratesLoader.enable();
 
         // Enable cluster bukkit api

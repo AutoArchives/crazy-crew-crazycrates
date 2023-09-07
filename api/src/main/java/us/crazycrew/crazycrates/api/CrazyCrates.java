@@ -3,8 +3,12 @@ package us.crazycrew.crazycrates.api;
 import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.api.platforms.Platform;
 
-public abstract class CrazyCrates {
+import java.io.File;
 
-    public abstract @NotNull Platform.Type getPlatform();
+public interface CrazyCrates {
+
+    @NotNull Platform.Type getPlatform();
+
+    @NotNull File getDataFolder();
 
 }
