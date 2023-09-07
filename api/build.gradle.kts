@@ -6,7 +6,7 @@ project.group = "${rootProject.group}"
 project.version = "${rootProject.version}"
 
 dependencies {
-    compileOnly("org.jetbrains", "annotations", "24.0.1")
+    compileOnly(libs.annotations)
 }
 
 val component: SoftwareComponent = components["java"]

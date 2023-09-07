@@ -14,7 +14,7 @@ listOf(
 
     "api",
 
-    "paper",
+    "paper"
 ).forEach {
     include(it)
 }

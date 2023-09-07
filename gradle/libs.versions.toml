@@ -1,0 +1,10 @@
+[versions]
+cluster = "0.4.1"
+
+[libraries]
+cluster-bukkit-api = { module = "com.ryderbelserion.cluster:cluster-bukkit", version.ref = "cluster" }
+cluster-api = { module = "com.ryderbelserion.cluster:cluster-api", version.ref = "cluster" }
+
+annotations = { module = "org.jetbrains:annotations", version = "24.0.1" }
+
+config-me = { module = "ch.jalu:configme", version = "1.4.1" }

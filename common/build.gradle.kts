@@ -8,11 +8,11 @@ project.version = "${rootProject.version}"
 dependencies {
     api(project(":api"))
 
-    api("ch.jalu", "configme", "1.4.1") {
+    api(libs.cluster.api)
+
+    api(libs.config.me) {
         exclude("org.yaml", "snakeyaml")
     }
 
-    api("com.ryderbelserion.cluster", "cluster-api", "0.4")
-
-    compileOnly("org.jetbrains", "annotations", "24.0.1")
+    compileOnly(libs.annotations)
 }

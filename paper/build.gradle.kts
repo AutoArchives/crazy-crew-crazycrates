@@ -30,17 +30,15 @@ repositories {
 dependencies {
     implementation(project(":common"))
 
-    implementation("de.tr7zw", "item-nbt-api", "2.11.3")
+    implementation("dev.triumphteam", "triumph-cmd-bukkit", "2.0.0-SNAPSHOT")
 
     implementation("org.bstats", "bstats-bukkit", "3.0.2")
 
-    implementation("com.ryderbelserion.cluster", "cluster-bukkit", "0.4") {
+    implementation("de.tr7zw", "item-nbt-api", "2.11.3")
+
+    implementation(libs.cluster.bukkit.api) {
         exclude("com.ryderbelserion.cluster", "cluster-api")
     }
-
-    implementation("dev.triumphteam", "triumph-cmd-bukkit", "2.0.0-SNAPSHOT")
-
-    compileOnly(fileTree("libs").include("*.jar"))
 
     compileOnly("me.filoghost.holographicdisplays", "holographicdisplays-api", "3.0.0")
 
@@ -51,6 +49,8 @@ dependencies {
     compileOnly("com.github.oraxen", "oraxen", "1.160.0")
 
     compileOnly("me.clip", "placeholderapi", "2.11.3")
+
+    compileOnly(fileTree("libs").include("*.jar"))
 }
 
 tasks {
