@@ -801,35 +801,6 @@ public class CrazyManager {
     }
 
     /**
-     * Load the offline keys of a player who has come online.
-     *
-     * @param player The player which you would like to load the offline keys for.
-     */
-    public void loadOfflinePlayersKeys(Player player) {
-        FileConfiguration data = FileManager.Files.DATA.getFile();
-
-        UUID uuid = player.getUniqueId();
-
-        String name = player.getName().toLowerCase();
-
-        if (data.contains("Offline-Players." + name)) {
-            for (Crate crate : getCrates()) {
-                if (data.contains("Offline-Players." + name + "." + crate.getName())) {
-                    PlayerReceiveKeyEvent event = new PlayerReceiveKeyEvent(uuid, crate, KeyReceiveReason.OFFLINE_PLAYER, 1);
-                    plugin.getServer().getPluginManager().callEvent(event);
-
-                    if (!event.isCancelled()) {
-                        this.userManager.addVirtualKeys(data.getInt("Offline-Players." + name + "." + crate.getName()), uuid, crate.getName());
-                    }
-                }
-            }
-
-            data.set("Offline-Players." + name, null);
-            FileManager.Files.DATA.saveFile();
-        }
-    }
-
-    /**
      * Add a player to the list of players that are currently opening crates.
      *
      * @param uuid The uuid of the player that is opening a crate.

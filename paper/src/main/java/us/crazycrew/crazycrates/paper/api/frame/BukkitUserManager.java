@@ -14,8 +14,10 @@ import us.crazycrew.crazycrates.api.frame.UserManager;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.Methods;
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
+import us.crazycrew.crazycrates.paper.api.FileManager;
 import us.crazycrew.crazycrates.paper.api.FileManager.Files;
 import us.crazycrew.crazycrates.paper.api.enums.settings.Messages;
+import us.crazycrew.crazycrates.paper.api.events.PlayerReceiveKeyEvent;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
 import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
 import java.util.ArrayList;
@@ -347,9 +349,9 @@ public class BukkitUserManager extends UserManager {
     /**
      * Check if a key is from a specific Crate.
      *
-     * @param item The key ItemStack you are checking.
-     * @param crate The Crate you are checking.
-     * @return Returns true if it belongs to that Crate and false if it does not.
+     * @param item The key item you are checking.
+     * @param crate The crate you are checking.
+     * @return true if it belongs to that crate and false if it does not.
      */
     private boolean isKeyFromCrate(ItemStack item, Crate crate) {
         if (crate.getCrateType() != CrateType.MENU) {
@@ -383,6 +385,37 @@ public class BukkitUserManager extends UserManager {
             FancyLogger.error("Could not add keys to offline player with uuid: " + uuid);
             FancyLogger.debug(exception.getMessage());
             return false;
+        }
+    }
+
+    /**
+     * Load the offline keys of a player who has come online.
+     *
+     * @param player The player which you would like to load the offline keys for.
+     */
+    public void loadOfflinePlayersKeys(Player player, List<Crate> crates) {
+        UUID uuid = player.getUniqueId();
+
+        String name = player.getName().toLowerCase();
+
+        if (this.data.contains("Offline-Players." + name)) {
+            for (Crate crate : crates) {
+                if (this.data.contains("Offline-Players." + name + "." + crate.getName())) {
+                    PlayerReceiveKeyEvent event = new PlayerReceiveKeyEvent(uuid, crate, PlayerReceiveKeyEvent.KeyReceiveReason.OFFLINE_PLAYER, 1);
+                    this.plugin.getServer().getPluginManager().callEvent(event);
+
+                    if (!event.isCancelled()) {
+                        if (crate.getCrateType() == CrateType.CRATE_ON_THE_GO) {
+                            player.getInventory().addItem(crate.getKey(this.data.getInt("Offline-Players." + name + "." + crate.getName())));
+                        } else {
+                            addVirtualKeys(this.data.getInt("Offline-Players." + name + "." + crate.getName()), uuid, crate.getName());
+                        }
+                    }
+                }
+            }
+
+            this.data.set("Offline-Players." + name, null);
+            Files.DATA.saveFile();
         }
     }
 }

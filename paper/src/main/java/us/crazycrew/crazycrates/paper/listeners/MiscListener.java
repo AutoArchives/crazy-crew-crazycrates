@@ -11,8 +11,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerAttemptPickupItemEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.jetbrains.annotations.NotNull;
+import us.crazycrew.crazycrates.paper.api.objects.Crate;
 import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
-
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class MiscListener implements Listener {
@@ -44,6 +45,7 @@ public class MiscListener implements Listener {
         final Player player = e.getPlayer();
 
         this.cratesLoader.getCrazyManager().setNewPlayerKeys(player);
-        this.cratesLoader.getCrazyManager().loadOfflinePlayersKeys(player);
+
+        this.cratesLoader.getUserManager().loadOfflinePlayersKeys(player, this.crazyManager.getCrates());
     }
 }
