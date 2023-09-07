@@ -42,6 +42,7 @@ public class CrazyCratesProvider {
                  1. The plugin failed to enable or is not in the plugins folder.
                  2. The plugin trying to use CrazyCrates doesn't depend on CrazyCrates.
                  3. The plugin trying to use CrazyCrates is using the API before CrazyCrates is enabled.
+                 4. The plugin is trying to shade it in instead of using it properly.
                  """;
 
         NotYetAvailable() {
