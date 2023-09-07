@@ -46,7 +46,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
@@ -955,22 +954,6 @@ public class CrazyManager {
      */
     public KeyType getPlayerKeyType(UUID uuid) {
         return playerKeys.get(uuid);
-    }
-
-    /**
-     * Get the amount of virtual keys a player has.
-     *
-     * @param uuid The uuid of the player you are checking.
-     * @return The amount of virtual keys they own.
-     */
-    public Map<Crate, Integer> getVirtualKeys(UUID uuid) {
-        HashMap<Crate, Integer> keys = new HashMap<>();
-
-        for (Crate crate : getCrates()) {
-            keys.put(crate, this.userManager.getVirtualKeys(uuid, crate.getName()));
-        }
-
-        return Collections.unmodifiableMap(keys);
     }
 
     /**

@@ -55,7 +55,11 @@ public class BaseKeyCommand extends BaseCommand {
 
         message.add(header);
 
-        Map<Crate, Integer> keys = crazyManager.getVirtualKeys(uuid);
+        Map<Crate, Integer> keys = new HashMap<>();
+
+        for (Crate crate : this.crazyManager.getCrates()) {
+            keys.put(crate, this.cratesLoader.getUserManager().getVirtualKeys(uuid, crate.getName()));
+        }
 
         boolean hasKeys = false;
 
