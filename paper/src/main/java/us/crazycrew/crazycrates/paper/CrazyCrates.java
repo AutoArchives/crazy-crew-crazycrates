@@ -207,7 +207,7 @@ public class CrazyCrates extends JavaPlugin {
             return numbers;
         });
 
-        manager.registerArgument(CrateBaseCommand.CustomPlayer.class, (sender, context) -> new CrateBaseCommand.CustomPlayer(context));
+        manager.registerArgument(CrateBaseCommand.CustomPlayer.class, (sender, context) -> new CrateBaseCommand.CustomPlayer(context, this));
 
         manager.registerCommand(new BaseKeyCommand());
         manager.registerCommand(new CrateBaseCommand());
