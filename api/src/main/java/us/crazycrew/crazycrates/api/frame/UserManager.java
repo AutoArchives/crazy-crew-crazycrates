@@ -92,6 +92,6 @@ public abstract class UserManager {
      * @param keys The amount of keys you wish to give to the player.
      * @return Returns true if it successfully gave the offline player a key and false if there was an error.
      */
-    public abstract boolean addOfflineKeys(UUID uuid, String crateName, int keys);
+    public abstract boolean addOfflineKeys(UUID uuid, String crateName, int keys, KeyType type);
 
 }

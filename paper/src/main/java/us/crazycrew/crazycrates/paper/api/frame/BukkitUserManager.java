@@ -3,6 +3,7 @@ package us.crazycrew.crazycrates.paper.api.frame;
 import com.ryderbelserion.cluster.api.adventure.FancyLogger;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -14,7 +15,6 @@ import us.crazycrew.crazycrates.api.frame.UserManager;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.Methods;
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
-import us.crazycrew.crazycrates.paper.api.FileManager;
 import us.crazycrew.crazycrates.paper.api.FileManager.Files;
 import us.crazycrew.crazycrates.paper.api.enums.settings.Messages;
 import us.crazycrew.crazycrates.paper.api.events.PlayerReceiveKeyEvent;
@@ -364,7 +364,7 @@ public class BukkitUserManager extends UserManager {
     }
 
     @Override
-    public boolean addOfflineKeys(UUID uuid, String crateName, int keys) {
+    public boolean addOfflineKeys(UUID uuid, String crateName, int keys, KeyType keyType) {
         if (crateName.isBlank()) {
             FancyLogger.warn("Crate name cannot be empty or null.");
             return false;
@@ -375,6 +375,15 @@ public class BukkitUserManager extends UserManager {
         OfflinePlayer player = this.plugin.getServer().getOfflinePlayer(uuid);
 
         try {
+            if (keyType == KeyType.PHYSICAL_KEY) {
+                if (this.data.contains("Offline-Players." + player.getName() + ".Physical." + crate.getName())) keys += this.data.getInt("Offline-Players." + player.getName() + ".Physical." + crate.getName());
+
+                this.data.set("Offline-Players." + player.getName() + ".Physical." + crate.getName(), keys);
+                Files.DATA.saveFile();
+
+                return true;
+            }
+
             if (this.data.contains("Offline-Players." + player.getName() + "." + crate.getName())) keys += this.data.getInt("Offline-Players." + player.getName() + "." + crate.getName());
 
             this.data.set("Offline-Players." + player.getName() + "." + crate.getName(), keys);
@@ -396,26 +405,87 @@ public class BukkitUserManager extends UserManager {
     public void loadOfflinePlayersKeys(Player player, List<Crate> crates) {
         UUID uuid = player.getUniqueId();
 
-        String name = player.getName().toLowerCase();
+        String name = player.getName();
 
-        if (this.data.contains("Offline-Players." + name)) {
-            for (Crate crate : crates) {
-                if (this.data.contains("Offline-Players." + name + "." + crate.getName())) {
-                    PlayerReceiveKeyEvent event = new PlayerReceiveKeyEvent(uuid, crate, PlayerReceiveKeyEvent.KeyReceiveReason.OFFLINE_PLAYER, 1);
-                    this.plugin.getServer().getPluginManager().callEvent(event);
+        if (!this.data.contains("Offline-Players." + name) || crates.isEmpty()) return;
 
-                    if (!event.isCancelled()) {
-                        if (crate.getCrateType() == CrateType.CRATE_ON_THE_GO) {
-                            player.getInventory().addItem(crate.getKey(this.data.getInt("Offline-Players." + name + "." + crate.getName())));
-                        } else {
-                            addVirtualKeys(this.data.getInt("Offline-Players." + name + "." + crate.getName()), uuid, crate.getName());
+        for (Crate crate : crates) {
+            if (this.data.contains("Offline-Players." + name + "." + crate.getName())) {
+                PlayerReceiveKeyEvent event = new PlayerReceiveKeyEvent(uuid, crate, PlayerReceiveKeyEvent.KeyReceiveReason.OFFLINE_PLAYER, 1);
+                this.plugin.getServer().getPluginManager().callEvent(event);
+
+                if (event.isCancelled()) return;
+
+                int keysGiven = 0;
+
+                int amount = this.data.getInt("Offline-Players." + name + "." + crate.getName());
+
+                while (keysGiven < amount) {
+                    // If the inventory is full, drop the remaining keys then stop.
+                    if (crate.getCrateType() == CrateType.CRATE_ON_THE_GO) {
+                        // If the inventory is full, drop the items then stop.
+                        if (this.methods.isInventoryFull(player)) {
+                            player.getWorld().dropItemNaturally(player.getLocation(), crate.getKey(amount));
+                            break;
                         }
                     }
+
+                    keysGiven++;
                 }
+
+                // If the crate type is on the go.
+                if (crate.getCrateType() == CrateType.CRATE_ON_THE_GO) {
+                    // If the inventory not full, add to inventory.
+                    player.getInventory().addItem(crate.getKey(amount));
+                } else {
+                    // Otherwise add virtual keys.
+                    addVirtualKeys(amount, uuid, crate.getName());
+                }
+
+                // If keys given is greater or equal than, remove data.
+                if (keysGiven >= amount) this.data.set("Offline-Players." + name + "." + crate.getName(), null);
             }
 
-            this.data.set("Offline-Players." + name, null);
-            Files.DATA.saveFile();
+            if (this.data.contains("Offline-Players." + name + ".Physical." + crate.getName())) {
+                PlayerReceiveKeyEvent event = new PlayerReceiveKeyEvent(uuid, crate, PlayerReceiveKeyEvent.KeyReceiveReason.OFFLINE_PLAYER, 1);
+                this.plugin.getServer().getPluginManager().callEvent(event);
+
+                if (event.isCancelled()) return;
+
+                int keysGiven = 0;
+
+                int amount = this.data.getInt("Offline-Players." + name + ".Physical." + crate.getName());
+
+                while (keysGiven < amount) {
+                    // If the inventory is full, drop the remaining keys then stop.
+                    if (this.methods.isInventoryFull(player)) {
+                        player.getWorld().dropItemNaturally(player.getLocation(), crate.getKey(amount-keysGiven));
+                        break;
+                    }
+
+                    keysGiven++;
+                }
+
+                // If the inventory not full, add to inventory.
+                player.getInventory().addItem(crate.getKey(keysGiven));
+
+                // If keys given is greater or equal than, remove data.
+                if (keysGiven >= amount) this.data.set("Offline-Players." + name + ".Physical." + crate.getName(), null);
+            }
         }
+
+        ConfigurationSection physicalSection = this.data.getConfigurationSection("Offline-Players." + name + ".Physical");
+
+        if (physicalSection != null) {
+            if (physicalSection.getKeys(false).isEmpty()) this.data.set("Offline-Players." + name + ".Physical", null);
+        }
+
+        ConfigurationSection section = this.data.getConfigurationSection("Offline-Players." + name);
+
+        if (section != null) {
+            if (section.getKeys(false).isEmpty()) this.data.set("Offline-Players." + name, null);
+        }
+
+        Files.DATA.saveFile();
     }
 }
