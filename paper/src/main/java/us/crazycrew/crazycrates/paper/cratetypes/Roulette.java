@@ -106,7 +106,7 @@ public class Roulette implements Listener {
                     if (time >= 23) {
                         //TODO() make volume/pitch configurable and sound type configurable.
                         //TODO() Adopt the new sound system including custom sounds.
-                        player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.PLAYERS,1f, 1f);
+                        player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.PLAYERS, 1f, 1f);
 
                         crazyManager.endCrate(uuid);
                         Prize prize = crate.getPrize(inv.getItem(13));

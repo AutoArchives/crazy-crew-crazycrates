@@ -101,7 +101,7 @@ public class QuadCrate implements Listener {
                                     session.endCrate();
                                     //TODO() make volume/pitch configurable and sound type configurable.
                                     //TODO() Adopt the new sound system including custom sounds.
-                                    player.playSound(player.getLocation(), Sound.BLOCK_STONE_STEP, SoundCategory.BLOCKS,1f, 1f);
+                                    player.playSound(player.getLocation(), Sound.BLOCK_STONE_STEP, SoundCategory.BLOCKS, 1f, 1f);
                                 }
                             }.runTaskLater(plugin, 60);
                         }
