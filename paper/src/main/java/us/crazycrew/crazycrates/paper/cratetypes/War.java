@@ -76,7 +76,9 @@ public class War implements Listener {
             public void run() {
                 if (full < 25) {
                     setRandomPrizes(player, inv, crate, inventoryTitle);
-                    player.playSound(player.getLocation(), Sound.BLOCK_LAVA_POP, 1, 1);
+                    //TODO() make volume/pitch configurable and sound type configurable.
+                    //TODO() Adopt the new sound system including custom sounds.
+                    player.playSound(player.getLocation(), Sound.BLOCK_LAVA_POP, SoundCategory.BLOCKS, 1f, 1f);
                 }
 
                 open++;
@@ -89,7 +91,9 @@ public class War implements Listener {
                 full++;
 
                 if (full == 26) { // Finished Rolling
-                    player.playSound(player.getLocation(), Sound.BLOCK_LAVA_POP, 1, 1);
+                    //TODO() make volume/pitch configurable and sound type configurable.
+                    //TODO() Adopt the new sound system including custom sounds.
+                    player.playSound(player.getLocation(), Sound.BLOCK_LAVA_POP, SoundCategory.BLOCKS, 1f, 1f);
                     setRandomGlass(uuid, inv, inventoryTitle);
                     canPick.put(uuid, true);
                 }
@@ -171,7 +175,9 @@ public class War implements Listener {
 
                     this.plugin.getServer().getPluginManager().callEvent(new PlayerPrizeEvent(uuid, crate, crate.getName(), prize));
                     this.crazyManager.removePlayerFromOpeningList(uuid);
-                    player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_LAND, 1, 1);
+                    //TODO() make volume/pitch configurable and sound type configurable.
+                    //TODO() Adopt the new sound system including custom sounds.
+                    player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_LAND, SoundCategory.BLOCKS, 1f, 1f);
                     // Sets all other non-picked prizes to show what they could have been.
 
                     this.crazyManager.addCrateTask(uuid, new BukkitRunnable() {

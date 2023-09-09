@@ -105,7 +105,9 @@ public class CSGO implements Listener {
                     moveItems(inv, player, crate);
                     setGlass(inv);
 
-                    player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+                    //TODO() make volume/pitch configurable and sound type configurable.
+                    //TODO() Adopt the new sound system including custom sounds.
+                    player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, SoundCategory.PLAYERS, 1f, 1f);
                 }
 
                 open++;
@@ -118,23 +120,26 @@ public class CSGO implements Listener {
 
                 full++;
                 if (full > 51) {
-
                     if (slowSpin().contains(time)) { // When Slowing Down
                         moveItems(inv, player, crate);
                         setGlass(inv);
 
-                        player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+                        //TODO() make volume/pitch configurable and sound type configurable.
+                        //TODO() Adopt the new sound system including custom sounds.
+                        player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, SoundCategory.PLAYERS, 1f, 1f);
                     }
 
                     time++;
 
                     if (time == 60) { // When done
-                        player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+                        //TODO() make volume/pitch configurable and sound type configurable.
+                        //TODO() Adopt the new sound system including custom sounds.
+                        player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.PLAYERS, 1f, 1f);
 
                         crazyManager.endCrate(uuid);
                         Prize prize = crate.getPrize(inv.getItem(13));
 
-                        methods.pickPrize(uuid, crate, prize);
+                        methods.pickPrize(player, crate, prize);
 
                         crazyManager.removePlayerFromOpeningList(uuid);
                         cancel();

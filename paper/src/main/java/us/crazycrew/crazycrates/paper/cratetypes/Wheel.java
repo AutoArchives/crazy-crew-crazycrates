@@ -83,7 +83,9 @@ public class Wheel implements Listener {
                     if (methods.slowSpin().contains(slower)) checkLore();
 
                     if (full == timer + 47) {
-                        player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+                        //TODO() make volume/pitch configurable and sound type configurable.
+                        //TODO() Adopt the new sound system including custom sounds.
+                        player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.PLAYERS, 1f, 1f);
                     }
 
                     if (full >= timer + 47) {

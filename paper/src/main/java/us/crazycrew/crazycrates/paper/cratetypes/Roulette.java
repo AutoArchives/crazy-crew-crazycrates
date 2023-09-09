@@ -69,7 +69,9 @@ public class Roulette implements Listener {
                     inv.setItem(13, crate.pickPrize(player).getDisplayItem());
                     setGlass(inv);
 
-                    player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+                    //TODO() make volume/pitch configurable and sound type configurable.
+                    //TODO() Adopt the new sound system including custom sounds.
+                    player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, SoundCategory.PLAYERS, 1f, 1f);
 
                     even++;
 
@@ -94,13 +96,17 @@ public class Roulette implements Listener {
                         setGlass(inv);
                         inv.setItem(13, crate.pickPrize(player).getDisplayItem());
 
-                        player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+                        //TODO() make volume/pitch configurable and sound type configurable.
+                        //TODO() Adopt the new sound system including custom sounds.
+                        player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, SoundCategory.PLAYERS, 1f, 1f);
                     }
 
                     time++;
 
                     if (time >= 23) {
-                        player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+                        //TODO() make volume/pitch configurable and sound type configurable.
+                        //TODO() Adopt the new sound system including custom sounds.
+                        player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.PLAYERS,1f, 1f);
 
                         crazyManager.endCrate(uuid);
                         Prize prize = crate.getPrize(inv.getItem(13));
