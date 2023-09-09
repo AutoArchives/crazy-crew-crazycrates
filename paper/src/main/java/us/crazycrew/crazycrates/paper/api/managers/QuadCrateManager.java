@@ -1,5 +1,7 @@
 package us.crazycrew.crazycrates.paper.api.managers;
 
+import ch.jalu.configme.SettingsManager;
+import us.crazycrew.crazycrates.common.config.MainConfig;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.Methods;
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
@@ -24,7 +26,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -38,10 +39,11 @@ public class QuadCrateManager {
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
     private final @NotNull CrazyCratesLoader cratesLoader = this.plugin.getCratesLoader();
-    private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
     private final @NotNull BukkitUserManager userManager = this.cratesLoader.getUserManager();
+    private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
     private final @NotNull ChestManager chestManager = this.cratesLoader.getChestManager();
     private final @NotNull Methods methods = this.cratesLoader.getMethods();
+    private final @NotNull SettingsManager config = this.cratesLoader.getConfigManager().getConfig();
 
     private static final List<QuadCrateManager> crateSessions = new ArrayList<>();
 
@@ -257,7 +259,7 @@ public class QuadCrateManager {
                 endCrateForce(true);
                 player.sendMessage(Messages.OUT_OF_TIME.getMessage());
             }
-        }.runTaskLater(plugin, crazyManager.getQuadCrateTimer()));
+        }.runTaskLater(plugin, this.config.getProperty(MainConfig.QUAD_CRATE_TIMER)));
     }
 
     /**

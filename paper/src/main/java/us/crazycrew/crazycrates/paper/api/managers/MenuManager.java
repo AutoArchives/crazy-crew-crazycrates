@@ -1,12 +1,14 @@
 package us.crazycrew.crazycrates.paper.api.managers;
 
+import ch.jalu.configme.SettingsManager;
+import us.crazycrew.crazycrates.common.config.MainConfig;
+import us.crazycrew.crazycrates.common.config.menus.CrateMainMenu;
+import us.crazycrew.crazycrates.common.config.menus.CratePreviewMenu;
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
-import us.crazycrew.crazycrates.paper.api.FileManager;
 import us.crazycrew.crazycrates.paper.api.frame.BukkitUserManager;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
-import us.crazycrew.crazycrates.paper.Methods;
 import us.crazycrew.crazycrates.paper.api.objects.ItemBuilder;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -28,7 +30,10 @@ public class MenuManager {
     private final @NotNull CrazyCratesLoader cratesLoader = this.plugin.getCratesLoader();
     private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
     private final @NotNull BukkitUserManager userManager = this.cratesLoader.getUserManager();
-    private final @NotNull Methods methods = this.cratesLoader.getMethods();
+
+    private final @NotNull SettingsManager config = this.cratesLoader.getConfigManager().getConfig();
+    private final @NotNull SettingsManager mainMenuConfig = this.cratesLoader.getConfigManager().getMainMenuConfig();
+    private final @NotNull SettingsManager previewMenuConfig = this.cratesLoader.getConfigManager().getPreviewMenuConfig();
 
     private final HashMap<UUID, Integer> playerPage = new HashMap<>();
     private final HashMap<UUID, Crate> playerCrate = new HashMap<>();
@@ -50,25 +55,23 @@ public class MenuManager {
     }
 
     public void loadButtons() {
-        FileConfiguration config = FileManager.Files.CONFIG.getFile();
-        String path = "Settings.Preview.Buttons.";
-        menuButton = new ItemBuilder()
-                .setMaterial(config.getString(path + "Menu.Item", "COMPASS"))
-                .setName(config.getString(path + "Menu.Name", "&7&l>> &c&lMenu &7&l<<"))
-                .setLore(config.contains(path + "Menu.Lore") ? config.getStringList(path + "Menu.Lore") : Collections.singletonList("&7Return to the menu."))
+        this.menuButton = new ItemBuilder()
+                .setMaterial(this.previewMenuConfig.getProperty(CratePreviewMenu.CRATE_PREVIEW_MENU_BUTTON_MATERIAL))
+                .setName(this.previewMenuConfig.getProperty(CratePreviewMenu.CRATE_PREVIEW_MENU_BUTTON_NAME))
+                .setLore(this.previewMenuConfig.getProperty(CratePreviewMenu.CRATE_PREVIEW_MENU_BUTTON_LORE))
                 .build();
-        nextButton = new ItemBuilder()
-                .setMaterial(config.getString(path + "Next.Item", "FEATHER"))
-                .setName(config.getString(path + "Next.Name", "&6&lNext >>"))
-                .setLore(config.contains(path + "Next.Lore") ? config.getStringList(path + "Next.Lore") : Collections.singletonList("&7&lPage: &b%page%"));
-        backButton = new ItemBuilder()
-                .setMaterial(config.getString(path + "Back.Item", "FEATHER"))
-                .setName(config.getString(path + "Back.Name", "&6&l<< Back"))
-                .setLore(config.contains(path + "Back.Lore") ? config.getStringList(path + "Back.Lore") : Collections.singletonList("&7&lPage: &b%page%"));
+        this.nextButton = new ItemBuilder()
+                .setMaterial(this.previewMenuConfig.getProperty(CratePreviewMenu.CRATE_PREVIEW_NEXT_BUTTON_MATERIAL))
+                .setName(this.previewMenuConfig.getProperty(CratePreviewMenu.CRATE_PREVIEW_NEXT_BUTTON_NAME))
+                .setLore(this.previewMenuConfig.getProperty(CratePreviewMenu.CRATE_PREVIEW_NEXT_BUTTON_LORE));
+        this.backButton = new ItemBuilder()
+                .setMaterial(this.previewMenuConfig.getProperty(CratePreviewMenu.CRATE_PREVIEW_BACK_BUTTON_MATERIAL))
+                .setName(this.previewMenuConfig.getProperty(CratePreviewMenu.CRATE_PREVIEW_BACK_BUTTON_NAME))
+                .setLore(this.previewMenuConfig.getProperty(CratePreviewMenu.CRATE_PREVIEW_BACK_BUTTON_LORE));
     }
 
     public void openNewPreview(Player player, Crate crate) {
-        playerCrate.put(player.getUniqueId(), crate);
+        this.playerCrate.put(player.getUniqueId(), crate);
         setPage(player.getUniqueId(), 1);
 
         player.openInventory(crate.getPreview(player));
@@ -77,17 +80,17 @@ public class MenuManager {
     public void openPreview(Player player, Crate crate) {
         UUID uuid = player.getUniqueId();
 
-        playerCrate.put(uuid, crate);
+        this.playerCrate.put(uuid, crate);
 
         player.openInventory(crate.getPreview(player));
     }
 
     public int getPage(UUID uuid) {
-        return playerPage.getOrDefault(uuid, 1);
+        return this.playerPage.getOrDefault(uuid, 1);
     }
 
     public void setPage(UUID uuid, int pageNumber) {
-        int max = playerCrate.get(uuid).getMaxPage();
+        int max = this.playerCrate.get(uuid).getMaxPage();
 
         if (pageNumber < 1) {
             pageNumber = 1;
@@ -95,11 +98,11 @@ public class MenuManager {
             pageNumber = max;
         }
 
-        playerPage.put(uuid, pageNumber);
+        this.playerPage.put(uuid, pageNumber);
     }
 
     public ItemStack getMenuButton() {
-        return menuButton;
+        return this.menuButton;
     }
 
     public ItemStack getNextButton() {
@@ -107,7 +110,7 @@ public class MenuManager {
     }
 
     public ItemStack getNextButton(UUID uuid) {
-        ItemBuilder button = new ItemBuilder(nextButton);
+        ItemBuilder button = new ItemBuilder(this.nextButton);
 
         button.addLorePlaceholder("%Page%", (getPage(uuid) + 1) + "");
 
@@ -119,7 +122,7 @@ public class MenuManager {
     }
 
     public ItemStack getBackButton(UUID uuid) {
-        ItemBuilder button = new ItemBuilder(backButton);
+        ItemBuilder button = new ItemBuilder(this.backButton);
         
         button.addLorePlaceholder("%Page%", (getPage(uuid) - 1) + "");
 
@@ -127,109 +130,109 @@ public class MenuManager {
     }
 
     public boolean playerInMenu(Player player) {
-        return playerInMenu.getOrDefault(player.getUniqueId(), false);
+        return this.playerInMenu.getOrDefault(player.getUniqueId(), false);
     }
 
     public void setPlayerInMenu(Player player, boolean inMenu) {
-        playerInMenu.put(player.getUniqueId(), inMenu);
+        this.playerInMenu.put(player.getUniqueId(), inMenu);
     }
 
     public void openMainMenu(Player player) {
-        int size = FileManager.Files.CONFIG.getFile().getInt("Settings.InventorySize");
-        Inventory inv = this.plugin.getServer().createInventory(null, size, methods.sanitizeColor(FileManager.Files.CONFIG.getFile().getString("Settings.InventoryName")));
+        int size = this.mainMenuConfig.getProperty(CrateMainMenu.CRATE_MENU_SIZE);
+        Inventory inv = this.plugin.getServer().createInventory(null, size, this.mainMenuConfig.getProperty(CrateMainMenu.CRATE_MENU_TITLE));
 
-        if (FileManager.Files.CONFIG.getFile().contains("Settings.Filler.Toggle")) {
-            if (FileManager.Files.CONFIG.getFile().getBoolean("Settings.Filler.Toggle")) {
-                String id = FileManager.Files.CONFIG.getFile().getString("Settings.Filler.Item");
-                String name = FileManager.Files.CONFIG.getFile().getString("Settings.Filler.Name");
-                List<String> lore = FileManager.Files.CONFIG.getFile().getStringList("Settings.Filler.Lore");
-                ItemStack item = new ItemBuilder().setMaterial(id).setName(name).setLore(lore).build();
+        if (!this.mainMenuConfig.getProperty(CrateMainMenu.CRATE_MENU_FILLER_TOGGLE)) {
+            String id = this.mainMenuConfig.getProperty(CrateMainMenu.CRATE_MENU_FILLER_ITEM);
+            String name = this.mainMenuConfig.getProperty(CrateMainMenu.CRATE_MENU_FILLER_NAME);
+            List<String> lore = this.mainMenuConfig.getProperty(CrateMainMenu.CRATE_MENU_FILLER_LORE);
+            ItemStack item = new ItemBuilder().setMaterial(id).setName(name).setLore(lore).build();
 
-                for (int i = 0; i < size; i++) {
-                    inv.setItem(i, item.clone());
-                }
+            for (int i = 0; i < size; i++) {
+                inv.setItem(i, item.clone());
             }
         }
 
         UUID uuid = player.getUniqueId();
 
-        if (FileManager.Files.CONFIG.getFile().contains("Settings.GUI-Customizer")) {
-            for (String custom : FileManager.Files.CONFIG.getFile().getStringList("Settings.GUI-Customizer")) {
+        if (this.config.getProperty(MainConfig.CUSTOMIZER_TOGGLE)) {
+            for (String custom : this.config.getProperty(MainConfig.CUSTOMIZER)) {
                 int slot = 0;
-                ItemBuilder item = new ItemBuilder();
-                String[] split = custom.split(", ");
+                if (this.config.getProperty(MainConfig.CUSTOMIZER_TOGGLE)) {
+                    ItemBuilder item = new ItemBuilder();
+                    String[] split = custom.split(", ");
 
-                for (String option : split) {
+                    for (String option : split) {
 
-                    if (option.contains("Item:")) item.setMaterial(option.replace("Item:", ""));
+                        if (option.contains("Item:")) item.setMaterial(option.replace("Item:", ""));
 
-                    if (option.contains("Name:")) {
-                        option = option.replace("Name:", "");
+                        if (option.contains("Name:")) {
+                            option = option.replace("Name:", "");
 
-                        option = getCrates(player, option);
-
-                        item.setName(option.replaceAll("%player%", player.getName()));
-                    }
-
-                    if (option.contains("Lore:")) {
-                        option = option.replace("Lore:", "");
-                        String[] d = option.split(",");
-
-                        for (String l : d) {
                             option = getCrates(player, option);
 
-                            item.addLore(option.replaceAll("%player%", player.getName()));
+                            item.setName(option.replaceAll("%player%", player.getName()));
                         }
+
+                        if (option.contains("Lore:")) {
+                            option = option.replace("Lore:", "");
+                            String[] d = option.split(",");
+
+                            for (String ignored : d) {
+                                option = getCrates(player, option);
+
+                                item.addLore(option.replaceAll("%player%", player.getName()));
+                            }
+                        }
+
+                        if (option.contains("Glowing:")) item.setGlow(Boolean.parseBoolean(option.replace("Glowing:", "")));
+
+                        if (option.contains("Player:")) item.setPlayerName(option.replaceAll("%player%", player.getName()));
+
+                        if (option.contains("Slot:")) slot = Integer.parseInt(option.replace("Slot:", ""));
+
+                        if (option.contains("Unbreakable-Item"))
+                            item.setUnbreakable(Boolean.parseBoolean(option.replace("Unbreakable-Item:", "")));
+
+                        if (option.contains("Hide-Item-Flags"))
+                            item.hideItemFlags(Boolean.parseBoolean(option.replace("Hide-Item-Flags:", "")));
                     }
 
-                    if (option.contains("Glowing:")) item.setGlow(Boolean.parseBoolean(option.replace("Glowing:", "")));
+                    if (slot > size) continue;
 
-                    if (option.contains("Player:")) item.setPlayerName(option.replaceAll("%player%", player.getName()));
-
-                    if (option.contains("Slot:")) slot = Integer.parseInt(option.replace("Slot:", ""));
-
-                    if (option.contains("Unbreakable-Item"))
-                        item.setUnbreakable(Boolean.parseBoolean(option.replace("Unbreakable-Item:", "")));
-
-                    if (option.contains("Hide-Item-Flags"))
-                        item.hideItemFlags(Boolean.parseBoolean(option.replace("Hide-Item-Flags:", "")));
-                }
-
-                if (slot > size) continue;
-
-                slot--;
-                inv.setItem(slot, item.build());
-            }
-
-            for (Crate crate : crazyManager.getCrates()) {
-                FileConfiguration file = crate.getFile();
-
-                if (file != null) {
-                    if (file.getBoolean("Crate.InGUI")) {
-                        String path = "Crate.";
-                        int slot = file.getInt(path + "Slot");
-
-                        if (slot > size) continue;
-
-                        slot--;
-                        inv.setItem(slot, new ItemBuilder()
-                                .setMaterial(file.getString(path + "Item"))
-                                .setName(file.getString(path + "Name"))
-                                .setLore(file.getStringList(path + "Lore"))
-                                .setCrateName(crate.getName())
-                                .setPlayerName(file.getString(path + "Player"))
-                                .setGlow(file.getBoolean(path + "Glowing"))
-                                .addLorePlaceholder("%Keys%", NumberFormat.getNumberInstance().format(this.userManager.getVirtualKeys(uuid, crate.getName())))
-                                .addLorePlaceholder("%Keys_Physical%", NumberFormat.getNumberInstance().format(this.userManager.getPhysicalKeys(uuid, crate.getName())))
-                                .addLorePlaceholder("%Keys_Total%", NumberFormat.getNumberInstance().format(this.userManager.getTotalKeys(uuid, crate.getName())))
-                                .addLorePlaceholder("%Player%", player.getName())
-                                .build());
-                    }
+                    slot--;
+                    inv.setItem(slot, item.build());
                 }
             }
-
-            player.openInventory(inv);
         }
+
+        for (Crate crate : this.crazyManager.getCrates()) {
+            FileConfiguration file = crate.getFile();
+
+            if (file != null) {
+                if (file.getBoolean("Crate.InGUI")) {
+                    String path = "Crate.";
+                    int slot = file.getInt(path + "Slot");
+
+                    if (slot > size) continue;
+
+                    slot--;
+                    inv.setItem(slot, new ItemBuilder()
+                            .setMaterial(file.getString(path + "Item"))
+                            .setName(file.getString(path + "Name"))
+                            .setLore(file.getStringList(path + "Lore"))
+                            .setCrateName(crate.getName())
+                            .setPlayerName(file.getString(path + "Player"))
+                            .setGlow(file.getBoolean(path + "Glowing"))
+                            .addLorePlaceholder("%Keys%", NumberFormat.getNumberInstance().format(this.userManager.getVirtualKeys(uuid, crate.getName())))
+                            .addLorePlaceholder("%Keys_Physical%", NumberFormat.getNumberInstance().format(this.userManager.getPhysicalKeys(uuid, crate.getName())))
+                            .addLorePlaceholder("%Keys_Total%", NumberFormat.getNumberInstance().format(this.userManager.getTotalKeys(uuid, crate.getName())))
+                            .addLorePlaceholder("%Player%", player.getName())
+                            .build());
+                }
+            }
+        }
+
+        player.openInventory(inv);
     }
 
     private String getCrates(Player player, String option) {

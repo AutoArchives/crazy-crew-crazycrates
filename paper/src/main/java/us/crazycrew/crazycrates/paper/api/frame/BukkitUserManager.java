@@ -1,5 +1,6 @@
 package us.crazycrew.crazycrates.paper.api.frame;
 
+import ch.jalu.configme.SettingsManager;
 import com.ryderbelserion.cluster.api.adventure.FancyLogger;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -12,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
 import us.crazycrew.crazycrates.api.enums.types.KeyType;
 import us.crazycrew.crazycrates.api.frame.UserManager;
+import us.crazycrew.crazycrates.common.config.MainConfig;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.Methods;
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
@@ -32,7 +34,8 @@ public class BukkitUserManager extends UserManager {
     private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
     private final @NotNull Methods methods = this.cratesLoader.getMethods();
 
-    private final @NotNull FileConfiguration config = Files.CONFIG.getFile();
+    private final @NotNull SettingsManager config = this.cratesLoader.getConfigManager().getConfig();
+
     private final @NotNull FileConfiguration data = Files.DATA.getFile();
 
     @Override
@@ -136,15 +139,11 @@ public class BukkitUserManager extends UserManager {
                     return;
                 }
 
-                if (this.config.getBoolean("Settings.Give-Virtual-Keys-When-Inventory-Full")) {
+                if (this.config.getProperty(MainConfig.GIVE_VIRTUAL_KEYS)) {
                     addVirtualKeys(amount, player.getUniqueId(), crate.getName());
 
-                    boolean sendMessage = this.config.getBoolean("Settings.Give-Virtual-Keys-When-Inventory-Full-Message");
-
-                    if (sendMessage) {
-                        player.sendMessage(Messages.CANNOT_GIVE_PLAYER_KEYS.getMessage()
-                                .replaceAll("%amount%", String.valueOf(amount))
-                                .replaceAll("%key%", crate.getName()));
+                    if (this.config.getProperty(MainConfig.GIVE_VIRTUAL_KEYS_MESSAGE)) {
+                        player.sendMessage(Messages.CANNOT_GIVE_PLAYER_KEYS.getMessage().replaceAll("%amount%", String.valueOf(amount)).replaceAll("%key%", crate.getName()));
                     }
 
                     return;

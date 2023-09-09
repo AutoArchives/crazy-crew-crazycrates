@@ -13,7 +13,7 @@ import us.crazycrew.crazycrates.common.config.ConfigManager;
 import us.crazycrew.crazycrates.common.config.PluginConfig;
 import us.crazycrew.crazycrates.paper.api.frame.BukkitUserManager;
 import us.crazycrew.crazycrates.paper.api.managers.MenuManager;
-import us.crazycrew.crazycrates.paper.api.plugin.migrate.ConfigValues;
+import us.crazycrew.crazycrates.paper.api.plugin.migrate.MigrationService;
 import us.crazycrew.crazycrates.paper.support.MetricsHandler;
 import com.ryderbelserion.cluster.bukkit.BukkitPlugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -24,11 +24,13 @@ import java.io.File;
 public class CrazyCratesLoader extends CrazyCratesPlugin {
     
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
+
+    private BukkitUserManager userManager;
+
     private BukkitPlugin bukkitPlugin;
     private MetricsHandler metrics;
 
     private FileManager fileManager;
-    private BukkitUserManager userManager;
     private CrazyManager crazyManager;
     private MenuManager menuManager;
     private ChestManager chestManager;
@@ -64,8 +66,9 @@ public class CrazyCratesLoader extends CrazyCratesPlugin {
                 .registerCustomFilesFolder("/schematics")
                 .setup();
 
-        // Convert old values to new configs.
-        ConfigValues.convert();
+        MigrationService service = new MigrationService();
+
+        service.migrate();
 
         // Reload just in case.
         getConfigManager().reload();
@@ -126,6 +129,9 @@ public class CrazyCratesLoader extends CrazyCratesPlugin {
         return null;
     }
 
+    /**
+     * Inherited methods.
+     */
     @Override
     public @NotNull ConfigManager getConfigManager() {
         return super.getConfigManager();
@@ -136,6 +142,9 @@ public class CrazyCratesLoader extends CrazyCratesPlugin {
         return this.userManager;
     }
 
+    /**
+     * Internal methods.
+     */
     public @NotNull FileManager getFileManager() {
         return this.fileManager;
     }

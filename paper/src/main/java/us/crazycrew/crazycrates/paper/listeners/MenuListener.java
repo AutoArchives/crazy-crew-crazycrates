@@ -32,6 +32,7 @@ public class MenuListener implements Listener {
     private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
     private final @NotNull BukkitUserManager userManager = this.cratesLoader.getUserManager();
     private final @NotNull Methods methods = this.cratesLoader.getMethods();
+    private final @NotNull SettingsManager config = this.cratesLoader.getConfigManager().getConfig();
 
     @EventHandler
     public void onInvClick(InventoryClickEvent e) {
@@ -39,7 +40,6 @@ public class MenuListener implements Listener {
         UUID uuid = player.getUniqueId();
 
         Inventory inv = e.getClickedInventory();
-        FileConfiguration config = FileManager.Files.CONFIG.getFile();
 
         if (inv == null) return;
 
@@ -47,7 +47,8 @@ public class MenuListener implements Listener {
             if (crate.getCrateType() != CrateType.MENU && crate.isCrateMenu(e.getView())) return;
         }
 
-        if (e.getView().getTitle().equals(methods.sanitizeColor(config.getString("Settings.InventoryName")))) {
+        //TODO() Re-do how this works.
+        if (e.getView().getTitle().equals(methods.sanitizeColor(" "))) {
             e.setCancelled(true);
 
             if (e.getCurrentItem() != null) {
@@ -84,17 +85,19 @@ public class MenuListener implements Listener {
                             if (this.userManager.getVirtualKeys(uuid, crate.getName()) >= 1) {
                                 hasKey = true;
                             } else {
-                                if (FileManager.Files.CONFIG.getFile().getBoolean("Settings.Virtual-Accepts-Physical-Keys") && this.userManager.hasPhysicalKey(uuid, crate.getName(), false)) {
+                                if (this.config.getProperty(MainConfig.VIRTUAL_ACCEPTS_PHYSICAL_KEYS) && this.userManager.hasPhysicalKey(uuid, crate.getName(), false)) {
                                     hasKey = true;
                                     keyType = KeyType.PHYSICAL_KEY;
                                 }
                             }
 
                             if (!hasKey) {
-                                if (config.contains("Settings.Need-Key-Sound")) {
-                                    Sound sound = Sound.valueOf(config.getString("Settings.Need-Key-Sound"));
+                                if (this.config.getProperty(MainConfig.KEY_SOUND_TOGGLE)) {
+                                    Sound sound = Sound.valueOf(this.config.getProperty(MainConfig.KEY_SOUND_NAME));
 
-                                    if (sound != null) player.playSound(player.getLocation(), sound, 1f, 1f);
+                                    //TODO() make volume/pitch configurable and sound type configurable.
+                                    //TODO() Adopt the new sound system including custom sounds.
+                                    player.playSound(player.getLocation(), sound, SoundCategory.PLAYERS, 1f, 1f);
                                 }
 
                                 player.sendMessage(Messages.NO_VIRTUAL_KEY.getMessage());
@@ -122,6 +125,6 @@ public class MenuListener implements Listener {
     }
     
     private ArrayList<String> getDisabledWorlds() {
-        return new ArrayList<>(FileManager.Files.CONFIG.getFile().getStringList("Settings.DisabledWorlds"));
+        return new ArrayList<>(this.config.getProperty(MainConfig.DISABLED_WORLDS));
     }
 }

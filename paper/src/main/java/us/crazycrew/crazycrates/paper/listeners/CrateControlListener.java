@@ -46,6 +46,7 @@ public class CrateControlListener implements Listener { // Crate Control
     private final @NotNull BukkitUserManager userManager = this.cratesLoader.getUserManager();
     private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
     private final @NotNull Methods methods = this.cratesLoader.getMethods();
+    private final @NotNull SettingsManager config = this.cratesLoader.getConfigManager().getConfig();
     
     // This event controls when a player tries to click in a GUI based crate type. This will stop them from taking items out of their inventories.
     @EventHandler
@@ -120,7 +121,7 @@ public class CrateControlListener implements Listener { // Crate Control
                 e.setCancelled(true);
 
                 if (crate.getCrateType() == CrateType.MENU) {
-                    boolean openMenu = config.getBoolean("Settings.Enable-Crate-Menu");
+                    boolean openMenu = this.config.getProperty(MainConfig.PREVIEW_MENU_TOGGLE);
 
                     //This is to stop players in QuadCrate to not be able to try and open a crate set to menu.
                     if (!crazyManager.isInOpeningList(uuid) && openMenu) this.cratesLoader.getMenuManager().openMainMenu(player);
@@ -147,12 +148,12 @@ public class CrateControlListener implements Listener { // Crate Control
                         return;
                     }
 
-                    if (crate.getCrateType() != CrateType.CRATE_ON_THE_GO && keyInHand && crazyManager.isKeyFromCrate(key, crate) && config.getBoolean("Settings.Physical-Accepts-Physical-Keys")) {
+                    if (crate.getCrateType() != CrateType.CRATE_ON_THE_GO && keyInHand && this.crazyManager.isKeyFromCrate(key, crate) && this.config.getProperty(MainConfig.PHYSICAL_ACCEPTS_PHYSICAL)) {
                         hasKey = true;
                         isPhysical = true;
                     }
 
-                    if (config.getBoolean("Settings.Physical-Accepts-Virtual-Keys") && this.userManager.getVirtualKeys(uuid, crate.getName()) >= 1) hasKey = true;
+                    if (this.config.getProperty(MainConfig.PHYSICAL_ACCEPTS_VIRTUAL) && this.userManager.getVirtualKeys(uuid, crate.getName()) >= 1) hasKey = true;
 
                     if (hasKey) {
                         // Checks if the player uses the quick crate again.
@@ -188,12 +189,14 @@ public class CrateControlListener implements Listener { // Crate Control
                         crazyManager.openCrate(player, crate, keyType, crateLocation.getLocation(), false, true);
                     } else {
                         if (crate.getCrateType() != CrateType.CRATE_ON_THE_GO) {
-                            if (config.getBoolean("Settings.KnockBack")) knockBack(player, clickedBlock.getLocation());
+                            if (this.config.getProperty(MainConfig.CRATE_KNOCK_BACK)) knockBack(player, clickedBlock.getLocation());
 
-                            if (config.contains("Settings.Need-Key-Sound")) {
-                                Sound sound = Sound.valueOf(config.getString("Settings.Need-Key-Sound"));
+                            if (this.config.getProperty(MainConfig.KEY_SOUND_TOGGLE)) {
+                                Sound sound = Sound.valueOf(this.config.getProperty(MainConfig.KEY_SOUND_NAME));
 
-                                if (sound != null) player.playSound(player.getLocation(), sound, 1f, 1f);
+                                //TODO() make volume/pitch configurable and sound type configurable.
+                                //TODO() Adopt the new sound system including custom sounds.
+                                player.playSound(player.getLocation(), sound, SoundCategory.PLAYERS, 1f, 1f);
                             }
 
                             player.sendMessage(Messages.NO_KEY.getMessage("%Key%", keyName));

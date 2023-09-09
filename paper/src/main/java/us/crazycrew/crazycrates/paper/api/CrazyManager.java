@@ -1,12 +1,15 @@
 package us.crazycrew.crazycrates.paper.api;
 
+import ch.jalu.configme.SettingsManager;
 import com.Zrips.CMI.Modules.ModuleHandling.CMIModule;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
 import org.bukkit.World;
+import us.crazycrew.crazycrates.common.config.MainConfig;
 import us.crazycrew.crazycrates.common.config.PluginConfig;
+import us.crazycrew.crazycrates.common.config.menus.CrateMainMenu;
 import us.crazycrew.crazycrates.paper.api.enums.settings.Messages;
 import us.crazycrew.crazycrates.paper.api.frame.BukkitUserManager;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
@@ -63,6 +66,8 @@ public class CrazyManager {
     private final @NotNull BukkitUserManager userManager = this.cratesLoader.getUserManager();
     private final @NotNull Methods methods = this.cratesLoader.getMethods();
 
+    private final @NotNull SettingsManager config = this.cratesLoader.getConfigManager().getConfig();
+
     // All the crates that have been loaded.
     private final ArrayList<Crate> crates = new ArrayList<>();
 
@@ -86,9 +91,6 @@ public class CrazyManager {
 
     // A list of tasks being run by the QuadCrate type.
     private final HashMap<UUID, ArrayList<BukkitTask>> currentQuadTasks = new HashMap<>();
-
-    // The time in seconds a quadcrate can go until afk kicks them from it.
-    private int quadCrateTimer;
 
     // A list of current crate schematics for Quad Crate.
     private final List<CrateSchematic> crateSchematics = new ArrayList<>();
@@ -138,7 +140,6 @@ public class CrazyManager {
         crateLocations.clear();
         crateSchematics.clear();
 
-        quadCrateTimer = Files.CONFIG.getFile().getInt("Settings.QuadCrate.Timer") * 20;
 
         // Removes all holograms so that they can be replaced.
         if (hologramController != null) hologramController.removeAllHolograms();
@@ -380,11 +381,9 @@ public class CrazyManager {
 
         if (crate.getFile() != null) this.methods.broadCastMessage(crate.getFile(), player);
 
-        FileConfiguration config = Files.CONFIG.getFile();
-
         switch (crate.getCrateType()) {
             case MENU -> {
-                boolean openMenu = config.getBoolean("Settings.Enable-Crate-Menu");
+                boolean openMenu = this.config.getProperty(MainConfig.PREVIEW_MENU_TOGGLE);
 
                 if (openMenu) this.cratesLoader.getMenuManager().openMainMenu(player);
                 else player.sendMessage(Messages.FEATURE_DISABLED.getMessage());
@@ -457,8 +456,8 @@ public class CrazyManager {
             }
         }
 
-        boolean logFile = Files.CONFIG.getFile().getBoolean("Settings.Crate-Actions.Log-File");
-        boolean logConsole = Files.CONFIG.getFile().getBoolean("Settings.Crate-Actions.Log-Console");
+        boolean logFile = this.config.getProperty(MainConfig.LOG_TO_FILE);
+        boolean logConsole = this.config.getProperty(MainConfig.LOG_TO_CONSOLE);
 
         this.cratesLoader.getEventLogger().logCrateEvent(player, crate, keyType, logFile, logConsole);
     }
@@ -694,15 +693,6 @@ public class CrazyManager {
         }
 
         return null;
-    }
-
-    /**
-     * The time in seconds a quadcrate will last before kicking the player.
-     *
-     * @return The time in seconds till kick.
-     */
-    public int getQuadCrateTimer() {
-        return quadCrateTimer;
     }
 
     /**
