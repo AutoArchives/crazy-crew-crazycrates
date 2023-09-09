@@ -25,7 +25,7 @@ public class PlaceholderAPISupport extends PlaceholderExpansion {
         if (player.isOnline()) {
             Player playerOnline = (Player) player;
 
-            for (Crate crate : crazyManager.getCrates()) {
+            for (Crate crate : this.crazyManager.getCrates()) {
                 if (crate.getCrateType() != CrateType.MENU) {
                     if (identifier.equalsIgnoreCase(crate.getName())) {
                         return NumberFormat.getNumberInstance().format(this.userManager.getVirtualKeys(playerOnline.getUniqueId(), crate.getName()));
@@ -58,6 +58,6 @@ public class PlaceholderAPISupport extends PlaceholderExpansion {
     
     @Override
     public @NotNull String getVersion() {
-        return plugin.getDescription().getVersion();
+        return this.plugin.getDescription().getVersion();
     }
 }

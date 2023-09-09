@@ -1,5 +1,6 @@
 package us.crazycrew.crazycrates.paper.cratetypes;
 
+import org.bukkit.SoundCategory;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.Methods;
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
@@ -29,14 +30,14 @@ public class Roulette implements Listener {
     private void setGlass(Inventory inv) {
         for (int i = 0; i < 27; i++) {
             if (i != 13) {
-                ItemStack item = methods.getRandomPaneColor().setName(" ").build();
+                ItemStack item = this.methods.getRandomPaneColor().setName(" ").build();
                 inv.setItem(i, item);
             }
         }
     }
     
     public void openRoulette(Player player, Crate crate, KeyType keyType, boolean checkHand) {
-        Inventory inv = plugin.getServer().createInventory(null, 27, methods.sanitizeColor(crate.getFile().getString("Crate.CrateName")));
+        Inventory inv = this.plugin.getServer().createInventory(null, 27, this.methods.sanitizeColor(crate.getFile().getString("Crate.CrateName")));
         setGlass(inv);
 
         UUID uuid = player.getUniqueId();
@@ -46,7 +47,7 @@ public class Roulette implements Listener {
         player.openInventory(inv);
 
         if (!this.userManager.takeKeys(1, player.getUniqueId(), crate.getName(), keyType, checkHand)) {
-            crazyManager.removePlayerFromOpeningList(uuid);
+            this.crazyManager.removePlayerFromOpeningList(uuid);
             return;
         }
 
@@ -56,7 +57,7 @@ public class Roulette implements Listener {
     private void startRoulette(Player player, final Inventory inv, final Crate crate) {
         UUID uuid = player.getUniqueId();
 
-        crazyManager.addCrateTask(uuid, new BukkitRunnable() {
+        this.crazyManager.addCrateTask(uuid, new BukkitRunnable() {
             int time = 1;
             int even = 0;
             int full = 0;
@@ -104,7 +105,7 @@ public class Roulette implements Listener {
                         crazyManager.endCrate(uuid);
                         Prize prize = crate.getPrize(inv.getItem(13));
 
-                        methods.pickPrize(uuid, crate, prize);
+                        methods.pickPrize(player, crate, prize);
 
                         crazyManager.removePlayerFromOpeningList(uuid);
 
@@ -117,6 +118,6 @@ public class Roulette implements Listener {
                     }
                 }
             }
-        }.runTaskTimer(plugin, 2, 2));
+        }.runTaskTimer(this.plugin, 2, 2));
     }
 }

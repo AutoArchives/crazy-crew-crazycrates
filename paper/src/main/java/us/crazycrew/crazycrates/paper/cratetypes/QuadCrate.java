@@ -1,5 +1,6 @@
 package us.crazycrew.crazycrates.paper.cratetypes;
 
+import org.bukkit.SoundCategory;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
 import us.crazycrew.crazycrates.paper.api.enums.settings.Messages;
@@ -67,11 +68,11 @@ public class QuadCrate implements Listener {
 
                     if (!session.getCratesOpened().get(block.getLocation())) {
 
-                        chestManager.openChest(block, true);
+                        this.chestManager.openChest(block, true);
 
                         Crate crate = session.getCrate();
                         Prize prize = crate.pickPrize(player, block.getLocation().add(.5, 1.3, .5));
-                        crazyManager.givePrize(player, prize, crate);
+                        this.crazyManager.givePrize(player, prize, crate);
 
                         ItemBuilder itemBuilder = ItemBuilder.convertItemStack(prize.getDisplayItem());
                         itemBuilder.addLore(new Random().nextInt(Integer.MAX_VALUE) + ""); // Makes sure items don't merge

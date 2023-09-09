@@ -30,7 +30,7 @@ public class FireCracker {
         UUID uuid = player.getUniqueId();
 
         if (!this.userManager.takeKeys(1, player.getUniqueId(), crate.getName(), keyType, true)) {
-            crazyManager.removePlayerFromOpeningList(uuid);
+            this.crazyManager.removePlayerFromOpeningList(uuid);
             return;
         }
 
@@ -46,7 +46,7 @@ public class FireCracker {
         colors.add(Color.MAROON);
         colors.add(Color.PURPLE);
 
-        crazyManager.addCrateTask(uuid, new BukkitRunnable() {
+        this.crazyManager.addCrateTask(uuid, new BukkitRunnable() {
             final Random r = new Random();
             final int color = r.nextInt(colors.size());
             int l = 0;
@@ -64,6 +64,6 @@ public class FireCracker {
                     plugin.getQuickCrate().openCrate(player, loc, crate, KeyType.FREE_KEY, hologramController);
                 }
             }
-        }.runTaskTimer(plugin, 0, 2));
+        }.runTaskTimer(this.plugin, 0, 2));
     }
 }

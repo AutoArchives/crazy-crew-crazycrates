@@ -10,7 +10,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import us.crazycrew.crazycrates.common.enums.Permissions;
-import us.crazycrew.crazycrates.paper.api.FileManager;
 import us.crazycrew.crazycrates.paper.api.enums.settings.Messages;
 import us.crazycrew.crazycrates.paper.api.events.PlayerPrizeEvent;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
@@ -47,10 +46,10 @@ public class Methods {
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
 
-    public final Pattern HEX_PATTERN = Pattern.compile("#[a-fA-F\\d]{6}");
+    private final Pattern HEX_PATTERN = Pattern.compile("#[a-fA-F\\d]{6}");
 
     public String color(String message) {
-        Matcher matcher = HEX_PATTERN.matcher(message);
+        Matcher matcher = this.HEX_PATTERN.matcher(message);
         StringBuilder buffer = new StringBuilder();
 
         while (matcher.find()) {
@@ -86,9 +85,9 @@ public class Methods {
     }
 
     public void sendCommand(String command) {
-        ConsoleCommandSender console = plugin.getServer().getConsoleSender();
+        ConsoleCommandSender console = this.plugin.getServer().getConsoleSender();
 
-        plugin.getServer().dispatchCommand(console, command);
+        this.plugin.getServer().dispatchCommand(console, command);
     }
 
     public String sanitizeColor(String msg) {
@@ -107,14 +106,14 @@ public class Methods {
         fw.setFireworkMeta(fm);
         addFirework(fw);
 
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, fw :: detonate, 2);
+        this.plugin.getServer().getScheduler().scheduleSyncDelayedTask(this.plugin, fw::detonate, 2);
     }
 
     /**
      * @param firework The firework you want to add.
      */
     private void addFirework(Entity firework) {
-        NamespacedKey noDamage = new NamespacedKey(plugin, "no-damage");
+        NamespacedKey noDamage = new NamespacedKey(this.plugin, "no-damage");
 
         PersistentDataContainer container = firework.getPersistentDataContainer();
 
@@ -129,7 +128,7 @@ public class Methods {
         fw.setFireworkMeta(fm);
         addFirework(fw);
 
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, fw :: detonate, 2);
+        this.plugin.getServer().getScheduler().scheduleSyncDelayedTask(this.plugin, fw::detonate, 2);
     }
 
     public void removeItem(ItemStack item, Player player) {
@@ -159,12 +158,13 @@ public class Methods {
         }
     }
 
+    //TODO() Find prefix
     public String getPrefix() {
-        return color(FileManager.Files.CONFIG.getFile().getString("Settings.Prefix"));
+        return color(" ");
     }
 
     public String getPrefix(String msg) {
-        return color(FileManager.Files.CONFIG.getFile().getString("Settings.Prefix") + msg);
+        return color(" " + msg);
     }
 
     public boolean isInventoryFull(Player player) {
@@ -351,21 +351,17 @@ public class Methods {
 
     /**
      * Picks the prize for the player.
-     * @param uuid - The uuid of the player who the prize is for.
+     * @param player - The player who the prize is for.
      * @param crate - The crate the player is opening.
      * @param prize - The prize the player is being given.
      */
-    public void pickPrize(UUID uuid, Crate crate, Prize prize) {
-        Player player = this.plugin.getServer().getPlayer(uuid);
-
-        if (player == null) return;
-
+    public void pickPrize(Player player, Crate crate, Prize prize) {
         if (prize != null) {
-            //this.cratesLoader.getCrazyManager().givePrize(uuid, prize, crate);
+            this.plugin.getCratesLoader().getCrazyManager().givePrize(player, prize, crate);
 
             if (prize.useFireworks()) firework(player.getLocation().add(0, 1, 0));
 
-            plugin.getServer().getPluginManager().callEvent(new PlayerPrizeEvent(uuid, crate, crate.getName(), prize));
+            this.plugin.getServer().getPluginManager().callEvent(new PlayerPrizeEvent(player.getUniqueId(), crate, crate.getName(), prize));
         } else {
             player.sendMessage(getPrefix("&cNo prize was found, please report this issue if you think this is an error."));
         }

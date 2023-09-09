@@ -45,14 +45,14 @@ public class BrokeLocation {
      * @return the location name
      */
     public String getLocationName() {
-        return locationName;
+        return this.locationName;
     }
 
     /**
      * @return the X coordinate
      */
     public int getX() {
-        return x;
+        return this.x;
     }
 
     /**
@@ -68,7 +68,7 @@ public class BrokeLocation {
      * @return the Y coordinate
      */
     public int getY() {
-        return y;
+        return this.y;
     }
 
 
@@ -85,7 +85,7 @@ public class BrokeLocation {
      * @return the Z coordinate
      */
     public int getZ() {
-        return z;
+        return this.z;
     }
 
     /**
@@ -101,7 +101,7 @@ public class BrokeLocation {
      * @return the world name
      */
     public String getWorld() {
-        return world;
+        return this.world;
     }
 
     /**
@@ -117,7 +117,7 @@ public class BrokeLocation {
      * @return the crate object
      */
     public Crate getCrate() {
-        return crate;
+        return this.crate;
     }
 
     /**
@@ -135,6 +135,6 @@ public class BrokeLocation {
      * @return the location of the broken crate
      */
     public Location getLocation() {
-        return new Location(plugin.getServer().getWorld(world), x, y, z);
+        return new Location(this.plugin.getServer().getWorld(this.world), this.x, this.y, this.z);
     }
 }

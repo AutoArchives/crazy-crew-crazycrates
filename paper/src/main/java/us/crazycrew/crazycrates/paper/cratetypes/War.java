@@ -1,5 +1,6 @@
 package us.crazycrew.crazycrates.paper.cratetypes;
 
+import org.bukkit.SoundCategory;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.Methods;
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
@@ -41,21 +42,21 @@ public class War implements Listener {
     private final HashMap<UUID, Boolean> canClose = new HashMap<>();
     
     public void openWarCrate(Player player, Crate crate, KeyType keyType, boolean checkHand) {
-        String crateName = methods.sanitizeColor(crate.getFile().getString(crateNameString));
-        Inventory inv = plugin.getServer().createInventory(null, 9, crateName);
+        String crateName = this.methods.sanitizeColor(crate.getFile().getString(this.crateNameString));
+        Inventory inv = this.plugin.getServer().createInventory(null, 9, crateName);
 
         UUID uuid = player.getUniqueId();
 
         setRandomPrizes(player, inv, crate, crateName);
         InventoryView inventoryView;
         inventoryView = player.openInventory(inv);
-        canPick.put(uuid, false);
-        canClose.put(uuid, false);
+        this.canPick.put(uuid, false);
+        this.canClose.put(uuid, false);
 
         if (!this.userManager.takeKeys(1, player.getUniqueId(), crate.getName(), keyType, checkHand)) {
-            crazyManager.removePlayerFromOpeningList(uuid);
-            canClose.remove(uuid);
-            canPick.remove(uuid);
+            this.crazyManager.removePlayerFromOpeningList(uuid);
+            this.canClose.remove(uuid);
+            this.canPick.remove(uuid);
             return;
         }
 
@@ -67,7 +68,7 @@ public class War implements Listener {
     private void startWar(Player player, final Inventory inv, final Crate crate, final String inventoryTitle) {
         UUID uuid = player.getUniqueId();
 
-        crazyManager.addCrateTask(uuid, new BukkitRunnable() {
+        this.crazyManager.addCrateTask(uuid, new BukkitRunnable() {
             int full = 0;
             int open = 0;
 
@@ -93,13 +94,13 @@ public class War implements Listener {
                     canPick.put(uuid, true);
                 }
             }
-        }.runTaskTimer(plugin, 1, 3));
+        }.runTaskTimer(this.plugin, 1, 3));
     }
     
     private void setRandomPrizes(Player player, Inventory inv, Crate crate, String inventoryTitle) {
         UUID uuid = player.getUniqueId();
 
-        if (crazyManager.isInOpeningList(uuid) && inventoryTitle.equalsIgnoreCase(methods.sanitizeColor(crazyManager.getOpeningCrate(uuid).getFile().getString(crateNameString)))) {
+        if (this.crazyManager.isInOpeningList(uuid) && inventoryTitle.equalsIgnoreCase(this.methods.sanitizeColor(this.crazyManager.getOpeningCrate(uuid).getFile().getString(this.crateNameString)))) {
             for (int i = 0; i < 9; i++) {
                 inv.setItem(i, crate.pickPrize(player).getDisplayItem());
             }
@@ -107,12 +108,11 @@ public class War implements Listener {
     }
     
     private void setRandomGlass(UUID uuid, Inventory inv, String inventoryTitle) {
-        if (crazyManager.isInOpeningList(uuid) && inventoryTitle.equalsIgnoreCase(methods.sanitizeColor(crazyManager.getOpeningCrate(uuid).getFile().getString(crateNameString)))) {
+        if (this.crazyManager.isInOpeningList(uuid) && inventoryTitle.equalsIgnoreCase(this.methods.sanitizeColor(this.crazyManager.getOpeningCrate(uuid).getFile().getString(this.crateNameString)))) {
+            if (this.colorCodes == null) this.colorCodes = getColorCode();
 
-            if (colorCodes == null) colorCodes = getColorCode();
-
-            ItemBuilder itemBuilder = methods.getRandomPaneColor();
-            itemBuilder.setName("&" + colorCodes.get(itemBuilder.build()) + "&l???");
+            ItemBuilder itemBuilder = this.methods.getRandomPaneColor();
+            itemBuilder.setName("&" + this.colorCodes.get(itemBuilder.build()) + "&l???");
             ItemStack item = itemBuilder.build();
 
             for (int i = 0; i < 9; i++) {
@@ -150,10 +150,10 @@ public class War implements Listener {
         final Player player = (Player) e.getWhoClicked();
         final UUID uuid = player.getUniqueId();
 
-        if (inv != null && canPick.containsKey(uuid) && crazyManager.isInOpeningList(uuid)) {
-            Crate crate = crazyManager.getOpeningCrate(uuid);
+        if (inv != null && this.canPick.containsKey(uuid) && this.crazyManager.isInOpeningList(uuid)) {
+            Crate crate = this.crazyManager.getOpeningCrate(uuid);
 
-            if (crate.getCrateType() == CrateType.WAR && canPick.get(uuid)) {
+            if (crate.getCrateType() == CrateType.WAR && this.canPick.get(uuid)) {
                 ItemStack item = e.getCurrentItem();
 
                 if (item != null && item.getType().toString().contains(Material.GLASS_PANE.toString())) {
@@ -161,20 +161,20 @@ public class War implements Listener {
                     Prize prize = crate.pickPrize(player);
                     inv.setItem(slot, prize.getDisplayItem());
 
-                    if (crazyManager.hasCrateTask(uuid)) crazyManager.endCrate(uuid);
+                    if (this.crazyManager.hasCrateTask(uuid)) this.crazyManager.endCrate(uuid);
 
-                    canPick.remove(uuid);
-                    canClose.put(uuid, true);
-                    crazyManager.givePrize(player, prize, crate);
+                    this.canPick.remove(uuid);
+                    this.canClose.put(uuid, true);
+                    this.crazyManager.givePrize(player, prize, crate);
 
-                    if (prize.useFireworks()) methods.firework(player.getLocation().add(0, 1, 0));
+                    if (prize.useFireworks()) this.methods.firework(player.getLocation().add(0, 1, 0));
 
-                    plugin.getServer().getPluginManager().callEvent(new PlayerPrizeEvent(uuid, crate, crate.getName(), prize));
-                    crazyManager.removePlayerFromOpeningList(uuid);
+                    this.plugin.getServer().getPluginManager().callEvent(new PlayerPrizeEvent(uuid, crate, crate.getName(), prize));
+                    this.crazyManager.removePlayerFromOpeningList(uuid);
                     player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_LAND, 1, 1);
                     // Sets all other non-picked prizes to show what they could have been.
 
-                    crazyManager.addCrateTask(uuid, new BukkitRunnable() {
+                    this.crazyManager.addCrateTask(uuid, new BukkitRunnable() {
                         @Override
                         public void run() {
                             for (int i = 0; i < 9; i++) {
@@ -205,7 +205,7 @@ public class War implements Listener {
                                 }
                             }.runTaskLater(plugin, 30));
                         }
-                    }.runTaskLater(plugin, 30));
+                    }.runTaskLater(this.plugin, 30));
                 }
             }
         }
@@ -216,12 +216,12 @@ public class War implements Listener {
         final Player player = (Player) e.getPlayer();
         final UUID uuid = player.getUniqueId();
 
-        if (canClose.containsKey(uuid) && canClose.get(uuid)) {
-            for (Crate crate : crazyManager.getCrates()) {
-                if (crate.getCrateType() == CrateType.WAR && e.getView().getTitle().equalsIgnoreCase(methods.sanitizeColor(crate.getFile().getString(crateNameString)))) {
-                    canClose.remove(uuid);
+        if (this.canClose.containsKey(uuid) && this.canClose.get(uuid)) {
+            for (Crate crate : this.crazyManager.getCrates()) {
+                if (crate.getCrateType() == CrateType.WAR && e.getView().getTitle().equalsIgnoreCase(this.methods.sanitizeColor(crate.getFile().getString(this.crateNameString)))) {
+                    this.canClose.remove(uuid);
 
-                    if (crazyManager.hasCrateTask(uuid)) crazyManager.endCrate(uuid);
+                    if (this.crazyManager.hasCrateTask(uuid)) this.crazyManager.endCrate(uuid);
                 }
             }
         }

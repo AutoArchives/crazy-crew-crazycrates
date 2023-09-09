@@ -1,5 +1,8 @@
 package us.crazycrew.crazycrates.paper.support.holograms;
 
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
+import us.crazycrew.crazycrates.common.config.MainConfig;
 import us.crazycrew.crazycrates.common.crates.CrateHologram;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.api.interfaces.HologramController;
@@ -29,26 +32,26 @@ public class HolographicDisplaysSupport implements HologramController {
 
         double height = crateHologram.getHeight();
 
-        Hologram hologram = api.createHologram(block.getLocation().add(.5, height, .5));
+        Hologram hologram = this.api.createHologram(block.getLocation().add(.5, height, .5));
 
         crateHologram.getMessages().forEach(line -> hologram.getLines().appendText(this.cratesLoader.getMethods().color(line)));
 
-        holograms.put(block, hologram);
+        this.holograms.put(block, hologram);
     }
 
     @Override
     public void removeHologram(Block block) {
-        if (!holograms.containsKey(block)) return;
+        if (!this.holograms.containsKey(block)) return;
 
-        Hologram hologram = holograms.get(block);
+        Hologram hologram = this.holograms.get(block);
 
-        holograms.remove(block);
+        this.holograms.remove(block);
         hologram.delete();
     }
 
     @Override
     public void removeAllHolograms() {
-        holograms.forEach((key, value) -> value.delete());
-        holograms.clear();
+        this.holograms.forEach((key, value) -> value.delete());
+        this.holograms.clear();
     }
 }

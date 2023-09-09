@@ -1,5 +1,6 @@
 package us.crazycrew.crazycrates.paper.cratetypes;
 
+import org.bukkit.SoundCategory;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.Methods;
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
@@ -37,11 +38,11 @@ public class Wheel implements Listener {
         UUID uuid = player.getUniqueId();
 
         if (!this.userManager.takeKeys(1, player.getUniqueId(), crate.getName(), keyType, checkHand)) {
-            crazyManager.removePlayerFromOpeningList(uuid);
+            this.crazyManager.removePlayerFromOpeningList(uuid);
             return;
         }
 
-        final Inventory inv = plugin.getServer().createInventory(null, 54, methods.sanitizeColor(crate.getFile().getString("Crate.CrateName")));
+        final Inventory inv = this.plugin.getServer().createInventory(null, 54, this.methods.sanitizeColor(crate.getFile().getString("Crate.CrateName")));
 
         for (int i = 0; i < 54; i++) {
             inv.setItem(i, new ItemBuilder().setMaterial(Material.BLACK_STAINED_GLASS_PANE).setName(" ").build());
@@ -55,11 +56,11 @@ public class Wheel implements Listener {
             items.put(i, prize.getDisplayItem());
         }
 
-        rewards.put(uuid, items);
+        this.rewards.put(uuid, items);
 
         player.openInventory(inv);
 
-        crazyManager.addCrateTask(uuid, new BukkitRunnable() {
+        this.crazyManager.addCrateTask(uuid, new BukkitRunnable() {
             final ArrayList<Integer> slots = getBorder();
             int i = 0;
             int f = 17;
@@ -104,7 +105,7 @@ public class Wheel implements Listener {
 
                         if (crazyManager.isInOpeningList(uuid)) prize = crate.getPrize(rewards.get(uuid).get(slots.get(f)));
 
-                        methods.pickPrize(uuid, crate, prize);
+                        methods.pickPrize(player, crate, prize);
 
                         player.closeInventory();
 
@@ -138,7 +139,7 @@ public class Wheel implements Listener {
                 i++;
                 f++;
             }
-        }.runTaskTimer(plugin, 1, 1));
+        }.runTaskTimer(this.plugin, 1, 1));
     }
 
     private ArrayList<Integer> getBorder() {

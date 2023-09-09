@@ -77,37 +77,37 @@ public class CrazyCrates extends JavaPlugin {
     private QuickCrate quickCrate;
 
     public War getWar() {
-        return war;
+        return this.war;
     }
 
     public CSGO getCsgo() {
-        return csgo;
+        return this.csgo;
     }
 
     public Wheel getWheel() {
-        return wheel;
+        return this.wheel;
     }
 
     public Wonder getWonder() {
-        return wonder;
+        return this.wonder;
     }
 
     public Cosmic getCosmic() {
-        return cosmic;
+        return this.cosmic;
     }
 
     public Roulette getRoulette() {
-        return roulette;
+        return this.roulette;
     }
 
     public QuickCrate getQuickCrate() {
-        return quickCrate;
+        return this.quickCrate;
     }
 
     private FireCracker fireCracker;
 
     public FireCracker getFireCracker() {
-        return fireCracker;
+        return this.fireCracker;
     }
 
     private void enable() {
@@ -137,9 +137,9 @@ public class CrazyCrates extends JavaPlugin {
 
         if (PluginSupport.PLACEHOLDERAPI.isPluginEnabled()) new PlaceholderAPISupport().register();
 
-        manager.registerMessage(MessageKey.UNKNOWN_COMMAND, (sender, context) -> sender.sendMessage(Messages.UNKNOWN_COMMAND.getMessage()));
+        this.manager.registerMessage(MessageKey.UNKNOWN_COMMAND, (sender, context) -> sender.sendMessage(Messages.UNKNOWN_COMMAND.getMessage()));
 
-        manager.registerMessage(MessageKey.TOO_MANY_ARGUMENTS, (sender, context) -> {
+        this.manager.registerMessage(MessageKey.TOO_MANY_ARGUMENTS, (sender, context) -> {
             String command = context.getCommand();
             String subCommand = context.getSubCommand();
 
@@ -157,7 +157,7 @@ public class CrazyCrates extends JavaPlugin {
             if (correctUsage != null) sender.sendMessage(Messages.CORRECT_USAGE.getMessage().replace("%usage%", correctUsage));
         });
 
-        manager.registerMessage(MessageKey.NOT_ENOUGH_ARGUMENTS, (sender, context) -> {
+        this.manager.registerMessage(MessageKey.NOT_ENOUGH_ARGUMENTS, (sender, context) -> {
             String command = context.getCommand();
             String subCommand = context.getSubCommand();
 
@@ -175,23 +175,23 @@ public class CrazyCrates extends JavaPlugin {
             if (correctUsage != null) sender.sendMessage(Messages.CORRECT_USAGE.getMessage().replace("%usage%", correctUsage));
         });
 
-        manager.registerMessage(MessageKey.INVALID_ARGUMENT, (sender, context) -> sender.sendMessage(Messages.NOT_ONLINE.getMessage().replace("%player%", context.getTypedArgument())));
+        this.manager.registerMessage(MessageKey.INVALID_ARGUMENT, (sender, context) -> sender.sendMessage(Messages.NOT_ONLINE.getMessage().replace("%player%", context.getTypedArgument())));
 
-        manager.registerMessage(BukkitMessageKey.NO_PERMISSION, (sender, context) -> sender.sendMessage(Messages.NO_PERMISSION.getMessage()));
+        this.manager.registerMessage(BukkitMessageKey.NO_PERMISSION, (sender, context) -> sender.sendMessage(Messages.NO_PERMISSION.getMessage()));
 
-        manager.registerMessage(BukkitMessageKey.PLAYER_ONLY, (sender, context) -> sender.sendMessage(Messages.MUST_BE_A_PLAYER.getMessage()));
+        this.manager.registerMessage(BukkitMessageKey.PLAYER_ONLY, (sender, context) -> sender.sendMessage(Messages.MUST_BE_A_PLAYER.getMessage()));
 
-        manager.registerMessage(BukkitMessageKey.CONSOLE_ONLY, (sender, context) -> sender.sendMessage(Messages.MUST_BE_A_CONSOLE_SENDER.getMessage()));
+        this.manager.registerMessage(BukkitMessageKey.CONSOLE_ONLY, (sender, context) -> sender.sendMessage(Messages.MUST_BE_A_CONSOLE_SENDER.getMessage()));
 
-        manager.registerSuggestion(SuggestionKey.of("crates"), (sender, context) -> getCratesLoader().getFileManager().getAllCratesNames(this).stream().toList());
+        this.manager.registerSuggestion(SuggestionKey.of("crates"), (sender, context) -> getCratesLoader().getFileManager().getAllCratesNames(this).stream().toList());
 
-        manager.registerSuggestion(SuggestionKey.of("key-types"), (sender, context) -> KEYS);
+        this.manager.registerSuggestion(SuggestionKey.of("key-types"), (sender, context) -> KEYS);
 
-        manager.registerSuggestion(SuggestionKey.of("online-players"), (sender, context) -> getServer().getOnlinePlayers().stream().map(Player::getName).toList());
+        this.manager.registerSuggestion(SuggestionKey.of("online-players"), (sender, context) -> getServer().getOnlinePlayers().stream().map(Player::getName).toList());
 
-        manager.registerSuggestion(SuggestionKey.of("locations"), (sender, context) -> getCratesLoader().getCrazyManager().getCrateLocations().stream().map(CrateLocation::getID).toList());
+        this.manager.registerSuggestion(SuggestionKey.of("locations"), (sender, context) -> getCratesLoader().getCrazyManager().getCrateLocations().stream().map(CrateLocation::getID).toList());
 
-        manager.registerSuggestion(SuggestionKey.of("prizes"), (sender, context) -> {
+        this.manager.registerSuggestion(SuggestionKey.of("prizes"), (sender, context) -> {
             List<String> numbers = new ArrayList<>();
 
             getCratesLoader().getCrazyManager().getCrateFromName(context.getArgs().get(0)).getPrizes().forEach(prize -> numbers.add(prize.getName()));
@@ -199,7 +199,7 @@ public class CrazyCrates extends JavaPlugin {
             return numbers;
         });
 
-        manager.registerSuggestion(SuggestionKey.of("numbers"), (sender, context) -> {
+        this.manager.registerSuggestion(SuggestionKey.of("numbers"), (sender, context) -> {
             List<String> numbers = new ArrayList<>();
 
             for (int i = 1; i <= 250; i++) numbers.add(i + "");
@@ -207,10 +207,10 @@ public class CrazyCrates extends JavaPlugin {
             return numbers;
         });
 
-        manager.registerArgument(CrateBaseCommand.CustomPlayer.class, (sender, context) -> new CrateBaseCommand.CustomPlayer(context, this));
+        this.manager.registerArgument(CrateBaseCommand.CustomPlayer.class, (sender, context) -> new CrateBaseCommand.CustomPlayer(context, this));
 
-        manager.registerCommand(new BaseKeyCommand());
-        manager.registerCommand(new CrateBaseCommand());
+        this.manager.registerCommand(new BaseKeyCommand());
+        this.manager.registerCommand(new CrateBaseCommand());
 
         printHooks();
     }

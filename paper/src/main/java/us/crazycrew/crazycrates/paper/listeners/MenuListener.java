@@ -1,6 +1,9 @@
 package us.crazycrew.crazycrates.paper.listeners;
 
+import ch.jalu.configme.SettingsManager;
+import org.bukkit.SoundCategory;
 import org.bukkit.plugin.java.JavaPlugin;
+import us.crazycrew.crazycrates.common.config.MainConfig;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.Methods;
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
@@ -43,7 +46,7 @@ public class MenuListener implements Listener {
 
         if (inv == null) return;
 
-        for (Crate crate : crazyManager.getCrates()) {
+        for (Crate crate : this.crazyManager.getCrates()) {
             if (crate.getCrateType() != CrateType.MENU && crate.isCrateMenu(e.getView())) return;
         }
 
@@ -58,7 +61,7 @@ public class MenuListener implements Listener {
                     NBTItem nbtItem = new NBTItem(item);
 
                     if (nbtItem.hasNBTData() && nbtItem.hasKey("CrazyCrates-Crate")) {
-                        Crate crate = crazyManager.getCrateFromName(nbtItem.getString("CrazyCrates-Crate"));
+                        Crate crate = this.crazyManager.getCrateFromName(nbtItem.getString("CrazyCrates-Crate"));
 
                         if (crate != null) {
                             if (e.getAction() == InventoryAction.PICKUP_HALF) { // Right-clicked the item
@@ -74,7 +77,7 @@ public class MenuListener implements Listener {
                                 return;
                             }
 
-                            if (crazyManager.isInOpeningList(uuid)) {
+                            if (this.crazyManager.isInOpeningList(uuid)) {
                                 player.sendMessage(Messages.CRATE_ALREADY_OPENED.getMessage());
                                 return;
                             }
@@ -111,12 +114,12 @@ public class MenuListener implements Listener {
                                 }
                             }
 
-                            if (methods.isInventoryFull(player)) {
+                            if (this.methods.isInventoryFull(player)) {
                                 player.sendMessage(Messages.INVENTORY_FULL.getMessage());
                                 return;
                             }
 
-                            crazyManager.openCrate(player, crate, keyType, player.getLocation(), true, false);
+                            this.crazyManager.openCrate(player, crate, keyType, player.getLocation(), true, false);
                         }
                     }
                 }

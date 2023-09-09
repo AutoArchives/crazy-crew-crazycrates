@@ -1,5 +1,6 @@
 package us.crazycrew.crazycrates.paper.cratetypes;
 
+import org.bukkit.SoundCategory;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.Methods;
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
@@ -45,23 +46,25 @@ public class Cosmic implements Listener {
     private final HashMap<UUID, Boolean> checkHands = new HashMap<>();
     
     private void showRewards(Player player, Crate crate) {
-        Inventory inv = plugin.getServer().createInventory(null, 27, methods.sanitizeColor(crate.getFile().getString("Crate.CrateName") + " - Prizes"));
+        Inventory inv = this.plugin.getServer().createInventory(null, 27, this.methods.sanitizeColor(crate.getFile().getString("Crate.CrateName") + " - Prizes"));
 
         UUID uuid = player.getUniqueId();
 
-        picks.get(uuid).forEach(i -> inv.setItem(i, pickTier(uuid).getTierPane()));
+        this.picks.get(uuid).forEach(i -> inv.setItem(i, pickTier(uuid).getTierPane()));
         player.openInventory(inv);
     }
     
     private void startRoll(Player player, Crate crate) {
-        Inventory inv = plugin.getServer().createInventory(null, 27, methods.sanitizeColor(crate.getFile().getString("Crate.CrateName") + " - Shuffling"));
+        Inventory inv = plugin.getServer().createInventory(null, 27, this.methods.sanitizeColor(crate.getFile().getString("Crate.CrateName") + " - Shuffling"));
 
         UUID uuid = player.getUniqueId();
         for (int i = 0; i < 27; i++) {
             inv.setItem(i, pickTier(uuid).getTierPane());
         }
 
-        player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+        //TODO() make volume/pitch configurable and sound type configurable.
+        //TODO() Adopt the new sound system including custom sounds.
+        player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, SoundCategory.PLAYERS, 1f, 1f);
         player.openInventory(inv);
     }
     
@@ -76,18 +79,18 @@ public class Cosmic implements Listener {
     }
     
     public void openCosmic(Player player, Crate crate, KeyType keyType, boolean checkHand) {
-        Inventory inv = plugin.getServer().createInventory(null, 27, methods.sanitizeColor(crate.getFile().getString("Crate.CrateName") + " - Choose"));
+        Inventory inv = this.plugin.getServer().createInventory(null, 27, this.methods.sanitizeColor(crate.getFile().getString("Crate.CrateName") + " - Choose"));
         setChests(inv, crate);
 
         UUID uuid = player.getUniqueId();
 
-        crazyManager.addPlayerKeyType(uuid, keyType);
-        checkHands.put(uuid, checkHand);
+        this.crazyManager.addPlayerKeyType(uuid, keyType);
+        this.checkHands.put(uuid, checkHand);
         player.openInventory(inv);
     }
     
     private Tier pickTier(UUID uuid) {
-        Crate crate = crazyManager.getOpeningCrate(uuid);
+        Crate crate = this.crazyManager.getOpeningCrate(uuid);
 
         if (crate.getTiers() != null && !crate.getTiers().isEmpty()) {
             for (int stopLoop = 0; stopLoop <= 100; stopLoop++) {
@@ -109,9 +112,9 @@ public class Cosmic implements Listener {
         final Player player = (Player) e.getWhoClicked();
         final UUID uuid = player.getUniqueId();
 
-        final Crate crate = crazyManager.getOpeningCrate(uuid);
+        final Crate crate = this.crazyManager.getOpeningCrate(uuid);
 
-        if (crazyManager.isInOpeningList(uuid)) {
+        if (this.crazyManager.isInOpeningList(uuid)) {
             if (!crate.getFile().getString("Crate.CrateType").equalsIgnoreCase("Cosmic")) return;
         } else {
             return;
@@ -119,14 +122,14 @@ public class Cosmic implements Listener {
 
         final FileConfiguration file = crate.getFile();
 
-        if (e.getView().getTitle().equals(methods.sanitizeColor(file.getString("Crate.CrateName") + " - Shuffling"))) e.setCancelled(true);
+        if (e.getView().getTitle().equals(this.methods.sanitizeColor(file.getString("Crate.CrateName") + " - Shuffling"))) e.setCancelled(true);
 
-        if (e.getView().getTitle().equals(methods.sanitizeColor(file.getString("Crate.CrateName") + " - Prizes"))) {
+        if (e.getView().getTitle().equals(this.methods.sanitizeColor(file.getString("Crate.CrateName") + " - Prizes"))) {
             e.setCancelled(true);
             int slot = e.getRawSlot();
 
             if (inCosmic(slot)) {
-                for (int i : picks.get(uuid)) {
+                for (int i : this.picks.get(uuid)) {
                     if (slot == i) {
                         ItemStack item = e.getCurrentItem();
                         Tier tier = getTier(crate, item);
@@ -139,12 +142,14 @@ public class Cosmic implements Listener {
                             }
 
                             if (prize != null) {
-                                crazyManager.givePrize(player, prize, crate);
-                                plugin.getServer().getPluginManager().callEvent(new PlayerPrizeEvent(uuid, crate, crazyManager.getOpeningCrate(uuid).getName(), prize));
+                                this.crazyManager.givePrize(player, prize, crate);
+                                this.plugin.getServer().getPluginManager().callEvent(new PlayerPrizeEvent(uuid, crate, this.crazyManager.getOpeningCrate(uuid).getName(), prize));
                                 e.setCurrentItem(prize.getDisplayItem());
-                                player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+                                //TODO() make volume/pitch configurable and sound type configurable.
+                                //TODO() Adopt the new sound system including custom sounds.
+                                player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.PLAYERS, 1f, 1f);
 
-                                if (prize.useFireworks()) methods.firework(player.getLocation().add(0, 1, 0));
+                                if (prize.useFireworks()) this.methods.firework(player.getLocation().add(0, 1, 0));
                             }
 
                             return;
@@ -154,7 +159,7 @@ public class Cosmic implements Listener {
             }
         }
 
-        if (e.getView().getTitle().equals(methods.sanitizeColor(file.getString("Crate.CrateName") + " - Choose"))) {
+        if (e.getView().getTitle().equals(this.methods.sanitizeColor(file.getString("Crate.CrateName") + " - Choose"))) {
             e.setCancelled(true);
             int slot = e.getRawSlot();
 
@@ -169,49 +174,53 @@ public class Cosmic implements Listener {
 
                     if (nbtItem.hasNBTData()) {
                         if (nbtItem.hasKey("Cosmic-Mystery-Crate")) {
-                            if (!glass.containsKey(uuid)) glass.put(uuid, new ArrayList<>());
+                            if (!this.glass.containsKey(uuid)) this.glass.put(uuid, new ArrayList<>());
 
-                            if (glass.get(uuid).size() < totalPrizes) {
+                            if (this.glass.get(uuid).size() < totalPrizes) {
                                 e.setCurrentItem(manager.getPickedCrate().setAmount(pickedSlot).addNamePlaceholder("%Slot%", pickedSlot + "").addLorePlaceholder("%Slot%", pickedSlot + "").build());
-                                glass.get(uuid).add(slot);
+                                this.glass.get(uuid).add(slot);
                             }
 
-                            player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+                            //TODO() make volume/pitch configurable and sound type configurable.
+                            //TODO() Adopt the new sound system including custom sounds.
+                            player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, SoundCategory.PLAYERS, 1f, 1f);
                         } else if (nbtItem.hasKey("Cosmic-Picked-Crate")) {
-                            if (!glass.containsKey(uuid)) glass.put(uuid, new ArrayList<>());
+                            if (!this.glass.containsKey(uuid)) this.glass.put(uuid, new ArrayList<>());
 
                             e.setCurrentItem(manager.getMysteryCrate().setAmount(pickedSlot).addNamePlaceholder("%Slot%", pickedSlot + "").addLorePlaceholder("%Slot%", pickedSlot + "").build());
                             ArrayList<Integer> l = new ArrayList<>();
 
-                            for (int i : glass.get(uuid)) if (i != slot) l.add(i);
+                            for (int i : this.glass.get(uuid)) if (i != slot) l.add(i);
 
-                            glass.put(uuid, l);
-                            player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+                            this.glass.put(uuid, l);
+                            //TODO() make volume/pitch configurable and sound type configurable.
+                            //TODO() Adopt the new sound system including custom sounds.
+                            player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, SoundCategory.PLAYERS, 1f, 1f);
                         }
                     }
 
-                    if (glass.get(uuid).size() >= totalPrizes) {
-                        KeyType keyType = crazyManager.getPlayerKeyType(uuid);
+                    if (this.glass.get(uuid).size() >= totalPrizes) {
+                        KeyType keyType = this.crazyManager.getPlayerKeyType(uuid);
 
-                        if (keyType == KeyType.PHYSICAL_KEY && !this.userManager.hasPhysicalKey(uuid, crate.getName(), checkHands.get(uuid))) {
+                        if (keyType == KeyType.PHYSICAL_KEY && !this.userManager.hasPhysicalKey(uuid, crate.getName(), this.checkHands.get(uuid))) {
                             player.closeInventory();
                             player.sendMessage(Messages.NO_KEY.getMessage());
 
-                            if (crazyManager.isInOpeningList(uuid)) {
-                                crazyManager.removePlayerFromOpeningList(uuid);
-                                crazyManager.removePlayerKeyType(uuid);
+                            if (this.crazyManager.isInOpeningList(uuid)) {
+                                this.crazyManager.removePlayerFromOpeningList(uuid);
+                                this.crazyManager.removePlayerKeyType(uuid);
                             }
 
-                            checkHands.remove(uuid);
-                            glass.remove(uuid);
+                            this.checkHands.remove(uuid);
+                            this.glass.remove(uuid);
                             return;
                         }
 
-                        if (crazyManager.hasPlayerKeyType(uuid) && !this.userManager.takeKeys(1, player.getUniqueId(), crate.getName(), keyType, checkHands.get(uuid))) {
-                            crazyManager.removePlayerFromOpeningList(uuid);
-                            crazyManager.removePlayerKeyType(uuid);
-                            checkHands.remove(uuid);
-                            glass.remove(uuid);
+                        if (this.crazyManager.hasPlayerKeyType(uuid) && !this.userManager.takeKeys(1, player.getUniqueId(), crate.getName(), keyType, this.checkHands.get(uuid))) {
+                            this.crazyManager.removePlayerFromOpeningList(uuid);
+                            this.crazyManager.removePlayerKeyType(uuid);
+                            this.checkHands.remove(uuid);
+                            this.glass.remove(uuid);
                             return;
                         }
 
@@ -245,7 +254,9 @@ public class Cosmic implements Listener {
                                 if (time == 40) {
                                     crazyManager.endCrate(uuid);
                                     showRewards(player, crate);
-                                    player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_PLACE, 1, 1);
+                                    //TODO() make volume/pitch configurable and sound type configurable.
+                                    //TODO() Adopt the new sound system including custom sounds.
+                                    player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_PLACE, SoundCategory.BLOCKS,1f, 1f);
 
                                     new BukkitRunnable() {
                                         @Override
@@ -268,9 +279,9 @@ public class Cosmic implements Listener {
         final Player player = (Player) e.getPlayer();
         final UUID uuid = player.getUniqueId();
 
-        Crate crate = crazyManager.getOpeningCrate(uuid);
+        Crate crate = this.crazyManager.getOpeningCrate(uuid);
 
-        if (crazyManager.isInOpeningList(uuid)) {
+        if (this.crazyManager.isInOpeningList(uuid)) {
             if (crate.getFile() == null) {
                 return;
             } else {
@@ -280,10 +291,10 @@ public class Cosmic implements Listener {
             return;
         }
 
-        if (e.getView().getTitle().equals(methods.sanitizeColor(crate.getFile().getString("Crate.CrateName") + " - Prizes"))) {
+        if (e.getView().getTitle().equals(this.methods.sanitizeColor(crate.getFile().getString("Crate.CrateName") + " - Prizes"))) {
             boolean playSound = false;
 
-            for (int i : picks.get(uuid)) {
+            for (int i : this.picks.get(uuid)) {
                 if (inv.getItem(i) != null) {
                     Tier tier = getTier(crate, inv.getItem(i));
 
@@ -294,38 +305,39 @@ public class Cosmic implements Listener {
                             prize = crate.pickPrize(player, tier);
                         }
 
-                        crazyManager.givePrize(player, prize, crate);
+                        this.crazyManager.givePrize(player, prize, crate);
                         playSound = true;
                     }
                 }
             }
 
-            if (playSound) player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+            //TODO() make volume/pitch configurable and sound type configurable.
+            //TODO() Adopt the new sound system including custom sounds.
+            if (playSound) player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, SoundCategory.PLAYERS, 1f, 1f);
 
-            crazyManager.removePlayerFromOpeningList(uuid);
-            crazyManager.removePlayerKeyType(uuid);
+            this.crazyManager.removePlayerFromOpeningList(uuid);
+            this.crazyManager.removePlayerKeyType(uuid);
 
-            if (glass.containsKey(uuid)) {
-                picks.put(uuid, glass.get(uuid));
-                glass.remove(uuid);
+            if (this.glass.containsKey(uuid)) {
+                this.picks.put(uuid, this.glass.get(uuid));
+                this.glass.remove(uuid);
             }
 
-            checkHands.remove(uuid);
+            this.checkHands.remove(uuid);
         }
 
-        if (crazyManager.isInOpeningList(uuid) && e.getView().getTitle().equals(methods.sanitizeColor(crate.getFile().getString("Crate.CrateName") + " - Choose"))) {
-
-            if (!glass.containsKey(uuid) || glass.get(uuid).size() < 4) {
-                crazyManager.removePlayerFromOpeningList(uuid);
-                crazyManager.removePlayerKeyType(uuid);
+        if (this.crazyManager.isInOpeningList(uuid) && e.getView().getTitle().equals(this.methods.sanitizeColor(crate.getFile().getString("Crate.CrateName") + " - Choose"))) {
+            if (!this.glass.containsKey(uuid) || this.glass.get(uuid).size() < 4) {
+                this.crazyManager.removePlayerFromOpeningList(uuid);
+                this.crazyManager.removePlayerKeyType(uuid);
             }
 
-            if (glass.containsKey(uuid)) {
-                picks.put(uuid, glass.get(uuid));
-                glass.remove(uuid);
+            if (this.glass.containsKey(uuid)) {
+                this.picks.put(uuid, this.glass.get(uuid));
+                this.glass.remove(uuid);
             }
 
-            checkHands.remove(uuid);
+            this.checkHands.remove(uuid);
         }
     }
     

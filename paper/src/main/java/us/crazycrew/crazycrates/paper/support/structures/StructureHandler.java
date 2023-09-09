@@ -138,7 +138,7 @@ public class StructureHandler {
     }
 
     public List<Location> getNearbyBlocks() {
-        return Collections.unmodifiableList(preStructureBlocks);
+        return Collections.unmodifiableList(this.preStructureBlocks);
     }
 
     public List<Material> getBlockBlackList() {

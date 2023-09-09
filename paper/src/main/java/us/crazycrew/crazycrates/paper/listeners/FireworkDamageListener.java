@@ -20,7 +20,7 @@ public class FireworkDamageListener implements Listener {
         if (e.getDamager() instanceof Firework firework) {
             PersistentDataContainer container = firework.getPersistentDataContainer();
 
-            NamespacedKey noDamage = new NamespacedKey(plugin, "no-damage");
+            NamespacedKey noDamage = new NamespacedKey(this.plugin, "no-damage");
 
             if (container.has(noDamage, PersistentDataType.STRING)) e.setCancelled(true);
         }

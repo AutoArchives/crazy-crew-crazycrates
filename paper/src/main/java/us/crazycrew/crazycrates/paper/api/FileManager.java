@@ -7,7 +7,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -32,21 +31,21 @@ public class FileManager {
      * Sets up the plugin and loads all necessary files.
      */
     public FileManager setup() {
-        if (!plugin.getDataFolder().exists()) plugin.getDataFolder().mkdirs();
+        if (!this.plugin.getDataFolder().exists()) this.plugin.getDataFolder().mkdirs();
 
-        files.clear();
-        customFiles.clear();
-        configurations.clear();
+        this.files.clear();
+        this.customFiles.clear();
+        this.configurations.clear();
 
         // Loads all the normal static files.
         for (Files file : Files.values()) {
-            File newFile = new File(plugin.getDataFolder(), file.getFileLocation());
+            File newFile = new File(this.plugin.getDataFolder(), file.getFileLocation());
 
             if (isLogging()) FancyLogger.info("Loading the " + file.getFileName());
 
             if (!newFile.exists()) {
                 try {
-                    File serverFile = new File(plugin.getDataFolder(), "/" + file.getFileLocation());
+                    File serverFile = new File(this.plugin.getDataFolder(), "/" + file.getFileLocation());
                     InputStream jarFile = getClass().getResourceAsStream("/" + file.getFileJar());
                     copyFile(jarFile, serverFile);
                 } catch (Exception e) {
@@ -59,18 +58,18 @@ public class FileManager {
                 }
             }
 
-            files.put(file, newFile);
-            configurations.put(file, YamlConfiguration.loadConfiguration(newFile));
+            this.files.put(file, newFile);
+            this.configurations.put(file, YamlConfiguration.loadConfiguration(newFile));
 
             if (isLogging()) FancyLogger.success("Successfully loaded " + file.getFileName());
         }
 
         // Starts to load all the custom files.
-        if (!homeFolders.isEmpty()) {
+        if (!this.homeFolders.isEmpty()) {
             if (isLogging()) FancyLogger.info("Loading custom files.");
 
-            for (String homeFolder : homeFolders) {
-                File homeFile = new File(plugin.getDataFolder(), "/" + homeFolder);
+            for (String homeFolder : this.homeFolders) {
+                File homeFile = new File(this.plugin.getDataFolder(), "/" + homeFolder);
 
                 if (homeFile.exists()) {
                     String[] list = homeFile.list();
@@ -81,7 +80,7 @@ public class FileManager {
                                 CustomFile file = new CustomFile(name, homeFolder);
 
                                 if (file.exists()) {
-                                    customFiles.add(file);
+                                    this.customFiles.add(file);
 
                                     if (isLogging()) FancyLogger.info("Loaded new custom file: " + homeFolder + "/" + name + ".");
                                 }
@@ -93,16 +92,16 @@ public class FileManager {
 
                     if (isLogging()) FancyLogger.info("The folder " + homeFolder + "/ was not found so it was created.");
 
-                    for (String fileName : autoGenerateFiles.keySet()) {
-                        if (autoGenerateFiles.get(fileName).equalsIgnoreCase(homeFolder)) {
-                            homeFolder = autoGenerateFiles.get(fileName);
+                    for (String fileName : this.autoGenerateFiles.keySet()) {
+                        if (this.autoGenerateFiles.get(fileName).equalsIgnoreCase(homeFolder)) {
+                            homeFolder = this.autoGenerateFiles.get(fileName);
 
                             try {
-                                File serverFile = new File(plugin.getDataFolder(), homeFolder + "/" + fileName);
-                                InputStream jarFile = getClass().getResourceAsStream((jarHomeFolders.getOrDefault(fileName, homeFolder)) + "/" + fileName);
+                                File serverFile = new File(this.plugin.getDataFolder(), homeFolder + "/" + fileName);
+                                InputStream jarFile = getClass().getResourceAsStream((this.jarHomeFolders.getOrDefault(fileName, homeFolder)) + "/" + fileName);
                                 copyFile(jarFile, serverFile);
 
-                                if (fileName.toLowerCase().endsWith(".yml")) customFiles.add(new CustomFile(fileName, homeFolder));
+                                if (fileName.toLowerCase().endsWith(".yml")) this.customFiles.add(new CustomFile(fileName, homeFolder));
 
                                 if (isLogging()) FancyLogger.info("Created new default file: " + homeFolder + "/" + fileName + ".");
                             } catch (Exception e) {
@@ -136,7 +135,7 @@ public class FileManager {
      * @return True if it is and false if it isn't.
      */
     public boolean isLogging() {
-        return log;
+        return this.log;
     }
 
     /**
@@ -144,7 +143,7 @@ public class FileManager {
      * @param homeFolder The folder that has custom files in it.
      */
     public FileManager registerCustomFilesFolder(String homeFolder) {
-        homeFolders.add(homeFolder);
+        this.homeFolders.add(homeFolder);
         return this;
     }
 
@@ -153,7 +152,7 @@ public class FileManager {
      * @param homeFolder The folder with custom files in it.
      */
     public FileManager unregisterCustomFilesFolder(String homeFolder) {
-        homeFolders.remove(homeFolder);
+        this.homeFolders.remove(homeFolder);
         return this;
     }
 
@@ -163,7 +162,7 @@ public class FileManager {
      * @param homeFolder The folder that has custom files in it.
      */
     public FileManager registerDefaultGenerateFiles(String fileName, String homeFolder) {
-        autoGenerateFiles.put(fileName, homeFolder);
+        this.autoGenerateFiles.put(fileName, homeFolder);
         return this;
     }
 
@@ -174,8 +173,8 @@ public class FileManager {
      * @param jarHomeFolder The folder that the file is found in the jar.
      */
     public FileManager registerDefaultGenerateFiles(String fileName, String homeFolder, String jarHomeFolder) {
-        autoGenerateFiles.put(fileName, homeFolder);
-        jarHomeFolders.put(fileName, jarHomeFolder);
+        this.autoGenerateFiles.put(fileName, homeFolder);
+        this.jarHomeFolders.put(fileName, jarHomeFolder);
         return this;
     }
 
@@ -184,8 +183,8 @@ public class FileManager {
      * @param fileName The file that you want to remove from auto-generating.
      */
     public FileManager unregisterDefaultGenerateFiles(String fileName) {
-        autoGenerateFiles.remove(fileName);
-        jarHomeFolders.remove(fileName);
+        this.autoGenerateFiles.remove(fileName);
+        this.jarHomeFolders.remove(fileName);
         return this;
     }
 
@@ -194,7 +193,7 @@ public class FileManager {
      * @return The file from the system.
      */
     public FileConfiguration getFile(Files file) {
-        return configurations.get(file);
+        return this.configurations.get(file);
     }
 
     /**
@@ -204,7 +203,7 @@ public class FileManager {
      * @return The custom file you wanted otherwise if not found will return null.
      */
     public CustomFile getFile(String name) {
-        for (CustomFile file : customFiles) {
+        for (CustomFile file : this.customFiles) {
             if (file.getName().equalsIgnoreCase(name)) return file;
         }
 
@@ -216,7 +215,7 @@ public class FileManager {
      */
     public void saveFile(Files file) {
         try {
-            configurations.get(file).save(files.get(file));
+            this.configurations.get(file).save(this.files.get(file));
         } catch (IOException e) {
             FancyLogger.debug("Could not save " + file.getFileName() + "!");
             FancyLogger.warn(e.getMessage());
@@ -232,7 +231,7 @@ public class FileManager {
 
         if (file != null) {
             try {
-                file.getFile().save(new File(plugin.getDataFolder(), file.getHomeFolder() + "/" + file.getFileName()));
+                file.getFile().save(new File(this.plugin.getDataFolder(), file.getHomeFolder() + "/" + file.getFileName()));
 
                 if (isLogging()) FancyLogger.success("Successfully saved the " + file.getFileName() + ".");
             } catch (Exception e) {
@@ -257,7 +256,7 @@ public class FileManager {
      * Overrides the loaded state file and loads the file systems file.
      */
     public void reloadFile(Files file) {
-        configurations.put(file, YamlConfiguration.loadConfiguration(files.get(file)));
+        this.configurations.put(file, YamlConfiguration.loadConfiguration(this.files.get(file)));
     }
 
     /**
@@ -268,7 +267,7 @@ public class FileManager {
 
         if (file != null) {
             try {
-                file.file = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "/" + file.getHomeFolder() + "/" + file.getFileName()));
+                file.file = YamlConfiguration.loadConfiguration(new File(this.plugin.getDataFolder(), "/" + file.getHomeFolder() + "/" + file.getFileName()));
 
                 if (isLogging()) FancyLogger.success("Successfully reloaded the " + file.getFileName() + ".");
             } catch (Exception e) {
@@ -293,7 +292,7 @@ public class FileManager {
             file.reloadFile();
         }
 
-        for (CustomFile file : customFiles) {
+        for (CustomFile file : this.customFiles) {
             file.reloadFile();
         }
     }
@@ -332,7 +331,6 @@ public class FileManager {
 
         // ENUM_NAME("fileName.yml", "fileLocation.yml"),
         // ENUM_NAME("fileName.yml", "newFileLocation.yml", "oldFileLocation.yml"),
-        CONFIG("config.yml", "config.yml"),
         LOGS("events.log", "events.log"),
         MESSAGES("messages.yml", "messages.yml"),
         LOCATIONS("locations.yml", "locations.yml"),
@@ -372,7 +370,7 @@ public class FileManager {
          * @return The name of the file.
          */
         public String getFileName() {
-            return fileName;
+            return this.fileName;
         }
 
         /**
@@ -380,7 +378,7 @@ public class FileManager {
          * @return The location in the jar the file is in.
          */
         public String getFileLocation() {
-            return fileLocation;
+            return this.fileLocation;
         }
 
         /**
@@ -388,7 +386,7 @@ public class FileManager {
          * @return The location of the file in the jar.
          */
         public String getFileJar() {
-            return fileJar;
+            return this.fileJar;
         }
 
         /**
@@ -396,21 +394,21 @@ public class FileManager {
          * @return The file from the system.
          */
         public FileConfiguration getFile() {
-            return fileManager.getFile(this);
+            return this.fileManager.getFile(this);
         }
 
         /**
          * Saves the file from the loaded state to the file system.
          */
         public void saveFile() {
-            fileManager.saveFile(this);
+            this.fileManager.saveFile(this);
         }
 
         /**
          * Overrides the loaded state file and loads the file systems file.
          */
         public void reloadFile() {
-            fileManager.reloadFile(this);
+            this.fileManager.reloadFile(this);
         }
     }
 
@@ -433,18 +431,18 @@ public class FileManager {
             this.fileName = name;
             this.homeFolder = homeFolder;
 
-            if (new File(plugin.getDataFolder(), "/" + homeFolder).exists()) {
-                if (new File(plugin.getDataFolder(), "/" + homeFolder + "/" + name).exists()) {
-                    file = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "/" + homeFolder + "/" + name));
+            if (new File(this.plugin.getDataFolder(), "/" + homeFolder).exists()) {
+                if (new File(this.plugin.getDataFolder(), "/" + homeFolder + "/" + name).exists()) {
+                    this.file = YamlConfiguration.loadConfiguration(new File(this.plugin.getDataFolder(), "/" + homeFolder + "/" + name));
                 } else {
-                    file = null;
+                    this.file = null;
                 }
             } else {
-                new File(plugin.getDataFolder(), "/" + homeFolder).mkdir();
+                new File(this.plugin.getDataFolder(), "/" + homeFolder).mkdir();
 
                 if (isLogging()) FancyLogger.success("The folder " + homeFolder + "/ was not found so it was created.");
 
-                file = null;
+                this.file = null;
             }
         }
 
@@ -453,7 +451,7 @@ public class FileManager {
          * @return The name of the file without the .yml.
          */
         public String getName() {
-            return name;
+            return this.name;
         }
 
         /**
@@ -461,7 +459,7 @@ public class FileManager {
          * @return Full name of the file.
          */
         public String getFileName() {
-            return fileName;
+            return this.fileName;
         }
 
         /**
@@ -469,7 +467,7 @@ public class FileManager {
          * @return The name of the home folder the files are in.
          */
         public String getHomeFolder() {
-            return homeFolder;
+            return this.homeFolder;
         }
 
         /**
@@ -477,31 +475,31 @@ public class FileManager {
          * @return The ConfigurationFile of this file.
          */
         public FileConfiguration getFile() {
-            return file;
+            return this.file;
         }
 
         /**
          * Check if the file actually exists in the file system.
          * @return True if it does and false if it doesn't.
          */
-        public Boolean exists() {
-            return file != null;
+        public boolean exists() {
+            return this.file != null;
         }
 
         /**
          * Save the custom file.
          * @return True if it saved correct and false if something went wrong.
          */
-        public Boolean saveFile() {
-            if (file != null) {
+        public boolean saveFile() {
+            if (this.file != null) {
                 try {
-                    file.save(new File(plugin.getDataFolder(), homeFolder + "/" + fileName));
+                    this.file.save(new File(this.plugin.getDataFolder(), this.homeFolder + "/" + this.fileName));
 
-                    if (isLogging()) FancyLogger.success("Successfully saved the " + fileName + ".");
+                    if (isLogging()) FancyLogger.success("Successfully saved the " + this.fileName + ".");
 
                     return true;
                 } catch (Exception e) {
-                    FancyLogger.error("Could not save " + fileName + "!");
+                    FancyLogger.error("Could not save " + this.fileName + "!");
                     FancyLogger.debug(e.getMessage());
                     return false;
                 }
@@ -516,16 +514,16 @@ public class FileManager {
          * Overrides the loaded state file and loads the filesystems file.
          * @return True if it reloaded correct and false if the file wasn't found or error.
          */
-        public Boolean reloadFile() {
-            if (file != null) {
+        public boolean reloadFile() {
+            if (this.file != null) {
                 try {
-                    file = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "/" + homeFolder + "/" + fileName));
+                    this.file = YamlConfiguration.loadConfiguration(new File(this.plugin.getDataFolder(), "/" + this.homeFolder + "/" + this.fileName));
 
-                    if (isLogging()) FancyLogger.success("Successfully reloaded the " + fileName + ".");
+                    if (isLogging()) FancyLogger.success("Successfully reloaded the " + this.fileName + ".");
 
                     return true;
                 } catch (Exception e) {
-                    FancyLogger.error("Could not reload the " + fileName + "!");
+                    FancyLogger.error("Could not reload the " + this.fileName + "!");
                     FancyLogger.debug(e.getMessage());
                 }
             } else {

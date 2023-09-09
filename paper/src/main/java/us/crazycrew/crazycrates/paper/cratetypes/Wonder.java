@@ -33,11 +33,11 @@ public class Wonder implements Listener {
         UUID uuid = player.getUniqueId();
 
         if (!this.userManager.takeKeys(1, player.getUniqueId(), crate.getName(), keyType, checkHand)) {
-            crazyManager.removePlayerFromOpeningList(uuid);
+            this.crazyManager.removePlayerFromOpeningList(uuid);
             return;
         }
 
-        final Inventory inv = plugin.getServer().createInventory(null, 45, crate.getCrateInventoryName());
+        final Inventory inv = this.plugin.getServer().createInventory(null, 45, crate.getCrateInventoryName());
         final ArrayList<String> slots = new ArrayList<>();
 
         for (int i = 0; i < 45; i++) {
@@ -48,7 +48,7 @@ public class Wonder implements Listener {
 
         player.openInventory(inv);
 
-        crazyManager.addCrateTask(uuid, new BukkitRunnable() {
+        this.crazyManager.addCrateTask(uuid, new BukkitRunnable() {
             int fullTime = 0;
             int timer = 0;
             int slot1 = 0;
@@ -106,6 +106,6 @@ public class Wonder implements Listener {
 
                 if (timer > 2) timer = 0;
             }
-        }.runTaskTimer(plugin, 0, 2));
+        }.runTaskTimer(this.plugin, 0, 2));
     }
 }

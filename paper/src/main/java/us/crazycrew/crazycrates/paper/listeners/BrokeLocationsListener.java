@@ -24,28 +24,28 @@ public class BrokeLocationsListener implements Listener {
     
     @EventHandler
     public void onWorldLoad(WorldLoadEvent event) {
-        if (!crazyManager.getBrokeCrateLocations().isEmpty()) {
+        if (!this.crazyManager.getBrokeCrateLocations().isEmpty()) {
             int fixedAmount = 0;
 
-            for (BrokeLocation brokeLocation : crazyManager.getBrokeCrateLocations()) {
+            for (BrokeLocation brokeLocation : this.crazyManager.getBrokeCrateLocations()) {
                 Location location = brokeLocation.getLocation();
 
                 if (location.getWorld() != null) {
                     if (brokeLocation.getCrate() != null) {
-                        crazyManager.addCrateLocation(new CrateLocation(brokeLocation.getLocationName(), brokeLocation.getCrate(), location));
+                        this.crazyManager.addCrateLocation(new CrateLocation(brokeLocation.getLocationName(), brokeLocation.getCrate(), location));
 
-                        if (brokeLocation.getCrate().getHologram().isEnabled() && crazyManager.getHologramController() != null) crazyManager.getHologramController().createHologram(location.getBlock(), brokeLocation.getCrate());
+                        if (brokeLocation.getCrate().getHologram().isEnabled() && this.crazyManager.getHologramController() != null) this.crazyManager.getHologramController().createHologram(location.getBlock(), brokeLocation.getCrate());
 
-                        crazyManager.removeBrokeCrateLocation(brokeLocation);
+                        this.crazyManager.removeBrokeCrateLocation(brokeLocation);
                         fixedAmount++;
                     }
                 }
             }
 
-            if (fileManager.isLogging()) {
+            if (this.fileManager.isLogging()) {
                 FancyLogger.debug("Fixed " + fixedAmount + " broken crate locations.");
 
-                if (crazyManager.getBrokeCrateLocations().isEmpty()) FancyLogger.success("All broken crate locations have been fixed.");
+                if (this.crazyManager.getBrokeCrateLocations().isEmpty()) FancyLogger.success("All broken crate locations have been fixed.");
             }
         }
     }

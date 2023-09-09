@@ -1,5 +1,6 @@
 package us.crazycrew.crazycrates.paper.cratetypes;
 
+import org.bukkit.SoundCategory;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.Methods;
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
@@ -39,7 +40,7 @@ public class CSGO implements Listener {
 
         for (int i : glass.keySet()) {
             if (inv.getItem(i) == null) {
-                ItemStack item = methods.getRandomPaneColor().setName(" ").build();
+                ItemStack item = this.methods.getRandomPaneColor().setName(" ").build();
                 inv.setItem(i, item);
                 inv.setItem(i + 18, item);
             }
@@ -49,7 +50,7 @@ public class CSGO implements Listener {
             if (i < 9 && i != 4) glass.put(i, inv.getItem(i));
         }
 
-        ItemStack item = methods.getRandomPaneColor().setName(" ").build();
+        ItemStack item = this.methods.getRandomPaneColor().setName(" ").build();
 
         inv.setItem(0, glass.get(1));
         inv.setItem(18, glass.get(1));
@@ -72,7 +73,7 @@ public class CSGO implements Listener {
     }
     
     public void openCSGO(Player player, Crate crate, KeyType keyType, boolean checkHand) {
-        Inventory inv = plugin.getServer().createInventory(null, 27, methods.sanitizeColor(crate.getFile().getString("Crate.CrateName")));
+        Inventory inv = this.plugin.getServer().createInventory(null, 27, this.methods.sanitizeColor(crate.getFile().getString("Crate.CrateName")));
         setGlass(inv);
 
         UUID uuid = player.getUniqueId();
@@ -86,14 +87,14 @@ public class CSGO implements Listener {
         if (this.userManager.takeKeys(1, player.getUniqueId(), crate.getName(), keyType, checkHand)) {
             startCSGO(player, inv, crate);
         } else {
-            crazyManager.removePlayerFromOpeningList(uuid);
+            this.crazyManager.removePlayerFromOpeningList(uuid);
         }
     }
     
     private void startCSGO(Player player, final Inventory inv, Crate crate) {
         UUID uuid = player.getUniqueId();
 
-        crazyManager.addCrateTask(uuid, new BukkitRunnable() {
+        this.crazyManager.addCrateTask(uuid, new BukkitRunnable() {
             int time = 1;
             int full = 0;
             int open = 0;
@@ -149,7 +150,7 @@ public class CSGO implements Listener {
                     }
                 }
             }
-        }.runTaskTimer(plugin, 1, 1));
+        }.runTaskTimer(this.plugin, 1, 1));
     }
 
     private ArrayList<Integer> slowSpin() {

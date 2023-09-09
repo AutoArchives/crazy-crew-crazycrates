@@ -27,14 +27,14 @@ public class MiscListener implements Listener {
         final Player player = event.getPlayer();
         final UUID uuid = player.getUniqueId();
 
-        if (crazyManager.isDisplayReward(event.getItem())) {
+        if (this.crazyManager.isDisplayReward(event.getItem())) {
             event.setCancelled(true);
             return;
         }
 
-        if (crazyManager.isInOpeningList(uuid)) {
+        if (this.crazyManager.isInOpeningList(uuid)) {
             // DrBot Start
-            if (crazyManager.getOpeningCrate(uuid).getCrateType().equals(CrateType.QUICK_CRATE)) return;
+            if (this.crazyManager.getOpeningCrate(uuid).getCrateType().equals(CrateType.QUICK_CRATE)) return;
             // DrBot End
             event.setCancelled(true);
         }

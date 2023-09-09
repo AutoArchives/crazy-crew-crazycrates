@@ -36,21 +36,21 @@ public class CrateOnTheGo implements Listener {
             
             if (item == null || item.getType() == Material.AIR) return;
             
-            for (Crate crate : crazyManager.getCrates()) {
-                if (crate.getCrateType() == CrateType.CRATE_ON_THE_GO && methods.isSimilar(item, crate)) {
+            for (Crate crate : this.crazyManager.getCrates()) {
+                if (crate.getCrateType() == CrateType.CRATE_ON_THE_GO && this.methods.isSimilar(item, crate)) {
                     e.setCancelled(true);
-                    crazyManager.addPlayerToOpeningList(uuid, crate);
+                    this.crazyManager.addPlayerToOpeningList(uuid, crate);
 
-                    methods.removeItem(item, player);
+                    this.methods.removeItem(item, player);
 
                     Prize prize = crate.pickPrize(player);
 
-                    crazyManager.givePrize(player, prize, crate);
-                    plugin.getServer().getPluginManager().callEvent(new PlayerPrizeEvent(uuid, crate, crazyManager.getOpeningCrate(uuid).getName(), prize));
+                    this.crazyManager.givePrize(player, prize, crate);
+                    this.plugin.getServer().getPluginManager().callEvent(new PlayerPrizeEvent(uuid, crate, this.crazyManager.getOpeningCrate(uuid).getName(), prize));
 
-                    if (prize.useFireworks()) methods.firework(player.getLocation().add(0, 1, 0));
+                    if (prize.useFireworks()) this.methods.firework(player.getLocation().add(0, 1, 0));
 
-                    crazyManager.removePlayerFromOpeningList(uuid);
+                    this.crazyManager.removePlayerFromOpeningList(uuid);
                 }
             }
         }

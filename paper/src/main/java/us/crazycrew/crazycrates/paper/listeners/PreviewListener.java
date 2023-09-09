@@ -1,6 +1,9 @@
 package us.crazycrew.crazycrates.paper.listeners;
 
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.plugin.java.JavaPlugin;
+import us.crazycrew.crazycrates.common.config.MainConfig;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
 import us.crazycrew.crazycrates.paper.api.managers.MenuManager;
@@ -26,24 +29,24 @@ public class PreviewListener implements Listener {
 
         if (e.getClickedInventory() == null) return;
 
-        if (menuManager.getPlayerCrate().get(uuid) != null) {
-            Crate crate = menuManager.getPlayerCrate().get(player.getUniqueId());
+        if (this.menuManager.getPlayerCrate().get(uuid) != null) {
+            Crate crate = this.menuManager.getPlayerCrate().get(player.getUniqueId());
 
             if (crate.isPreview(e.getView())) {
                 e.setCancelled(true);
 
                 if (e.getCurrentItem() != null) {
                     if (e.getRawSlot() == crate.getAbsoluteItemPosition(4)) { // Clicked the menu button.
-                        if (menuManager.playerInMenu(player)) this.cratesLoader.getMenuManager().openMainMenu(player);
+                        if (this.menuManager.playerInMenu(player)) this.cratesLoader.getMenuManager().openMainMenu(player);
                     } else if (e.getRawSlot() == crate.getAbsoluteItemPosition(5)) { // Clicked the next button.
-                        if (menuManager.getPage(uuid) < crate.getMaxPage()) {
+                        if (this.menuManager.getPage(uuid) < crate.getMaxPage()) {
                             nextPage(uuid);
-                            menuManager.openPreview(player, crate);
+                            this.menuManager.openPreview(player, crate);
                         }
                     } else if (e.getRawSlot() == crate.getAbsoluteItemPosition(3)) { // Clicked the back button.
-                        if (menuManager.getPage(uuid) > 1 && menuManager.getPage(uuid) <= crate.getMaxPage()) {
+                        if (this.menuManager.getPage(uuid) > 1 && this.menuManager.getPage(uuid) <= crate.getMaxPage()) {
                             backPage(uuid);
-                            menuManager.openPreview(player, crate);
+                            this.menuManager.openPreview(player, crate);
                         }
                     }
                 }
@@ -52,10 +55,10 @@ public class PreviewListener implements Listener {
     }
 
     private void nextPage(UUID uuid) {
-        menuManager.setPage(uuid, menuManager.getPage(uuid) + 1);
+        this.menuManager.setPage(uuid, this.menuManager.getPage(uuid) + 1);
     }
 
     private void backPage(UUID uuid) {
-        menuManager.setPage(uuid, menuManager.getPage(UUID.randomUUID()) - 1);
+        this.menuManager.setPage(uuid, this.menuManager.getPage(UUID.randomUUID()) - 1);
     }
 }

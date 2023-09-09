@@ -418,7 +418,7 @@ public class Crate {
      * @return The itemstack of the key shown in the /cc admin menu.
      */
     public ItemStack getAdminKey() {
-        return adminKey;
+        return this.adminKey;
     }
     
     /**
@@ -440,7 +440,7 @@ public class Crate {
      * @return The prize you asked for.
      */
     public Prize getPrize(String name) {
-        for (Prize prize : prizes) {
+        for (Prize prize : this.prizes) {
             if (prize.getName().equalsIgnoreCase(name)) return prize;
         }
 
@@ -454,7 +454,7 @@ public class Crate {
             if (nbt.hasKey("crazycrate-prize")) return getPrize(nbt.getString("crazycrate-prize"));
         } catch (Exception ignored) {}
         
-        for (Prize prize : prizes) {
+        for (Prize prize : this.prizes) {
             if (item.isSimilar(prize.getDisplayItem())) return prize;
         }
 
@@ -465,14 +465,14 @@ public class Crate {
      * @return True if new players get keys and false if they do not.
      */
     public boolean doNewPlayersGetKeys() {
-        return giveNewPlayerKeys;
+        return this.giveNewPlayerKeys;
     }
     
     /**
      * @return The number of keys new players get.
      */
     public int getNewPlayerKeys() {
-        return newPlayerKeys;
+        return this.newPlayerKeys;
     }
     
     /**
@@ -485,17 +485,16 @@ public class Crate {
         items.add(item);
         String path = "Crate.Prizes." + prize;
 
-        if (!file.contains(path)) {
-
+        if (!this.file.contains(path)) {
             if (item.hasItemMeta()) {
-                if (item.getItemMeta().hasDisplayName()) file.set(path + ".DisplayName", item.getItemMeta().getDisplayName());
-                if (item.getItemMeta().hasLore()) file.set(path + ".Lore", item.getItemMeta().getLore());
+                if (item.getItemMeta().hasDisplayName()) this.file.set(path + ".DisplayName", item.getItemMeta().getDisplayName());
+                if (item.getItemMeta().hasLore()) this.file.set(path + ".Lore", item.getItemMeta().getLore());
             }
 
             NBTItem nbtItem = new NBTItem(item);
 
             if (nbtItem.hasNBTData()) {
-                if (nbtItem.hasKey("Unbreakable") && nbtItem.getBoolean("Unbreakable")) file.set(path + ".Unbreakable", true);
+                if (nbtItem.hasKey("Unbreakable") && nbtItem.getBoolean("Unbreakable")) this.file.set(path + ".Unbreakable", true);
             }
 
             List<String> enchantments = new ArrayList<>();
@@ -504,33 +503,33 @@ public class Crate {
                 enchantments.add((enchantment.getKey().getKey() + ":" + item.getEnchantmentLevel(enchantment)));
             }
 
-            if (!enchantments.isEmpty()) file.set(path + ".DisplayEnchantments", enchantments);
+            if (!enchantments.isEmpty()) this.file.set(path + ".DisplayEnchantments", enchantments);
 
-            file.set(path + ".DisplayItem", item.getType().name());
-            file.set(path + ".DisplayAmount", item.getAmount());
-            file.set(path + ".MaxRange", 100);
-            file.set(path + ".Chance", 50);
+            this.file.set(path + ".DisplayItem", item.getType().name());
+            this.file.set(path + ".DisplayAmount", item.getAmount());
+            this.file.set(path + ".MaxRange", 100);
+            this.file.set(path + ".Chance", 50);
         } else {
             // Must be checked as getList will return null if nothing is found.
-            if (file.contains(path + ".Editor-Items")) file.getList(path + ".Editor-Items").forEach(listItem -> items.add((ItemStack) listItem));
+            if (this.file.contains(path + ".Editor-Items")) this.file.getList(path + ".Editor-Items").forEach(listItem -> items.add((ItemStack) listItem));
         }
 
-        file.set(path + ".Editor-Items", items);
-        fileManager.saveFile(fileManager.getFile(name));
+        this.file.set(path + ".Editor-Items", items);
+        this.fileManager.saveFile(this.fileManager.getFile(this.name));
     }
     
     /**
      * @return The max page for the preview.
      */
     public int getMaxPage() {
-        return maxPage;
+        return this.maxPage;
     }
     
     /**
      * @return A list of the tiers for the crate. Will be empty if there are none.
      */
     public ArrayList<Tier> getTiers() {
-        return tiers;
+        return this.tiers;
     }
 
     /**
@@ -548,15 +547,15 @@ public class Crate {
      * @return A CrateHologram which contains all the info about the hologram the crate uses.
      */
     public CrateHologram getHologram() {
-        return hologram;
+        return this.hologram;
     }
     
     public int getAbsoluteItemPosition(int baseSlot) {
-        return baseSlot + (previewChestLines > 1 ? previewChestLines - 1 : 1) * 9;
+        return baseSlot + (this.previewChestLines > 1 ? this.previewChestLines - 1 : 1) * 9;
     }
     
     private boolean isInventoryNameSimilar(String inventory1, String inventory2) {
-        return methods.removeColor(inventory1).equalsIgnoreCase(methods.removeColor(inventory2));
+        return this.methods.removeColor(inventory1).equalsIgnoreCase(this.methods.removeColor(inventory2));
     }
     
     /**
@@ -574,12 +573,12 @@ public class Crate {
     }
     
     private List<ItemStack> getPageItems(int page) {
-        List<ItemStack> list = preview;
+        List<ItemStack> list = this.preview;
         List<ItemStack> items = new ArrayList<>();
 
         if (page <= 0) page = 1;
 
-        int max = maxSlots - (borderToggle ? 18 : maxSlots >= preview.size() ? 0 : maxSlots != 9 ? 9 : 0);
+        int max = this.maxSlots - (this.borderToggle ? 18 : this.maxSlots >= this.preview.size() ? 0 : this.maxSlots != 9 ? 9 : 0);
         int index = page * max - max;
         int endIndex = index >= list.size() ? list.size() - 1 : index + max;
 
@@ -603,34 +602,34 @@ public class Crate {
     private void setDefaultItems(Inventory inventory, Player player) {
         UUID uuid = player.getUniqueId();
 
-        if (borderToggle) {
+        if (this.borderToggle) {
             List<Integer> borderItems = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8);
 
             for (int i : borderItems) { // Top Boarder slots
-                inventory.setItem(i, boarderItem.build());
+                inventory.setItem(i, this.boarderItem.build());
             }
 
             borderItems.replaceAll(this::getAbsoluteItemPosition);
 
             for (int i : borderItems) { // Bottom Boarder slots
-                inventory.setItem(i, boarderItem.build());
+                inventory.setItem(i, this.boarderItem.build());
             }
         }
 
         int page =  this.cratesLoader.getMenuManager().getPage(uuid);
 
-        if ( this.cratesLoader.getMenuManager().playerInMenu(player)) inventory.setItem(getAbsoluteItemPosition(4),  this.cratesLoader.getMenuManager().getMenuButton());
+        if (this.cratesLoader.getMenuManager().playerInMenu(player)) inventory.setItem(getAbsoluteItemPosition(4), this.cratesLoader.getMenuManager().getMenuButton());
 
         if (page == 1) {
-            if (borderToggle) inventory.setItem(getAbsoluteItemPosition(3), boarderItem.build());
+            if (this.borderToggle) inventory.setItem(getAbsoluteItemPosition(3), this.boarderItem.build());
         } else {
-            inventory.setItem(getAbsoluteItemPosition(3),  this.cratesLoader.getMenuManager().getBackButton(uuid));
+            inventory.setItem(getAbsoluteItemPosition(3), this.cratesLoader.getMenuManager().getBackButton(uuid));
         }
 
-        if (page == maxPage) {
-            if (borderToggle) inventory.setItem(getAbsoluteItemPosition(5), boarderItem.build());
+        if (page == this.maxPage) {
+            if (this.borderToggle) inventory.setItem(getAbsoluteItemPosition(5), this.boarderItem.build());
         } else {
-            inventory.setItem(getAbsoluteItemPosition(5),  this.cratesLoader.getMenuManager().getNextButton(uuid));
+            inventory.setItem(getAbsoluteItemPosition(5), this.cratesLoader.getMenuManager().getNextButton(uuid));
         }
     }
 }
