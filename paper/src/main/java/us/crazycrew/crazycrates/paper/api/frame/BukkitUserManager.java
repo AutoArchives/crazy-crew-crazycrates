@@ -420,6 +420,8 @@ public class BukkitUserManager extends UserManager {
 
                 int amount = this.data.getInt("Offline-Players." + name + "." + crate.getName());
 
+                //TODO() Instead of dropping the keys, make it so they need to empty their inventory and prompt them to open a gui.
+
                 while (keysGiven < amount) {
                     // If the inventory is full, drop the remaining keys then stop.
                     if (crate.getCrateType() == CrateType.CRATE_ON_THE_GO) {
@@ -455,6 +457,8 @@ public class BukkitUserManager extends UserManager {
                 int keysGiven = 0;
 
                 int amount = this.data.getInt("Offline-Players." + name + ".Physical." + crate.getName());
+
+                //TODO() Instead of dropping the keys, make it so they need to empty their inventory and prompt them to open a gui.
 
                 while (keysGiven < amount) {
                     // If the inventory is full, drop the remaining keys then stop.
