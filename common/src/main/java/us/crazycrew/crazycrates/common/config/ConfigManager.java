@@ -17,7 +17,7 @@ public class ConfigManager {
     }
 
     private SettingsManager pluginConfig;
-    private SettingsManager config;
+    private SettingsManager localeConfig;
 
     private SettingsManager mainMenuConfig;
     private SettingsManager previewMenuConfig;
@@ -31,6 +31,14 @@ public class ConfigManager {
                 .withYamlFile(pluginConfigFile)
                 .useDefaultMigrationService()
                 .configurationData(createPluginConfig())
+                .create();
+
+        File localeFile = new File(this.dataFolder, "/locale/" + this.pluginConfig.getProperty(PluginConfig.PLUGIN_LOCALE) + ".yml");
+
+        this.localeConfig = SettingsManagerBuilder
+                .withYamlFile(localeFile)
+                .useDefaultMigrationService()
+                .configurationData(LocaleConfig.class)
                 .create();
 
         File configFile = new File(this.dataFolder, "config.yml");
@@ -62,6 +70,16 @@ public class ConfigManager {
         // Reload plugin-config.yml
         this.pluginConfig.reload();
 
+        this.localeConfig.save();
+
+        File localeFile = new File(this.dataFolder, "/locale/" + this.pluginConfig.getProperty(PluginConfig.PLUGIN_LOCALE) + ".yml");
+
+        this.localeConfig = SettingsManagerBuilder
+                .withYamlFile(localeFile)
+                .useDefaultMigrationService()
+                .configurationData(LocaleConfig.class)
+                .create();
+
         // Reload crate-menu.yml
         this.mainMenuConfig.reload();
 
@@ -73,6 +91,9 @@ public class ConfigManager {
         return this.pluginConfig;
     }
 
+    public SettingsManager getLocaleConfig() {
+        return this.localeConfig;
+    }
     public SettingsManager getConfig() {
         return this.config;
     }
