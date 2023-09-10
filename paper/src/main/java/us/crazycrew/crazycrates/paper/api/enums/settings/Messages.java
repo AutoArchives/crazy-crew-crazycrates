@@ -281,7 +281,8 @@ public enum Messages {
         }
 
         for (Entry<String, String> placeholder : placeholders.entrySet()) {
-            message = message.replace(placeholder.getKey(), placeholder.getValue()).replace(placeholder.getKey().toLowerCase(), placeholder.getValue());
+            message = message.replace(placeholder.getKey(), placeholder.getValue())
+                    .replace(placeholder.getKey().toLowerCase(), placeholder.getValue());
         }
 
         if (isList) { // Don't want to add a prefix to a list of messages.

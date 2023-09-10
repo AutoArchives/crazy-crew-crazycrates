@@ -2,10 +2,15 @@ package us.crazycrew.crazycrates.common.enums;
 
 import ch.jalu.configme.SettingsManager;
 import ch.jalu.configme.properties.Property;
+import com.ryderbelserion.cluster.api.utils.ColorUtils;
+import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.common.config.ConfigManager;
 import us.crazycrew.crazycrates.common.config.types.Locale;
+import us.crazycrew.crazycrates.common.utils.MiscUtils;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public enum Messages {
 
@@ -20,7 +25,7 @@ public enum Messages {
     no_prizes_found(Locale.no_prizes_found),
     no_schematics_found(Locale.no_schematics_found),
 
-    prize_error(Locale.prize_error, ""),
+    prize_error(Locale.prize_error, true),
 
     internal_error(Locale.internal_error),
 
@@ -46,7 +51,7 @@ public enum Messages {
     need_more_room(Locale.crate_requirements_need_more_room),
     world_disabled(Locale.crate_requirements_world_disabled),
 
-    physical_crate_created(Locale.crates_physical_crate_created, ""),
+    physical_crate_created(Locale.crates_physical_crate_created, true),
 
     physical_crate_removed(Locale.crates_physical_crate_removed),
 
@@ -84,22 +89,24 @@ public enum Messages {
     command_keys_personal_no_virtual_keys(Locale.command_keys_personal_no_virtual_keys),
 
     // virtual keys header personal
-    command_keys_personal_header(Locale.command_keys_personal_no_virtual_keys_header, ""),
+    command_keys_personal_header(Locale.command_keys_personal_no_virtual_keys_header, true),
 
     command_keys_other_player_no_virtual_keys(Locale.command_keys_other_player_no_virtual_keys),
 
     // other player no virtual keys
-    command_keys_other_player_header(Locale.command_keys_other_player_no_virtual_keys_header, ""),
+    command_keys_other_player_header(Locale.command_keys_other_player_no_virtual_keys_header, true),
 
     command_keys_crate_format(Locale.command_keys_crate_format),
 
-    player_help(Locale.player_help, ""),
+    player_help(Locale.player_help, true),
 
-    admin_help(Locale.admin_help, "");
+    admin_help(Locale.admin_help, true);
 
     private Property<String> property;
 
     private Property<List<String>> listProperty;
+
+    private boolean isList = false;
 
     /**
      * Used for strings
@@ -114,28 +121,49 @@ public enum Messages {
      * Used for string lists
      *
      * @param listProperty the list property
-     * @param empty does nothing except allow this to exist
+     * @param isList Defines if it's a list or not.
      */
-    Messages(Property<List<String>> listProperty, String empty) {
+    Messages(Property<List<String>> listProperty, boolean isList) {
         this.listProperty = listProperty;
+
+        this.isList = isList;
     }
 
     private final @NotNull SettingsManager localeConfig = ConfigManager.getLocaleConfig();
 
-    public Property<String> getProperty() {
-        return this.property;
+    private boolean isList() {
+        return this.isList;
     }
 
-    public Property<List<String>> getListProperty() {
-        return this.listProperty;
-    }
-
-    public @NotNull List<String> getMessageList() {
+    private @NotNull List<String> getPropertyList() {
         return this.localeConfig.getProperty(this.listProperty);
     }
 
-    private @NotNull String getMessage() {
+    private @NotNull String getProperty() {
         return this.localeConfig.getProperty(this.property);
+    }
+
+    public Component getMessage(String placeholder, String replacement) {
+        Map<String, String> placeholders = new HashMap<>();
+        placeholders.put(placeholder, replacement);
+
+        return getMessage(placeholders);
+    }
+
+    public Component getMessage(Map<String, String> placeholders) {
+        String message;
+
+        if (isList()) {
+            message = MiscUtils.convertList(getPropertyList());
+        } else {
+            message = getProperty();
+        }
+
+        for (Map.Entry<String, String> placeholder : placeholders.entrySet()) {
+            message = message.replace(placeholder.getKey(), placeholder.getValue()).replace(placeholder.getKey().toLowerCase(), placeholder.getValue());
+        }
+
+        return ColorUtils.parse(message);
     }
 
     public String setPlaceholders(String message) {
