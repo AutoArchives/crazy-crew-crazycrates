@@ -1,4 +1,4 @@
-package us.crazycrew.crazycrates.paper.api.frame;
+package us.crazycrew.crazycrates.paper.api.plugin.frame;
 
 import ch.jalu.configme.SettingsManager;
 import com.ryderbelserion.cluster.api.adventure.FancyLogger;
