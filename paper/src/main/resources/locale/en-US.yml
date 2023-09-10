@@ -25,8 +25,6 @@ errors:
 
 player:
   requirements:
-    too-many-args: '<red>You put more arguments then I can handle.</red>'
-    not-enough-args: '<red>You did not supply enough arguments.</red>'
     must-be-player: '<red>You must be a player to use this command.</red>'
     must-be-console-sender: '<red>You must be using console to use this command.</red>'
     must-be-looking-at-block: '<red>You must be looking at a block.</red>'
