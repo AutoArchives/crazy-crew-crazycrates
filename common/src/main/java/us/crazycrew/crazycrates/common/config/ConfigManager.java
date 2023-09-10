@@ -18,12 +18,13 @@ public class ConfigManager {
 
     private SettingsManager pluginConfig;
     private SettingsManager localeConfig;
+    private SettingsManager mainConfig;
 
     private SettingsManager mainMenuConfig;
     private SettingsManager previewMenuConfig;
 
     public void load() {
-        // Create the plugin-support.yml file.
+        // Create the plugin-config.yml file.
         File pluginConfigFile = new File(this.dataFolder, "plugin-config.yml");
 
         // Bind it to settings manager
@@ -43,7 +44,7 @@ public class ConfigManager {
 
         File configFile = new File(this.dataFolder, "config.yml");
 
-        this.config = SettingsManagerBuilder
+        this.mainConfig = SettingsManagerBuilder
                 .withYamlFile(configFile)
                 .useDefaultMigrationService()
                 .configurationData(ConfigurationDataBuilder.createConfiguration(MainConfig.class))
@@ -94,8 +95,9 @@ public class ConfigManager {
     public SettingsManager getLocaleConfig() {
         return this.localeConfig;
     }
+
     public SettingsManager getConfig() {
-        return this.config;
+        return this.mainConfig;
     }
 
     public SettingsManager getMainMenuConfig() {
