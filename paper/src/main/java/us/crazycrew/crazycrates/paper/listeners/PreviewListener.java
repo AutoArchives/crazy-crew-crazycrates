@@ -1,9 +1,6 @@
 package us.crazycrew.crazycrates.paper.listeners;
 
-import org.bukkit.Sound;
-import org.bukkit.SoundCategory;
 import org.bukkit.plugin.java.JavaPlugin;
-import us.crazycrew.crazycrates.common.config.MainConfig;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
 import us.crazycrew.crazycrates.paper.api.managers.MenuManager;

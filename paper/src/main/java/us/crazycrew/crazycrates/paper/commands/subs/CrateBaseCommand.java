@@ -8,6 +8,7 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.World;
 import us.crazycrew.crazycrates.common.config.MainConfig;
+import us.crazycrew.crazycrates.common.config.menus.CrateMainMenu;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.Methods;
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
@@ -16,7 +17,7 @@ import us.crazycrew.crazycrates.paper.api.FileManager;
 import us.crazycrew.crazycrates.paper.api.enums.settings.Messages;
 import us.crazycrew.crazycrates.paper.api.events.PlayerPrizeEvent;
 import us.crazycrew.crazycrates.paper.api.events.PlayerReceiveKeyEvent;
-import us.crazycrew.crazycrates.paper.api.frame.BukkitUserManager;
+import us.crazycrew.crazycrates.paper.api.plugin.frame.BukkitUserManager;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
 import us.crazycrew.crazycrates.paper.api.objects.CrateLocation;
 import us.crazycrew.crazycrates.paper.api.objects.Prize;
@@ -54,11 +55,12 @@ public class CrateBaseCommand extends BaseCommand {
     private final @NotNull Methods methods = this.cratesLoader.getMethods();
 
     private final @NotNull SettingsManager config = this.cratesLoader.getConfigManager().getConfig();
+    private final @NotNull SettingsManager menuConfig = this.cratesLoader.getConfigManager().getMainMenuConfig();
 
     @Default
     @Permission(value = "crazycrates.command.player.menu", def = PermissionDefault.TRUE)
     public void onDefaultMenu(Player player) {
-        boolean openMenu = this.config.getProperty(MainConfig.PREVIEW_MENU_TOGGLE);
+        boolean openMenu = this.menuConfig.getProperty(CrateMainMenu.CRATE_MENU_TOGGLE);
 
         if (openMenu) this.cratesLoader.getMenuManager().openMainMenu(player); else player.sendMessage(Messages.FEATURE_DISABLED.getMessage());
     }

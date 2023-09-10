@@ -3,14 +3,14 @@ package us.crazycrew.crazycrates.paper.listeners;
 import ch.jalu.configme.SettingsManager;
 import org.bukkit.SoundCategory;
 import us.crazycrew.crazycrates.common.config.MainConfig;
+import us.crazycrew.crazycrates.common.config.menus.CrateMainMenu;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.Methods;
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
 import us.crazycrew.crazycrates.common.enums.Permissions;
-import us.crazycrew.crazycrates.paper.api.FileManager;
 import us.crazycrew.crazycrates.paper.api.enums.settings.Messages;
 import us.crazycrew.crazycrates.paper.api.events.PhysicalCrateKeyCheckEvent;
-import us.crazycrew.crazycrates.paper.api.frame.BukkitUserManager;
+import us.crazycrew.crazycrates.paper.api.plugin.frame.BukkitUserManager;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
 import us.crazycrew.crazycrates.api.enums.types.KeyType;
@@ -19,7 +19,6 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -50,6 +49,7 @@ public class CrateControlListener implements Listener { // Crate Control
     private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
     private final @NotNull Methods methods = this.cratesLoader.getMethods();
     private final @NotNull SettingsManager config = this.cratesLoader.getConfigManager().getConfig();
+    private final @NotNull SettingsManager mainMenuConfig = this.cratesLoader.getConfigManager().getMainMenuConfig();
     
     // This event controls when a player tries to click in a GUI based crate type. This will stop them from taking items out of their inventories.
     @EventHandler
@@ -123,7 +123,7 @@ public class CrateControlListener implements Listener { // Crate Control
                 e.setCancelled(true);
 
                 if (crate.getCrateType() == CrateType.MENU) {
-                    boolean openMenu = this.config.getProperty(MainConfig.PREVIEW_MENU_TOGGLE);
+                    boolean openMenu = this.mainMenuConfig.getProperty(CrateMainMenu.CRATE_MENU_TOGGLE);
 
                     //This is to stop players in QuadCrate to not be able to try and open a crate set to menu.
                     if (!this.crazyManager.isInOpeningList(uuid) && openMenu) this.cratesLoader.getMenuManager().openMainMenu(player);

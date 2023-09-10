@@ -5,7 +5,7 @@ import us.crazycrew.crazycrates.common.config.MainConfig;
 import us.crazycrew.crazycrates.common.config.menus.CrateMainMenu;
 import us.crazycrew.crazycrates.common.config.menus.CratePreviewMenu;
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
-import us.crazycrew.crazycrates.paper.api.frame.BukkitUserManager;
+import us.crazycrew.crazycrates.paper.api.plugin.frame.BukkitUserManager;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
@@ -238,7 +238,7 @@ public class MenuManager {
     private String getCrates(Player player, String option) {
         UUID uuid = player.getUniqueId();
 
-        for (Crate crate : crazyManager.getCrates()) {
+        for (Crate crate : this.crazyManager.getCrates()) {
             if (crate.getCrateType() != CrateType.MENU) {
                 option = option.replaceAll("%" + crate.getName().toLowerCase() + "%", this.userManager.getVirtualKeys(uuid, crate.getName()) + "")
                         .replaceAll("%" + crate.getName().toLowerCase() + "_physical%", this.userManager.getPhysicalKeys(uuid, crate.getName()) + "")

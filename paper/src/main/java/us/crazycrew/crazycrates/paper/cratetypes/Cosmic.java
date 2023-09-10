@@ -7,7 +7,7 @@ import us.crazycrew.crazycrates.paper.api.CrazyManager;
 import us.crazycrew.crazycrates.paper.api.enums.settings.Messages;
 import us.crazycrew.crazycrates.paper.api.events.PlayerPrizeEvent;
 import us.crazycrew.crazycrates.paper.api.events.PlayerReceiveKeyEvent;
-import us.crazycrew.crazycrates.paper.api.frame.BukkitUserManager;
+import us.crazycrew.crazycrates.paper.api.plugin.frame.BukkitUserManager;
 import us.crazycrew.crazycrates.paper.api.managers.CosmicCrateManager;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
 import us.crazycrew.crazycrates.paper.api.objects.Prize;

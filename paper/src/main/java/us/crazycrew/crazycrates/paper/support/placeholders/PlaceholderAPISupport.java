@@ -2,7 +2,7 @@ package us.crazycrew.crazycrates.paper.support.placeholders;
 
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
-import us.crazycrew.crazycrates.paper.api.frame.BukkitUserManager;
+import us.crazycrew.crazycrates.paper.api.plugin.frame.BukkitUserManager;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;

@@ -11,7 +11,7 @@ import us.crazycrew.crazycrates.common.config.MainConfig;
 import us.crazycrew.crazycrates.common.config.PluginConfig;
 import us.crazycrew.crazycrates.common.config.menus.CrateMainMenu;
 import us.crazycrew.crazycrates.paper.api.enums.settings.Messages;
-import us.crazycrew.crazycrates.paper.api.frame.BukkitUserManager;
+import us.crazycrew.crazycrates.paper.api.plugin.frame.BukkitUserManager;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
 import us.crazycrew.crazycrates.paper.api.objects.CrateLocation;
 import us.crazycrew.crazycrates.paper.api.objects.ItemBuilder;
@@ -67,6 +67,7 @@ public class CrazyManager {
     private final @NotNull Methods methods = this.cratesLoader.getMethods();
 
     private final @NotNull SettingsManager config = this.cratesLoader.getConfigManager().getConfig();
+    private final @NotNull SettingsManager menuConfig = this.cratesLoader.getConfigManager().getMainMenuConfig();
 
     // All the crates that have been loaded.
     private final ArrayList<Crate> crates = new ArrayList<>();
@@ -382,7 +383,7 @@ public class CrazyManager {
 
         switch (crate.getCrateType()) {
             case MENU -> {
-                boolean openMenu = this.config.getProperty(MainConfig.PREVIEW_MENU_TOGGLE);
+                boolean openMenu = this.menuConfig.getProperty(CrateMainMenu.CRATE_MENU_TOGGLE);
 
                 if (openMenu) this.cratesLoader.getMenuManager().openMainMenu(player);
                 else player.sendMessage(Messages.FEATURE_DISABLED.getMessage());

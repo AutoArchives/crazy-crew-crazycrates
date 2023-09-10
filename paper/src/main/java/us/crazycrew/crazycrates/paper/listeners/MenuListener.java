@@ -4,18 +4,17 @@ import ch.jalu.configme.SettingsManager;
 import org.bukkit.SoundCategory;
 import org.bukkit.plugin.java.JavaPlugin;
 import us.crazycrew.crazycrates.common.config.MainConfig;
+import us.crazycrew.crazycrates.common.config.menus.CrateMainMenu;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.Methods;
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
-import us.crazycrew.crazycrates.paper.api.FileManager;
 import us.crazycrew.crazycrates.paper.api.enums.settings.Messages;
-import us.crazycrew.crazycrates.paper.api.frame.BukkitUserManager;
+import us.crazycrew.crazycrates.paper.api.plugin.frame.BukkitUserManager;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
 import us.crazycrew.crazycrates.api.enums.types.KeyType;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import org.bukkit.Sound;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -36,6 +35,7 @@ public class MenuListener implements Listener {
     private final @NotNull BukkitUserManager userManager = this.cratesLoader.getUserManager();
     private final @NotNull Methods methods = this.cratesLoader.getMethods();
     private final @NotNull SettingsManager config = this.cratesLoader.getConfigManager().getConfig();
+    private final @NotNull SettingsManager menuConfig = this.cratesLoader.getConfigManager().getMainMenuConfig();
 
     @EventHandler
     public void onInvClick(InventoryClickEvent e) {
@@ -51,7 +51,7 @@ public class MenuListener implements Listener {
         }
 
         //TODO() Re-do how this works.
-        if (e.getView().getTitle().equals(methods.sanitizeColor(" "))) {
+        if (e.getView().getTitle().equals(this.menuConfig.getProperty(CrateMainMenu.CRATE_MENU_TITLE))) {
             e.setCancelled(true);
 
             if (e.getCurrentItem() != null) {
@@ -107,10 +107,12 @@ public class MenuListener implements Listener {
                                 return;
                             }
 
-                            for (String world : getDisabledWorlds()) {
-                                if (world.equalsIgnoreCase(player.getWorld().getName())) {
-                                    player.sendMessage(Messages.WORLD_DISABLED.getMessage("%World%", player.getWorld().getName()));
-                                    return;
+                            if (this.config.getProperty(MainConfig.DISABLED_WORLDS_TOGGLE)) {
+                                for (String world : getDisabledWorlds()) {
+                                    if (world.equalsIgnoreCase(player.getWorld().getName())) {
+                                        player.sendMessage(Messages.WORLD_DISABLED.getMessage("%World%", player.getWorld().getName()));
+                                        return;
+                                    }
                                 }
                             }
 
