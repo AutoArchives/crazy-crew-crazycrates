@@ -1,4 +1,4 @@
-package us.crazycrew.crazycrates.common.config;
+package us.crazycrew.crazycrates.common.config.types;
 
 import ch.jalu.configme.Comment;
 import ch.jalu.configme.SettingsHolder;
@@ -20,16 +20,16 @@ public class PluginConfig implements SettingsHolder {
             "Submit your finalized config using https://bin.bloom.host/ and send it to us in https://discord.gg/badbones-s-live-chat-182615261403283459",
             ""
     })
-    public static final Property<String> PLUGIN_LOCALE = PropertyInitializer.newProperty("plugin_locale", "en-US");
+    public static final Property<String> plugin_locale = PropertyInitializer.newProperty("plugin_locale", "en-US");
 
     @Comment({
             "Sends anonymous statistics about how the plugin is used to bstats.org.",
             "bstats is a service for plugin developers to find out how the plugin being used,",
             "This information helps us figure out how to better improve the plugin."
     })
-    public static final Property<Boolean> TOGGLE_METRICS = PropertyInitializer.newProperty("toggle_metrics", true);
+    public static final Property<Boolean> toggle_metrics = PropertyInitializer.newProperty("toggle_metrics", true);
 
     @Comment("The command prefix you want shown in front of commands!")
-    public static final Property<String> COMMAND_PREFIX = PropertyInitializer.newProperty("command_prefix", "<red>[CrazyCrates]</red> ");
+    public static final Property<String> command_prefix = PropertyInitializer.newProperty("command_prefix", "<red>[CrazyCrates]</red> ");
 
 }

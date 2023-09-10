@@ -70,8 +70,8 @@ public class MigrationService {
         String oldPrefix = config.getString(this.prefix + "Prefix");
         boolean oldMetrics = config.getBoolean(this.prefix + "Toggle-Metrics");
 
-        this.pluginConfig.setProperty(PluginConfig.TOGGLE_METRICS, oldMetrics);
-        if (oldPrefix != null) this.pluginConfig.setProperty(PluginConfig.COMMAND_PREFIX, oldPrefix);
+        this.pluginConfig.setProperty(PluginConfig.toggle_metrics, oldMetrics);
+        if (oldPrefix != null) this.pluginConfig.setProperty(PluginConfig.command_prefix, oldPrefix);
 
         config.set(this.prefix + "Prefix", null);
         config.set(this.prefix + "Toggle-Metrics", null);
@@ -146,55 +146,55 @@ public class MigrationService {
         List<String> fillerLore = config_v1.getStringList(this.prefix + "Filler.Lore");
         List<String> guiCustomizer = config_v1.getStringList(this.prefix + "GUI-Customizer");
 
-        this.config.setProperty(MainConfig.LOG_TO_FILE, crateLogFile);
-        this.config.setProperty(MainConfig.LOG_TO_CONSOLE, crateLogConsole);
+        this.config.setProperty(Config.log_to_file, crateLogFile);
+        this.config.setProperty(Config.log_to_console, crateLogConsole);
 
-        this.config.setProperty(MainConfig.CRATE_KNOCK_BACK, knockBack);
+        this.config.setProperty(Config.crate_knock_back, knockBack);
 
-        this.config.setProperty(MainConfig.PHYSICAL_ACCEPTS_VIRTUAL, physAcceptsVirtual);
-        this.config.setProperty(MainConfig.PHYSICAL_ACCEPTS_PHYSICAL, physAcceptsPhys);
-        this.config.setProperty(MainConfig.VIRTUAL_ACCEPTS_PHYSICAL_KEYS, virtualAcceptsPhys);
+        this.config.setProperty(Config.physical_accepts_virtual, physAcceptsVirtual);
+        this.config.setProperty(Config.physical_accepts_physical, physAcceptsPhys);
+        this.config.setProperty(Config.virtual_accepts_physical_keys, virtualAcceptsPhys);
 
-        this.config.setProperty(MainConfig.GIVE_VIRTUAL_KEYS, giveVirtualKeysInventory);
-        this.config.setProperty(MainConfig.GIVE_VIRTUAL_KEYS_MESSAGE, giveVirtualKeysInventoryMessage);
+        this.config.setProperty(Config.give_virtual_keys, giveVirtualKeysInventory);
+        this.config.setProperty(Config.give_virtual_keys_message, giveVirtualKeysInventoryMessage);
 
         if (needKeySound != null) {
-            this.config.setProperty(MainConfig.KEY_SOUND_TOGGLE, needKeySound.isBlank());
+            this.config.setProperty(Config.key_sound_toggle, needKeySound.isBlank());
 
-            this.config.setProperty(MainConfig.KEY_SOUND_NAME, needKeySound);
+            this.config.setProperty(Config.key_sound_name, needKeySound);
         }
 
-        this.config.setProperty(MainConfig.QUAD_CRATE_TIMER, quadCrateTimer);
+        this.config.setProperty(Config.quad_crate_timer, quadCrateTimer);
 
-        this.config.setProperty(MainConfig.DISABLED_WORLDS, disabledWorlds);
-        this.config.setProperty(MainConfig.DISABLED_WORLDS_TOGGLE, this.config.getProperty(MainConfig.DISABLED_WORLDS).isEmpty());
+        this.config.setProperty(Config.disabled_worlds, disabledWorlds);
+        this.config.setProperty(Config.disabled_worlds_toggle, this.config.getProperty(Config.disabled_worlds).isEmpty());
 
-        if (invName != null) this.crateMainConfig.setProperty(CrateMainMenu.CRATE_MENU_TITLE, invName);
-        this.crateMainConfig.setProperty(CrateMainMenu.CRATE_MENU_TOGGLE, enableCrateMenu);
-        this.crateMainConfig.setProperty(CrateMainMenu.CRATE_MENU_SIZE, invSize);
+        if (invName != null) this.crateMainConfig.setProperty(CrateMainMenu.crate_menu_title, invName);
+        this.crateMainConfig.setProperty(CrateMainMenu.crate_menu_toggle, enableCrateMenu);
+        this.crateMainConfig.setProperty(CrateMainMenu.crate_menu_size, invSize);
 
-        this.crateMainConfig.setProperty(CrateMainMenu.CRATE_MENU_FILLER_TOGGLE, fillerToggle);
-        if (fillerItem != null) this.crateMainConfig.setProperty(CrateMainMenu.CRATE_MENU_FILLER_ITEM, fillerItem);
-        if (fillerName != null) this.crateMainConfig.setProperty(CrateMainMenu.CRATE_MENU_FILLER_NAME, fillerName);
-        this.crateMainConfig.setProperty(CrateMainMenu.CRATE_MENU_FILLER_LORE, fillerLore);
+        this.crateMainConfig.setProperty(CrateMainMenu.crate_menu_filler_toggle, fillerToggle);
+        if (fillerItem != null) this.crateMainConfig.setProperty(CrateMainMenu.crate_menu_filler_item, fillerItem);
+        if (fillerName != null) this.crateMainConfig.setProperty(CrateMainMenu.crate_menu_filler_name, fillerName);
+        this.crateMainConfig.setProperty(CrateMainMenu.crate_menu_filler_lore, fillerLore);
 
-        if (menuItem != null) this.cratePreviewConfig.setProperty(CratePreviewMenu.CRATE_PREVIEW_MENU_BUTTON_MATERIAL, menuItem);
-        if (menuName != null) this.cratePreviewConfig.setProperty(CratePreviewMenu.CRATE_PREVIEW_MENU_BUTTON_NAME, menuName);
+        if (menuItem != null) this.cratePreviewConfig.setProperty(CratePreviewMenu.crate_preview_menu_button_material, menuItem);
+        if (menuName != null) this.cratePreviewConfig.setProperty(CratePreviewMenu.crate_preview_menu_button_name, menuName);
 
-        this.cratePreviewConfig.setProperty(CratePreviewMenu.CRATE_PREVIEW_MENU_BUTTON_LORE, menuLore);
+        this.cratePreviewConfig.setProperty(CratePreviewMenu.crate_preview_menu_button_lore, menuLore);
 
-        if (nextItem != null) this.cratePreviewConfig.setProperty(CratePreviewMenu.CRATE_PREVIEW_NEXT_BUTTON_MATERIAL, nextItem);
-        if (nextName != null) this.cratePreviewConfig.setProperty(CratePreviewMenu.CRATE_PREVIEW_NEXT_BUTTON_NAME, nextName);
+        if (nextItem != null) this.cratePreviewConfig.setProperty(CratePreviewMenu.crate_preview_next_button_material, nextItem);
+        if (nextName != null) this.cratePreviewConfig.setProperty(CratePreviewMenu.crate_preview_next_button_name, nextName);
 
-        this.cratePreviewConfig.setProperty(CratePreviewMenu.CRATE_PREVIEW_NEXT_BUTTON_LORE, nextLore);
+        this.cratePreviewConfig.setProperty(CratePreviewMenu.crate_preview_next_button_lore, nextLore);
 
-        if (backItem != null) this.cratePreviewConfig.setProperty(CratePreviewMenu.CRATE_PREVIEW_BACK_BUTTON_MATERIAL, backItem);
-        if (backName != null) this.cratePreviewConfig.setProperty(CratePreviewMenu.CRATE_PREVIEW_BACK_BUTTON_NAME, backName);
+        if (backItem != null) this.cratePreviewConfig.setProperty(CratePreviewMenu.crate_preview_back_button_material, backItem);
+        if (backName != null) this.cratePreviewConfig.setProperty(CratePreviewMenu.crate_preview_back_button_name, backName);
 
-        this.cratePreviewConfig.setProperty(CratePreviewMenu.CRATE_PREVIEW_BACK_BUTTON_LORE, backLore);
+        this.cratePreviewConfig.setProperty(CratePreviewMenu.crate_preview_back_button_lore, backLore);
 
-        this.config.setProperty(MainConfig.CUSTOMIZER, guiCustomizer);
-        this.config.setProperty(MainConfig.CUSTOMIZER_TOGGLE, this.config.getProperty(MainConfig.CUSTOMIZER).isEmpty());
+        this.config.setProperty(Config.customizer, guiCustomizer);
+        this.config.setProperty(Config.customizer_toggle, this.config.getProperty(Config.customizer).isEmpty());
 
         this.config.save();
         this.cratePreviewConfig.save();
@@ -310,78 +310,78 @@ public class MigrationService {
 
         String requiredKeys = yamlConfiguration.getString("Messages.Required-Keys");
 
-        this.localeConfig.setProperty(LocaleConfig.UNKNOWN_COMMAND, convert(unknownCommand));
-        this.localeConfig.setProperty(LocaleConfig.NO_TELEPORTING, convert(noTeleporting));
-        this.localeConfig.setProperty(LocaleConfig.NO_COMMANDS, convert(noCommandsWhileInCrate));
-        this.localeConfig.setProperty(LocaleConfig.NO_KEYS, convert(noKeys));
-        this.localeConfig.setProperty(LocaleConfig.NO_VIRTUAL_KEYS, convert(noVirtualKeys));
+        this.localeConfig.setProperty(Locale.unknown_command, convert(unknownCommand));
+        this.localeConfig.setProperty(Locale.no_teleporting, convert(noTeleporting));
+        this.localeConfig.setProperty(Locale.no_commands, convert(noCommandsWhileInCrate));
+        this.localeConfig.setProperty(Locale.no_keys, convert(noKeys));
+        this.localeConfig.setProperty(Locale.no_virtual_keys, convert(noVirtualKeys));
 
-        this.localeConfig.setProperty(LocaleConfig.FEATURE_DISABLED, convert(featureDisabled));
-        this.localeConfig.setProperty(LocaleConfig.CORRECT_USAGE, convert(correctUsage));
-        this.localeConfig.setProperty(LocaleConfig.NO_PRIZES_FOUND, convert(noPrizesFound));
-        this.localeConfig.setProperty(LocaleConfig.NO_SCHEMATICS_FOUND, convert(noSchematicsFound));
-        this.localeConfig.setProperty(LocaleConfig.INTERNAL_ERROR, convert(internalError));
+        this.localeConfig.setProperty(Locale.feature_disabled, convert(featureDisabled));
+        this.localeConfig.setProperty(Locale.correct_usage, convert(correctUsage));
+        this.localeConfig.setProperty(Locale.no_prizes_found, convert(noPrizesFound));
+        this.localeConfig.setProperty(Locale.no_schematics_found, convert(noSchematicsFound));
+        this.localeConfig.setProperty(Locale.internal_error, convert(internalError));
 
-        this.localeConfig.setProperty(LocaleConfig.PLAYER_REQUIREMENTS_MUST_BE_PLAYER, convert(mustBePlayer));
-        this.localeConfig.setProperty(LocaleConfig.PLAYER_REQUIREMENTS_MUST_BE_CONSOLE_SENDER, convert(mustBeConsole));
-        this.localeConfig.setProperty(LocaleConfig.PLAYER_REQUIREMENTS_MUST_BE_LOOKING_AT_BLOCK, convert(mustBeLookingAtBlock));
+        this.localeConfig.setProperty(Locale.player_requirements_must_be_player, convert(mustBePlayer));
+        this.localeConfig.setProperty(Locale.player_requirements_must_be_console_sender, convert(mustBeConsole));
+        this.localeConfig.setProperty(Locale.player_requirements_must_be_looking_at_block, convert(mustBeLookingAtBlock));
 
-        this.localeConfig.setProperty(LocaleConfig.PLAYER_REQUIREMENTS_TARGET_NOT_ONLINE, convert(playerNotOnline));
-        this.localeConfig.setProperty(LocaleConfig.PLAYER_REQUIREMENTS_SAME_PLAYER, convert(samePlayer));
-        this.localeConfig.setProperty(LocaleConfig.PLAYER_REQUIREMENTS_NO_PERMISSION, convert(noPermission));
-        this.localeConfig.setProperty(LocaleConfig.PLAYER_REQUIREMENTS_INVENTORY_NOT_EMPTY, convert(inventoryFull));
-        this.localeConfig.setProperty(LocaleConfig.PLAYER_REQUIREMENTS_OBTAINING_KEYS, convert(obtainingKeys));
-        this.localeConfig.setProperty(LocaleConfig.PLAYER_REQUIREMENTS_TOO_CLOSE_TO_ANOTHER_PLAYER, convert(closeAnotherPlayer));
+        this.localeConfig.setProperty(Locale.player_requirements_target_not_online, convert(playerNotOnline));
+        this.localeConfig.setProperty(Locale.player_requirements_same_player, convert(samePlayer));
+        this.localeConfig.setProperty(Locale.player_requirements_no_permission, convert(noPermission));
+        this.localeConfig.setProperty(Locale.player_requirements_inventory_not_empty, convert(inventoryFull));
+        this.localeConfig.setProperty(Locale.player_requirements_obtaining_keys, convert(obtainingKeys));
+        this.localeConfig.setProperty(Locale.player_requirements_too_close_to_another_player, convert(closeAnotherPlayer));
 
-        this.localeConfig.setProperty(LocaleConfig.CRATE_REQUIREMENTS_NOT_A_CRATE, convert(notACrate));
-        this.localeConfig.setProperty(LocaleConfig.CRATE_REQUIREMENTS_NOT_A_NUMBER, convert(notANumber));
+        this.localeConfig.setProperty(Locale.crate_requirements_not_a_crate, convert(notACrate));
+        this.localeConfig.setProperty(Locale.crate_requirements_not_a_number, convert(notANumber));
 
-        this.localeConfig.setProperty(LocaleConfig.CRATE_REQUIREMENTS_NOT_ON_BLOCK, convert(notOnBlock));
-        this.localeConfig.setProperty(LocaleConfig.CRATE_REQUIREMENTS_MUST_OUT_OF_TIME, convert(outOfTime));
-        this.localeConfig.setProperty(LocaleConfig.CRATE_REQUIREMENTS_PREVIEW_DISABLED, convert(previewDisabled));
-        this.localeConfig.setProperty(LocaleConfig.CRATE_REQUIREMENTS_ALREADY_OPEN, convert(crateAlreadyOpened));
-        this.localeConfig.setProperty(LocaleConfig.CRATE_REQUIREMENTS_IN_USE, convert(quickCrateInUse));
-        this.localeConfig.setProperty(LocaleConfig.CRATE_REQUIREMENTS_CANNOT_BE_A_VIRTUAL_CRATE, convert(cannotBeVirtualCrate));
-        this.localeConfig.setProperty(LocaleConfig.CRATE_REQUIREMENTS_NEED_MORE_ROOM, convert(needsRoom));
-        this.localeConfig.setProperty(LocaleConfig.CRATE_REQUIREMENTS_WORLD_DISABLED, convert(worldDisabled));
-        this.localeConfig.setProperty(LocaleConfig.CRATES_PHYSICAL_CRATE_REMOVED, convert(removedPhysCrate));
+        this.localeConfig.setProperty(Locale.crate_requirements_not_on_block, convert(notOnBlock));
+        this.localeConfig.setProperty(Locale.crate_requirements_out_of_time, convert(outOfTime));
+        this.localeConfig.setProperty(Locale.crate_requirements_preview_disabled, convert(previewDisabled));
+        this.localeConfig.setProperty(Locale.crate_requirements_already_open, convert(crateAlreadyOpened));
+        this.localeConfig.setProperty(Locale.crate_requirements_in_use, convert(quickCrateInUse));
+        this.localeConfig.setProperty(Locale.crate_requirements_cannot_be_a_virtual_crate, convert(cannotBeVirtualCrate));
+        this.localeConfig.setProperty(Locale.crate_requirements_need_more_room, convert(needsRoom));
+        this.localeConfig.setProperty(Locale.crate_requirements_world_disabled, convert(worldDisabled));
+        this.localeConfig.setProperty(Locale.crates_physical_crate_removed, convert(removedPhysCrate));
 
-        this.localeConfig.setProperty(LocaleConfig.COMMAND_OPEN_CRATE, convert(openedCrate));
+        this.localeConfig.setProperty(Locale.command_open_crate, convert(openedCrate));
 
-        this.localeConfig.setProperty(LocaleConfig.COMMAND_GIVE_PLAYER_KEYS, convert(givenPlayerKeys));
-        this.localeConfig.setProperty(LocaleConfig.PLAYER_REQUIREMENTS_INVENTORY_NOT_EMPTY, convert(cannotGivePlayerKeys));
-        this.localeConfig.setProperty(LocaleConfig.COMMAND_GIVE_EVERYONE_KEYS, convert(givenEveryoneKeys));
-        this.localeConfig.setProperty(LocaleConfig.COMMAND_GIVE_OFFLINE_PLAYER_KEYS, convert(givenOfflinePlayerKeys));
+        this.localeConfig.setProperty(Locale.command_give_player_keys, convert(givenPlayerKeys));
+        this.localeConfig.setProperty(Locale.player_requirements_inventory_not_empty, convert(cannotGivePlayerKeys));
+        this.localeConfig.setProperty(Locale.command_give_everyone_keys, convert(givenEveryoneKeys));
+        this.localeConfig.setProperty(Locale.command_give_offline_player_keys, convert(givenOfflinePlayerKeys));
 
-        this.localeConfig.setProperty(LocaleConfig.COMMAND_TAKE_PLAYER_KEYS, convert(takePlayerKeys));
-        this.localeConfig.setProperty(LocaleConfig.COMMAND_TAKE_OFFLINE_PLAYER_KEYS, convert(takeOfflineKeys));
+        this.localeConfig.setProperty(Locale.command_take_player_keys, convert(takePlayerKeys));
+        this.localeConfig.setProperty(Locale.command_take_offline_player_keys, convert(takeOfflineKeys));
 
-        this.localeConfig.setProperty(LocaleConfig.COMMAND_ADDITEM_NO_ITEM_IN_HAND, convert(noItemInHand));
-        this.localeConfig.setProperty(LocaleConfig.COMMAND_ADD_ITEM_FROM_HAND, convert(addedItem));
+        this.localeConfig.setProperty(Locale.command_add_item_no_item_in_hand, convert(noItemInHand));
+        this.localeConfig.setProperty(Locale.command_add_item_from_hand, convert(addedItem));
 
-        this.localeConfig.setProperty(LocaleConfig.COMMAND_CONVERT_NO_FILES_TO_CONVERT, convert(filesConvertedNone));
-        this.localeConfig.setProperty(LocaleConfig.COMMAND_CONVERT_ERROR_CONVERTING_FILES, convert(filesConvertedError));
+        this.localeConfig.setProperty(Locale.command_convert_no_files_to_convert, convert(filesConvertedNone));
+        this.localeConfig.setProperty(Locale.command_convert_error_converting_files, convert(filesConvertedError));
 
-        this.localeConfig.setProperty(LocaleConfig.COMMAND_RELOAD_COMPLETED, convert(reload));
+        this.localeConfig.setProperty(Locale.command_reload_completed, convert(reload));
 
-        this.localeConfig.setProperty(LocaleConfig.COMMAND_TRANSFER_NOT_ENOUGH_KEYS, convert(transferKeys));
-        this.localeConfig.setProperty(LocaleConfig.COMMAND_TRANSFER_KEYS, convert(transferredKeys));
-        this.localeConfig.setProperty(LocaleConfig.COMMAND_TRANSFER_KEYS_RECEIVED, convert(gotTransferKeys));
+        this.localeConfig.setProperty(Locale.command_transfer_not_enough_keys, convert(transferKeys));
+        this.localeConfig.setProperty(Locale.command_transfer_keys, convert(transferredKeys));
+        this.localeConfig.setProperty(Locale.command_transfer_keys_received, convert(gotTransferKeys));
 
-        this.localeConfig.setProperty(LocaleConfig.COMMAND_KEYS_PERSONAL_NO_VIRTUAL_KEYS, convert(personalNoVirtualKeys));
-        this.localeConfig.setProperty(LocaleConfig.COMMAND_KEYS_PERSONAL_NO_VIRTUAL_KEYS_HEADER, convert(personalHeader));
+        this.localeConfig.setProperty(Locale.command_keys_personal_no_virtual_keys, convert(personalNoVirtualKeys));
+        this.localeConfig.setProperty(Locale.command_keys_personal_no_virtual_keys_header, convert(personalHeader));
 
-        this.localeConfig.setProperty(LocaleConfig.COMMAND_KEYS_OTHER_PLAYER_NO_VIRTUAL_KEYS, convert(otherPlayer));
-        this.localeConfig.setProperty(LocaleConfig.COMMAND_KEYS_OTHER_PLAYER_NO_VIRTUAL_KEYS_HEADER, convert(otherHeader));
+        this.localeConfig.setProperty(Locale.command_keys_other_player_no_virtual_keys, convert(otherPlayer));
+        this.localeConfig.setProperty(Locale.command_keys_other_player_no_virtual_keys_header, convert(personalHeader));
 
-        this.localeConfig.setProperty(LocaleConfig.COMMAND_KEYS_CRATE_FORMAT, convert(perCrate));
+        this.localeConfig.setProperty(Locale.command_keys_crate_format, convert(perCrate));
 
-        this.localeConfig.setProperty(LocaleConfig.PLAYER_HELP, convert(playerHelp));
-        this.localeConfig.setProperty(LocaleConfig.ADMIN_HELP, convert(adminHelp));
+        this.localeConfig.setProperty(Locale.player_help, convert(playerHelp));
+        this.localeConfig.setProperty(Locale.admin_help, convert(adminHelp));
 
-        this.localeConfig.setProperty(LocaleConfig.CRATES_PHYSICAL_CRATE_CREATED, convert(physicalCrate));
+        this.localeConfig.setProperty(Locale.crates_physical_crate_created, convert(physicalCrate));
 
-        this.localeConfig.setProperty(LocaleConfig.PLAYER_REQUIREMENTS_REQUIRED_KEYS, convert(requiredKeys));
+        this.localeConfig.setProperty(Locale.player_requirements_required_keys, convert(requiredKeys));
 
         this.localeConfig.save();
 

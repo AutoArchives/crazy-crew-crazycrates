@@ -122,7 +122,7 @@ public class CrazyManager {
 
         this.cratesLoader.getConfigManager().reload();
 
-        boolean metrics = this.cratesLoader.getConfigManager().getPluginConfig().getProperty(PluginConfig.TOGGLE_METRICS);
+        boolean metrics = ConfigManager.getPluginConfig().getProperty(PluginConfig.toggle_metrics);
 
         if (metrics) {
             this.cratesLoader.getMetrics().start();
@@ -383,7 +383,7 @@ public class CrazyManager {
 
         switch (crate.getCrateType()) {
             case MENU -> {
-                boolean openMenu = this.menuConfig.getProperty(CrateMainMenu.CRATE_MENU_TOGGLE);
+                boolean openMenu = this.menuConfig.getProperty(CrateMainMenu.crate_menu_toggle);
 
                 if (openMenu) this.cratesLoader.getMenuManager().openMainMenu(player);
                 else player.sendMessage(Messages.FEATURE_DISABLED.getMessage());
@@ -456,8 +456,8 @@ public class CrazyManager {
             }
         }
 
-        boolean logFile = this.config.getProperty(MainConfig.LOG_TO_FILE);
-        boolean logConsole = this.config.getProperty(MainConfig.LOG_TO_CONSOLE);
+        boolean logFile = this.config.getProperty(Config.log_to_file);
+        boolean logConsole = this.config.getProperty(Config.log_to_console);
 
         this.cratesLoader.getEventLogger().logCrateEvent(player, crate, keyType, logFile, logConsole);
     }

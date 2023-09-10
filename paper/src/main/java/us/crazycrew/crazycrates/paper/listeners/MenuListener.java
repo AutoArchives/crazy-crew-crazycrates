@@ -51,7 +51,7 @@ public class MenuListener implements Listener {
         }
 
         //TODO() Re-do how this works.
-        if (e.getView().getTitle().equals(this.menuConfig.getProperty(CrateMainMenu.CRATE_MENU_TITLE))) {
+        if (e.getView().getTitle().equals(this.menuConfig.getProperty(CrateMainMenu.crate_menu_title))) {
             e.setCancelled(true);
 
             if (e.getCurrentItem() != null) {
@@ -88,15 +88,15 @@ public class MenuListener implements Listener {
                             if (this.userManager.getVirtualKeys(uuid, crate.getName()) >= 1) {
                                 hasKey = true;
                             } else {
-                                if (this.config.getProperty(MainConfig.VIRTUAL_ACCEPTS_PHYSICAL_KEYS) && this.userManager.hasPhysicalKey(uuid, crate.getName(), false)) {
+                                if (this.config.getProperty(Config.virtual_accepts_physical_keys) && this.userManager.hasPhysicalKey(uuid, crate.getName(), false)) {
                                     hasKey = true;
                                     keyType = KeyType.PHYSICAL_KEY;
                                 }
                             }
 
                             if (!hasKey) {
-                                if (this.config.getProperty(MainConfig.KEY_SOUND_TOGGLE)) {
-                                    Sound sound = Sound.valueOf(this.config.getProperty(MainConfig.KEY_SOUND_NAME));
+                                if (this.config.getProperty(Config.key_sound_toggle)) {
+                                    Sound sound = Sound.valueOf(this.config.getProperty(Config.key_sound_name));
 
                                     //TODO() make volume/pitch configurable and sound type configurable.
                                     //TODO() Adopt the new sound system including custom sounds.
@@ -107,7 +107,7 @@ public class MenuListener implements Listener {
                                 return;
                             }
 
-                            if (this.config.getProperty(MainConfig.DISABLED_WORLDS_TOGGLE)) {
+                            if (this.config.getProperty(Config.disabled_worlds_toggle)) {
                                 for (String world : getDisabledWorlds()) {
                                     if (world.equalsIgnoreCase(player.getWorld().getName())) {
                                         player.sendMessage(Messages.WORLD_DISABLED.getMessage("%World%", player.getWorld().getName()));
@@ -130,6 +130,6 @@ public class MenuListener implements Listener {
     }
     
     private ArrayList<String> getDisabledWorlds() {
-        return new ArrayList<>(this.config.getProperty(MainConfig.DISABLED_WORLDS));
+        return new ArrayList<>(this.config.getProperty(Config.disabled_worlds));
     }
 }

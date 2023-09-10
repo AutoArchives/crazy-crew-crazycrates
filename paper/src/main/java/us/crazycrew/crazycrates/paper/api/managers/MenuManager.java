@@ -56,18 +56,18 @@ public class MenuManager {
 
     public void loadButtons() {
         this.menuButton = new ItemBuilder()
-                .setMaterial(this.previewMenuConfig.getProperty(CratePreviewMenu.CRATE_PREVIEW_MENU_BUTTON_MATERIAL))
-                .setName(this.previewMenuConfig.getProperty(CratePreviewMenu.CRATE_PREVIEW_MENU_BUTTON_NAME))
-                .setLore(this.previewMenuConfig.getProperty(CratePreviewMenu.CRATE_PREVIEW_MENU_BUTTON_LORE))
+                .setMaterial(this.previewMenuConfig.getProperty(CratePreviewMenu.crate_preview_menu_button_material))
+                .setName(this.previewMenuConfig.getProperty(CratePreviewMenu.crate_preview_menu_button_name))
+                .setLore(this.previewMenuConfig.getProperty(CratePreviewMenu.crate_preview_menu_button_lore))
                 .build();
         this.nextButton = new ItemBuilder()
-                .setMaterial(this.previewMenuConfig.getProperty(CratePreviewMenu.CRATE_PREVIEW_NEXT_BUTTON_MATERIAL))
-                .setName(this.previewMenuConfig.getProperty(CratePreviewMenu.CRATE_PREVIEW_NEXT_BUTTON_NAME))
-                .setLore(this.previewMenuConfig.getProperty(CratePreviewMenu.CRATE_PREVIEW_NEXT_BUTTON_LORE));
+                .setMaterial(this.previewMenuConfig.getProperty(CratePreviewMenu.crate_preview_next_button_material))
+                .setName(this.previewMenuConfig.getProperty(CratePreviewMenu.crate_preview_next_button_name))
+                .setLore(this.previewMenuConfig.getProperty(CratePreviewMenu.crate_preview_next_button_lore));
         this.backButton = new ItemBuilder()
-                .setMaterial(this.previewMenuConfig.getProperty(CratePreviewMenu.CRATE_PREVIEW_BACK_BUTTON_MATERIAL))
-                .setName(this.previewMenuConfig.getProperty(CratePreviewMenu.CRATE_PREVIEW_BACK_BUTTON_NAME))
-                .setLore(this.previewMenuConfig.getProperty(CratePreviewMenu.CRATE_PREVIEW_BACK_BUTTON_LORE));
+                .setMaterial(this.previewMenuConfig.getProperty(CratePreviewMenu.crate_preview_back_button_material))
+                .setName(this.previewMenuConfig.getProperty(CratePreviewMenu.crate_preview_back_button_name))
+                .setLore(this.previewMenuConfig.getProperty(CratePreviewMenu.crate_preview_back_button_lore));
     }
 
     public void openNewPreview(Player player, Crate crate) {
@@ -138,13 +138,13 @@ public class MenuManager {
     }
 
     public void openMainMenu(Player player) {
-        int size = this.mainMenuConfig.getProperty(CrateMainMenu.CRATE_MENU_SIZE);
-        Inventory inv = this.plugin.getServer().createInventory(null, size, this.mainMenuConfig.getProperty(CrateMainMenu.CRATE_MENU_TITLE));
+        int size = this.mainMenuConfig.getProperty(CrateMainMenu.crate_menu_size);
+        Inventory inv = this.plugin.getServer().createInventory(null, size, this.mainMenuConfig.getProperty(CrateMainMenu.crate_menu_title));
 
-        if (!this.mainMenuConfig.getProperty(CrateMainMenu.CRATE_MENU_FILLER_TOGGLE)) {
-            String id = this.mainMenuConfig.getProperty(CrateMainMenu.CRATE_MENU_FILLER_ITEM);
-            String name = this.mainMenuConfig.getProperty(CrateMainMenu.CRATE_MENU_FILLER_NAME);
-            List<String> lore = this.mainMenuConfig.getProperty(CrateMainMenu.CRATE_MENU_FILLER_LORE);
+        if (!this.mainMenuConfig.getProperty(CrateMainMenu.crate_menu_filler_toggle)) {
+            String id = this.mainMenuConfig.getProperty(CrateMainMenu.crate_menu_filler_item);
+            String name = this.mainMenuConfig.getProperty(CrateMainMenu.crate_menu_filler_name);
+            List<String> lore = this.mainMenuConfig.getProperty(CrateMainMenu.crate_menu_filler_lore);
             ItemStack item = new ItemBuilder().setMaterial(id).setName(name).setLore(lore).build();
 
             for (int i = 0; i < size; i++) {
@@ -154,54 +154,52 @@ public class MenuManager {
 
         UUID uuid = player.getUniqueId();
 
-        if (this.config.getProperty(MainConfig.CUSTOMIZER_TOGGLE)) {
-            for (String custom : this.config.getProperty(MainConfig.CUSTOMIZER)) {
+        if (this.config.getProperty(Config.customizer_toggle)) {
+            for (String custom : this.config.getProperty(Config.customizer)) {
                 int slot = 0;
-                if (this.config.getProperty(MainConfig.CUSTOMIZER_TOGGLE)) {
-                    ItemBuilder item = new ItemBuilder();
-                    String[] split = custom.split(", ");
+                ItemBuilder item = new ItemBuilder();
+                String[] split = custom.split(", ");
 
-                    for (String option : split) {
+                for (String option : split) {
 
-                        if (option.contains("Item:")) item.setMaterial(option.replace("Item:", ""));
+                    if (option.contains("Item:")) item.setMaterial(option.replace("Item:", ""));
 
-                        if (option.contains("Name:")) {
-                            option = option.replace("Name:", "");
+                    if (option.contains("Name:")) {
+                        option = option.replace("Name:", "");
 
-                            option = getCrates(player, option);
+                        option = getCrates(player, option);
 
-                            item.setName(option.replaceAll("%player%", player.getName()));
-                        }
-
-                        if (option.contains("Lore:")) {
-                            option = option.replace("Lore:", "");
-                            String[] d = option.split(",");
-
-                            for (String ignored : d) {
-                                option = getCrates(player, option);
-
-                                item.addLore(option.replaceAll("%player%", player.getName()));
-                            }
-                        }
-
-                        if (option.contains("Glowing:")) item.setGlow(Boolean.parseBoolean(option.replace("Glowing:", "")));
-
-                        if (option.contains("Player:")) item.setPlayerName(option.replaceAll("%player%", player.getName()));
-
-                        if (option.contains("Slot:")) slot = Integer.parseInt(option.replace("Slot:", ""));
-
-                        if (option.contains("Unbreakable-Item"))
-                            item.setUnbreakable(Boolean.parseBoolean(option.replace("Unbreakable-Item:", "")));
-
-                        if (option.contains("Hide-Item-Flags"))
-                            item.hideItemFlags(Boolean.parseBoolean(option.replace("Hide-Item-Flags:", "")));
+                        item.setName(option.replaceAll("%player%", player.getName()));
                     }
 
-                    if (slot > size) continue;
+                    if (option.contains("Lore:")) {
+                        option = option.replace("Lore:", "");
+                        String[] d = option.split(",");
 
-                    slot--;
-                    inv.setItem(slot, item.build());
+                        for (String ignored : d) {
+                            option = getCrates(player, option);
+
+                            item.addLore(option.replaceAll("%player%", player.getName()));
+                        }
+                    }
+
+                    if (option.contains("Glowing:")) item.setGlow(Boolean.parseBoolean(option.replace("Glowing:", "")));
+
+                    if (option.contains("Player:")) item.setPlayerName(option.replaceAll("%player%", player.getName()));
+
+                    if (option.contains("Slot:")) slot = Integer.parseInt(option.replace("Slot:", ""));
+
+                    if (option.contains("Unbreakable-Item"))
+                        item.setUnbreakable(Boolean.parseBoolean(option.replace("Unbreakable-Item:", "")));
+
+                    if (option.contains("Hide-Item-Flags"))
+                        item.hideItemFlags(Boolean.parseBoolean(option.replace("Hide-Item-Flags:", "")));
                 }
+
+                if (slot > size) continue;
+
+                slot--;
+                inv.setItem(slot, item.build());
             }
         }
 

@@ -60,7 +60,7 @@ public class CrateBaseCommand extends BaseCommand {
     @Default
     @Permission(value = "crazycrates.command.player.menu", def = PermissionDefault.TRUE)
     public void onDefaultMenu(Player player) {
-        boolean openMenu = this.menuConfig.getProperty(CrateMainMenu.CRATE_MENU_TOGGLE);
+        boolean openMenu = this.menuConfig.getProperty(CrateMainMenu.crate_menu_toggle);
 
         if (openMenu) this.cratesLoader.getMenuManager().openMainMenu(player); else player.sendMessage(Messages.FEATURE_DISABLED.getMessage());
     }
@@ -111,8 +111,8 @@ public class CrateBaseCommand extends BaseCommand {
 
         player.sendMessage(Messages.RECEIVED_TRANSFERRED_KEYS.getMessage(placeholders));
 
-        boolean logFile = this.config.getProperty(MainConfig.LOG_TO_FILE);
-        boolean logConsole = this.config.getProperty(MainConfig.LOG_TO_CONSOLE);
+        boolean logFile = this.config.getProperty(Config.log_to_file);
+        boolean logConsole = this.config.getProperty(Config.log_to_console);
 
         this.eventLogger.logKeyEvent(player, sender, crate, KeyType.VIRTUAL_KEY, EventLogger.KeyEventType.KEY_EVENT_RECEIVED, logFile, logConsole);
     }
@@ -338,7 +338,7 @@ public class CrateBaseCommand extends BaseCommand {
         if (this.userManager.getVirtualKeys(player.getUniqueId(), crate.getName()) >= 1) {
             hasKey = true;
         } else {
-            if (this.config.getProperty(MainConfig.VIRTUAL_ACCEPTS_PHYSICAL_KEYS)) {
+            if (this.config.getProperty(Config.virtual_accepts_physical_keys)) {
                 if (this.userManager.hasPhysicalKey(player.getUniqueId(), crate.getName(), false)) {
                     hasKey = true;
                     keyType = KeyType.PHYSICAL_KEY;
@@ -349,8 +349,8 @@ public class CrateBaseCommand extends BaseCommand {
         if (!hasKey) {
             //TODO() make volume/pitch configurable
             //TODO() Adopt the new sound system including custom sounds.
-            if (this.config.getProperty(MainConfig.KEY_SOUND_TOGGLE)) {
-                Sound sound = Sound.valueOf(this.config.getProperty(MainConfig.KEY_SOUND_NAME));
+            if (this.config.getProperty(Config.key_sound_toggle)) {
+                Sound sound = Sound.valueOf(this.config.getProperty(Config.key_sound_name));
 
                 player.playSound(player.getLocation(), sound, SoundCategory.PLAYERS,1f, 1f);
             }
@@ -373,8 +373,8 @@ public class CrateBaseCommand extends BaseCommand {
 
         sender.sendMessage(Messages.OPENED_A_CRATE.getMessage(placeholders));
 
-        boolean logFile = this.config.getProperty(MainConfig.LOG_TO_FILE);
-        boolean logConsole = this.config.getProperty(MainConfig.LOG_TO_CONSOLE);
+        boolean logFile = this.config.getProperty(Config.log_to_file);
+        boolean logConsole = this.config.getProperty(Config.log_to_console);
 
         this.eventLogger.logKeyEvent(player, sender, crate, keyType, EventLogger.KeyEventType.KEY_EVENT_REMOVED, logFile, logConsole);
     }
@@ -455,8 +455,8 @@ public class CrateBaseCommand extends BaseCommand {
 
         sender.sendMessage(Messages.OPENED_A_CRATE.getMessage(placeholders));
 
-        boolean logFile = this.config.getProperty(MainConfig.LOG_TO_FILE);
-        boolean logConsole = this.config.getProperty(MainConfig.LOG_TO_CONSOLE);
+        boolean logFile = this.config.getProperty(Config.log_to_file);
+        boolean logConsole = this.config.getProperty(Config.log_to_console);
 
         this.eventLogger.logKeyEvent(player, sender, crate, KeyType.FREE_KEY, EventLogger.KeyEventType.KEY_EVENT_REMOVED, logFile, logConsole);
     }
@@ -516,6 +516,9 @@ public class CrateBaseCommand extends BaseCommand {
     private void addKey(CommandSender sender, Player player, OfflinePlayer offlinePlayer, UUID uuid, Crate crate, KeyType type, int amount) {
         PlayerReceiveKeyEvent event = new PlayerReceiveKeyEvent(uuid, crate, PlayerReceiveKeyEvent.KeyReceiveReason.GIVE_COMMAND, amount);
 
+        boolean logFile = this.config.getProperty(Config.log_to_file);
+        boolean logConsole = this.config.getProperty(Config.log_to_console);
+
         this.plugin.getServer().getPluginManager().callEvent(event);
 
         if (event.isCancelled()) return;
@@ -537,9 +540,6 @@ public class CrateBaseCommand extends BaseCommand {
 
                 sender.sendMessage(Messages.GIVEN_OFFLINE_PLAYER_KEYS.getMessage(placeholders));
 
-                boolean logFile = this.config.getProperty(MainConfig.LOG_TO_FILE);
-                boolean logConsole = this.config.getProperty(MainConfig.LOG_TO_CONSOLE);
-
                 eventLogger.logKeyEvent(offlinePlayer, sender, crate, type, EventLogger.KeyEventType.KEY_EVENT_GIVEN, logFile, logConsole);
 
                 return;
@@ -552,14 +552,11 @@ public class CrateBaseCommand extends BaseCommand {
         placeholders.put("%Player%", player.getName());
         placeholders.put("%Key%", crate.getKey().getItemMeta().getDisplayName());
 
-        boolean fullMessage = this.config.getProperty(MainConfig.GIVE_VIRTUAL_KEYS_MESSAGE);
-        boolean inventoryCheck = this.config.getProperty(MainConfig.GIVE_VIRTUAL_KEYS);
+        boolean fullMessage = this.config.getProperty(Config.give_virtual_keys_message);
+        boolean inventoryCheck = this.config.getProperty(Config.give_virtual_keys);
 
         sender.sendMessage(Messages.GIVEN_A_PLAYER_KEYS.getMessage(placeholders));
         if (!inventoryCheck || !fullMessage && !methods.isInventoryFull(player) && player.isOnline()) player.sendMessage(Messages.OBTAINING_KEYS.getMessage(placeholders));
-
-        boolean logFile = this.config.getProperty(MainConfig.LOG_TO_FILE);
-        boolean logConsole = this.config.getProperty(MainConfig.LOG_TO_CONSOLE);
 
         eventLogger.logKeyEvent(player, sender, crate, type, EventLogger.KeyEventType.KEY_EVENT_GIVEN, logFile, logConsole);
     }
@@ -594,6 +591,9 @@ public class CrateBaseCommand extends BaseCommand {
     }
 
     private void takeKey(CommandSender sender, Player player, OfflinePlayer offlinePlayer, UUID uuid, Crate crate, KeyType type, int amount) {
+        boolean logFile = this.config.getProperty(Config.log_to_file);
+        boolean logConsole = this.config.getProperty(Config.log_to_console);
+
         if (player != null) {
             this.userManager.takeKeys(amount, uuid, crate.getName(), type, false);
         } else {
@@ -609,9 +609,6 @@ public class CrateBaseCommand extends BaseCommand {
 
                 sender.sendMessage(Messages.TAKE_OFFLINE_PLAYER_KEYS.getMessage(placeholders));
 
-                boolean logFile = this.config.getProperty(MainConfig.LOG_TO_FILE);
-                boolean logConsole = this.config.getProperty(MainConfig.LOG_TO_CONSOLE);
-
                 eventLogger.logKeyEvent(offlinePlayer, sender, crate, type, EventLogger.KeyEventType.KEY_EVENT_REMOVED, logFile, logConsole);
 
                 return;
@@ -624,9 +621,6 @@ public class CrateBaseCommand extends BaseCommand {
         placeholders.put("%Player%", player.getName());
 
         sender.sendMessage(Messages.TAKE_A_PLAYER_KEYS.getMessage(placeholders));
-
-        boolean logFile = this.config.getProperty(MainConfig.LOG_TO_FILE);
-        boolean logConsole = this.config.getProperty(MainConfig.LOG_TO_CONSOLE);
 
         this.eventLogger.logKeyEvent(player, sender, crate, type, EventLogger.KeyEventType.KEY_EVENT_REMOVED, logFile, logConsole);
     }
@@ -701,8 +695,8 @@ public class CrateBaseCommand extends BaseCommand {
 
                 this.userManager.addKeys(amount, onlinePlayer.getUniqueId(), crate.getName(), type);
 
-                boolean logFile = this.config.getProperty(MainConfig.LOG_TO_FILE);
-                boolean logConsole = this.config.getProperty(MainConfig.LOG_TO_CONSOLE);
+                boolean logFile = this.config.getProperty(Config.log_to_file);
+                boolean logConsole = this.config.getProperty(Config.log_to_console);
 
                 eventLogger.logKeyEvent(onlinePlayer, sender, crate, type, EventLogger.KeyEventType.KEY_EVENT_GIVEN, logFile, logConsole);
             }

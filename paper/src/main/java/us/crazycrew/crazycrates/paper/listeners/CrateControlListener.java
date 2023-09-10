@@ -123,7 +123,7 @@ public class CrateControlListener implements Listener { // Crate Control
                 e.setCancelled(true);
 
                 if (crate.getCrateType() == CrateType.MENU) {
-                    boolean openMenu = this.mainMenuConfig.getProperty(CrateMainMenu.CRATE_MENU_TOGGLE);
+                    boolean openMenu = this.mainMenuConfig.getProperty(CrateMainMenu.crate_menu_toggle);
 
                     //This is to stop players in QuadCrate to not be able to try and open a crate set to menu.
                     if (!this.crazyManager.isInOpeningList(uuid) && openMenu) this.cratesLoader.getMenuManager().openMainMenu(player);
@@ -150,12 +150,12 @@ public class CrateControlListener implements Listener { // Crate Control
                         return;
                     }
 
-                    if (crate.getCrateType() != CrateType.CRATE_ON_THE_GO && keyInHand && this.crazyManager.isKeyFromCrate(key, crate) && this.config.getProperty(MainConfig.PHYSICAL_ACCEPTS_PHYSICAL)) {
+                    if (crate.getCrateType() != CrateType.CRATE_ON_THE_GO && keyInHand && this.crazyManager.isKeyFromCrate(key, crate) && this.config.getProperty(Config.physical_accepts_physical)) {
                         hasKey = true;
                         isPhysical = true;
                     }
 
-                    if (this.config.getProperty(MainConfig.PHYSICAL_ACCEPTS_VIRTUAL) && this.userManager.getVirtualKeys(uuid, crate.getName()) >= 1) hasKey = true;
+                    if (this.config.getProperty(Config.physical_accepts_virtual) && this.userManager.getVirtualKeys(uuid, crate.getName()) >= 1) hasKey = true;
 
                     if (hasKey) {
                         // Checks if the player uses the quick crate again.
@@ -191,10 +191,10 @@ public class CrateControlListener implements Listener { // Crate Control
                         this.crazyManager.openCrate(player, crate, keyType, crateLocation.getLocation(), false, true);
                     } else {
                         if (crate.getCrateType() != CrateType.CRATE_ON_THE_GO) {
-                            if (this.config.getProperty(MainConfig.CRATE_KNOCK_BACK)) knockBack(player, clickedBlock.getLocation());
+                            if (this.config.getProperty(Config.crate_knock_back)) knockBack(player, clickedBlock.getLocation());
 
-                            if (this.config.getProperty(MainConfig.KEY_SOUND_TOGGLE)) {
-                                Sound sound = Sound.valueOf(this.config.getProperty(MainConfig.KEY_SOUND_NAME));
+                            if (this.config.getProperty(Config.key_sound_toggle)) {
+                                Sound sound = Sound.valueOf(this.config.getProperty(Config.key_sound_name));
 
                                 //TODO() make volume/pitch configurable and sound type configurable.
                                 //TODO() Adopt the new sound system including custom sounds.

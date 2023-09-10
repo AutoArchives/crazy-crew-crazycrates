@@ -258,7 +258,7 @@ public class QuadCrateManager {
                 endCrateForce(true);
                 player.sendMessage(Messages.OUT_OF_TIME.getMessage());
             }
-        }.runTaskLater(this.plugin, this.config.getProperty(MainConfig.QUAD_CRATE_TIMER)));
+        }.runTaskLater(this.plugin, this.config.getProperty(Config.quad_crate_timer)));
     }
 
     /**

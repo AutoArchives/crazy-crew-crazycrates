@@ -1,8 +1,5 @@
 package us.crazycrew.crazycrates.paper.support.holograms;
 
-import org.bukkit.Sound;
-import org.bukkit.SoundCategory;
-import us.crazycrew.crazycrates.common.config.MainConfig;
 import us.crazycrew.crazycrates.common.crates.CrateHologram;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.api.interfaces.HologramController;

@@ -1,4 +1,4 @@
-package us.crazycrew.crazycrates.common.config;
+package us.crazycrew.crazycrates.common.config.types;
 
 import ch.jalu.configme.Comment;
 import ch.jalu.configme.SettingsHolder;
@@ -14,9 +14,9 @@ import static ch.jalu.configme.properties.PropertyInitializer.newProperty;
  *
  * Description: The config.yml options.
  */
-public class MainConfig implements SettingsHolder {
+public class Config implements SettingsHolder {
 
-    protected MainConfig() {}
+    protected Config() {}
 
     @Override
     public void registerComments(CommentsConfiguration conf) {
@@ -49,40 +49,40 @@ public class MainConfig implements SettingsHolder {
             "",
             "Option will always be set to false by default."
     })
-    public static final Property<Boolean> LOG_TO_FILE = newProperty("crate-settings.crate-actions.log-to-file", false);
+    public static final Property<Boolean> log_to_file = newProperty("crate-settings.crate-actions.log-to-file", false);
 
     @Comment("Whether you want to log crate actions to console or not.")
-    public static final Property<Boolean> LOG_TO_CONSOLE = newProperty("crate-settings.crate-actions.log-to-console", false);
+    public static final Property<Boolean> log_to_console = newProperty("crate-settings.crate-actions.log-to-console", false);
 
     @Comment({
             "Whether you want crates to knock you back if you have no keys.",
             "",
             "Warning: This option will be moved to be an option per crate."
     })
-    public static final Property<Boolean> CRATE_KNOCK_BACK = newProperty("crate-settings.knock-back", true);
+    public static final Property<Boolean> crate_knock_back = newProperty("crate-settings.knock-back", true);
 
     @Comment("Whether to notify the player they were given a virtual key when inventory is not empty.")
-    public static final Property<Boolean> GIVE_VIRTUAL_KEYS_MESSAGE = newProperty("crate-settings.keys.inventory-not-empty.give-virtual-keys-message", true);
+    public static final Property<Boolean> give_virtual_keys_message = newProperty("crate-settings.keys.inventory-not-empty.give-virtual-keys-message", true);
 
     @Comment("Whether to give virtual keys to a player if inventory is not empty.")
-    public static final Property<Boolean> GIVE_VIRTUAL_KEYS = newProperty("crate-settings.keys.inventory-not-empty.give-virtual-keys", true);
+    public static final Property<Boolean> give_virtual_keys = newProperty("crate-settings.keys.inventory-not-empty.give-virtual-keys", true);
 
     @Comment({
             "Whether the sound should play or not.",
             "",
             "Warning: This option will be moved to be an option per crate."
     })
-    public static final Property<Boolean> KEY_SOUND_TOGGLE = newProperty("crate-settings.keys.key-sound.toggle", true);
+    public static final Property<Boolean> key_sound_toggle = newProperty("crate-settings.keys.key-sound.toggle", true);
 
     @Comment("The sound that plays when a player tries to open a crate without keys.")
-    public static final Property<String> KEY_SOUND_NAME = newProperty("crate-settings.keys.key-sound.name", "ENTITY_VILLAGER_NO");
+    public static final Property<String> key_sound_name = newProperty("crate-settings.keys.key-sound.name", "ENTITY_VILLAGER_NO");
 
     @Comment("Whether physical crates accept virtual keys or not.")
-    public static final Property<Boolean> PHYSICAL_ACCEPTS_VIRTUAL = newProperty("crate-settings.keys.physical-accepts-virtual-keys", true);
+    public static final Property<Boolean> physical_accepts_virtual = newProperty("crate-settings.keys.physical-accepts-virtual-keys", true);
     @Comment("Whether physical crates accept physical keys or not.")
-    public static final Property<Boolean> PHYSICAL_ACCEPTS_PHYSICAL = newProperty("crate-settings.keys.physical-accepts-physical-keys", true);
+    public static final Property<Boolean> physical_accepts_physical = newProperty("crate-settings.keys.physical-accepts-physical-keys", true);
     @Comment("Whether virtual crates accept physical keys or not.")
-    public static final Property<Boolean> VIRTUAL_ACCEPTS_PHYSICAL_KEYS = newProperty("crate-settings.keys.virtual-accepts-physical-keys", true);
+    public static final Property<Boolean> virtual_accepts_physical_keys = newProperty("crate-settings.keys.virtual-accepts-physical-keys", true);
 
     @Comment({
             "How long a quad crate should be open?",
@@ -90,25 +90,25 @@ public class MainConfig implements SettingsHolder {
             "Warning: This option will be moved to be an option per crate.",
             "Moving this will allow each quad-crate to have different timers.",
             })
-    public static final Property<Integer> QUAD_CRATE_TIMER = newProperty("crate-settings.quad-crate.timer", 300);
+    public static final Property<Integer> quad_crate_timer = newProperty("crate-settings.quad-crate.timer", 300);
 
     @Comment({
             "Whether you want to deny crate usage in X world or not.",
             "",
             "Warning: This will potentially be moved to be an option per crate for more specific control."
             })
-    public static final Property<Boolean> DISABLED_WORLDS_TOGGLE = newProperty("crate-settings.disabled-worlds.toggle", false);
+    public static final Property<Boolean> disabled_worlds_toggle = newProperty("crate-settings.disabled-worlds.toggle", false);
 
     @Comment("The list of worlds to deny crate usage in.")
-    public static final Property<List<String>> DISABLED_WORLDS = newListProperty("crate-settings.disabled-worlds.worlds", List.of(
+    public static final Property<List<String>> disabled_worlds = newListProperty("crate-settings.disabled-worlds.worlds", List.of(
             "world_nether"
     ));
 
     @Comment("Whether you want the customizer to be enabled.")
-    public static final Property<Boolean> CUSTOMIZER_TOGGLE = newProperty("gui-settings.customizer.toggle", true);
+    public static final Property<Boolean> customizer_toggle = newProperty("gui-settings.customizer.toggle", true);
 
     @Comment("Place any fancy item in the gui including custom items.")
-    public static final Property<List<String>> CUSTOMIZER = newListProperty("gui-settings.customizer.items", List.of(
+    public static final Property<List<String>> customizer = newListProperty("gui-settings.customizer.items", List.of(
             "Slot:1, Item:BLACK_STAINED_GLASS_PANE, Name: ",
             "Slot:2, Item:BLACK_STAINED_GLASS_PANE, Name: ",
             "Slot:3, Item:BLACK_STAINED_GLASS_PANE, Name: ",
