@@ -11,7 +11,7 @@ import us.crazycrew.crazycrates.paper.api.FileManager.Files;
 import us.crazycrew.crazycrates.paper.api.FileManager;
 import us.crazycrew.crazycrates.common.config.ConfigManager;
 import us.crazycrew.crazycrates.common.config.PluginConfig;
-import us.crazycrew.crazycrates.paper.api.frame.BukkitUserManager;
+import us.crazycrew.crazycrates.paper.api.plugin.frame.BukkitUserManager;
 import us.crazycrew.crazycrates.paper.api.managers.MenuManager;
 import us.crazycrew.crazycrates.paper.api.plugin.migrate.MigrationService;
 import us.crazycrew.crazycrates.paper.support.MetricsHandler;
@@ -47,6 +47,20 @@ public class CrazyCratesLoader extends CrazyCratesPlugin {
         this.bukkitPlugin = new BukkitPlugin(this.plugin);
         this.bukkitPlugin.enable();
 
+        // Run migration checks
+        // The migration check will only stay until 2.5
+        MigrationService service = new MigrationService(this.bukkitPlugin);
+        service.migrate();
+
+        //TODO() Only use this when there is more then one file in locale folder.
+        /*this.bukkitPlugin.getFileUtils().copyFiles(
+                new File(this.plugin.getDataFolder(), "locale").toPath(),
+                "locale",
+                List.of(
+                        "en-US.yml"
+                )
+        );*/
+
         // Enable crazycrates api
         super.enable();
 
@@ -65,13 +79,6 @@ public class CrazyCratesLoader extends CrazyCratesPlugin {
                 .registerCustomFilesFolder("/crates")
                 .registerCustomFilesFolder("/schematics")
                 .setup();
-
-        MigrationService service = new MigrationService();
-
-        service.migrate();
-
-        // Reload just in case.
-        getConfigManager().reload();
 
         // Clean files if we have to.
         janitor();
