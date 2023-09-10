@@ -8,12 +8,6 @@ import java.util.List;
 
 public class CratePreviewMenu implements SettingsHolder {
 
-    @Comment({"""
-            The title of the menu.
-            Available Placeholders: %crate%
-            """})
-    public static final Property<String> CRATE_PREVIEW_TITLE = PropertyInitializer.newProperty("settings.crate-menu.title","<red>Crate Preview</red> <dark_gray>:</dark_gray> <reset>%crate%</reset>");
-
     @Comment("The material the main menu button will be.")
     public static final Property<String> CRATE_PREVIEW_MENU_BUTTON_MATERIAL = PropertyInitializer.newProperty("settings.preview-buttons.menu-button.material","COMPASS");
 
@@ -40,4 +34,5 @@ public class CratePreviewMenu implements SettingsHolder {
 
     @Comment("The lore for the back button.")
     public static final Property<List<String>> CRATE_PREVIEW_BACK_BUTTON_LORE = PropertyInitializer.newListProperty("settings.preview-buttons.back-button.lore", "");
+
 }

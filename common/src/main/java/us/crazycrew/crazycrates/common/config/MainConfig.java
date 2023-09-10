@@ -54,15 +54,6 @@ public class MainConfig implements SettingsHolder {
     @Comment("Whether you want to log crate actions to console or not.")
     public static final Property<Boolean> LOG_TO_CONSOLE = newProperty("crate-settings.crate-actions.log-to-console", false);
 
-    @Comment("Whether you want /crates to open a menu or not.")
-    public static final Property<Boolean> PREVIEW_MENU_TOGGLE = newProperty("crate-settings.preview-menu.toggle", true);
-
-    @Comment("The title of /crates menu.")
-    public static final Property<String> PREVIEW_MENU_NAME = newProperty("crate-settings.preview-menu.name", "<purple>Crazy Crates</purple>");
-
-    @Comment("The size of /crates menu. | Must be a multiply of 9 so 9,18,27,36,45")
-    public static final Property<Integer> PREVIEW_MENU_SIZE = newProperty("crate-settings.preview-menu.size", 45);
-
     @Comment({
             "Whether you want crates to knock you back if you have no keys.",
             "",
@@ -87,7 +78,7 @@ public class MainConfig implements SettingsHolder {
     public static final Property<String> KEY_SOUND_NAME = newProperty("crate-settings.keys.key-sound.name", "ENTITY_VILLAGER_NO");
 
     @Comment("Whether physical crates accept virtual keys or not.")
-    public static final Property<Boolean> PHYSICAL_ACCEPTS_VIRTUAL = newProperty("crate-settings.physical-accepts-virtual-keys", true);
+    public static final Property<Boolean> PHYSICAL_ACCEPTS_VIRTUAL = newProperty("crate-settings.keys.physical-accepts-virtual-keys", true);
     @Comment("Whether physical crates accept physical keys or not.")
     public static final Property<Boolean> PHYSICAL_ACCEPTS_PHYSICAL = newProperty("crate-settings.keys.physical-accepts-physical-keys", true);
     @Comment("Whether virtual crates accept physical keys or not.")
@@ -109,46 +100,9 @@ public class MainConfig implements SettingsHolder {
     public static final Property<Boolean> DISABLED_WORLDS_TOGGLE = newProperty("crate-settings.disabled-worlds.toggle", false);
 
     @Comment("The list of worlds to deny crate usage in.")
-    public static final Property<List<String>> DISABLED_WORLDS = newListProperty("crate-settings.disabled-worlds.worlds", "");
-
-    @Comment("The material of the menu button.")
-    public static final Property<String> MENU_ITEM = newProperty("gui-settings.buttons.menu.compass", "COMPASS");
-
-    @Comment("The name of the menu button.")
-    public static final Property<String> MENU_NAME = newProperty("gui-settings.buttons.menu.item", "<purple>»</purple> <red>Menu</red> <purple>«</purple>");
-
-    @Comment("The lore of the menu button.")
-    public static final Property<List<String>> MENU_LORE = newListProperty("gui-settings.buttons.menu.lore", "<gray>Return to the menu.</gray>");
-
-    @Comment("The material of the next button.")
-    public static final Property<String> NEXT_ITEM = newProperty("gui-settings.buttons.next.item", "FEATHER");
-
-    @Comment("The name of the next button.")
-    public static final Property<String> NEXT_NAME = newProperty("gui-settings.buttons.next.name", "<gold>Next</gold> <gray>»</gray>");
-
-    @Comment("The lore of the next button.")
-    public static final Property<List<String>> NEXT_LORE = newListProperty("gui-settings.buttons.next.lore", "<gray>Page:</gray> <blue>%page%</blue>");
-
-    @Comment("The material of the back button.")
-    public static final Property<String> BACK_ITEM = newProperty("gui-settings.buttons.back.item", "FEATHER");
-
-    @Comment("The name of the back button.")
-    public static final Property<String> BACK_NAME = newProperty("gui-settings.buttons.back.name", "<gold>Back</gold> <gray>»</gray>");
-
-    @Comment("The lore of the back button.")
-    public static final Property<List<String>> BACK_LORE = newListProperty("gui-settings.buttons.back.lore", "<gray>Page:</gray> <blue>%page%</blue>");
-
-    @Comment("Whether to the menu should be filled with items or not.")
-    public static final Property<Boolean> FILLER_TOGGLE = newProperty("gui-settings.filler-items.toggle", false);
-
-    @Comment("The item type you want to use.")
-    public static final Property<String> FILLER_ITEM = newProperty("gui-settings.filler-items.item", "BLACK_STAINED_GLASS_PANE");
-
-    @Comment("The name of the item.")
-    public static final Property<String> FILLER_NAME = newProperty("gui-settings.filler-items.name", " ");
-
-    @Comment("The lore of the item.")
-    public static final Property<List<String>> FILLER_LORE = newListProperty("gui-settings.filler-items.lore", "");
+    public static final Property<List<String>> DISABLED_WORLDS = newListProperty("crate-settings.disabled-worlds.worlds", List.of(
+            "world_nether"
+    ));
 
     @Comment("Whether you want the customizer to be enabled.")
     public static final Property<Boolean> CUSTOMIZER_TOGGLE = newProperty("gui-settings.customizer.toggle", true);
