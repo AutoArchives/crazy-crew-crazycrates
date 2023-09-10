@@ -1,7 +1,8 @@
 package us.crazycrew.crazycrates.paper.api.managers;
 
 import ch.jalu.configme.SettingsManager;
-import us.crazycrew.crazycrates.common.config.MainConfig;
+import us.crazycrew.crazycrates.common.config.ConfigManager;
+import us.crazycrew.crazycrates.common.config.types.Config;
 import us.crazycrew.crazycrates.common.config.menus.CrateMainMenu;
 import us.crazycrew.crazycrates.common.config.menus.CratePreviewMenu;
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
@@ -31,9 +32,9 @@ public class MenuManager {
     private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
     private final @NotNull BukkitUserManager userManager = this.cratesLoader.getUserManager();
 
-    private final @NotNull SettingsManager config = this.cratesLoader.getConfigManager().getConfig();
-    private final @NotNull SettingsManager mainMenuConfig = this.cratesLoader.getConfigManager().getMainMenuConfig();
-    private final @NotNull SettingsManager previewMenuConfig = this.cratesLoader.getConfigManager().getPreviewMenuConfig();
+    private final @NotNull SettingsManager config = ConfigManager.getConfig();
+    private final @NotNull SettingsManager mainMenuConfig = ConfigManager.getMainMenuConfig();
+    private final @NotNull SettingsManager previewMenuConfig = ConfigManager.getPreviewMenuConfig();
 
     private final HashMap<UUID, Integer> playerPage = new HashMap<>();
     private final HashMap<UUID, Crate> playerCrate = new HashMap<>();

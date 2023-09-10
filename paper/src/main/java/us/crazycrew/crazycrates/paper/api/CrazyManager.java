@@ -7,8 +7,9 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
 import org.bukkit.World;
-import us.crazycrew.crazycrates.common.config.MainConfig;
-import us.crazycrew.crazycrates.common.config.PluginConfig;
+import us.crazycrew.crazycrates.common.config.ConfigManager;
+import us.crazycrew.crazycrates.common.config.types.Config;
+import us.crazycrew.crazycrates.common.config.types.PluginConfig;
 import us.crazycrew.crazycrates.common.config.menus.CrateMainMenu;
 import us.crazycrew.crazycrates.paper.api.enums.settings.Messages;
 import us.crazycrew.crazycrates.paper.api.plugin.frame.BukkitUserManager;
@@ -66,8 +67,8 @@ public class CrazyManager {
     private final @NotNull BukkitUserManager userManager = this.cratesLoader.getUserManager();
     private final @NotNull Methods methods = this.cratesLoader.getMethods();
 
-    private final @NotNull SettingsManager config = this.cratesLoader.getConfigManager().getConfig();
-    private final @NotNull SettingsManager menuConfig = this.cratesLoader.getConfigManager().getMainMenuConfig();
+    private final @NotNull SettingsManager config = ConfigManager.getConfig();
+    private final @NotNull SettingsManager menuConfig = ConfigManager.getMainMenuConfig();
 
     // All the crates that have been loaded.
     private final ArrayList<Crate> crates = new ArrayList<>();

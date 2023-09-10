@@ -6,9 +6,9 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.common.config.ConfigManager;
-import us.crazycrew.crazycrates.common.config.LocaleConfig;
-import us.crazycrew.crazycrates.common.config.MainConfig;
-import us.crazycrew.crazycrates.common.config.PluginConfig;
+import us.crazycrew.crazycrates.common.config.types.Locale;
+import us.crazycrew.crazycrates.common.config.types.Config;
+import us.crazycrew.crazycrates.common.config.types.PluginConfig;
 import us.crazycrew.crazycrates.common.config.menus.CrateMainMenu;
 import us.crazycrew.crazycrates.common.config.menus.CratePreviewMenu;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
@@ -61,11 +61,11 @@ public class MigrationService {
 
         this.configManager.load();
 
-        this.config = this.configManager.getConfig();
-        this.pluginConfig = this.configManager.getPluginConfig();
-        this.localeConfig = this.configManager.getLocaleConfig();
-        this.crateMainConfig = this.configManager.getMainMenuConfig();
-        this.cratePreviewConfig = this.configManager.getPreviewMenuConfig();
+        this.config = ConfigManager.getConfig();
+        this.pluginConfig = ConfigManager.getPluginConfig();
+        this.localeConfig = ConfigManager.getLocaleConfig();
+        this.crateMainConfig = ConfigManager.getMainMenuConfig();
+        this.cratePreviewConfig = ConfigManager.getPreviewMenuConfig();
 
         String oldPrefix = config.getString(this.prefix + "Prefix");
         boolean oldMetrics = config.getBoolean(this.prefix + "Toggle-Metrics");

@@ -10,7 +10,7 @@ import us.crazycrew.crazycrates.paper.api.EventLogger;
 import us.crazycrew.crazycrates.paper.api.FileManager.Files;
 import us.crazycrew.crazycrates.paper.api.FileManager;
 import us.crazycrew.crazycrates.common.config.ConfigManager;
-import us.crazycrew.crazycrates.common.config.PluginConfig;
+import us.crazycrew.crazycrates.common.config.types.PluginConfig;
 import us.crazycrew.crazycrates.paper.api.plugin.frame.BukkitUserManager;
 import us.crazycrew.crazycrates.paper.api.managers.MenuManager;
 import us.crazycrew.crazycrates.paper.api.plugin.migrate.MigrationService;

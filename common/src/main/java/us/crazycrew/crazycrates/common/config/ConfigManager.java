@@ -6,6 +6,9 @@ import ch.jalu.configme.configurationdata.ConfigurationData;
 import ch.jalu.configme.configurationdata.ConfigurationDataBuilder;
 import us.crazycrew.crazycrates.common.config.menus.CrateMainMenu;
 import us.crazycrew.crazycrates.common.config.menus.CratePreviewMenu;
+import us.crazycrew.crazycrates.common.config.types.Locale;
+import us.crazycrew.crazycrates.common.config.types.Config;
+import us.crazycrew.crazycrates.common.config.types.PluginConfig;
 import java.io.File;
 
 public class ConfigManager {
@@ -16,43 +19,43 @@ public class ConfigManager {
         this.dataFolder = dataFolder;
     }
 
-    private SettingsManager pluginConfig;
-    private SettingsManager localeConfig;
-    private SettingsManager mainConfig;
+    private static SettingsManager pluginConfig;
+    private static SettingsManager localeConfig;
+    private static SettingsManager mainConfig;
 
-    private SettingsManager mainMenuConfig;
-    private SettingsManager previewMenuConfig;
+    private static SettingsManager mainMenuConfig;
+    private static SettingsManager previewMenuConfig;
 
     public void load() {
         // Create the plugin-config.yml file.
         File pluginConfigFile = new File(this.dataFolder, "plugin-config.yml");
 
         // Bind it to settings manager
-        this.pluginConfig = SettingsManagerBuilder
+        ConfigManager.pluginConfig = SettingsManagerBuilder
                 .withYamlFile(pluginConfigFile)
                 .useDefaultMigrationService()
                 .configurationData(createPluginConfig())
                 .create();
 
-        File localeFile = new File(this.dataFolder, "/locale/" + this.pluginConfig.getProperty(PluginConfig.PLUGIN_LOCALE) + ".yml");
+        File localeFile = new File(this.dataFolder, "/locale/" + ConfigManager.pluginConfig.getProperty(PluginConfig.plugin_locale) + ".yml");
 
-        this.localeConfig = SettingsManagerBuilder
+        ConfigManager.localeConfig = SettingsManagerBuilder
                 .withYamlFile(localeFile)
                 .useDefaultMigrationService()
-                .configurationData(LocaleConfig.class)
+                .configurationData(Locale.class)
                 .create();
 
         File configFile = new File(this.dataFolder, "config.yml");
 
-        this.mainConfig = SettingsManagerBuilder
+        ConfigManager.mainConfig = SettingsManagerBuilder
                 .withYamlFile(configFile)
                 .useDefaultMigrationService()
-                .configurationData(ConfigurationDataBuilder.createConfiguration(MainConfig.class))
+                .configurationData(ConfigurationDataBuilder.createConfiguration(Config.class))
                 .create();
 
         File mainMenuFile = new File(this.dataFolder, "/menus/crate-menu.yml");
 
-        this.mainMenuConfig = SettingsManagerBuilder
+        ConfigManager.mainMenuConfig = SettingsManagerBuilder
                 .withYamlFile(mainMenuFile)
                 .useDefaultMigrationService()
                 .configurationData(ConfigurationDataBuilder.createConfiguration(CrateMainMenu.class))
@@ -60,7 +63,7 @@ public class ConfigManager {
 
         File previewMenuFile = new File(this.dataFolder, "/menus/preview-menu.yml");
 
-        this.previewMenuConfig = SettingsManagerBuilder
+        ConfigManager.previewMenuConfig = SettingsManagerBuilder
                 .withYamlFile(previewMenuFile)
                 .useDefaultMigrationService()
                 .configurationData(ConfigurationDataBuilder.createConfiguration(CratePreviewMenu.class))
@@ -69,43 +72,43 @@ public class ConfigManager {
 
     public void reload() {
         // Reload plugin-config.yml
-        this.pluginConfig.reload();
+        ConfigManager.pluginConfig.reload();
 
-        this.localeConfig.save();
+        ConfigManager.localeConfig.save();
 
-        File localeFile = new File(this.dataFolder, "/locale/" + this.pluginConfig.getProperty(PluginConfig.PLUGIN_LOCALE) + ".yml");
+        File localeFile = new File(this.dataFolder, "/locale/" + ConfigManager.pluginConfig.getProperty(PluginConfig.plugin_locale) + ".yml");
 
-        this.localeConfig = SettingsManagerBuilder
+        ConfigManager.localeConfig = SettingsManagerBuilder
                 .withYamlFile(localeFile)
                 .useDefaultMigrationService()
-                .configurationData(LocaleConfig.class)
+                .configurationData(Locale.class)
                 .create();
 
         // Reload crate-menu.yml
-        this.mainMenuConfig.reload();
+        ConfigManager.mainMenuConfig.reload();
 
         // Reload preview-menu.yml
-        this.previewMenuConfig.reload();
+        ConfigManager.previewMenuConfig.reload();
     }
 
-    public SettingsManager getPluginConfig() {
-        return this.pluginConfig;
+    public static SettingsManager getConfig() {
+        return mainConfig;
     }
 
-    public SettingsManager getLocaleConfig() {
-        return this.localeConfig;
+    public static SettingsManager getPluginConfig() {
+        return pluginConfig;
     }
 
-    public SettingsManager getConfig() {
-        return this.mainConfig;
+    public static SettingsManager getLocaleConfig() {
+        return localeConfig;
     }
 
-    public SettingsManager getMainMenuConfig() {
-        return this.mainMenuConfig;
+    public static SettingsManager getMainMenuConfig() {
+        return mainMenuConfig;
     }
 
-    public SettingsManager getPreviewMenuConfig() {
-        return this.previewMenuConfig;
+    public static SettingsManager getPreviewMenuConfig() {
+        return previewMenuConfig;
     }
 
     private ConfigurationData createPluginConfig() {

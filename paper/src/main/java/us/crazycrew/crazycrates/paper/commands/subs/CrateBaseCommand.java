@@ -7,7 +7,8 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.World;
-import us.crazycrew.crazycrates.common.config.MainConfig;
+import us.crazycrew.crazycrates.common.config.ConfigManager;
+import us.crazycrew.crazycrates.common.config.types.Config;
 import us.crazycrew.crazycrates.common.config.menus.CrateMainMenu;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.Methods;
@@ -54,8 +55,8 @@ public class CrateBaseCommand extends BaseCommand {
     private final @NotNull EventLogger eventLogger = this.cratesLoader.getEventLogger();
     private final @NotNull Methods methods = this.cratesLoader.getMethods();
 
-    private final @NotNull SettingsManager config = this.cratesLoader.getConfigManager().getConfig();
-    private final @NotNull SettingsManager menuConfig = this.cratesLoader.getConfigManager().getMainMenuConfig();
+    private final @NotNull SettingsManager config = ConfigManager.getConfig();
+    private final @NotNull SettingsManager menuConfig = ConfigManager.getMainMenuConfig();
 
     @Default
     @Permission(value = "crazycrates.command.player.menu", def = PermissionDefault.TRUE)

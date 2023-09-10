@@ -2,7 +2,8 @@ package us.crazycrew.crazycrates.paper.listeners;
 
 import ch.jalu.configme.SettingsManager;
 import org.bukkit.SoundCategory;
-import us.crazycrew.crazycrates.common.config.MainConfig;
+import us.crazycrew.crazycrates.common.config.ConfigManager;
+import us.crazycrew.crazycrates.common.config.types.Config;
 import us.crazycrew.crazycrates.common.config.menus.CrateMainMenu;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.Methods;
@@ -48,8 +49,8 @@ public class CrateControlListener implements Listener { // Crate Control
     private final @NotNull BukkitUserManager userManager = this.cratesLoader.getUserManager();
     private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
     private final @NotNull Methods methods = this.cratesLoader.getMethods();
-    private final @NotNull SettingsManager config = this.cratesLoader.getConfigManager().getConfig();
-    private final @NotNull SettingsManager mainMenuConfig = this.cratesLoader.getConfigManager().getMainMenuConfig();
+    private final @NotNull SettingsManager config = ConfigManager.getConfig();
+    private final @NotNull SettingsManager mainMenuConfig = ConfigManager.getMainMenuConfig();
     
     // This event controls when a player tries to click in a GUI based crate type. This will stop them from taking items out of their inventories.
     @EventHandler

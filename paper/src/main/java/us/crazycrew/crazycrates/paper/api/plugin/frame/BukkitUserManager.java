@@ -13,7 +13,8 @@ import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
 import us.crazycrew.crazycrates.api.enums.types.KeyType;
 import us.crazycrew.crazycrates.api.frame.UserManager;
-import us.crazycrew.crazycrates.common.config.MainConfig;
+import us.crazycrew.crazycrates.common.config.ConfigManager;
+import us.crazycrew.crazycrates.common.config.types.Config;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.Methods;
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
@@ -34,7 +35,7 @@ public class BukkitUserManager extends UserManager {
     private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
     private final @NotNull Methods methods = this.cratesLoader.getMethods();
 
-    private final @NotNull SettingsManager config = this.cratesLoader.getConfigManager().getConfig();
+    private final @NotNull SettingsManager config = ConfigManager.getConfig();
 
     private final @NotNull FileConfiguration data = Files.DATA.getFile();
 

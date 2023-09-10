@@ -1,7 +1,8 @@
 package us.crazycrew.crazycrates.paper.api.managers;
 
 import ch.jalu.configme.SettingsManager;
-import us.crazycrew.crazycrates.common.config.MainConfig;
+import us.crazycrew.crazycrates.common.config.ConfigManager;
+import us.crazycrew.crazycrates.common.config.types.Config;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.Methods;
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
@@ -43,7 +44,7 @@ public class QuadCrateManager {
     private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
     private final @NotNull ChestManager chestManager = this.cratesLoader.getChestManager();
     private final @NotNull Methods methods = this.cratesLoader.getMethods();
-    private final @NotNull SettingsManager config = this.cratesLoader.getConfigManager().getConfig();
+    private final @NotNull SettingsManager config = ConfigManager.getConfig();
 
     private static final List<QuadCrateManager> crateSessions = new ArrayList<>();
 
