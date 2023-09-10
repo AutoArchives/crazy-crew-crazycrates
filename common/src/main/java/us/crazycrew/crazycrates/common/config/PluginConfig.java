@@ -29,4 +29,7 @@ public class PluginConfig implements SettingsHolder {
     })
     public static final Property<Boolean> TOGGLE_METRICS = PropertyInitializer.newProperty("toggle_metrics", true);
 
+    @Comment("The command prefix you want shown in front of commands!")
+    public static final Property<String> COMMAND_PREFIX = PropertyInitializer.newProperty("command_prefix", "<red>[CrazyCrates]</red> ");
+
 }
