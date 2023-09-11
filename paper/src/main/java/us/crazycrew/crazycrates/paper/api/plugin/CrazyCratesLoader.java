@@ -30,10 +30,10 @@ public class CrazyCratesLoader extends CrazyCratesPlugin {
     private BukkitPlugin bukkitPlugin;
     private MetricsHandler metrics;
 
-    private FileManager fileManager;
-    private CrazyManager crazyManager;
-    private MenuManager menuManager;
     private ChestManager chestManager;
+    private CrazyManager crazyManager;
+    private FileManager fileManager;
+    private MenuManager menuManager;
     private EventLogger eventLogger;
 
     private Methods methods;
@@ -42,14 +42,17 @@ public class CrazyCratesLoader extends CrazyCratesPlugin {
         super(dataFolder, Platform.Type.PAPER);
     }
 
-    public void enable() {
+    public void enableLoader() {
         // Enable cluster bukkit api
         this.bukkitPlugin = new BukkitPlugin(this.plugin);
         this.bukkitPlugin.enable();
 
+        // Enable crazycrates api
+        super.enable();
+
         // Run migration checks
         // The migration check will only stay until 2.5
-        MigrationService service = new MigrationService(this.bukkitPlugin);
+        MigrationService service = new MigrationService(getConfigManager());
         service.migrate();
 
         //TODO() Only use this when there is more then one file in locale folder.
@@ -60,9 +63,6 @@ public class CrazyCratesLoader extends CrazyCratesPlugin {
                         "en-US.yml"
                 )
         );*/
-
-        // Enable crazycrates api
-        super.enable();
 
         this.fileManager = new FileManager();
         this.fileManager.setLog(true)
@@ -93,7 +93,7 @@ public class CrazyCratesLoader extends CrazyCratesPlugin {
         this.menuManager = new MenuManager();
         this.menuManager.loadButtons();
 
-        boolean metrics = ConfigManager.getPluginConfig().getProperty(PluginConfig.toggle_metrics);
+        boolean metrics = super.getConfigManager().getPluginConfig().getProperty(PluginConfig.toggle_metrics);
 
         this.metrics = new MetricsHandler();
         if (metrics) getMetrics().start();
@@ -114,7 +114,7 @@ public class CrazyCratesLoader extends CrazyCratesPlugin {
         }
     }
 
-    public void disable() {
+    public void disableLoader() {
         // Reload plugin
         this.crazyManager.reload(true);
 

@@ -1,11 +1,10 @@
 package us.crazycrew.crazycrates.paper.commands.subs.player;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.plugin.java.JavaPlugin;
+import us.crazycrew.crazycrates.common.enums.Messages;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
-import us.crazycrew.crazycrates.paper.api.enums.settings.Messages;
-import us.crazycrew.crazycrates.paper.api.objects.Crate;
-import com.google.common.collect.Lists;
 import dev.triumphteam.cmd.bukkit.annotation.Permission;
 import dev.triumphteam.cmd.core.BaseCommand;
 import dev.triumphteam.cmd.core.annotation.*;
@@ -13,9 +12,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @Command(value = "keys", alias = {"key"})
@@ -28,30 +25,36 @@ public class BaseKeyCommand extends BaseCommand {
     @Default
     @Permission("crazycrates.command.player.key")
     public void viewPersonal(Player player) {
-        String header = Messages.PERSONAL_HEADER.getMessageNoPrefix();
+        Messages header = Messages.command_keys_personal_virtual_keys_header.getMessage();
 
-        String noKeys = Messages.PERSONAL_NO_VIRTUAL_KEYS.getMessage();
+        Messages noKeys = Messages.command_keys_personal_no_virtual_keys.getMessage();
 
-        getKeys(player.getUniqueId(), player, header, noKeys);
+        getKeys(player.getUniqueId(), player, header.toListComponent(), noKeys.toComponent());
     }
 
     @SubCommand("view")
     @Permission("crazycrates.command.player.key.others")
     public void viewOthers(CommandSender sender, @Suggestion ("online-players") Player target) {
         if (target == sender) {
-            sender.sendMessage(Messages.SAME_PLAYER.getMessage());
+            sender.sendMessage(Messages.same_player.getMessage().toComponent());
             return;
         }
 
-        String header = Messages.OTHER_PLAYER_HEADER.getMessageNoPrefix("%Player%", target.getName());
+        Messages header = Messages.command_keys_other_player_virtual_keys_header.getMessage("\\{player}", target.getName());
 
-        String otherPlayer = Messages.OTHER_PLAYER_NO_VIRTUAL_KEYS.getMessage("%Player%", target.getName());
+        Messages.command_keys_other_player_no_virtual_keys.getMessage("\\{player}", target.getName());
 
-        getKeys(target.getUniqueId(), sender, header, otherPlayer);
+        Messages otherPlayer = Messages.command_keys_other_player_no_virtual_keys.getMessage("\\{player}", target.getName());
+
+        getKeys(target.getUniqueId(), sender, header.toListComponent(), otherPlayer.toComponent());
     }
 
-    private void getKeys(UUID uuid, CommandSender sender, String header, String messageContent) {
-        List<String> message = Lists.newArrayList();
+    private void getKeys(UUID uuid, CommandSender sender, List<Component> header, Component messageContent) {
+        header.forEach(sender::sendMessage);
+
+        sender.sendMessage(messageContent);
+
+        /*List<String> message = Lists.newArrayList();
 
         message.add(header);
 
@@ -79,6 +82,6 @@ public class BaseKeyCommand extends BaseCommand {
             sender.sendMessage(Messages.convertList(message));
         } else {
             sender.sendMessage(messageContent);
-        }
+        }*/
     }
 }

@@ -139,13 +139,13 @@ public class Locale implements SettingsHolder {
 
     public static final Property<String> command_keys_personal_no_virtual_keys = PropertyInitializer.newProperty("command.keys.personal.no-virtual-keys", "<dark_gray>(/dark_gray><gold>!</gold><dark_gray>)/dark_gray> <gray>You currently do not have any virtual keys.</gray>");
 
-    public static final Property<List<String>> command_keys_personal_no_virtual_keys_header = PropertyInitializer.newListProperty("command.keys.personal.virtual-keys-header", List.of(
+    public static final Property<List<String>> command_keys_personal_virtual_keys_header = PropertyInitializer.newListProperty("command.keys.personal.virtual-keys-header", List.of(
             "<dark_gray>(/dark_gray><gold>!</gold><dark_gray>)/dark_gray> <gray>A list of your current amount of keys.</gray>"
     ));
 
     public static final Property<String> command_keys_other_player_no_virtual_keys = PropertyInitializer.newProperty("command.keys.other-player.no-virtual-keys", "<dark_gray>(/dark_gray><gold>!</gold><dark_gray>)/dark_gray> <gray>The player</gray> <red>{player} <gray>does not have any keys.</gray>");
 
-    public static final Property<List<String>> command_keys_other_player_no_virtual_keys_header = PropertyInitializer.newListProperty("command.keys.other-player.virtual-keys-header", List.of(
+    public static final Property<List<String>> command_keys_other_player_virtual_keys_header = PropertyInitializer.newListProperty("command.keys.other-player.virtual-keys-header", List.of(
             "<dark_gray>(</dark_gray><gold>!</gold><dark_gray>)</dark_gray> <gray>A list of</gray> <red>{player}''s</red> <gray>current amount of keys.</gray>"
     ));
 

@@ -6,6 +6,7 @@ import org.jetbrains.annotations.Nullable;
 import us.crazycrew.crazycrates.api.CrazyCrates;
 import us.crazycrew.crazycrates.api.CrazyCratesProvider;
 import us.crazycrew.crazycrates.api.platforms.Platform;
+import us.crazycrew.crazycrates.common.api.registry.PluginRegistry;
 import us.crazycrew.crazycrates.common.config.ConfigManager;
 import java.io.File;
 import java.util.List;
@@ -26,12 +27,12 @@ public abstract class AbstractPlugin implements CrazyCrates {
         this.platform = platform;
     }
 
-    public void enable() {
-        CrazyCratesProvider.start(this);
+    public void enablePlugin() {
+        PluginRegistry.start(this);
     }
 
-    public void disable() {
-        CrazyCratesProvider.stop();
+    public void disablePlugin() {
+        PluginRegistry.stop();
     }
 
     /**

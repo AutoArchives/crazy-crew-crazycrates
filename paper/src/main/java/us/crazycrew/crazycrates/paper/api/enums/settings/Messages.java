@@ -141,7 +141,7 @@ public enum Messages {
      * Adds any missing messages to the Messages.yml file based on values in the Messages enum.
      */
     public static void addMissingMessages() {
-        FileConfiguration messages = FileManager.Files.MESSAGES.getFile();
+        FileConfiguration messages = null;
         boolean saveFile = false;
 
         for (Messages message : values()) {
@@ -163,7 +163,6 @@ public enum Messages {
             FancyLogger.info("Removing now, Please use `Correct-Usage` from now on." );
 
             messages.set("Messages.Too-Many-Args", null);
-            FileManager.Files.MESSAGES.saveFile();
         }
 
         if (tooFewArgs != null) {
@@ -171,10 +170,9 @@ public enum Messages {
             FancyLogger.info("Removing now, Please use `Correct-Usage` from now on." );
 
             messages.set("Messages.Not-Enough-Args", null);
-            FileManager.Files.MESSAGES.saveFile();
         }
 
-        if (saveFile) FileManager.Files.MESSAGES.saveFile();
+        //if (saveFile) FileManager.Files.MESSAGES.saveFile();
     }
 
     /**
@@ -262,19 +260,19 @@ public enum Messages {
      * @return the completed message
      */
     private String getMessage(Map<String, String> placeholders, boolean prefix) {
-        String message;
+        String message = "";
         boolean isList = isList();
         boolean exists = exists();
 
         if (isList) {
             if (exists) {
-                message = methods.color(convertList(FileManager.Files.MESSAGES.getFile().getStringList("Messages." + path)));
+                //message = methods.color(convertList(FileManager.Files.MESSAGES.getFile().getStringList("Messages." + path)));
             } else {
                 message = methods.color(convertList(getDefaultListMessage()));
             }
         } else {
             if (exists) {
-                message = methods.color(FileManager.Files.MESSAGES.getFile().getString("Messages." + path));
+                //message = methods.color(FileManager.Files.MESSAGES.getFile().getString("Messages." + path));
             } else {
                 message = methods.color(getDefaultMessage());
             }
@@ -302,7 +300,8 @@ public enum Messages {
      * @return true if found otherwise false
      */
     private boolean exists() {
-        return FileManager.Files.MESSAGES.getFile().contains("Messages." + path);
+        return true;
+        //return FileManager.Files.MESSAGES.getFile().contains("Messages." + path);
     }
 
     /**
@@ -311,11 +310,12 @@ public enum Messages {
      * @return true if found otherwise false
      */
     private boolean isList() {
-        if (FileManager.Files.MESSAGES.getFile().contains("Messages." + path)) {
+        return defaultMessage == null;
+        /*if (FileManager.Files.MESSAGES.getFile().contains("Messages." + path)) {
             return !FileManager.Files.MESSAGES.getFile().getStringList("Messages." + path).isEmpty();
         } else {
             return defaultMessage == null;
-        }
+        }*/
     }
 
     /**

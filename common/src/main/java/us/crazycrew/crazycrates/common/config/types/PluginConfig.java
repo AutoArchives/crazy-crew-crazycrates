@@ -2,6 +2,7 @@ package us.crazycrew.crazycrates.common.config.types;
 
 import ch.jalu.configme.Comment;
 import ch.jalu.configme.SettingsHolder;
+import ch.jalu.configme.properties.BooleanProperty;
 import ch.jalu.configme.properties.Property;
 import ch.jalu.configme.properties.PropertyInitializer;
 
@@ -31,5 +32,8 @@ public class PluginConfig implements SettingsHolder {
 
     @Comment("The command prefix you want shown in front of commands!")
     public static final Property<String> command_prefix = PropertyInitializer.newProperty("command_prefix", "<red>[CrazyCrates]</red> ");
+
+    @Comment("Whether the config is migrated or not. DO NOT CHANGE THIS")
+    public static final BooleanProperty config_migrated = PropertyInitializer.newProperty("config_migrated", false);
 
 }

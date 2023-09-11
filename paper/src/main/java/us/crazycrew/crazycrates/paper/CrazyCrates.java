@@ -46,10 +46,10 @@ public class CrazyCrates extends JavaPlugin {
     @Override
     public void onEnable() {
         this.cratesLoader = new CrazyCratesLoader(getDataFolder());
-        getCratesLoader().enable();
+        getCratesLoader().enableLoader();
 
         // Add extra messages.
-        Messages.addMissingMessages();
+        //Messages.addMissingMessages();
 
         enable();
     }
@@ -62,6 +62,8 @@ public class CrazyCrates extends JavaPlugin {
         getQuickCrate().removeAllRewards();
 
         if (getCratesLoader().getCrazyManager().getHologramController() != null) getCratesLoader().getCrazyManager().getHologramController().removeAllHolograms();
+
+        getCratesLoader().disableLoader();
     }
 
     public @NotNull CrazyCratesLoader getCratesLoader() {

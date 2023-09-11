@@ -35,7 +35,8 @@ public class BukkitUserManager extends UserManager {
     private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
     private final @NotNull Methods methods = this.cratesLoader.getMethods();
 
-    private final @NotNull SettingsManager config = ConfigManager.getConfig();
+    private final @NotNull ConfigManager configManager = this.cratesLoader.getConfigManager();
+    private final @NotNull SettingsManager config = this.configManager.getConfig();
 
     private final @NotNull FileConfiguration data = Files.DATA.getFile();
 

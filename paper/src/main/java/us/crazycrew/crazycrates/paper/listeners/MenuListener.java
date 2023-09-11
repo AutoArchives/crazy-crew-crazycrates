@@ -35,8 +35,9 @@ public class MenuListener implements Listener {
     private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
     private final @NotNull BukkitUserManager userManager = this.cratesLoader.getUserManager();
     private final @NotNull Methods methods = this.cratesLoader.getMethods();
-    private final @NotNull SettingsManager config = ConfigManager.getConfig();
-    private final @NotNull SettingsManager menuConfig = ConfigManager.getMainMenuConfig();
+    private final @NotNull ConfigManager configManager = this.cratesLoader.getConfigManager();
+    private final @NotNull SettingsManager config = this.configManager.getConfig();
+    private final @NotNull SettingsManager menuConfig = this.configManager.getMainMenuConfig();
 
     @EventHandler
     public void onInvClick(InventoryClickEvent e) {

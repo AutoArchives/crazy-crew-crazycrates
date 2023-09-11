@@ -7,7 +7,9 @@ import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.common.config.ConfigManager;
 import us.crazycrew.crazycrates.common.config.types.Locale;
+import us.crazycrew.crazycrates.common.api.plugin.registry.InternalProvider;
 import us.crazycrew.crazycrates.common.utils.MiscUtils;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,12 +91,12 @@ public enum Messages {
     command_keys_personal_no_virtual_keys(Locale.command_keys_personal_no_virtual_keys),
 
     // virtual keys header personal
-    command_keys_personal_header(Locale.command_keys_personal_no_virtual_keys_header, true),
+    command_keys_personal_virtual_keys_header(Locale.command_keys_personal_virtual_keys_header, true),
 
     command_keys_other_player_no_virtual_keys(Locale.command_keys_other_player_no_virtual_keys),
 
     // other player no virtual keys
-    command_keys_other_player_header(Locale.command_keys_other_player_no_virtual_keys_header, true),
+    command_keys_other_player_virtual_keys_header(Locale.command_keys_other_player_virtual_keys_header, true),
 
     command_keys_crate_format(Locale.command_keys_crate_format),
 
@@ -107,6 +109,8 @@ public enum Messages {
     private Property<List<String>> listProperty;
 
     private boolean isList = false;
+
+    private String message;
 
     /**
      * Used for strings
@@ -129,41 +133,59 @@ public enum Messages {
         this.isList = isList;
     }
 
-    private final @NotNull SettingsManager localeConfig = ConfigManager.getLocaleConfig();
-
     private boolean isList() {
         return this.isList;
     }
 
-    private @NotNull List<String> getPropertyList() {
-        return this.localeConfig.getProperty(this.listProperty);
+    private @NotNull List<String> getPropertyList(Property<List<String>> properties) {
+        return this.localeConfig.getProperty(properties);
     }
 
-    private @NotNull String getProperty() {
-        return this.localeConfig.getProperty(this.property);
+    private @NotNull String getProperty(Property<String> property) {
+        return this.localeConfig.getProperty(property);
     }
 
-    public Component getMessage(String placeholder, String replacement) {
+    public Messages getMessage() {
+        return getMessage(new HashMap<>());
+    }
+
+    public Messages getMessage(String placeholder, String replacement) {
         Map<String, String> placeholders = new HashMap<>();
         placeholders.put(placeholder, replacement);
 
         return getMessage(placeholders);
     }
 
-    public Component getMessage(Map<String, String> placeholders) {
-        String message;
+    public Messages getMessage(Map<String, String> placeholders) {
+        String message = "";
 
         if (isList()) {
-            message = MiscUtils.convertList(getPropertyList());
+            //message = MiscUtils.convertList(getPropertyList());
         } else {
-            message = getProperty();
+            //message = getProperty();
         }
 
-        for (Map.Entry<String, String> placeholder : placeholders.entrySet()) {
-            message = message.replace(placeholder.getKey(), placeholder.getValue()).replace(placeholder.getKey().toLowerCase(), placeholder.getValue());
+        if (!placeholders.isEmpty()) {
+            for (Map.Entry<String, String> placeholder : placeholders.entrySet()) {
+                message = message.replace(placeholder.getKey(), placeholder.getValue()).replace(placeholder.getKey().toLowerCase(), placeholder.getValue());
+            }
         }
 
-        return ColorUtils.parse(message);
+        this.message = message;
+
+        return this;
+    }
+
+    public Component toComponent() {
+        return ColorUtils.parse(this.message);
+    }
+
+    public List<Component> toListComponent() {
+        ArrayList<Component> components = new ArrayList<>();
+
+        //getPropertyList().forEach(line -> components.add(ColorUtils.parse(line)));
+
+        return components;
     }
 
     public String setPlaceholders(String message) {

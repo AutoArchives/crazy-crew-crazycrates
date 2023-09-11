@@ -19,6 +19,7 @@ import us.crazycrew.crazycrates.paper.api.objects.ItemBuilder;
 import us.crazycrew.crazycrates.paper.api.objects.Prize;
 import us.crazycrew.crazycrates.paper.api.objects.Tier;
 import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
+import us.crazycrew.crazycrates.paper.support.MetricsHandler;
 import us.crazycrew.crazycrates.paper.support.holograms.CMIHologramsSupport;
 import us.crazycrew.crazycrates.paper.support.holograms.HolographicDisplaysSupport;
 import us.crazycrew.crazycrates.paper.support.libraries.PluginSupport;
@@ -67,8 +68,9 @@ public class CrazyManager {
     private final @NotNull BukkitUserManager userManager = this.cratesLoader.getUserManager();
     private final @NotNull Methods methods = this.cratesLoader.getMethods();
 
-    private final @NotNull SettingsManager config = ConfigManager.getConfig();
-    private final @NotNull SettingsManager menuConfig = ConfigManager.getMainMenuConfig();
+    private final @NotNull ConfigManager configManager = this.cratesLoader.getConfigManager();
+    private final @NotNull SettingsManager config = this.configManager.getConfig();
+    private final @NotNull SettingsManager menuConfig = this.configManager.getMainMenuConfig();
 
     // All the crates that have been loaded.
     private final ArrayList<Crate> crates = new ArrayList<>();
@@ -116,19 +118,21 @@ public class CrazyManager {
     }
 
     public void reload(boolean serverStop) {
+        MetricsHandler metricsHandler = this.cratesLoader.getMetrics();
+
         if (serverStop) {
-            this.cratesLoader.getMetrics().stop();
+            metricsHandler.stop();
             return;
         }
 
-        this.cratesLoader.getConfigManager().reload();
+        this.configManager.reload();
 
-        boolean metrics = ConfigManager.getPluginConfig().getProperty(PluginConfig.toggle_metrics);
+        boolean metrics = this.configManager.getPluginConfig().getProperty(PluginConfig.toggle_metrics);
 
         if (metrics) {
-            this.cratesLoader.getMetrics().start();
+            metricsHandler.start();
         } else {
-            this.cratesLoader.getMetrics().stop();
+            metricsHandler.stop();
         }
 
         loadCrates();
