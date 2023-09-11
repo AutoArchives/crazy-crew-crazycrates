@@ -5,7 +5,7 @@ import org.bukkit.SoundCategory;
 import org.bukkit.plugin.java.JavaPlugin;
 import us.crazycrew.crazycrates.common.config.ConfigManager;
 import us.crazycrew.crazycrates.common.config.types.Config;
-import us.crazycrew.crazycrates.common.config.menus.CrateMainMenu;
+import us.crazycrew.crazycrates.common.config.types.menus.CrateMainMenu;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.Methods;
 import us.crazycrew.crazycrates.paper.api.CrazyManager;

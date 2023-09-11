@@ -4,11 +4,11 @@ import ch.jalu.configme.SettingsManager;
 import ch.jalu.configme.SettingsManagerBuilder;
 import ch.jalu.configme.configurationdata.ConfigurationData;
 import ch.jalu.configme.configurationdata.ConfigurationDataBuilder;
-import us.crazycrew.crazycrates.common.config.menus.CrateMainMenu;
-import us.crazycrew.crazycrates.common.config.menus.CratePreviewMenu;
-import us.crazycrew.crazycrates.common.config.types.Locale;
+import us.crazycrew.crazycrates.common.config.types.menus.CrateMainMenu;
+import us.crazycrew.crazycrates.common.config.types.Messages;
 import us.crazycrew.crazycrates.common.config.types.Config;
 import us.crazycrew.crazycrates.common.config.types.PluginConfig;
+import us.crazycrew.crazycrates.common.config.types.menus.CratePreviewMenu;
 import java.io.File;
 
 public class ConfigManager {
@@ -42,7 +42,7 @@ public class ConfigManager {
         this.messages = SettingsManagerBuilder
                 .withYamlFile(messagesFile)
                 .useDefaultMigrationService()
-                .configurationData(Locale.class)
+                .configurationData(Messages.class)
                 .create();
 
         File configFile = new File(this.dataFolder, "config.yml");
@@ -81,7 +81,7 @@ public class ConfigManager {
         this.messages = SettingsManagerBuilder
                 .withYamlFile(messagesFile)
                 .useDefaultMigrationService()
-                .configurationData(Locale.class)
+                .configurationData(Messages.class)
                 .create();
 
         // Reload crate-menu.yml

@@ -5,11 +5,11 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.common.config.ConfigManager;
-import us.crazycrew.crazycrates.common.config.types.Locale;
 import us.crazycrew.crazycrates.common.config.types.Config;
+import us.crazycrew.crazycrates.common.config.types.Messages;
 import us.crazycrew.crazycrates.common.config.types.PluginConfig;
-import us.crazycrew.crazycrates.common.config.menus.CrateMainMenu;
-import us.crazycrew.crazycrates.common.config.menus.CratePreviewMenu;
+import us.crazycrew.crazycrates.common.config.types.menus.CrateMainMenu;
+import us.crazycrew.crazycrates.common.config.types.menus.CratePreviewMenu;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import java.io.File;
 import java.io.IOException;
@@ -25,8 +25,8 @@ public class MigrationService {
     private final SettingsManager config;
     private final SettingsManager messages;
     private final SettingsManager pluginConfig;
-    private final SettingsManager crateMainMenuConfig;
-    private final SettingsManager cratePreviewMenuConfig;
+    private final SettingsManager mainMenuConfig;
+    private final SettingsManager previewMenuConfig;
     
     public MigrationService(ConfigManager configManager) {
         this.configManager = configManager;
@@ -34,8 +34,8 @@ public class MigrationService {
         this.config = this.configManager.getConfig();
         this.messages = this.configManager.getMessages();
         this.pluginConfig = this.configManager.getPluginConfig();
-        this.crateMainMenuConfig = this.configManager.getMainMenuConfig();
-        this.cratePreviewMenuConfig = this.configManager.getPreviewMenuConfig();
+        this.mainMenuConfig = this.configManager.getMainMenuConfig();
+        this.previewMenuConfig = this.configManager.getPreviewMenuConfig();
     }
 
     private final String prefix = "Settings.";
@@ -184,40 +184,40 @@ public class MigrationService {
         this.config.setProperty(Config.disabled_worlds, disabledWorlds);
         this.config.setProperty(Config.disabled_worlds_toggle, this.config.getProperty(Config.disabled_worlds).isEmpty());
 
-        if (invName != null) this.crateMainMenuConfig.setProperty(CrateMainMenu.crate_menu_title, convert(invName));
-        this.crateMainMenuConfig.setProperty(CrateMainMenu.crate_menu_toggle, enableCrateMenu);
-        this.crateMainMenuConfig.setProperty(CrateMainMenu.crate_menu_size, invSize);
+        if (invName != null) this.mainMenuConfig.setProperty(CrateMainMenu.crate_menu_title, convert(invName));
+        this.mainMenuConfig.setProperty(CrateMainMenu.crate_menu_toggle, enableCrateMenu);
+        this.mainMenuConfig.setProperty(CrateMainMenu.crate_menu_size, invSize);
 
-        this.crateMainMenuConfig.setProperty(CrateMainMenu.crate_menu_filler_toggle, fillerToggle);
-        if (fillerItem != null) this.crateMainMenuConfig.setProperty(CrateMainMenu.crate_menu_filler_item, fillerItem);
-        if (fillerName != null) this.crateMainMenuConfig.setProperty(CrateMainMenu.crate_menu_filler_name, convert(fillerName));
-        this.crateMainMenuConfig.setProperty(CrateMainMenu.crate_menu_filler_lore, convert(fillerLore));
+        this.mainMenuConfig.setProperty(CrateMainMenu.crate_menu_filler_toggle, fillerToggle);
+        if (fillerItem != null) this.mainMenuConfig.setProperty(CrateMainMenu.crate_menu_filler_item, fillerItem);
+        if (fillerName != null) this.mainMenuConfig.setProperty(CrateMainMenu.crate_menu_filler_name, convert(fillerName));
+        this.mainMenuConfig.setProperty(CrateMainMenu.crate_menu_filler_lore, convert(fillerLore));
 
-        if (menuItem != null) this.cratePreviewMenuConfig.setProperty(CratePreviewMenu.crate_preview_menu_button_material, menuItem);
-        if (menuName != null) this.cratePreviewMenuConfig.setProperty(CratePreviewMenu.crate_preview_menu_button_name, convert(menuName));
+        if (menuItem != null) this.previewMenuConfig.setProperty(CratePreviewMenu.crate_preview_menu_button_material, menuItem);
+        if (menuName != null) this.previewMenuConfig.setProperty(CratePreviewMenu.crate_preview_menu_button_name, convert(menuName));
 
-        this.cratePreviewMenuConfig.setProperty(CratePreviewMenu.crate_preview_menu_button_lore, convert(menuLore));
+        this.previewMenuConfig.setProperty(CratePreviewMenu.crate_preview_menu_button_lore, convert(menuLore));
 
-        if (nextItem != null) this.cratePreviewMenuConfig.setProperty(CratePreviewMenu.crate_preview_next_button_material, nextItem);
-        if (nextName != null) this.cratePreviewMenuConfig.setProperty(CratePreviewMenu.crate_preview_next_button_name, convert(nextName));
+        if (nextItem != null) this.previewMenuConfig.setProperty(CratePreviewMenu.crate_preview_next_button_material, nextItem);
+        if (nextName != null) this.previewMenuConfig.setProperty(CratePreviewMenu.crate_preview_next_button_name, convert(nextName));
 
-        this.cratePreviewMenuConfig.setProperty(CratePreviewMenu.crate_preview_next_button_lore, convert(nextLore));
+        this.previewMenuConfig.setProperty(CratePreviewMenu.crate_preview_next_button_lore, convert(nextLore));
 
-        if (backItem != null) this.cratePreviewMenuConfig.setProperty(CratePreviewMenu.crate_preview_back_button_material, backItem);
-        if (backName != null) this.cratePreviewMenuConfig.setProperty(CratePreviewMenu.crate_preview_back_button_name, convert(backName));
+        if (backItem != null) this.previewMenuConfig.setProperty(CratePreviewMenu.crate_preview_back_button_material, backItem);
+        if (backName != null) this.previewMenuConfig.setProperty(CratePreviewMenu.crate_preview_back_button_name, convert(backName));
 
-        this.cratePreviewMenuConfig.setProperty(CratePreviewMenu.crate_preview_back_button_lore, convert(backLore));
+        this.previewMenuConfig.setProperty(CratePreviewMenu.crate_preview_back_button_lore, convert(backLore));
 
         this.config.setProperty(Config.customizer, guiCustomizer);
         this.config.setProperty(Config.customizer_toggle, this.config.getProperty(Config.customizer).isEmpty());
 
         this.config.save();
-        this.cratePreviewMenuConfig.save();
-        this.crateMainMenuConfig.save();
+        this.previewMenuConfig.save();
+        this.mainMenuConfig.save();
 
         this.config.reload();
-        this.cratePreviewMenuConfig.reload();
-        this.crateMainMenuConfig.reload();
+        this.previewMenuConfig.reload();
+        this.mainMenuConfig.reload();
 
         output.delete();
 
@@ -332,78 +332,78 @@ public class MigrationService {
 
         String requiredKeys = yamlConfiguration.getString("Messages.Required-Keys");
 
-        this.messages.setProperty(Locale.unknown_command, convert(unknownCommand));
-        this.messages.setProperty(Locale.no_teleporting, convert(noTeleporting));
-        this.messages.setProperty(Locale.no_commands, convert(noCommandsWhileInCrate));
-        this.messages.setProperty(Locale.no_keys, convert(noKeys));
-        this.messages.setProperty(Locale.no_virtual_keys, convert(noVirtualKeys));
+        this.messages.setProperty(Messages.unknown_command, convert(unknownCommand));
+        this.messages.setProperty(Messages.no_teleporting, convert(noTeleporting));
+        this.messages.setProperty(Messages.no_commands, convert(noCommandsWhileInCrate));
+        this.messages.setProperty(Messages.no_keys, convert(noKeys));
+        this.messages.setProperty(Messages.no_virtual_keys, convert(noVirtualKeys));
 
-        this.messages.setProperty(Locale.feature_disabled, convert(featureDisabled));
-        this.messages.setProperty(Locale.correct_usage, convert(correctUsage));
-        this.messages.setProperty(Locale.no_prizes_found, convert(noPrizesFound));
-        this.messages.setProperty(Locale.no_schematics_found, convert(noSchematicsFound));
-        this.messages.setProperty(Locale.internal_error, convert(internalError));
+        this.messages.setProperty(Messages.feature_disabled, convert(featureDisabled));
+        this.messages.setProperty(Messages.correct_usage, convert(correctUsage));
+        this.messages.setProperty(Messages.no_prizes_found, convert(noPrizesFound));
+        this.messages.setProperty(Messages.no_schematics_found, convert(noSchematicsFound));
+        this.messages.setProperty(Messages.internal_error, convert(internalError));
 
-        this.messages.setProperty(Locale.player_requirements_must_be_player, convert(mustBePlayer));
-        this.messages.setProperty(Locale.player_requirements_must_be_console_sender, convert(mustBeConsole));
-        this.messages.setProperty(Locale.player_requirements_must_be_looking_at_block, convert(mustBeLookingAtBlock));
+        this.messages.setProperty(Messages.player_requirements_must_be_player, convert(mustBePlayer));
+        this.messages.setProperty(Messages.player_requirements_must_be_console_sender, convert(mustBeConsole));
+        this.messages.setProperty(Messages.player_requirements_must_be_looking_at_block, convert(mustBeLookingAtBlock));
 
-        this.messages.setProperty(Locale.player_requirements_target_not_online, convert(playerNotOnline));
-        this.messages.setProperty(Locale.player_requirements_same_player, convert(samePlayer));
-        this.messages.setProperty(Locale.player_requirements_no_permission, convert(noPermission));
-        this.messages.setProperty(Locale.player_requirements_inventory_not_empty, convert(inventoryFull));
-        this.messages.setProperty(Locale.player_requirements_obtaining_keys, convert(obtainingKeys));
-        this.messages.setProperty(Locale.player_requirements_too_close_to_another_player, convert(closeAnotherPlayer));
+        this.messages.setProperty(Messages.player_requirements_target_not_online, convert(playerNotOnline));
+        this.messages.setProperty(Messages.player_requirements_same_player, convert(samePlayer));
+        this.messages.setProperty(Messages.player_requirements_no_permission, convert(noPermission));
+        this.messages.setProperty(Messages.player_requirements_inventory_not_empty, convert(inventoryFull));
+        this.messages.setProperty(Messages.player_requirements_obtaining_keys, convert(obtainingKeys));
+        this.messages.setProperty(Messages.player_requirements_too_close_to_another_player, convert(closeAnotherPlayer));
 
-        this.messages.setProperty(Locale.crate_requirements_not_a_crate, convert(notACrate));
-        this.messages.setProperty(Locale.crate_requirements_not_a_number, convert(notANumber));
+        this.messages.setProperty(Messages.crate_requirements_not_a_crate, convert(notACrate));
+        this.messages.setProperty(Messages.crate_requirements_not_a_number, convert(notANumber));
 
-        this.messages.setProperty(Locale.crate_requirements_not_on_block, convert(notOnBlock));
-        this.messages.setProperty(Locale.crate_requirements_out_of_time, convert(outOfTime));
-        this.messages.setProperty(Locale.crate_requirements_preview_disabled, convert(previewDisabled));
-        this.messages.setProperty(Locale.crate_requirements_already_open, convert(crateAlreadyOpened));
-        this.messages.setProperty(Locale.crate_requirements_in_use, convert(quickCrateInUse));
-        this.messages.setProperty(Locale.crate_requirements_cannot_be_a_virtual_crate, convert(cannotBeVirtualCrate));
-        this.messages.setProperty(Locale.crate_requirements_need_more_room, convert(needsRoom));
-        this.messages.setProperty(Locale.crate_requirements_world_disabled, convert(worldDisabled));
-        this.messages.setProperty(Locale.crates_physical_crate_removed, convert(removedPhysCrate));
+        this.messages.setProperty(Messages.crate_requirements_not_on_block, convert(notOnBlock));
+        this.messages.setProperty(Messages.crate_requirements_out_of_time, convert(outOfTime));
+        this.messages.setProperty(Messages.crate_requirements_preview_disabled, convert(previewDisabled));
+        this.messages.setProperty(Messages.crate_requirements_already_open, convert(crateAlreadyOpened));
+        this.messages.setProperty(Messages.crate_requirements_in_use, convert(quickCrateInUse));
+        this.messages.setProperty(Messages.crate_requirements_cannot_be_a_virtual_crate, convert(cannotBeVirtualCrate));
+        this.messages.setProperty(Messages.crate_requirements_need_more_room, convert(needsRoom));
+        this.messages.setProperty(Messages.crate_requirements_world_disabled, convert(worldDisabled));
+        this.messages.setProperty(Messages.crates_physical_crate_removed, convert(removedPhysCrate));
 
-        this.messages.setProperty(Locale.command_open_crate, convert(openedCrate));
+        this.messages.setProperty(Messages.command_open_crate, convert(openedCrate));
 
-        this.messages.setProperty(Locale.command_give_player_keys, convert(givenPlayerKeys));
-        this.messages.setProperty(Locale.player_requirements_inventory_not_empty, convert(cannotGivePlayerKeys));
-        this.messages.setProperty(Locale.command_give_everyone_keys, convert(givenEveryoneKeys));
-        this.messages.setProperty(Locale.command_give_offline_player_keys, convert(givenOfflinePlayerKeys));
+        this.messages.setProperty(Messages.command_give_player_keys, convert(givenPlayerKeys));
+        this.messages.setProperty(Messages.player_requirements_inventory_not_empty, convert(cannotGivePlayerKeys));
+        this.messages.setProperty(Messages.command_give_everyone_keys, convert(givenEveryoneKeys));
+        this.messages.setProperty(Messages.command_give_offline_player_keys, convert(givenOfflinePlayerKeys));
 
-        this.messages.setProperty(Locale.command_take_player_keys, convert(takePlayerKeys));
-        this.messages.setProperty(Locale.command_take_offline_player_keys, convert(takeOfflineKeys));
+        this.messages.setProperty(Messages.command_take_player_keys, convert(takePlayerKeys));
+        this.messages.setProperty(Messages.command_take_offline_player_keys, convert(takeOfflineKeys));
 
-        this.messages.setProperty(Locale.command_add_item_no_item_in_hand, convert(noItemInHand));
-        this.messages.setProperty(Locale.command_add_item_from_hand, convert(addedItem));
+        this.messages.setProperty(Messages.command_add_item_no_item_in_hand, convert(noItemInHand));
+        this.messages.setProperty(Messages.command_add_item_from_hand, convert(addedItem));
 
-        this.messages.setProperty(Locale.command_convert_no_files_to_convert, convert(filesConvertedNone));
-        this.messages.setProperty(Locale.command_convert_error_converting_files, convert(filesConvertedError));
+        this.messages.setProperty(Messages.command_convert_no_files_to_convert, convert(filesConvertedNone));
+        this.messages.setProperty(Messages.command_convert_error_converting_files, convert(filesConvertedError));
 
-        this.messages.setProperty(Locale.command_reload_completed, convert(reload));
+        this.messages.setProperty(Messages.command_reload_completed, convert(reload));
 
-        this.messages.setProperty(Locale.command_transfer_not_enough_keys, convert(transferKeys));
-        this.messages.setProperty(Locale.command_transfer_keys, convert(transferredKeys));
-        this.messages.setProperty(Locale.command_transfer_keys_received, convert(gotTransferKeys));
+        this.messages.setProperty(Messages.command_transfer_not_enough_keys, convert(transferKeys));
+        this.messages.setProperty(Messages.command_transfer_keys, convert(transferredKeys));
+        this.messages.setProperty(Messages.command_transfer_keys_received, convert(gotTransferKeys));
 
-        this.messages.setProperty(Locale.command_keys_personal_no_virtual_keys, convert(personalNoVirtualKeys));
-        this.messages.setProperty(Locale.command_keys_personal_virtual_keys_header, convert(personalHeader));
+        this.messages.setProperty(Messages.command_keys_personal_no_virtual_keys, convert(personalNoVirtualKeys));
+        this.messages.setProperty(Messages.command_keys_personal_virtual_keys_header, convert(personalHeader));
 
-        this.messages.setProperty(Locale.command_keys_other_player_no_virtual_keys, convert(otherPlayer));
-        this.messages.setProperty(Locale.command_keys_other_player_virtual_keys_header, convert(otherHeader));
+        this.messages.setProperty(Messages.command_keys_other_player_no_virtual_keys, convert(otherPlayer));
+        this.messages.setProperty(Messages.command_keys_other_player_virtual_keys_header, convert(otherHeader));
 
-        this.messages.setProperty(Locale.command_keys_crate_format, convert(perCrate));
+        this.messages.setProperty(Messages.command_keys_crate_format, convert(perCrate));
 
-        this.messages.setProperty(Locale.player_help, convert(playerHelp));
-        this.messages.setProperty(Locale.admin_help, convert(adminHelp));
+        this.messages.setProperty(Messages.player_help, convert(playerHelp));
+        this.messages.setProperty(Messages.admin_help, convert(adminHelp));
 
-        this.messages.setProperty(Locale.crates_physical_crate_created, convert(physicalCrate));
+        this.messages.setProperty(Messages.crates_physical_crate_created, convert(physicalCrate));
 
-        this.messages.setProperty(Locale.player_requirements_required_keys, convert(requiredKeys));
+        this.messages.setProperty(Messages.player_requirements_required_keys, convert(requiredKeys));
 
         this.isLocaleMigrated = true;
         this.messages.reload();

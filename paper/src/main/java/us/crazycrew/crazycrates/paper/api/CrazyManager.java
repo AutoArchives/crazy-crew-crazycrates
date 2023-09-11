@@ -10,7 +10,7 @@ import org.bukkit.World;
 import us.crazycrew.crazycrates.common.config.ConfigManager;
 import us.crazycrew.crazycrates.common.config.types.Config;
 import us.crazycrew.crazycrates.common.config.types.PluginConfig;
-import us.crazycrew.crazycrates.common.config.menus.CrateMainMenu;
+import us.crazycrew.crazycrates.common.config.types.menus.CrateMainMenu;
 import us.crazycrew.crazycrates.paper.api.enums.settings.Messages;
 import us.crazycrew.crazycrates.paper.api.plugin.frame.BukkitUserManager;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
@@ -403,7 +403,7 @@ public class CrazyManager {
                 Location lastLocation = player.getLocation();
                 lastLocation.setPitch(0F);
                 CrateSchematic crateSchematic = getCrateSchematics().get(new Random().nextInt(getCrateSchematics().size()));
-                StructureHandler handler = new StructureHandler(crateSchematic.schematicFile());
+                StructureHandler handler = new StructureHandler(crateSchematic.getSchematicFile());
                 CrateLocation crateLocation = getCrateLocation(location);
                 QuadCrateManager session = new QuadCrateManager(player, crate, keyType, crateLocation.getLocation(), lastLocation, checkHand, handler);
 
@@ -996,7 +996,7 @@ public class CrazyManager {
      */
     public CrateSchematic getCrateSchematic(String name) {
         for (CrateSchematic schematic : this.crateSchematics) {
-            if (schematic.schematicName().equalsIgnoreCase(name)) {
+            if (schematic.getSchematicName().equalsIgnoreCase(name)) {
                 return schematic;
             }
         }

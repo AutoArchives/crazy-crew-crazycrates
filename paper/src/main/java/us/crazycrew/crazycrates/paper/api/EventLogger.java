@@ -25,7 +25,7 @@ public class EventLogger {
     private final @NotNull Methods methods = this.cratesLoader.getMethods();
 
     public void logCrateEvent(Player player, Crate crate, KeyType keyType, boolean logFile, boolean logConsole) {
-        if (logFile) log(setEntryData("Player: %player% | Crate Name: %crate_name% | Crate Type: %crate_type% | Key Name: %key_name% | Key Type: %key_type% | Key Item: %key_item%", player, player, crate, keyType), CrateEventType.CRATE_EVENT.getName());
+        if (logFile) log(setEntryData("Player: %player% | Crate Name: %crate_name% | Crate Type: %crate_type% | Key Name: %key_name% | Key Type: %key_type% | Key Item: %key_item%", player, player, crate, keyType), CrateEventType.crate_open_event.getName());
 
         if (logConsole) this.plugin.getLogger().info(setEntryData(this.methods.color("Player: %player% | Crate Name: %crate_name% | Crate Type: %crate_type% | Key Name: %key_name%&r | Key Type: %key_type% | Key Item: %key_item%"), player, player, crate, keyType));
     }
@@ -37,7 +37,7 @@ public class EventLogger {
     }
 
     public void logCrateEvent(OfflinePlayer target, CommandSender sender, Crate crate, KeyType keyType, boolean logFile, boolean logConsole) {
-        if (logFile) log(setEntryData("Player: %player% | Crate Name: %crate_name% | Crate Type: %crate_type% | Key Name: %key_name% | Key Type: %key_type% | Key Item: %key_item%", target, sender, crate, keyType), CrateEventType.CRATE_EVENT.getName());
+        if (logFile) log(setEntryData("Player: %player% | Crate Name: %crate_name% | Crate Type: %crate_type% | Key Name: %key_name% | Key Type: %key_type% | Key Item: %key_item%", target, sender, crate, keyType), CrateEventType.crate_open_event.getName());
 
         if (logConsole) this.plugin.getLogger().info(setEntryData(this.methods.color("Player: %player% | Crate Name: %crate_name% | Crate Type: %crate_type% | Key Name: %key_name%&r | Key Type: %key_type% | Key Item: %key_item%"), target, sender, crate, keyType));
     }
@@ -92,10 +92,10 @@ public class EventLogger {
 
     public enum KeyEventType {
 
-        KEY_EVENT_GIVEN("KEY EVENT GIVEN"),
-        KEY_EVENT_SENT("KEY EVENT SENT"),
-        KEY_EVENT_RECEIVED("KEY EVENT RECEIVED"),
-        KEY_EVENT_REMOVED("KEY EVENT REMOVED");
+        key_give_event("key_give_event"),
+        key_sent_event("key_sent_event"),
+        key_received_event("key_received_event"),
+        key_removed_event("key_removed_event");
 
         private final String keyEventName;
 
@@ -110,7 +110,7 @@ public class EventLogger {
 
     public enum CrateEventType {
 
-        CRATE_EVENT("CRATE EVENT");
+        crate_open_event("crate_open_event");
 
         private final String crateEventName;
 

@@ -1,5 +1,5 @@
 plugins {
-    id("root-plugin")
+    id("java-plugin")
 }
 
 defaultTasks("build")

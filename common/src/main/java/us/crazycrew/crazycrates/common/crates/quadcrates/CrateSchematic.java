@@ -2,27 +2,15 @@ package us.crazycrew.crazycrates.common.crates.quadcrates;
 
 import java.io.File;
 
-/**
- * A constructor to build a schematic reference.
- *
- * @param schematicName the name of the schematic
- * @param schematicFile the schematic file
- */
-public record CrateSchematic(String schematicName, File schematicFile) {
+public record CrateSchematic(String getSchematicName, File getSchematicFile) {
 
-    /**
-     * @return returns the name of the schematic.
-     */
     @Override
-    public String schematicName() {
-        return schematicName;
+    public String getSchematicName() {
+        return this.getSchematicName;
     }
 
-    /**
-     * @return returns the file where the schematic is located.
-     */
     @Override
-    public File schematicFile() {
-        return schematicFile;
+    public File getSchematicFile() {
+        return this.getSchematicFile;
     }
 }

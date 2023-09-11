@@ -4,7 +4,7 @@ import ch.jalu.configme.SettingsManager;
 import org.bukkit.SoundCategory;
 import us.crazycrew.crazycrates.common.config.ConfigManager;
 import us.crazycrew.crazycrates.common.config.types.Config;
-import us.crazycrew.crazycrates.common.config.menus.CrateMainMenu;
+import us.crazycrew.crazycrates.common.config.types.menus.CrateMainMenu;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.Methods;
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
@@ -219,7 +219,7 @@ public class CrateControlListener implements Listener { // Crate Control
         if (e.getView().getTitle().equals(this.methods.sanitizeColor("&4&lAdmin Keys"))) {
             e.setCancelled(true);
 
-            if (!this.methods.permCheck(player, Permissions.CRAZY_CRATES_ADMIN_ACCESS, false)) {
+            if (!this.methods.permCheck(player, Permissions.crazy_crates_admin_access, false)) {
                 player.closeInventory();
                 return;
             }

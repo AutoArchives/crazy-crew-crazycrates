@@ -22,6 +22,6 @@ public enum CrateParticles {
      * @return the particle name
      */
     public String getName() {
-        return name;
+        return this.name;
     }
 }

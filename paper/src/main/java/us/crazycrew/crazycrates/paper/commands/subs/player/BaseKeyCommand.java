@@ -2,7 +2,6 @@ package us.crazycrew.crazycrates.paper.commands.subs.player;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.plugin.java.JavaPlugin;
-import us.crazycrew.crazycrates.common.enums.Messages;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
 import dev.triumphteam.cmd.bukkit.annotation.Permission;
@@ -25,28 +24,28 @@ public class BaseKeyCommand extends BaseCommand {
     @Default
     @Permission("crazycrates.command.player.key")
     public void viewPersonal(Player player) {
-        Messages header = Messages.command_keys_personal_virtual_keys_header.getMessage();
+        //Messages1 header = Messages1.command_keys_personal_virtual_keys_header.getMessage();
 
-        Messages noKeys = Messages.command_keys_personal_no_virtual_keys.getMessage();
+        //Messages1 noKeys = Messages1.command_keys_personal_no_virtual_keys.getMessage();
 
-        getKeys(player.getUniqueId(), player, header.toListComponent(), noKeys.toComponent());
+        //getKeys(player.getUniqueId(), player, header.toListComponent(), noKeys.toComponent());
     }
 
     @SubCommand("view")
     @Permission("crazycrates.command.player.key.others")
     public void viewOthers(CommandSender sender, @Suggestion ("online-players") Player target) {
         if (target == sender) {
-            sender.sendMessage(Messages.same_player.getMessage().toComponent());
+            //sender.sendMessage(Messages1.same_player.getMessage().toComponent());
             return;
         }
 
-        Messages header = Messages.command_keys_other_player_virtual_keys_header.getMessage("\\{player}", target.getName());
+        //Messages1 header = Messages1.command_keys_other_player_virtual_keys_header.getMessage("\\{player}", target.getName());
 
-        Messages.command_keys_other_player_no_virtual_keys.getMessage("\\{player}", target.getName());
+        //Messages1.command_keys_other_player_no_virtual_keys.getMessage("\\{player}", target.getName());
 
-        Messages otherPlayer = Messages.command_keys_other_player_no_virtual_keys.getMessage("\\{player}", target.getName());
+        //Messages1 otherPlayer = Messages1.command_keys_other_player_no_virtual_keys.getMessage("\\{player}", target.getName());
 
-        getKeys(target.getUniqueId(), sender, header.toListComponent(), otherPlayer.toComponent());
+        //getKeys(target.getUniqueId(), sender, header.toListComponent(), otherPlayer.toComponent());
     }
 
     private void getKeys(UUID uuid, CommandSender sender, List<Component> header, Component messageContent) {

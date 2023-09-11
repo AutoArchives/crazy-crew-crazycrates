@@ -7,10 +7,9 @@ import ch.jalu.configme.properties.Property;
 import ch.jalu.configme.properties.PropertyInitializer;
 import java.util.List;
 
-public class Locale implements SettingsHolder {
+public class Messages implements SettingsHolder {
 
-    protected Locale() {
-    }
+    protected Messages() {}
 
     @Override
     public void registerComments(CommentsConfiguration conf) {

@@ -1,4 +1,4 @@
-package us.crazycrew.crazycrates.common.config.menus;
+package us.crazycrew.crazycrates.common.config.types.menus;
 
 import ch.jalu.configme.Comment;
 import ch.jalu.configme.SettingsHolder;

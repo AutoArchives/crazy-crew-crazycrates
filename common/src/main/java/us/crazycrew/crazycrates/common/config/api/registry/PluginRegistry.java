@@ -1,4 +1,4 @@
-package us.crazycrew.crazycrates.common.api.registry;
+package us.crazycrew.crazycrates.common.config.api.registry;
 
 import org.jetbrains.annotations.ApiStatus;
 import us.crazycrew.crazycrates.api.CrazyCratesProvider;
@@ -6,7 +6,7 @@ import us.crazycrew.crazycrates.api.CrazyCrates;
 import java.lang.reflect.Method;
 
 public class PluginRegistry {
-    
+
     private static final Method start;
     private static final Method stop;
 
