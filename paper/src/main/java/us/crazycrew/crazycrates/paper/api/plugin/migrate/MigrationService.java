@@ -14,35 +14,24 @@ import us.crazycrew.crazycrates.paper.CrazyCrates;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MigrationService {
     
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
 
-    private final ConfigManager configManager;
+    private ConfigManager configManager;
 
-    private final SettingsManager config;
-    private final SettingsManager messages;
-    private final SettingsManager pluginConfig;
-    private final SettingsManager mainMenuConfig;
-    private final SettingsManager previewMenuConfig;
-    
-    public MigrationService(ConfigManager configManager) {
-        this.configManager = configManager;
-
-        this.config = this.configManager.getConfig();
-        this.messages = this.configManager.getMessages();
-        this.pluginConfig = this.configManager.getPluginConfig();
-        this.mainMenuConfig = this.configManager.getMainMenuConfig();
-        this.previewMenuConfig = this.configManager.getPreviewMenuConfig();
-    }
+    private SettingsManager config;
+    private SettingsManager messages;
+    private SettingsManager pluginConfig;
+    private SettingsManager mainMenuConfig;
+    private SettingsManager previewMenuConfig;
 
     private final String prefix = "Settings.";
 
     public void migrate() {
-        if (this.pluginConfig.getProperty(PluginConfig.config_migrated)) return;
-
         // Copy first
         copyPluginSettings();
 
@@ -51,19 +40,9 @@ public class MigrationService {
 
         // Copy last
         copyMessages();
-
-        if (this.isPluginMigrated && this.isConfigMigrated && this.isLocaleMigrated) {
-            this.pluginConfig.setProperty(PluginConfig.config_migrated, true);
-            this.pluginConfig.save();
-            this.pluginConfig.reload();
-        }
     }
 
-    private boolean isPluginMigrated = false;
-    private boolean isConfigMigrated = false;
-    private boolean isLocaleMigrated = false;
-
-    private void copyPluginSettings() {
+    private boolean copyPluginSettings() {
         File input = new File(this.plugin.getDataFolder(),"config.yml");
 
         // The old configuration of config.yml.
@@ -71,10 +50,16 @@ public class MigrationService {
 
         config = YamlConfiguration.loadConfiguration(input);
 
-        if (config.getString(this.prefix + "Prefix") == null) {
-            this.isPluginMigrated = true;
-            return;
-        }
+        if (config.getString(this.prefix + "Prefix") == null) return false;
+
+        this.configManager = new ConfigManager(this.plugin.getDataFolder());
+        this.configManager.load();
+
+        this.config = this.configManager.getConfig();
+        this.messages = this.configManager.getMessages();
+        this.pluginConfig = this.configManager.getPluginConfig();
+        this.mainMenuConfig = this.configManager.getMainMenuConfig();
+        this.previewMenuConfig = this.configManager.getPreviewMenuConfig();
 
         String oldPrefix = config.getString(this.prefix + "Prefix");
         boolean oldMetrics = config.getBoolean(this.prefix + "Toggle-Metrics");
@@ -87,15 +72,18 @@ public class MigrationService {
 
         try {
             this.pluginConfig.save();
-            this.pluginConfig.reload();
 
             config.save(input);
+
+            return true;
         } catch (IOException exception) {
             exception.printStackTrace();
+
+            return false;
         }
     }
 
-    private void copyConfigSettings() {
+    private boolean copyConfigSettings() {
         File output = new File(this.plugin.getDataFolder(), "config-v1.yml");
 
         File configFile = new File(this.plugin.getDataFolder(), "config.yml");
@@ -109,10 +97,7 @@ public class MigrationService {
         // Only if the old value is found.
         config = YamlConfiguration.loadConfiguration(configFile);
 
-        if (config.getString(this.prefix + "Enable-Crate-Menu") == null && !output.exists()) {
-            this.isConfigMigrated = true;
-            return;
-        }
+        if (config.getString(this.prefix + "Enable-Crate-Menu") == null && !output.exists()) return false;
 
         configFile.renameTo(output);
 
@@ -215,23 +200,16 @@ public class MigrationService {
         this.previewMenuConfig.save();
         this.mainMenuConfig.save();
 
-        this.config.reload();
-        this.previewMenuConfig.reload();
-        this.mainMenuConfig.reload();
-
         output.delete();
 
-        this.isConfigMigrated = true;
+        return true;
     }
 
-    private void copyMessages() {
+    private boolean copyMessages() {
         // The messages.yml
         File input = new File(this.plugin.getDataFolder(), "messages.yml");
 
-        if (!input.exists()) {
-            this.isLocaleMigrated = true;
-            return;
-        }
+        if (!input.exists()) return false;
 
         // The old configuration of messages.yml
         YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(input);
@@ -269,6 +247,8 @@ public class MigrationService {
 
         String inventoryFull = yamlConfiguration.getString("Messages.Inventory-Full");
 
+        String cannotGive = yamlConfiguration.getString("Messages.Cannot-Give-Player-Keys");
+
         String obtainingKeys = yamlConfiguration.getString("Messages.Obtaining-Keys");
 
         String closeAnotherPlayer = yamlConfiguration.getString("Messages.To-Close-To-Another-Player");
@@ -293,6 +273,8 @@ public class MigrationService {
         String openedCrate = yamlConfiguration.getString("Messages.Opened-A-Crate");
 
         String givenPlayerKeys = yamlConfiguration.getString("Messages.Given-A-Player-Keys");
+
+        List<String> prizeError = Collections.singletonList(yamlConfiguration.getString("Messages.Prize-Error"));
 
         String cannotGivePlayerKeys = yamlConfiguration.getString("Messages.Cannot-Give-Player-Keys");
 
@@ -371,6 +353,7 @@ public class MigrationService {
         this.messages.setProperty(Messages.command_open_crate, convert(openedCrate));
 
         this.messages.setProperty(Messages.command_give_player_keys, convert(givenPlayerKeys));
+        this.messages.setProperty(Messages.command_give_cannot_give_player_keys, convert(cannotGive));
         this.messages.setProperty(Messages.player_requirements_inventory_not_empty, convert(cannotGivePlayerKeys));
         this.messages.setProperty(Messages.command_give_everyone_keys, convert(givenEveryoneKeys));
         this.messages.setProperty(Messages.command_give_offline_player_keys, convert(givenOfflinePlayerKeys));
@@ -401,12 +384,15 @@ public class MigrationService {
         this.messages.setProperty(Messages.player_help, convert(playerHelp));
         this.messages.setProperty(Messages.admin_help, convert(adminHelp));
 
+        this.messages.setProperty(Messages.prize_error, convert(prizeError));
+
+        this.messages.setProperty(Messages.command_convert_successfully_converted_files, "&aPlugin conversion has succeeded!");
+
         this.messages.setProperty(Messages.crates_physical_crate_created, convert(physicalCrate));
 
         this.messages.setProperty(Messages.player_requirements_required_keys, convert(requiredKeys));
 
-        this.isLocaleMigrated = true;
-        this.messages.reload();
+        this.messages.save();
 
         input.renameTo(new File(this.plugin.getDataFolder(), "old-messages.yml"));
         input.delete();
@@ -419,6 +405,8 @@ public class MigrationService {
                         "en-US.yml"
                 )
         );*/
+
+        return true;
     }
 
     // Convert old placeholder lists.
@@ -439,6 +427,7 @@ public class MigrationService {
                 .replaceAll("%player%", "{player}")
                 .replaceAll("%number%", "{number}")
                 .replaceAll("%amount%", "{amount}")
+                .replaceAll("%page%", "{page}")
                 .replaceAll("%keys%", "{keys}")
                 .replaceAll("%usage%", "{usage}")
                 .replaceAll("%prize%", "{prize}")

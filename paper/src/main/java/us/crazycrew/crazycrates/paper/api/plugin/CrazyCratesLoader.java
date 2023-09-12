@@ -47,13 +47,13 @@ public class CrazyCratesLoader extends CrazyCratesPlugin {
         this.bukkitPlugin = new BukkitPlugin(this.plugin);
         this.bukkitPlugin.enable();
 
-        // Enable crazycrates api
-        super.enable();
-
         // Run migration checks
         // The migration check will only stay until 2.5
-        MigrationService service = new MigrationService(getConfigManager());
+        MigrationService service = new MigrationService();
         service.migrate();
+
+        // Enable crazycrates api
+        super.enable();
 
         //TODO() Only use this when there is more then one file in locale folder.
         /*this.bukkitPlugin.getFileUtils().copyFiles(
@@ -88,7 +88,7 @@ public class CrazyCratesLoader extends CrazyCratesPlugin {
         this.crazyManager = new CrazyManager();
         this.userManager = new BukkitUserManager();
 
-        getCrazyManager().load(true);
+        this.crazyManager.load(true);
 
         this.menuManager = new MenuManager();
         this.menuManager.loadButtons();
@@ -96,7 +96,7 @@ public class CrazyCratesLoader extends CrazyCratesPlugin {
         boolean metrics = super.getConfigManager().getPluginConfig().getProperty(PluginConfig.toggle_metrics);
 
         this.metrics = new MetricsHandler();
-        if (metrics) getMetrics().start();
+        if (metrics) this.metrics.start();
 
         this.chestManager = new ChestManager();
         this.eventLogger = new EventLogger();
