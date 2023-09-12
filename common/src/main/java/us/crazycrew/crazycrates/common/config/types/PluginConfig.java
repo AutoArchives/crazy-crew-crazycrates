@@ -2,7 +2,6 @@ package us.crazycrew.crazycrates.common.config.types;
 
 import ch.jalu.configme.Comment;
 import ch.jalu.configme.SettingsHolder;
-import ch.jalu.configme.properties.BooleanProperty;
 import ch.jalu.configme.properties.Property;
 import ch.jalu.configme.properties.PropertyInitializer;
 
@@ -33,7 +32,18 @@ public class PluginConfig implements SettingsHolder {
     @Comment("The command prefix you want shown in front of commands!")
     public static final Property<String> command_prefix = PropertyInitializer.newProperty("command_prefix", "<red>[CrazyCrates]</red> ");
 
-    @Comment("Whether the config is migrated or not. DO NOT CHANGE THIS")
-    public static final BooleanProperty config_migrated = PropertyInitializer.newProperty("config_migrated", false);
+    @Comment({
+            "A temporary option to allow you to opt in for using MiniMessage.",
+            "",
+            "MiniMessage allows you to use gradients as well as hex colors,",
+            "&7 or &c will no longer work when you set this option to true.",
+            "",
+            "Please read up on MiniMessage and how to use it below,",
+            "https://docs.advntr.dev/minimessage/format.html#color",
+            "",
+            "This option will only be here until v2.1 then you will be forced to use MiniMessage,",
+            "It is only added as an option to give you time to convert your configurations."
+    })
+    public static final Property<Boolean> USE_MINI_MESSAGE = PropertyInitializer.newProperty("use_minimessage", true);
 
 }
