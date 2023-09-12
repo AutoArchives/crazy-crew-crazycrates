@@ -26,9 +26,7 @@ public class Config implements SettingsHolder {
                 "",
                 "Issues: https://github.com/Crazy-Crew/CrazyCrates/issues",
                 "Features: https://github.com/Crazy-Crew/CrazyCrates/issues",
-                "",
-                "Legacy color codes such as &7,&c no longer work.",
-                "https://docs.advntr.dev/minimessage/format.html#color"
+                ""
         };
 
         String[] deprecation = {
