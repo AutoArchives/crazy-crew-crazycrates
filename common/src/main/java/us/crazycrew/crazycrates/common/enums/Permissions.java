@@ -52,7 +52,7 @@ public enum Permissions {
      * @return a completed permission
      */
     public String getPermission(String action) {
-        return "crazycrates." + action + "." + defaultPermission;
+        return "crazycrates." + action + "." + this.defaultPermission;
     }
 
     /**
@@ -61,7 +61,7 @@ public enum Permissions {
      * @return a completed permission
      */
     public String getPermission() {
-        return "crazycrates.command." + defaultPermission;
+        return "crazycrates.command." + this.defaultPermission;
     }
 
     /**
@@ -70,6 +70,6 @@ public enum Permissions {
      * @return the description
      */
     public String getDescription() {
-        return description;
+        return this.description;
     }
 }
