@@ -45,10 +45,10 @@ public class Methods {
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
 
-    private final Pattern HEX_PATTERN = Pattern.compile("#[a-fA-F\\d]{6}");
+    private final Pattern hex_pattern = Pattern.compile("#[a-fA-F\\d]{6}");
 
     public String color(String message) {
-        Matcher matcher = this.HEX_PATTERN.matcher(message);
+        Matcher matcher = this.hex_pattern.matcher(message);
         StringBuilder buffer = new StringBuilder();
 
         while (matcher.find()) {
