@@ -108,7 +108,7 @@ public class Messages implements SettingsHolder {
     public static final Property<String> command_give_player_keys = PropertyInitializer.newProperty("command.give.given-player-keys", "<gray>You have given</gray> <gold>{player} {amount} Keys.</gold>");
 
     @Comment("This is only sent if they have a full inventory.")
-    public static final Property<String> command_give_cannot_give_player_keys = PropertyInitializer.newProperty("command.give.cannot-give-player-keys", "<gray>You have been given</gray> <gold>{amount} {key}</gold> <gray>virtual keys because your inventory was full.</gray>");
+    public static final Property<String> command_give_cannot_give_player_keys = PropertyInitializer.newProperty("command.give.cannot-give-player-keys", "<gray>You have been given</gray> <gold>{amount} {key}</gold> <gray>virtual keys because your inventory is full.</gray>");
 
     public static final Property<String> command_give_everyone_keys = PropertyInitializer.newProperty("command.give.given-everyone-keys", "<gray>You have given everyone</gray> <gold>{amount} Keys.</gold>");
 
