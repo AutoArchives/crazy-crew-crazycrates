@@ -79,7 +79,7 @@ public class CrateBaseCommand extends BaseCommand {
         Crate crate = this.crazyManager.getCrateFromName(crateName);
 
         if (crate == null || crate.getCrateType() == CrateType.MENU) {
-            player.sendMessage(Messages.NOT_A_CRATE.getMessage("%Crate%", crateName));
+            player.sendMessage(Messages.NOT_A_CRATE.getMessage("\\{crate}", crateName));
             return;
         }
 
@@ -89,7 +89,7 @@ public class CrateBaseCommand extends BaseCommand {
         }
 
         if (this.userManager.getVirtualKeys(sender.getUniqueId(), crate.getName()) < amount) {
-            sender.sendMessage(Messages.NOT_ENOUGH_KEYS.getMessage("%Crate%", crate.getName()));
+            sender.sendMessage(Messages.NOT_ENOUGH_KEYS.getMessage("\\{crate}", crate.getName()));
             return;
         }
 
@@ -103,13 +103,13 @@ public class CrateBaseCommand extends BaseCommand {
 
         HashMap<String, String> placeholders = new HashMap<>();
 
-        placeholders.put("%Crate%", crate.getName());
-        placeholders.put("%Amount%", amount + "");
-        placeholders.put("%Player%", player.getName());
+        placeholders.put("\\{crate}", crate.getName());
+        placeholders.put("\\{amount}", amount + "");
+        placeholders.put("\\{player}", player.getName());
 
         sender.sendMessage(Messages.TRANSFERRED_KEYS.getMessage(placeholders));
 
-        placeholders.put("%Player%", sender.getName());
+        placeholders.put("\\{player}", sender.getName());
 
         player.sendMessage(Messages.RECEIVED_TRANSFERRED_KEYS.getMessage(placeholders));
 
@@ -146,7 +146,7 @@ public class CrateBaseCommand extends BaseCommand {
         Crate crate = this.crazyManager.getCrateFromName(crateName);
 
         if (crate == null || crate.getCrateType() == CrateType.MENU) {
-            player.sendMessage(Messages.NOT_A_CRATE.getMessage("%Crate%", crateName));
+            player.sendMessage(Messages.NOT_A_CRATE.getMessage("\\{crate}", crateName));
             return;
         }
 
@@ -262,7 +262,7 @@ public class CrateBaseCommand extends BaseCommand {
         Crate crate = this.crazyManager.getCrateFromName(crateName);
 
         if (crate == null || crate.getCrateType() == CrateType.MENU) {
-            player.sendMessage(Messages.NOT_A_CRATE.getMessage("%Crate%", crateName));
+            player.sendMessage(Messages.NOT_A_CRATE.getMessage("\\{crate}", crateName));
             return;
         }
 
@@ -277,8 +277,8 @@ public class CrateBaseCommand extends BaseCommand {
 
         HashMap<String, String> placeholders = new HashMap<>();
 
-        placeholders.put("%Crate%", crate.getName());
-        placeholders.put("%Prize%", prize);
+        placeholders.put("\\{crate}", crate.getName());
+        placeholders.put("\\{prize}", prize);
 
         player.sendMessage(Messages.ADDED_ITEM_WITH_EDITOR.getMessage(placeholders));
     }
@@ -289,7 +289,7 @@ public class CrateBaseCommand extends BaseCommand {
         Crate crate = this.crazyManager.getCrateFromName(crateName);
 
         if (crate == null || crate.getCrateType() == CrateType.MENU) {
-            sender.sendMessage(Messages.NOT_A_CRATE.getMessage("%Crate%", crateName));
+            sender.sendMessage(Messages.NOT_A_CRATE.getMessage("\\{crate}", crateName));
             return;
         }
 
@@ -318,7 +318,7 @@ public class CrateBaseCommand extends BaseCommand {
         Crate crate = this.crazyManager.getCrateFromName(crateName);
 
         if (crate == null || crate.getCrateType() == CrateType.MENU) {
-            sender.sendMessage(Messages.NOT_A_CRATE.getMessage("%Crate%", crateName));
+            sender.sendMessage(Messages.NOT_A_CRATE.getMessage("\\{crate}", crateName));
             return;
         }
 
@@ -370,8 +370,8 @@ public class CrateBaseCommand extends BaseCommand {
 
         HashMap<String, String> placeholders = new HashMap<>();
 
-        placeholders.put("%Crate%", crate.getName());
-        placeholders.put("%Player%", player.getName());
+        placeholders.put("\\{crate}", crate.getName());
+        placeholders.put("\\{player}", player.getName());
 
         sender.sendMessage(Messages.OPENED_A_CRATE.getMessage(placeholders));
 
@@ -389,7 +389,7 @@ public class CrateBaseCommand extends BaseCommand {
         Crate crate = this.crazyManager.getCrateFromName(crateName);
 
         if (crate == null || crate.getCrateType() == CrateType.MENU) {
-            player.sendMessage(Messages.NOT_A_CRATE.getMessage("%Crate%", crateName));
+            player.sendMessage(Messages.NOT_A_CRATE.getMessage("\\{crate}", crateName));
             return;
         }
 
@@ -432,7 +432,7 @@ public class CrateBaseCommand extends BaseCommand {
         Crate crate = this.crazyManager.getCrateFromName(crateName);
 
         if (crate == null || crate.getCrateType() == CrateType.MENU) {
-            sender.sendMessage(Messages.NOT_A_CRATE.getMessage("%Crate%", crateName));
+            sender.sendMessage(Messages.NOT_A_CRATE.getMessage("\\{crate}", crateName));
             return;
         }
 
@@ -452,8 +452,8 @@ public class CrateBaseCommand extends BaseCommand {
 
         HashMap<String, String> placeholders = new HashMap<>();
 
-        placeholders.put("%Crate%", crate.getName());
-        placeholders.put("%Player%", player.getName());
+        placeholders.put("\\{crate}", crate.getName());
+        placeholders.put("\\{player}", player.getName());
 
         sender.sendMessage(Messages.OPENED_A_CRATE.getMessage(placeholders));
 
@@ -469,7 +469,7 @@ public class CrateBaseCommand extends BaseCommand {
         Crate crate = this.crazyManager.getCrateFromName(crateName);
 
         if (crate == null || crate.getCrateType() == CrateType.MENU) {
-            player.sendMessage(Messages.NOT_A_CRATE.getMessage("%Crate%", crateName));
+            player.sendMessage(Messages.NOT_A_CRATE.getMessage("\\{crate}", crateName));
             return;
         }
 
@@ -489,8 +489,8 @@ public class CrateBaseCommand extends BaseCommand {
 
         HashMap<String, String> placeholders = new HashMap<>();
 
-        placeholders.put("%Crate%", crate.getName());
-        placeholders.put("%Prefix%", this.methods.getPrefix());
+        placeholders.put("\\{crate}", crate.getName());
+        placeholders.put("\\{prefix}", this.methods.getPrefix());
 
         player.sendMessage(Messages.CREATED_PHYSICAL_CRATE.getMessage(placeholders));
     }
@@ -537,8 +537,8 @@ public class CrateBaseCommand extends BaseCommand {
             } else {
                 HashMap<String, String> placeholders = new HashMap<>();
 
-                placeholders.put("%Amount%", String.valueOf(amount));
-                placeholders.put("%Player%", offlinePlayer.getName());
+                placeholders.put("\\{amount}", String.valueOf(amount));
+                placeholders.put("\\{player}", offlinePlayer.getName());
 
                 sender.sendMessage(Messages.GIVEN_OFFLINE_PLAYER_KEYS.getMessage(placeholders));
 
@@ -550,9 +550,9 @@ public class CrateBaseCommand extends BaseCommand {
 
         HashMap<String, String> placeholders = new HashMap<>();
 
-        placeholders.put("%Amount%", String.valueOf(amount));
-        placeholders.put("%Player%", player.getName());
-        placeholders.put("%Key%", crate.getKey().getItemMeta().getDisplayName());
+        placeholders.put("\\{amount}", String.valueOf(amount));
+        placeholders.put("\\{player}", player.getName());
+        placeholders.put("\\{key}", crate.getKey().getItemMeta().getDisplayName());
 
         boolean fullMessage = this.config.getProperty(Config.give_virtual_keys_message);
         boolean inventoryCheck = this.config.getProperty(Config.give_virtual_keys);
@@ -575,7 +575,7 @@ public class CrateBaseCommand extends BaseCommand {
         }
 
         if (crate == null || crate.getCrateType() == CrateType.MENU) {
-            sender.sendMessage(Messages.NOT_A_CRATE.getMessage("%Crate%", crateName));
+            sender.sendMessage(Messages.NOT_A_CRATE.getMessage("\\{crate}", crateName));
             return;
         }
 
@@ -606,8 +606,8 @@ public class CrateBaseCommand extends BaseCommand {
 
                 HashMap<String, String> placeholders = new HashMap<>();
 
-                placeholders.put("%Amount%", String.valueOf(amount));
-                placeholders.put("%Player%", offlinePlayer.getName());
+                placeholders.put("\\{amount}", String.valueOf(amount));
+                placeholders.put("\\{player}", offlinePlayer.getName());
 
                 sender.sendMessage(Messages.TAKE_OFFLINE_PLAYER_KEYS.getMessage(placeholders));
 
@@ -619,8 +619,8 @@ public class CrateBaseCommand extends BaseCommand {
 
         HashMap<String, String> placeholders = new HashMap<>();
 
-        placeholders.put("%Amount%", String.valueOf(amount));
-        placeholders.put("%Player%", player.getName());
+        placeholders.put("\\{amount}", String.valueOf(amount));
+        placeholders.put("\\{player}", player.getName());
 
         sender.sendMessage(Messages.TAKE_A_PLAYER_KEYS.getMessage(placeholders));
 
@@ -640,7 +640,7 @@ public class CrateBaseCommand extends BaseCommand {
         }
 
         if (crate == null || crate.getCrateType() == CrateType.MENU) {
-            sender.sendMessage(Messages.NOT_A_CRATE.getMessage("%Crate%", crateName));
+            sender.sendMessage(Messages.NOT_A_CRATE.getMessage("\\{crate}", crateName));
             return;
         }
 
@@ -670,14 +670,14 @@ public class CrateBaseCommand extends BaseCommand {
         Crate crate = this.crazyManager.getCrateFromName(crateName);
 
         if (crate == null || crate.getCrateType() == CrateType.MENU) {
-            sender.sendMessage(Messages.NOT_A_CRATE.getMessage("%Crate%", crateName));
+            sender.sendMessage(Messages.NOT_A_CRATE.getMessage("\\{crate}", crateName));
             return;
         }
 
         HashMap<String, String> placeholders = new HashMap<>();
 
-        placeholders.put("%Amount%", amount + "");
-        placeholders.put("%Key%", crate.getKey().getItemMeta().getDisplayName());
+        placeholders.put("\\{amount}", amount + "");
+        placeholders.put("\\{key}", crate.getKey().getItemMeta().getDisplayName());
 
         sender.sendMessage(Messages.GIVEN_EVERYONE_KEYS.getMessage(placeholders));
 
