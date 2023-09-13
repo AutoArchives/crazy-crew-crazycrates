@@ -6,7 +6,6 @@ import us.crazycrew.crazycrates.api.platforms.Platform;
 import us.crazycrew.crazycrates.common.config.ConfigManager;
 import us.crazycrew.crazycrates.common.config.api.AbstractPlugin;
 import us.crazycrew.crazycrates.common.config.types.PluginConfig;
-
 import java.io.File;
 
 public abstract class CrazyCratesPlugin extends AbstractPlugin {
