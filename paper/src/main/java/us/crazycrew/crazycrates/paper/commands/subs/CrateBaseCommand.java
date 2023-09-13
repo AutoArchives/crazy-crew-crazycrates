@@ -119,12 +119,6 @@ public class CrateBaseCommand extends BaseCommand {
         this.eventLogger.logKeyEvent(player, sender, crate, KeyType.VIRTUAL_KEY, EventLogger.KeyEventType.key_received_event, logFile, logConsole);
     }
 
-    @SubCommand("admin-help")
-    @Permission(value = "crazycrates.command.admin.help", def = PermissionDefault.OP)
-    public void onAdminHelp(CommandSender sender) {
-        sender.sendMessage(Messages.ADMIN_HELP.getMessage());
-    }
-
     @SubCommand("reload")
     @Permission(value = "crazycrates.command.admin.reload", def = PermissionDefault.OP)
     public void onReload(CommandSender sender) {
