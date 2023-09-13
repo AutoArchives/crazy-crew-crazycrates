@@ -1,4 +1,4 @@
-package us.crazycrew.crazycrates.common.config.api.registry;
+package us.crazycrew.crazycrates.common.api.registry;
 
 import org.jetbrains.annotations.ApiStatus;
 import us.crazycrew.crazycrates.api.CrazyCratesProvider;

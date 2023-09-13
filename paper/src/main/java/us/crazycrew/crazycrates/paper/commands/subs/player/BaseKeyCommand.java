@@ -11,7 +11,7 @@ import dev.triumphteam.cmd.core.annotation.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
+import us.crazycrew.crazycrates.paper.api.plugin.CrazyHandler;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,8 +19,8 @@ import java.util.UUID;
 public class BaseKeyCommand extends BaseCommand {
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
-    private final @NotNull CrazyCratesLoader cratesLoader = this.plugin.getCratesLoader();
-    private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
+    private final @NotNull CrazyHandler crazyHandler = this.plugin.getCrazyHandler();
+    private final @NotNull CrazyManager crazyManager = this.crazyHandler.getCrazyManager();
 
     @Default
     @Permission(value = "crazycrates.key", def = PermissionDefault.TRUE)
@@ -61,7 +61,7 @@ public class BaseKeyCommand extends BaseCommand {
         Map<Crate, Integer> keys = new HashMap<>();
 
         for (Crate crate : this.crazyManager.getCrates()) {
-            keys.put(crate, this.cratesLoader.getUserManager().getVirtualKeys(uuid, crate.getName()));
+            keys.put(crate, this.crazyHandler.getUserManager().getVirtualKeys(uuid, crate.getName()));
         }
 
         boolean hasKeys = false;

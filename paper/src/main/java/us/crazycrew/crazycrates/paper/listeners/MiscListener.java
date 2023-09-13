@@ -11,14 +11,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerAttemptPickupItemEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.jetbrains.annotations.NotNull;
-import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
+import us.crazycrew.crazycrates.paper.api.plugin.CrazyHandler;
 import java.util.UUID;
 
 public class MiscListener implements Listener {
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
-    private final @NotNull CrazyCratesLoader cratesLoader = this.plugin.getCratesLoader();
-    private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
+    private final @NotNull CrazyHandler crazyHandler = this.plugin.getCrazyHandler();
+    private final @NotNull CrazyManager crazyManager = this.crazyHandler.getCrazyManager();
 
     @EventHandler
     public void onPlayerPickUp(PlayerAttemptPickupItemEvent event) {
@@ -42,8 +42,8 @@ public class MiscListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent e) {
         final Player player = e.getPlayer();
 
-        this.cratesLoader.getCrazyManager().setNewPlayerKeys(player);
+        this.crazyHandler.getCrazyManager().setNewPlayerKeys(player);
 
-        this.cratesLoader.getUserManager().loadOfflinePlayersKeys(player, this.crazyManager.getCrates());
+        this.crazyHandler.getUserManager().loadOfflinePlayersKeys(player, this.crazyManager.getCrates());
     }
 }

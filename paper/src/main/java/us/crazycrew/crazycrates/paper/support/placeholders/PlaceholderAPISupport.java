@@ -10,15 +10,15 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
+import us.crazycrew.crazycrates.paper.api.plugin.CrazyHandler;
 import java.text.NumberFormat;
 
 public class PlaceholderAPISupport extends PlaceholderExpansion {
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
-    private final @NotNull CrazyCratesLoader cratesLoader = this.plugin.getCratesLoader();
-    private final @NotNull BukkitUserManager userManager = this.cratesLoader.getUserManager();
-    private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
+    private final @NotNull CrazyHandler crazyHandler = this.plugin.getCrazyHandler();
+    private final @NotNull BukkitUserManager userManager = this.crazyHandler.getUserManager();
+    private final @NotNull CrazyManager crazyManager = this.crazyHandler.getCrazyManager();
     
     @Override
     public String onRequest(OfflinePlayer player, @NotNull String identifier) {

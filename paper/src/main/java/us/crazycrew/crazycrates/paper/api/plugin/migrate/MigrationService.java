@@ -193,8 +193,8 @@ public class MigrationService {
 
         this.previewMenuConfig.setProperty(CratePreviewMenu.crate_preview_back_button_lore, convert(backLore));
 
-        this.config.setProperty(Config.customizer, guiCustomizer);
-        this.config.setProperty(Config.customizer_toggle, this.config.getProperty(Config.customizer).isEmpty());
+        this.config.setProperty(Config.customizer_item_list, guiCustomizer);
+        this.config.setProperty(Config.customizer_toggle, this.config.getProperty(Config.customizer_item_list).isEmpty());
 
         this.config.save();
         this.previewMenuConfig.save();

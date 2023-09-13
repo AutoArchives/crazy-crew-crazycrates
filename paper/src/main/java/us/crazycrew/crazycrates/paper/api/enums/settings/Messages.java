@@ -4,7 +4,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.Methods;
 import org.jetbrains.annotations.NotNull;
-import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
+import us.crazycrew.crazycrates.paper.api.plugin.CrazyHandler;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -111,7 +111,7 @@ public enum Messages {
     }
 
     private static final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
-    private static final @NotNull CrazyCratesLoader cratesLoader = plugin.getCratesLoader();
+    private static final @NotNull CrazyHandler crazyHandler = plugin.getCrazyHandler()();
     private static final @NotNull Methods methods = cratesLoader.getMethods();
 
     /**

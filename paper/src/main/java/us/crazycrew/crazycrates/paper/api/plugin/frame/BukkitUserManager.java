@@ -22,7 +22,7 @@ import us.crazycrew.crazycrates.paper.api.FileManager.Files;
 import us.crazycrew.crazycrates.paper.api.enums.settings.Messages;
 import us.crazycrew.crazycrates.paper.api.events.PlayerReceiveKeyEvent;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
-import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
+import us.crazycrew.crazycrates.paper.api.plugin.CrazyHandler;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,11 +31,11 @@ import java.util.UUID;
 public class BukkitUserManager extends UserManager {
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
-    private final @NotNull CrazyCratesLoader cratesLoader = this.plugin.getCratesLoader();
-    private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
-    private final @NotNull Methods methods = this.cratesLoader.getMethods();
+    private final @NotNull CrazyHandler crazyHandler = this.plugin.getCrazyHandler();
+    private final @NotNull CrazyManager crazyManager = this.crazyHandler.getCrazyManager();
+    private final @NotNull Methods methods = this.crazyHandler.getMethods();
 
-    private final @NotNull ConfigManager configManager = this.cratesLoader.getConfigManager();
+    private final @NotNull ConfigManager configManager = this.crazyHandler.getConfigManager();
     private final @NotNull SettingsManager config = this.configManager.getConfig();
 
     private final @NotNull FileConfiguration data = Files.DATA.getFile();

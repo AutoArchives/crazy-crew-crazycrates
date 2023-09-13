@@ -8,7 +8,7 @@ import org.bukkit.Registry;
 import org.bukkit.plugin.java.JavaPlugin;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.Methods;
-import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
+import us.crazycrew.crazycrates.paper.api.plugin.CrazyHandler;
 import us.crazycrew.crazycrates.paper.support.SkullCreator;
 import us.crazycrew.crazycrates.paper.support.libraries.PluginSupport;
 import de.tr7zw.changeme.nbtapi.NBTItem;
@@ -38,8 +38,8 @@ import java.util.stream.Collectors;
 public class ItemBuilder {
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
-    private final @NotNull CrazyCratesLoader cratesLoader = this.plugin.getCratesLoader();
-    private final @NotNull Methods methods = this.cratesLoader.getMethods();
+    private final @NotNull CrazyHandler crazyHandler = this.plugin.getCrazyHandler();
+    private final @NotNull Methods methods = this.crazyHandler.getMethods();
 
     private NBTItem nbtItem;
 

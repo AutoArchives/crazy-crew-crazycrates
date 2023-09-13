@@ -24,18 +24,18 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
+import us.crazycrew.crazycrates.paper.api.plugin.CrazyHandler;
 import java.util.ArrayList;
 import java.util.UUID;
 
 public class MenuListener implements Listener {
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
-    private final @NotNull CrazyCratesLoader cratesLoader = this.plugin.getCratesLoader();
-    private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
-    private final @NotNull BukkitUserManager userManager = this.cratesLoader.getUserManager();
-    private final @NotNull Methods methods = this.cratesLoader.getMethods();
-    private final @NotNull ConfigManager configManager = this.cratesLoader.getConfigManager();
+    private final @NotNull CrazyHandler crazyHandler = this.plugin.getCrazyHandler();
+    private final @NotNull CrazyManager crazyManager = this.crazyHandler.getCrazyManager();
+    private final @NotNull BukkitUserManager userManager = this.crazyHandler.getUserManager();
+    private final @NotNull Methods methods = this.crazyHandler.getMethods();
+    private final @NotNull ConfigManager configManager = this.crazyHandler.getConfigManager();
     private final @NotNull SettingsManager config = this.configManager.getConfig();
     private final @NotNull SettingsManager menuConfig = this.configManager.getMainMenuConfig();
 
@@ -70,8 +70,8 @@ public class MenuListener implements Listener {
                                 if (crate.isPreviewEnabled()) {
                                     player.closeInventory();
 
-                                    this.cratesLoader.getMenuManager().setPlayerInMenu(player, true);
-                                    this.cratesLoader.getMenuManager().openNewPreview(player, crate);
+                                    this.crazyHandler.getMenuManager().setPlayerInMenu(player, true);
+                                    this.crazyHandler.getMenuManager().openNewPreview(player, crate);
                                 } else {
                                     player.sendMessage(Messages.PREVIEW_DISABLED.getMessage());
                                 }

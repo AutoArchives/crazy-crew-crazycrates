@@ -18,7 +18,7 @@ import us.crazycrew.crazycrates.paper.api.objects.CrateLocation;
 import us.crazycrew.crazycrates.paper.api.objects.ItemBuilder;
 import us.crazycrew.crazycrates.paper.api.objects.Prize;
 import us.crazycrew.crazycrates.paper.api.objects.Tier;
-import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
+import us.crazycrew.crazycrates.paper.api.plugin.CrazyHandler;
 import us.crazycrew.crazycrates.paper.support.MetricsHandler;
 import us.crazycrew.crazycrates.paper.support.holograms.CMIHologramsSupport;
 import us.crazycrew.crazycrates.paper.support.holograms.HolographicDisplaysSupport;
@@ -63,12 +63,12 @@ public class CrazyManager {
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
     
-    private final @NotNull CrazyCratesLoader cratesLoader = this.plugin.getCratesLoader();
-    private final @NotNull FileManager fileManager = this.cratesLoader.getFileManager();
-    private final @NotNull BukkitUserManager userManager = this.cratesLoader.getUserManager();
-    private final @NotNull Methods methods = this.cratesLoader.getMethods();
+    private final @NotNull CrazyHandler crazyHandler = this.plugin.getCrazyHandler();
+    private final @NotNull FileManager fileManager = this.crazyHandler.getFileManager();
+    private final @NotNull BukkitUserManager userManager = this.crazyHandler.getUserManager();
+    private final @NotNull Methods methods = this.crazyHandler.getMethods();
 
-    private final @NotNull ConfigManager configManager = this.cratesLoader.getConfigManager();
+    private final @NotNull ConfigManager configManager = this.crazyHandler.getConfigManager();
     private final @NotNull SettingsManager config = this.configManager.getConfig();
     private final @NotNull SettingsManager menuConfig = this.configManager.getMainMenuConfig();
 
@@ -118,7 +118,7 @@ public class CrazyManager {
     }
 
     public void reload(boolean serverStop) {
-        MetricsHandler metricsHandler = this.cratesLoader.getMetrics();
+        MetricsHandler metricsHandler = this.crazyHandler.getMetrics();
 
         if (serverStop) {
             metricsHandler.stop();
@@ -390,7 +390,7 @@ public class CrazyManager {
             case MENU -> {
                 boolean openMenu = this.menuConfig.getProperty(CrateMainMenu.crate_menu_toggle);
 
-                if (openMenu) this.cratesLoader.getMenuManager().openMainMenu(player);
+                if (openMenu) this.crazyHandler.getMenuManager().openMainMenu(player);
                 else player.sendMessage(Messages.FEATURE_DISABLED.getMessage());
             }
             case COSMIC -> this.plugin.getCosmic().openCosmic(player, crate, keyType, checkHand);
@@ -464,7 +464,7 @@ public class CrazyManager {
         boolean logFile = this.config.getProperty(Config.log_to_file);
         boolean logConsole = this.config.getProperty(Config.log_to_console);
 
-        this.cratesLoader.getEventLogger().logCrateEvent(player, crate, keyType, logFile, logConsole);
+        this.crazyHandler.getEventLogger().logCrateEvent(player, crate, keyType, logFile, logConsole);
     }
 
     /**

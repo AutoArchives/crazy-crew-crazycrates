@@ -17,7 +17,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
+import us.crazycrew.crazycrates.paper.api.plugin.CrazyHandler;
 import java.text.NumberFormat;
 import java.util.Collections;
 import java.util.HashMap;
@@ -28,11 +28,11 @@ import java.util.UUID;
 public class MenuManager {
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
-    private final @NotNull CrazyCratesLoader cratesLoader = this.plugin.getCratesLoader();
-    private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
-    private final @NotNull BukkitUserManager userManager = this.cratesLoader.getUserManager();
+    private final @NotNull CrazyHandler crazyHandler = this.plugin.getCrazyHandler();
+    private final @NotNull CrazyManager crazyManager = this.crazyHandler.getCrazyManager();
+    private final @NotNull BukkitUserManager userManager = this.crazyHandler.getUserManager();
 
-    private final @NotNull ConfigManager configManager = this.cratesLoader.getConfigManager();
+    private final @NotNull ConfigManager configManager = this.crazyHandler.getConfigManager();
 
     private final @NotNull SettingsManager config = this.configManager.getConfig();
     private final @NotNull SettingsManager mainMenuConfig = this.configManager.getMainMenuConfig();
@@ -158,7 +158,7 @@ public class MenuManager {
         UUID uuid = player.getUniqueId();
 
         if (this.config.getProperty(Config.customizer_toggle)) {
-            for (String custom : this.config.getProperty(Config.customizer)) {
+            for (String custom : this.config.getProperty(Config.customizer_item_list)) {
                 int slot = 0;
                 ItemBuilder item = new ItemBuilder();
                 String[] split = custom.split(", ");

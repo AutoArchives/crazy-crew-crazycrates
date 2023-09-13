@@ -10,7 +10,7 @@ import us.crazycrew.crazycrates.paper.api.enums.settings.Messages;
 import us.crazycrew.crazycrates.paper.api.plugin.frame.BukkitUserManager;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
 import us.crazycrew.crazycrates.common.crates.quadcrates.CrateParticles;
-import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
+import us.crazycrew.crazycrates.paper.api.plugin.CrazyHandler;
 import us.crazycrew.crazycrates.paper.support.structures.blocks.ChestManager;
 import us.crazycrew.crazycrates.api.enums.types.KeyType;
 import us.crazycrew.crazycrates.paper.support.structures.QuadCrateSpiralHandler;
@@ -39,12 +39,12 @@ import java.util.UUID;
 public class QuadCrateManager {
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
-    private final @NotNull CrazyCratesLoader cratesLoader = this.plugin.getCratesLoader();
-    private final @NotNull BukkitUserManager userManager = this.cratesLoader.getUserManager();
-    private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
-    private final @NotNull ChestManager chestManager = this.cratesLoader.getChestManager();
-    private final @NotNull Methods methods = this.cratesLoader.getMethods();
-    private final @NotNull ConfigManager configManager = this.cratesLoader.getConfigManager();
+    private final @NotNull CrazyHandler crazyHandler = this.plugin.getCrazyHandler();
+    private final @NotNull BukkitUserManager userManager = this.crazyHandler.getUserManager();
+    private final @NotNull CrazyManager crazyManager = this.crazyHandler.getCrazyManager();
+    private final @NotNull ChestManager chestManager = this.crazyHandler.getChestManager();
+    private final @NotNull Methods methods = this.crazyHandler.getMethods();
+    private final @NotNull ConfigManager configManager = this.crazyHandler.getConfigManager();
     private final @NotNull SettingsManager config = this.configManager.getConfig();
 
     private static final List<QuadCrateManager> crateSessions = new ArrayList<>();

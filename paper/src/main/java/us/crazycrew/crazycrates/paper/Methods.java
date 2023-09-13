@@ -160,7 +160,7 @@ public class Methods {
 
     //TODO() Find prefix
     public String getPrefix() {
-        return color(this.plugin.getCratesLoader().getConfigManager().getPluginConfig().getProperty(PluginConfig.command_prefix));
+        return color(this.plugin.getCrazyHandler().getConfigManager().getPluginConfig().getProperty(PluginConfig.command_prefix));
     }
 
     public String getPrefix(String msg) {
@@ -357,7 +357,7 @@ public class Methods {
      */
     public void pickPrize(Player player, Crate crate, Prize prize) {
         if (prize != null) {
-            this.plugin.getCratesLoader().getCrazyManager().givePrize(player, prize, crate);
+            this.plugin.getCrazyHandler().getCrazyManager().givePrize(player, prize, crate);
 
             if (prize.useFireworks()) firework(player.getLocation().add(0, 1, 0));
 

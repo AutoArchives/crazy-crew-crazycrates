@@ -8,7 +8,7 @@ import us.crazycrew.crazycrates.paper.api.plugin.frame.BukkitUserManager;
 import us.crazycrew.crazycrates.paper.api.interfaces.HologramController;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
 import us.crazycrew.crazycrates.paper.api.objects.Prize;
-import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
+import us.crazycrew.crazycrates.paper.api.plugin.CrazyHandler;
 import us.crazycrew.crazycrates.paper.listeners.CrateControlListener;
 import us.crazycrew.crazycrates.paper.support.structures.blocks.ChestManager;
 import us.crazycrew.crazycrates.api.enums.types.KeyType;
@@ -29,11 +29,11 @@ import java.util.UUID;
 public class QuickCrate implements Listener {
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
-    private final @NotNull CrazyCratesLoader cratesLoader = this.plugin.getCratesLoader();
-    private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
-    private final @NotNull BukkitUserManager userManager = this.cratesLoader.getUserManager();
-    private final @NotNull ChestManager chestManager = this.cratesLoader.getChestManager();
-    private final @NotNull Methods methods = this.cratesLoader.getMethods();
+    private final @NotNull CrazyHandler crazyHandler = this.plugin.getCrazyHandler();
+    private final @NotNull CrazyManager crazyManager = this.crazyHandler.getCrazyManager();
+    private final @NotNull BukkitUserManager userManager = this.crazyHandler.getUserManager();
+    private final @NotNull ChestManager chestManager = this.crazyHandler.getChestManager();
+    private final @NotNull Methods methods = this.crazyHandler.getMethods();
 
     private final ArrayList<Entity> allRewards = new ArrayList<>();
     private final HashMap<UUID, Entity> rewards = new HashMap<>();

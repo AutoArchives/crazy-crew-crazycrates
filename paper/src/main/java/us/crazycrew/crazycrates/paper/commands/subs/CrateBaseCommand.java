@@ -23,7 +23,7 @@ import us.crazycrew.crazycrates.paper.api.objects.Crate;
 import us.crazycrew.crazycrates.paper.api.objects.CrateLocation;
 import us.crazycrew.crazycrates.paper.api.objects.Prize;
 import us.crazycrew.crazycrates.common.enums.Permissions;
-import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
+import us.crazycrew.crazycrates.paper.api.plugin.CrazyHandler;
 import us.crazycrew.crazycrates.paper.listeners.CrateControlListener;
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
 import us.crazycrew.crazycrates.api.enums.types.KeyType;
@@ -48,13 +48,13 @@ import java.util.concurrent.CompletableFuture;
 public class CrateBaseCommand extends BaseCommand {
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
-    private final @NotNull CrazyCratesLoader cratesLoader = this.plugin.getCratesLoader();
-    private final @NotNull FileManager fileManager = this.cratesLoader.getFileManager();
-    private final @NotNull BukkitUserManager userManager = this.cratesLoader.getUserManager();
-    private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
-    private final @NotNull EventLogger eventLogger = this.cratesLoader.getEventLogger();
-    private final @NotNull Methods methods = this.cratesLoader.getMethods();
-    private final @NotNull ConfigManager configManager = this.cratesLoader.getConfigManager();
+    private final @NotNull CrazyHandler crazyHandler = this.plugin.getCrazyHandler();
+    private final @NotNull FileManager fileManager = this.crazyHandler.getFileManager();
+    private final @NotNull BukkitUserManager userManager = this.crazyHandler.getUserManager();
+    private final @NotNull CrazyManager crazyManager = this.crazyHandler.getCrazyManager();
+    private final @NotNull EventLogger eventLogger = this.crazyHandler.getEventLogger();
+    private final @NotNull Methods methods = this.crazyHandler.getMethods();
+    private final @NotNull ConfigManager configManager = this.crazyHandler.getConfigManager();
 
     private final @NotNull SettingsManager config = this.configManager.getConfig();
     private final @NotNull SettingsManager menuConfig = this.configManager.getMainMenuConfig();
@@ -64,7 +64,7 @@ public class CrateBaseCommand extends BaseCommand {
     public void onDefaultMenu(Player player) {
         boolean openMenu = this.menuConfig.getProperty(CrateMainMenu.crate_menu_toggle);
 
-        if (openMenu) this.cratesLoader.getMenuManager().openMainMenu(player); else player.sendMessage(Messages.FEATURE_DISABLED.getMessage());
+        if (openMenu) this.crazyHandler.getMenuManager().openMainMenu(player); else player.sendMessage(Messages.FEATURE_DISABLED.getMessage());
     }
 
     @SubCommand("help")
@@ -131,11 +131,11 @@ public class CrateBaseCommand extends BaseCommand {
         this.fileManager.reloadAllFiles();
         this.fileManager.setup();
 
-        CrazyCratesLoader.janitor();
+        CrazyHandler.janitor();
 
         this.crazyManager.reload(false);
 
-        this.cratesLoader.getMenuManager().loadButtons();
+        this.crazyHandler.getMenuManager().loadButtons();
 
         sender.sendMessage(Messages.RELOAD.getMessage());
     }
@@ -298,8 +298,8 @@ public class CrateBaseCommand extends BaseCommand {
             return;
         }
 
-        this.cratesLoader.getMenuManager().setPlayerInMenu(player, false);
-        this.cratesLoader.getMenuManager().openNewPreview(player, crate);
+        this.crazyHandler.getMenuManager().setPlayerInMenu(player, false);
+        this.crazyHandler.getMenuManager().openNewPreview(player, crate);
     }
 
     @SubCommand("open-others")

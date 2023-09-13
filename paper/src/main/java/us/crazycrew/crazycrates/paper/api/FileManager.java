@@ -6,7 +6,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
+import us.crazycrew.crazycrates.paper.api.plugin.CrazyHandler;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -341,8 +341,8 @@ public class FileManager {
         private final String fileLocation;
 
         private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
-        private final @NotNull CrazyCratesLoader cratesLoader = this.plugin.getCratesLoader();
-        private final @NotNull FileManager fileManager = this.cratesLoader.getFileManager();
+        private final @NotNull CrazyHandler crazyHandler = this.plugin.getCrazyHandler();
+        private final @NotNull FileManager fileManager = this.crazyHandler.getFileManager();
 
         /**
          * The files that the server will try and load.

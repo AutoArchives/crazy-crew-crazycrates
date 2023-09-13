@@ -12,15 +12,15 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.WorldLoadEvent;
 import org.jetbrains.annotations.NotNull;
-import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
+import us.crazycrew.crazycrates.paper.api.plugin.CrazyHandler;
 
 // Only use for this class is to check if for broken locations and to try and fix them when the server loads the world.
 public class BrokeLocationsListener implements Listener {
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
-    private final @NotNull CrazyCratesLoader cratesLoader = this.plugin.getCratesLoader();
-    private final @NotNull FileManager fileManager = this.cratesLoader.getFileManager();
-    private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
+    private final @NotNull CrazyHandler crazyHandler = this.plugin.getCrazyHandler();
+    private final @NotNull FileManager fileManager = this.crazyHandler.getFileManager();
+    private final @NotNull CrazyManager crazyManager = this.crazyHandler.getCrazyManager();
     
     @EventHandler
     public void onWorldLoad(WorldLoadEvent event) {

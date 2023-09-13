@@ -4,7 +4,7 @@ import com.ryderbelserion.cluster.api.adventure.FancyLogger;
 import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.api.platforms.Platform;
 import us.crazycrew.crazycrates.common.config.ConfigManager;
-import us.crazycrew.crazycrates.common.config.api.AbstractPlugin;
+import us.crazycrew.crazycrates.common.api.AbstractPlugin;
 import us.crazycrew.crazycrates.common.config.types.PluginConfig;
 import java.io.File;
 

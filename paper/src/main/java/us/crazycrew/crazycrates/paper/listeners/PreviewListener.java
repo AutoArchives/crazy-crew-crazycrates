@@ -9,15 +9,15 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
-import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
+import us.crazycrew.crazycrates.paper.api.plugin.CrazyHandler;
 import java.util.UUID;
 
 public class PreviewListener implements Listener {
 
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
-    private final @NotNull CrazyCratesLoader cratesLoader = this.plugin.getCratesLoader();
-    private final @NotNull MenuManager menuManager = this.cratesLoader.getMenuManager();
+    private final @NotNull CrazyHandler crazyHandler = this.plugin.getCrazyHandler();
+    private final @NotNull MenuManager menuManager = this.crazyHandler.getMenuManager();
     
     @EventHandler
     public void onPlayerClick(InventoryClickEvent e) {
@@ -34,7 +34,7 @@ public class PreviewListener implements Listener {
 
                 if (e.getCurrentItem() != null) {
                     if (e.getRawSlot() == crate.getAbsoluteItemPosition(4)) { // Clicked the menu button.
-                        if (this.menuManager.playerInMenu(player)) this.cratesLoader.getMenuManager().openMainMenu(player);
+                        if (this.menuManager.playerInMenu(player)) this.crazyHandler.getMenuManager().openMainMenu(player);
                     } else if (e.getRawSlot() == crate.getAbsoluteItemPosition(5)) { // Clicked the next button.
                         if (this.menuManager.getPage(uuid) < crate.getMaxPage()) {
                             nextPage(uuid);

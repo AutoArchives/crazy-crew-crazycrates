@@ -19,7 +19,7 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
+import us.crazycrew.crazycrates.paper.api.plugin.CrazyHandler;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -53,9 +53,9 @@ public class Crate {
     private final CrateHologram hologram;
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
-    private final @NotNull CrazyCratesLoader cratesLoader = this.plugin.getCratesLoader();
-    private final @NotNull FileManager fileManager = this.cratesLoader.getFileManager();
-    private final @NotNull Methods methods = this.cratesLoader.getMethods();
+    private final @NotNull CrazyHandler crazyHandler = this.plugin.getCrazyHandler();
+    private final @NotNull FileManager fileManager = this.crazyHandler.getFileManager();
+    private final @NotNull Methods methods = this.crazyHandler.getMethods();
 
     private final int maxMassOpen;
     private final int requiredKeys;
@@ -339,7 +339,7 @@ public class Crate {
      */
     public Inventory getPreview(Player player) {
         UUID uuid = player.getUniqueId();
-        return getPreview(player, this.cratesLoader.getMenuManager().getPage(uuid));
+        return getPreview(player, this.crazyHandler.getMenuManager().getPage(uuid));
     }
     
     /**
@@ -347,7 +347,7 @@ public class Crate {
      * @return The preview as an Inventory object.
      */
     public Inventory getPreview(Player player, int page) {
-        Inventory inventory = this.plugin.getServer().createInventory(null, !borderToggle && (this.cratesLoader.getMenuManager().playerInMenu(player) || maxPage > 1) && maxSlots == 9 ? maxSlots + 9 : maxSlots, previewName);
+        Inventory inventory = this.plugin.getServer().createInventory(null, !borderToggle && (this.crazyHandler.getMenuManager().playerInMenu(player) || maxPage > 1) && maxSlots == 9 ? maxSlots + 9 : maxSlots, previewName);
         setDefaultItems(inventory, player);
 
         for (ItemStack item : getPageItems(page)) {
@@ -616,20 +616,20 @@ public class Crate {
             }
         }
 
-        int page =  this.cratesLoader.getMenuManager().getPage(uuid);
+        int page =  this.crazyHandler.getMenuManager().getPage(uuid);
 
-        if (this.cratesLoader.getMenuManager().playerInMenu(player)) inventory.setItem(getAbsoluteItemPosition(4), this.cratesLoader.getMenuManager().getMenuButton());
+        if (this.crazyHandler.getMenuManager().playerInMenu(player)) inventory.setItem(getAbsoluteItemPosition(4), this.crazyHandler.getMenuManager().getMenuButton());
 
         if (page == 1) {
             if (this.borderToggle) inventory.setItem(getAbsoluteItemPosition(3), this.boarderItem.build());
         } else {
-            inventory.setItem(getAbsoluteItemPosition(3), this.cratesLoader.getMenuManager().getBackButton(uuid));
+            inventory.setItem(getAbsoluteItemPosition(3), this.crazyHandler.getMenuManager().getBackButton(uuid));
         }
 
         if (page == this.maxPage) {
             if (this.borderToggle) inventory.setItem(getAbsoluteItemPosition(5), this.boarderItem.build());
         } else {
-            inventory.setItem(getAbsoluteItemPosition(5), this.cratesLoader.getMenuManager().getNextButton(uuid));
+            inventory.setItem(getAbsoluteItemPosition(5), this.crazyHandler.getMenuManager().getNextButton(uuid));
         }
     }
 }

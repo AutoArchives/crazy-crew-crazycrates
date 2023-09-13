@@ -106,7 +106,7 @@ public class Config implements SettingsHolder {
     public static final Property<Boolean> customizer_toggle = newProperty("gui-settings.customizer.toggle", true);
 
     @Comment("Place any fancy item in the gui including custom items.")
-    public static final Property<List<String>> customizer = newListProperty("gui-settings.customizer.items", List.of(
+    public static final Property<List<String>> customizer_item_list = newListProperty("gui-settings.customizer.items", List.of(
             "Slot:1, Item:BLACK_STAINED_GLASS_PANE, Name: ",
             "Slot:2, Item:BLACK_STAINED_GLASS_PANE, Name: ",
             "Slot:3, Item:BLACK_STAINED_GLASS_PANE, Name: ",

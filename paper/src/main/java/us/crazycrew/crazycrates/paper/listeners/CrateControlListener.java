@@ -35,7 +35,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
+import us.crazycrew.crazycrates.paper.api.plugin.CrazyHandler;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -45,11 +45,11 @@ public class CrateControlListener implements Listener { // Crate Control
     public static HashMap<UUID, Location> inUse = new HashMap<>();
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
-    private final @NotNull CrazyCratesLoader cratesLoader = this.plugin.getCratesLoader();
-    private final @NotNull BukkitUserManager userManager = this.cratesLoader.getUserManager();
-    private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
-    private final @NotNull Methods methods = this.cratesLoader.getMethods();
-    private final @NotNull ConfigManager configManager = this.cratesLoader.getConfigManager();
+    private final @NotNull CrazyHandler crazyHandler = this.plugin.getCrazyHandler();
+    private final @NotNull BukkitUserManager userManager = this.crazyHandler.getUserManager();
+    private final @NotNull CrazyManager crazyManager = this.crazyHandler.getCrazyManager();
+    private final @NotNull Methods methods = this.crazyHandler.getMethods();
+    private final @NotNull ConfigManager configManager = this.crazyHandler.getConfigManager();
     private final @NotNull SettingsManager config = this.configManager.getConfig();
     private final @NotNull SettingsManager mainMenuConfig = this.configManager.getMainMenuConfig();
     
@@ -97,8 +97,8 @@ public class CrateControlListener implements Listener { // Crate Control
 
                     if (loc.getCrateType() != CrateType.MENU) {
                         if (loc.getCrate().isPreviewEnabled()) {
-                             this.cratesLoader.getMenuManager().setPlayerInMenu(player, false);
-                             this.cratesLoader.getMenuManager().openNewPreview(player, loc.getCrate());
+                             this.crazyHandler.getMenuManager().setPlayerInMenu(player, false);
+                             this.crazyHandler.getMenuManager().openNewPreview(player, loc.getCrate());
                         } else {
                             player.sendMessage(Messages.PREVIEW_DISABLED.getMessage());
                         }
@@ -128,7 +128,7 @@ public class CrateControlListener implements Listener { // Crate Control
                     boolean openMenu = this.mainMenuConfig.getProperty(CrateMainMenu.crate_menu_toggle);
 
                     //This is to stop players in QuadCrate to not be able to try and open a crate set to menu.
-                    if (!this.crazyManager.isInOpeningList(uuid) && openMenu) this.cratesLoader.getMenuManager().openMainMenu(player);
+                    if (!this.crazyManager.isInOpeningList(uuid) && openMenu) this.crazyHandler.getMenuManager().openMainMenu(player);
 
                     return;
                 }

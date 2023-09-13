@@ -1,4 +1,4 @@
-package us.crazycrew.crazycrates.common.config.api;
+package us.crazycrew.crazycrates.common.api;
 
 import com.ryderbelserion.cluster.api.adventure.FancyLogger;
 import org.jetbrains.annotations.NotNull;
@@ -6,8 +6,8 @@ import org.jetbrains.annotations.Nullable;
 import us.crazycrew.crazycrates.api.CrazyCrates;
 import us.crazycrew.crazycrates.api.CrazyCratesProvider;
 import us.crazycrew.crazycrates.api.platforms.Platform;
+import us.crazycrew.crazycrates.common.api.registry.PluginRegistry;
 import us.crazycrew.crazycrates.common.config.ConfigManager;
-import us.crazycrew.crazycrates.common.config.api.registry.PluginRegistry;
 import java.io.File;
 import java.util.List;
 

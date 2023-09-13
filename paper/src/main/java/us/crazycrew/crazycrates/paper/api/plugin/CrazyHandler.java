@@ -3,13 +3,13 @@ package us.crazycrew.crazycrates.paper.api.plugin;
 import org.jetbrains.annotations.Nullable;
 import us.crazycrew.crazycrates.api.platforms.Platform;
 import us.crazycrew.crazycrates.common.CrazyCratesPlugin;
+import us.crazycrew.crazycrates.common.config.ConfigManager;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.Methods;
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
 import us.crazycrew.crazycrates.paper.api.EventLogger;
 import us.crazycrew.crazycrates.paper.api.FileManager.Files;
 import us.crazycrew.crazycrates.paper.api.FileManager;
-import us.crazycrew.crazycrates.common.config.ConfigManager;
 import us.crazycrew.crazycrates.common.config.types.PluginConfig;
 import us.crazycrew.crazycrates.paper.api.plugin.frame.BukkitUserManager;
 import us.crazycrew.crazycrates.paper.api.managers.MenuManager;
@@ -21,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.paper.support.structures.blocks.ChestManager;
 import java.io.File;
 
-public class CrazyCratesLoader extends CrazyCratesPlugin {
+public class CrazyHandler extends CrazyCratesPlugin {
     
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
 
@@ -38,7 +38,7 @@ public class CrazyCratesLoader extends CrazyCratesPlugin {
 
     private Methods methods;
 
-    public CrazyCratesLoader(File dataFolder) {
+    public CrazyHandler(File dataFolder) {
         super(dataFolder, Platform.Type.PAPER);
     }
 

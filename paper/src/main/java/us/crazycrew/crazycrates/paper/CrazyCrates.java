@@ -5,7 +5,7 @@ import us.crazycrew.crazycrates.common.config.types.PluginConfig;
 import us.crazycrew.crazycrates.paper.api.enums.settings.Messages;
 import us.crazycrew.crazycrates.paper.api.managers.QuadCrateManager;
 import us.crazycrew.crazycrates.paper.api.objects.CrateLocation;
-import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
+import us.crazycrew.crazycrates.paper.api.plugin.CrazyHandler;
 import us.crazycrew.crazycrates.paper.commands.subs.CrateBaseCommand;
 import us.crazycrew.crazycrates.paper.commands.subs.player.BaseKeyCommand;
 import us.crazycrew.crazycrates.paper.cratetypes.CSGO;
@@ -42,14 +42,14 @@ public class CrazyCrates extends JavaPlugin {
 
     private final BukkitCommandManager<CommandSender> manager = BukkitCommandManager.create(this);
 
-    private CrazyCratesLoader cratesLoader;
+    private CrazyHandler crazyHandler;
 
     @Override
     public void onEnable() {
-        this.cratesLoader = new CrazyCratesLoader(getDataFolder());
-        this.cratesLoader.install();
+        this.crazyHandler = new CrazyHandler(getDataFolder());
+        this.crazyHandler.install();
 
-        boolean useMiniMessage = this.cratesLoader.getConfigManager().getPluginConfig().getProperty(PluginConfig.use_mini_message);
+        boolean useMiniMessage = this.crazyHandler.getConfigManager().getPluginConfig().getProperty(PluginConfig.use_mini_message);
 
         if (!useMiniMessage) {
             List.of(
@@ -68,13 +68,13 @@ public class CrazyCrates extends JavaPlugin {
 
         this.quickCrate.removeAllRewards();
 
-        if (this.cratesLoader.getCrazyManager().getHologramController() != null) this.cratesLoader.getCrazyManager().getHologramController().removeAllHolograms();
+        if (this.crazyHandler.getCrazyManager().getHologramController() != null) this.crazyHandler.getCrazyManager().getHologramController().removeAllHolograms();
 
-        this.cratesLoader.uninstall();
+        this.crazyHandler.uninstall();
     }
 
-    public @NotNull CrazyCratesLoader getCratesLoader() {
-        return this.cratesLoader;
+    public @NotNull CrazyHandler getCrazyHandler() {
+        return this.crazyHandler;
     }
 
     private War war;
@@ -140,9 +140,9 @@ public class CrazyCrates extends JavaPlugin {
 
         this.fireCracker = new FireCracker();
 
-        this.cratesLoader.getCrazyManager().load(true);
+        this.crazyHandler.getCrazyManager().load(true);
 
-        if (!this.cratesLoader.getCrazyManager().getBrokeCrateLocations().isEmpty()) pluginManager.registerEvents(new BrokeLocationsListener(), this);
+        if (!this.crazyHandler.getCrazyManager().getBrokeCrateLocations().isEmpty()) pluginManager.registerEvents(new BrokeLocationsListener(), this);
 
         if (PluginSupport.PLACEHOLDERAPI.isPluginEnabled()) new PlaceholderAPISupport().register();
 
@@ -194,18 +194,18 @@ public class CrazyCrates extends JavaPlugin {
 
         this.manager.registerMessage(BukkitMessageKey.CONSOLE_ONLY, (sender, context) -> sender.sendMessage(Messages.MUST_BE_A_CONSOLE_SENDER.getMessage()));
 
-        this.manager.registerSuggestion(SuggestionKey.of("crates"), (sender, context) -> getCratesLoader().getFileManager().getAllCratesNames(this).stream().toList());
+        this.manager.registerSuggestion(SuggestionKey.of("crates"), (sender, context) -> getCrazyHandler().getFileManager().getAllCratesNames(this).stream().toList());
 
         this.manager.registerSuggestion(SuggestionKey.of("key-types"), (sender, context) -> List.of("virtual", "v", "physical", "p"));
 
         this.manager.registerSuggestion(SuggestionKey.of("online-players"), (sender, context) -> getServer().getOnlinePlayers().stream().map(Player::getName).toList());
 
-        this.manager.registerSuggestion(SuggestionKey.of("locations"), (sender, context) -> getCratesLoader().getCrazyManager().getCrateLocations().stream().map(CrateLocation::getID).toList());
+        this.manager.registerSuggestion(SuggestionKey.of("locations"), (sender, context) -> getCrazyHandler().getCrazyManager().getCrateLocations().stream().map(CrateLocation::getID).toList());
 
         this.manager.registerSuggestion(SuggestionKey.of("prizes"), (sender, context) -> {
             List<String> numbers = new ArrayList<>();
 
-            this.cratesLoader.getCrazyManager().getCrateFromName(context.getArgs().get(0)).getPrizes().forEach(prize -> numbers.add(prize.getName()));
+            this.crazyHandler.getCrazyManager().getCrateFromName(context.getArgs().get(0)).getPrizes().forEach(prize -> numbers.add(prize.getName()));
 
             return numbers;
         });
