@@ -70,7 +70,13 @@ public class CrateBaseCommand extends BaseCommand {
     @SubCommand("help")
     @Permission(value = "crazycrates.command.player.help", def = PermissionDefault.TRUE)
     public void onHelp(CommandSender sender) {
-        sender.sendMessage(Messages.HELP.getMessage());
+        //TODO() Paginated help list with permission filtering.
+        /*if (sender.hasPermission(new org.bukkit.permissions.Permission("crazycrates.admin-access", PermissionDefault.NOT_OP))) {
+            sender.sendMessage(Messages.ADMIN_HELP.getMessage());
+            return;
+        }
+
+        sender.sendMessage(Messages.HELP.getMessage());*/
     }
 
     @SubCommand("transfer")
