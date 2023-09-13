@@ -145,7 +145,7 @@ public class BukkitUserManager extends UserManager {
                     addVirtualKeys(amount, player.getUniqueId(), crate.getName());
 
                     if (this.config.getProperty(Config.give_virtual_keys_message)) {
-                        player.sendMessage(Messages.CANNOT_GIVE_PLAYER_KEYS.getMessage().replaceAll("%amount%", String.valueOf(amount)).replaceAll("%key%", crate.getName()));
+                        player.sendMessage(Messages.CANNOT_GIVE_PLAYER_KEYS.getMessage().replaceAll("\\{amount}", String.valueOf(amount)).replaceAll("\\{key}", crate.getName()));
                     }
 
                     return;

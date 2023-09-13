@@ -9,6 +9,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import us.crazycrew.crazycrates.common.config.types.PluginConfig;
 import us.crazycrew.crazycrates.common.enums.Permissions;
 import us.crazycrew.crazycrates.paper.api.enums.settings.Messages;
 import us.crazycrew.crazycrates.paper.api.events.PlayerPrizeEvent;
@@ -65,7 +66,7 @@ public class Methods {
         if (crateBroadcastBoolean && crateBroadcastBooleanExists != null && crateBroadcast != null) {
             if (crateBroadcast.isEmpty()) return;
 
-            this.plugin.getServer().broadcastMessage(color(crateBroadcast.replaceAll("%prefix%", quoteReplacement(getPrefix())).replaceAll("%player%", player.getName()).replaceAll("%Prefix%", quoteReplacement(getPrefix())).replaceAll("%Player%", player.getName())));
+            this.plugin.getServer().broadcastMessage(color(crateBroadcast.replaceAll("\\{prefix}", quoteReplacement(getPrefix())).replaceAll("\\{player}", player.getName()).replaceAll("\\{prefix}", quoteReplacement(getPrefix())).replaceAll("\\{player}", player.getName())));
         }
     }
 
@@ -75,12 +76,12 @@ public class Methods {
         String prefix = getPrefix();
 
         if (commandSender instanceof Player player) {
-            if (!prefix.isEmpty() && prefixToggle) player.sendMessage(color(message.replaceAll("%prefix%", quoteReplacement(prefix))).replaceAll("%Prefix%", quoteReplacement(prefix))); else player.sendMessage(color(message));
+            if (!prefix.isEmpty() && prefixToggle) player.sendMessage(color(message.replaceAll("\\{prefix}", quoteReplacement(prefix))).replaceAll("\\{prefix}", quoteReplacement(prefix))); else player.sendMessage(color(message));
 
             return;
         }
 
-        if (!prefix.isEmpty() && prefixToggle) commandSender.sendMessage(color(message.replaceAll("%prefix%", quoteReplacement(prefix))).replaceAll("%Prefix%", quoteReplacement(prefix))); else commandSender.sendMessage(color(message));
+        if (!prefix.isEmpty() && prefixToggle) commandSender.sendMessage(color(message.replaceAll("\\{prefix}", quoteReplacement(prefix))).replaceAll("\\{prefix}", quoteReplacement(prefix))); else commandSender.sendMessage(color(message));
     }
 
     public void sendCommand(String command) {
@@ -159,11 +160,11 @@ public class Methods {
 
     //TODO() Find prefix
     public String getPrefix() {
-        return color(" ");
+        return color(this.plugin.getCratesLoader().getConfigManager().getPluginConfig().getProperty(PluginConfig.command_prefix));
     }
 
     public String getPrefix(String msg) {
-        return color(" " + msg);
+        return color(getPrefix() + msg);
     }
 
     public boolean isInventoryFull(Player player) {

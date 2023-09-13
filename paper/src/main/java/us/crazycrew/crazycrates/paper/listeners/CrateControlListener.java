@@ -148,7 +148,7 @@ public class CrateControlListener implements Listener { // Crate Control
                     int totalKeys = this.userManager.getTotalKeys(uuid, crate.getName());
 
                     if (requiredKeys > 0 && totalKeys < requiredKeys) {
-                        player.sendMessage(Messages.REQUIRED_KEYS.getMessage().replaceAll("%key-amount%", String.valueOf(requiredKeys)).replaceAll("%crate%", crate.getPreviewName()).replaceAll("%amount%", String.valueOf(totalKeys)));
+                        player.sendMessage(Messages.REQUIRED_KEYS.getMessage().replaceAll("\\{key-amount}", String.valueOf(requiredKeys)).replaceAll("\\{crate}", crate.getPreviewName()).replaceAll("\\{amount}", String.valueOf(totalKeys)));
                         return;
                     }
 

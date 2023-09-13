@@ -172,7 +172,7 @@ public class MenuManager {
 
                         option = getCrates(player, option);
 
-                        item.setName(option.replaceAll("%player%", player.getName()));
+                        item.setName(option.replaceAll("\\{player}", player.getName()));
                     }
 
                     if (option.contains("Lore:")) {
@@ -182,13 +182,13 @@ public class MenuManager {
                         for (String ignored : d) {
                             option = getCrates(player, option);
 
-                            item.addLore(option.replaceAll("%player%", player.getName()));
+                            item.addLore(option.replaceAll("\\{player}", player.getName()));
                         }
                     }
 
                     if (option.contains("Glowing:")) item.setGlow(Boolean.parseBoolean(option.replace("Glowing:", "")));
 
-                    if (option.contains("Player:")) item.setPlayerName(option.replaceAll("%player%", player.getName()));
+                    if (option.contains("Player:")) item.setPlayerName(option.replaceAll("\\{player}", player.getName()));
 
                     if (option.contains("Slot:")) slot = Integer.parseInt(option.replace("Slot:", ""));
 
