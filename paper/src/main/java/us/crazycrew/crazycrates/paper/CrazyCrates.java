@@ -170,12 +170,14 @@ public class CrazyCrates extends JavaPlugin {
             String command = context.getCommand();
             String subCommand = context.getSubCommand();
 
-            String commandOrder = "/" + command + " " + subCommand + " ";
+            StringBuilder commandOrder = new StringBuilder("/" + command);
+
+            commandOrder.append(" ").append(subCommand).append(" ");
 
             String correctUsage = null;
 
             switch (command) {
-                case "crates" -> correctUsage = getString(subCommand, commandOrder);
+                case "crates" -> correctUsage = getString(subCommand, commandOrder.toString());
                 case "keys" -> {
                     if (subCommand.equals("view")) correctUsage = "/keys " + subCommand + " <player-name>";
                 }
