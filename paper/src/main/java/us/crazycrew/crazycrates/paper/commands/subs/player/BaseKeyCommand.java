@@ -1,6 +1,7 @@
 package us.crazycrew.crazycrates.paper.commands.subs.player;
 
 import net.kyori.adventure.text.Component;
+import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.java.JavaPlugin;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
@@ -22,7 +23,7 @@ public class BaseKeyCommand extends BaseCommand {
     private final @NotNull CrazyManager crazyManager = this.cratesLoader.getCrazyManager();
 
     @Default
-    @Permission("crazycrates.command.player.key")
+    @Permission(value = "crazycrates.key", def = PermissionDefault.TRUE)
     public void viewPersonal(Player player) {
         //Messages1 header = Messages1.command_keys_personal_virtual_keys_header.getMessage();
 
@@ -32,7 +33,7 @@ public class BaseKeyCommand extends BaseCommand {
     }
 
     @SubCommand("view")
-    @Permission("crazycrates.command.player.key.others")
+    @Permission(value = "crazycrates.key-others", def = PermissionDefault.TRUE)
     public void viewOthers(CommandSender sender, @Suggestion ("online-players") Player target) {
         if (target == sender) {
             //sender.sendMessage(Messages1.same_player.getMessage().toComponent());

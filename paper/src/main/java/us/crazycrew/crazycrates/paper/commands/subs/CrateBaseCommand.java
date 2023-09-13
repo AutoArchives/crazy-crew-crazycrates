@@ -60,7 +60,7 @@ public class CrateBaseCommand extends BaseCommand {
     private final @NotNull SettingsManager menuConfig = this.configManager.getMainMenuConfig();
 
     @Default
-    @Permission(value = "crazycrates.command.player.menu", def = PermissionDefault.TRUE)
+    @Permission(value = "crazycrates.crate-menu", def = PermissionDefault.TRUE)
     public void onDefaultMenu(Player player) {
         boolean openMenu = this.menuConfig.getProperty(CrateMainMenu.crate_menu_toggle);
 
@@ -68,7 +68,7 @@ public class CrateBaseCommand extends BaseCommand {
     }
 
     @SubCommand("help")
-    @Permission(value = "crazycrates.command.player.help", def = PermissionDefault.TRUE)
+    @Permission(value = "crazycrates.help", def = PermissionDefault.TRUE)
     public void onHelp(CommandSender sender) {
         //TODO() Paginated help list with permission filtering.
         /*if (sender.hasPermission(new org.bukkit.permissions.Permission("crazycrates.admin-access", PermissionDefault.NOT_OP))) {
@@ -80,7 +80,7 @@ public class CrateBaseCommand extends BaseCommand {
     }
 
     @SubCommand("transfer")
-    @Permission(value = "crazycrates.command.player.transfer", def = PermissionDefault.OP)
+    @Permission(value = "crazycrates.transfer", def = PermissionDefault.FALSE)
     public void onPlayerTransferKeys(Player sender, @Suggestion("crates") String crateName, @Suggestion("online-players") Player player, @Suggestion("numbers") int amount) {
         Crate crate = this.crazyManager.getCrateFromName(crateName);
 
@@ -126,7 +126,7 @@ public class CrateBaseCommand extends BaseCommand {
     }
 
     @SubCommand("reload")
-    @Permission(value = "crazycrates.command.admin.reload", def = PermissionDefault.OP)
+    @Permission(value = "crazycrates.reload", def = PermissionDefault.FALSE)
     public void onReload(CommandSender sender) {
         this.fileManager.reloadAllFiles();
         this.fileManager.setup();
@@ -141,7 +141,7 @@ public class CrateBaseCommand extends BaseCommand {
     }
 
     @SubCommand("debug")
-    @Permission(value = "crazycrates.command.admin.debug", def = PermissionDefault.OP)
+    @Permission(value = "crazycrates.debug", def = PermissionDefault.FALSE)
     public void onDebug(Player player, @Suggestion("crates") String crateName) {
         Crate crate = this.crazyManager.getCrateFromName(crateName);
 
@@ -154,19 +154,19 @@ public class CrateBaseCommand extends BaseCommand {
     }
 
     @SubCommand("schem-save")
-    @Permission(value = "crazycrates.command.admin.schematic.save", def = PermissionDefault.OP)
+    @Permission(value = "crazycrates.schematic-save", def = PermissionDefault.FALSE)
     public void onAdminSave(Player player) {
         player.sendMessage(Messages.FEATURE_DISABLED.getMessage());
     }
 
     @SubCommand("schem-set")
-    @Permission(value = "crazycrates.command.admin.schematic.set", def = PermissionDefault.OP)
+    @Permission(value = "crazycrates.schematic-set", def = PermissionDefault.FALSE)
     public void onAdminSet(Player player) {
         player.sendMessage(Messages.FEATURE_DISABLED.getMessage());
     }
 
     @SubCommand("admin")
-    @Permission(value = "crazycrates.command.admin.access", def = PermissionDefault.OP)
+    @Permission(value = "crazycrates.admin-access", def = PermissionDefault.FALSE)
     public void onAdminMenu(Player player) {
         int size = this.crazyManager.getCrates().size();
         int slots = 9;
@@ -185,7 +185,7 @@ public class CrateBaseCommand extends BaseCommand {
     }
 
     @SubCommand("list")
-    @Permission(value = "crazycrates.command.admin.list", def = PermissionDefault.OP)
+    @Permission(value = "crazycrates.list", def = PermissionDefault.FALSE)
     public void onAdminList(CommandSender sender) {
         StringBuilder crates = new StringBuilder();
         String brokecrates;
@@ -220,7 +220,7 @@ public class CrateBaseCommand extends BaseCommand {
     }
 
     @SubCommand("tp")
-    @Permission(value = "crazycrates.command.admin.teleport", def = PermissionDefault.OP)
+    @Permission(value = "crazycrates.teleport", def = PermissionDefault.FALSE)
     public void onAdminTeleport(Player player, @Suggestion("locations") String id) {
         FileConfiguration locations = FileManager.Files.LOCATIONS.getFile();
 
@@ -250,7 +250,7 @@ public class CrateBaseCommand extends BaseCommand {
     }
 
     @SubCommand("additem")
-    @Permission(value = "crazycrates.command.admin.additem", def = PermissionDefault.OP)
+    @Permission(value = "crazycrates.additem", def = PermissionDefault.FALSE)
     public void onAdminCrateAddItem(Player player, @Suggestion("crates") String crateName, @Suggestion("prizes") String prize) {
         ItemStack item = player.getInventory().getItemInMainHand();
 
@@ -284,7 +284,7 @@ public class CrateBaseCommand extends BaseCommand {
     }
 
     @SubCommand("preview")
-    @Permission(value = "crazycrates.command.admin.preview", def = PermissionDefault.OP)
+    @Permission(value = "crazycrates.preview", def = PermissionDefault.FALSE)
     public void onAdminCratePreview(CommandSender sender, @Suggestion("crates") String crateName, @Suggestion("online-players") Player player) {
         Crate crate = this.crazyManager.getCrateFromName(crateName);
 
@@ -303,13 +303,13 @@ public class CrateBaseCommand extends BaseCommand {
     }
 
     @SubCommand("open-others")
-    @Permission(value = "crazycrates.command.admin.open.others", def = PermissionDefault.OP)
+    @Permission(value = "crazycrates.open-others", def = PermissionDefault.FALSE)
     public void onAdminCrateOpenOthers(CommandSender sender, @Suggestion("crates") String crateName, @Suggestion("online-players") Player player) {
         openCrate(sender, player, crateName);
     }
 
     @SubCommand("open")
-    @Permission(value = "crazycrates.command.admin.open", def = PermissionDefault.OP)
+    @Permission(value = "crazycrates.open", def = PermissionDefault.FALSE)
     public void onAdminCrateOpen(Player player, @Suggestion("crates") String crateName) {
         openCrate(player, player, crateName);
     }
@@ -382,7 +382,7 @@ public class CrateBaseCommand extends BaseCommand {
     }
 
     @SubCommand("mass-open")
-    @Permission(value = "crazycrates.command.admin.massopen", def = PermissionDefault.OP)
+    @Permission(value = "crazycrates.mass-open", def = PermissionDefault.FALSE)
     public void onAdminCrateMassOpen(Player player, @Suggestion("crates") String crateName, @Suggestion("numbers") int amount) {
         UUID uuid = player.getUniqueId();
 
@@ -427,7 +427,7 @@ public class CrateBaseCommand extends BaseCommand {
     }
 
     @SubCommand("forceopen")
-    @Permission(value = "crazycrates.command.admin.forceopen", def = PermissionDefault.OP)
+    @Permission(value = "crazycrates.force-open", def = PermissionDefault.FALSE)
     public void onAdminForceOpen(CommandSender sender, @Suggestion("crates") String crateName, @Suggestion("online-players") Player player) {
         Crate crate = this.crazyManager.getCrateFromName(crateName);
 
@@ -464,7 +464,7 @@ public class CrateBaseCommand extends BaseCommand {
     }
 
     @SubCommand("set")
-    @Permission(value = "crazycrates.command.admin.set", def = PermissionDefault.OP)
+    @Permission(value = "crazycrates.set-crate", def = PermissionDefault.FALSE)
     public void onAdminCrateSet(Player player, @Suggestion("crates") String crateName) {
         Crate crate = this.crazyManager.getCrateFromName(crateName);
 
@@ -496,7 +496,7 @@ public class CrateBaseCommand extends BaseCommand {
     }
 
     @SubCommand("give-random")
-    @Permission(value = "crazycrates.command.admin.giverandomkey", def = PermissionDefault.OP)
+    @Permission(value = "crazycrates.give-random-key", def = PermissionDefault.FALSE)
     public void onAdminCrateGiveRandom(CommandSender sender, @Suggestion("key-types") String keyType, @Suggestion("numbers") int amount, @Suggestion("online-players") CustomPlayer player) {
         Crate crate = this.crazyManager.getCrates().get((int) this.crazyManager.pickNumber(0, (this.crazyManager.getCrates().size() - 2)));
 
@@ -564,7 +564,7 @@ public class CrateBaseCommand extends BaseCommand {
     }
 
     @SubCommand("give")
-    @Permission(value = "crazycrates.command.admin.givekey", def = PermissionDefault.OP)
+    @Permission(value = "crazycrates.give-key", def = PermissionDefault.FALSE)
     public void onAdminCrateGive(CommandSender sender, @Suggestion("key-types") String keyType, @Suggestion("crates") String crateName, @Suggestion("numbers") int amount, @Suggestion("online-players") CustomPlayer target) {
         KeyType type = KeyType.getFromName(keyType);
         Crate crate = this.crazyManager.getCrateFromName(crateName);
@@ -628,7 +628,7 @@ public class CrateBaseCommand extends BaseCommand {
     }
 
     @SubCommand("take")
-    @Permission(value = "crazycrates.command.admin.takekey", def = PermissionDefault.OP)
+    @Permission(value = "crazycrates.take-key", def = PermissionDefault.FALSE)
     public void onAdminCrateTake(CommandSender sender, @Suggestion("key-types") String keyType, @Suggestion("crates") String crateName, @Suggestion("numbers") int amount, @Suggestion("online-players") CustomPlayer target) {
         KeyType type = KeyType.getFromName(keyType);
 
@@ -658,7 +658,7 @@ public class CrateBaseCommand extends BaseCommand {
     }
 
     @SubCommand("giveall")
-    @Permission(value = "crazycrates.command.admin.giveall", def = PermissionDefault.OP)
+    @Permission(value = "crazycrates.give-all", def = PermissionDefault.FALSE)
     public void onAdminCrateGiveAllKeys(CommandSender sender, @Suggestion("key-types") @ArgName("key-type") String keyType, @Suggestion("crates") @ArgName("crate-name") String crateName, @Suggestion("numbers") int amount) {
         KeyType type = KeyType.getFromName(keyType);
 
