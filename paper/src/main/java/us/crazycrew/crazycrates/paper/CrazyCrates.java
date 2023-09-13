@@ -54,7 +54,7 @@ public class CrazyCrates extends JavaPlugin {
         if (!useMiniMessage) {
             List.of(
                     "Legacy color codes such as &7 or &c and so on are deprecated and marked for removal.",
-                    "Please work on updating all your configurations as they will be removed in 2.1"
+                    "Please work on updating all your configurations as legacy colors codes will no longer work in 2.1"
             ).forEach(FancyLogger::warn);
         }
 
