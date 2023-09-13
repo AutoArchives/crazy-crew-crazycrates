@@ -1,6 +1,7 @@
 package us.crazycrew.crazycrates.paper;
 
 import org.jetbrains.annotations.NotNull;
+import us.crazycrew.crazycrates.common.config.types.PluginConfig;
 import us.crazycrew.crazycrates.paper.api.enums.settings.Messages;
 import us.crazycrew.crazycrates.paper.api.managers.QuadCrateManager;
 import us.crazycrew.crazycrates.paper.api.objects.CrateLocation;
@@ -46,7 +47,16 @@ public class CrazyCrates extends JavaPlugin {
     @Override
     public void onEnable() {
         this.cratesLoader = new CrazyCratesLoader(getDataFolder());
-        this.cratesLoader.enableLoader();
+        this.cratesLoader.install();
+
+        boolean useMiniMessage = this.cratesLoader.getConfigManager().getPluginConfig().getProperty(PluginConfig.use_mini_message);
+
+        if (!useMiniMessage) {
+            List.of(
+                    "Legacy color codes such as &7 or &c and so on are deprecated and marked for removal.",
+                    "Please work on updating all your configurations as they will be removed in 2.1"
+            ).forEach(FancyLogger::warn);
+        }
 
         enable();
     }
