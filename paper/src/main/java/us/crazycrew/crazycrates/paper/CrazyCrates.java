@@ -66,11 +66,11 @@ public class CrazyCrates extends JavaPlugin {
         QuadCrateManager.getCrateSessions().forEach(session -> session.endCrateForce(false));
         QuadCrateManager.clearSessions();
 
-        getQuickCrate().removeAllRewards();
+        this.quickCrate.removeAllRewards();
 
-        if (getCratesLoader().getCrazyManager().getHologramController() != null) getCratesLoader().getCrazyManager().getHologramController().removeAllHolograms();
+        if (this.cratesLoader.getCrazyManager().getHologramController() != null) this.cratesLoader.getCrazyManager().getHologramController().removeAllHolograms();
 
-        getCratesLoader().disableLoader();
+        this.cratesLoader.uninstall();
     }
 
     public @NotNull CrazyCratesLoader getCratesLoader() {
@@ -140,9 +140,9 @@ public class CrazyCrates extends JavaPlugin {
 
         this.fireCracker = new FireCracker();
 
-        getCratesLoader().getCrazyManager().load(true);
+        this.cratesLoader.getCrazyManager().load(true);
 
-        if (!getCratesLoader().getCrazyManager().getBrokeCrateLocations().isEmpty()) pluginManager.registerEvents(new BrokeLocationsListener(), this);
+        if (!this.cratesLoader.getCrazyManager().getBrokeCrateLocations().isEmpty()) pluginManager.registerEvents(new BrokeLocationsListener(), this);
 
         if (PluginSupport.PLACEHOLDERAPI.isPluginEnabled()) new PlaceholderAPISupport().register();
 
@@ -194,7 +194,7 @@ public class CrazyCrates extends JavaPlugin {
 
         this.manager.registerSuggestion(SuggestionKey.of("crates"), (sender, context) -> getCratesLoader().getFileManager().getAllCratesNames(this).stream().toList());
 
-        this.manager.registerSuggestion(SuggestionKey.of("key-types"), (sender, context) -> KEYS);
+        this.manager.registerSuggestion(SuggestionKey.of("key-types"), (sender, context) -> List.of("virtual", "v", "physical", "p"));
 
         this.manager.registerSuggestion(SuggestionKey.of("online-players"), (sender, context) -> getServer().getOnlinePlayers().stream().map(Player::getName).toList());
 
@@ -241,8 +241,6 @@ public class CrazyCrates extends JavaPlugin {
 
         return correctUsage;
     }
-
-    private static final List<String> KEYS = List.of("virtual", "v", "physical", "p");
 
     private void printHooks() {
         for (PluginSupport value : PluginSupport.values()) {

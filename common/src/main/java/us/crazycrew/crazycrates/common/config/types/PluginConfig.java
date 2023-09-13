@@ -44,6 +44,6 @@ public class PluginConfig implements SettingsHolder {
             "This option will only be here until v2.1 then you will be forced to use MiniMessage,",
             "It is only added as an option to give you time to convert your configurations."
     })
-    public static final Property<Boolean> USE_MINI_MESSAGE = PropertyInitializer.newProperty("use_minimessage", true);
+    public static final Property<Boolean> use_mini_message = PropertyInitializer.newProperty("use_minimessage", true);
 
 }
