@@ -163,7 +163,7 @@ public class CrazyCrates extends JavaPlugin {
                 }
             }
 
-            if (correctUsage != null) sender.sendMessage(Messages.CORRECT_USAGE.getMessage().replace("%usage%", correctUsage));
+            if (correctUsage != null) sender.sendMessage(Messages.CORRECT_USAGE.getMessage().replaceAll("\\{usage}", correctUsage));
         });
 
         this.manager.registerMessage(MessageKey.NOT_ENOUGH_ARGUMENTS, (sender, context) -> {
@@ -183,10 +183,10 @@ public class CrazyCrates extends JavaPlugin {
                 }
             }
 
-            if (correctUsage != null) sender.sendMessage(Messages.CORRECT_USAGE.getMessage().replace("%usage%", correctUsage));
+            if (correctUsage != null) sender.sendMessage(Messages.CORRECT_USAGE.getMessage().replaceAll("\\{usage}", correctUsage));
         });
 
-        this.manager.registerMessage(MessageKey.INVALID_ARGUMENT, (sender, context) -> sender.sendMessage(Messages.NOT_ONLINE.getMessage().replace("%player%", context.getTypedArgument())));
+        this.manager.registerMessage(MessageKey.INVALID_ARGUMENT, (sender, context) -> sender.sendMessage(Messages.NOT_ONLINE.getMessage().replaceAll("\\{player}", context.getTypedArgument())));
 
         this.manager.registerMessage(BukkitMessageKey.NO_PERMISSION, (sender, context) -> sender.sendMessage(Messages.NO_PERMISSION.getMessage()));
 
@@ -205,7 +205,7 @@ public class CrazyCrates extends JavaPlugin {
         this.manager.registerSuggestion(SuggestionKey.of("prizes"), (sender, context) -> {
             List<String> numbers = new ArrayList<>();
 
-            getCratesLoader().getCrazyManager().getCrateFromName(context.getArgs().get(0)).getPrizes().forEach(prize -> numbers.add(prize.getName()));
+            this.cratesLoader.getCrazyManager().getCrateFromName(context.getArgs().get(0)).getPrizes().forEach(prize -> numbers.add(prize.getName()));
 
             return numbers;
         });
