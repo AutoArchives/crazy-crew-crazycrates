@@ -138,44 +138,6 @@ public enum Messages {
     }
 
     /**
-     * Adds any missing messages to the Messages.yml file based on values in the Messages enum.
-     */
-    public static void addMissingMessages() {
-        FileConfiguration messages = null;
-        boolean saveFile = false;
-
-        for (Messages message : values()) {
-            if (!messages.contains("Messages." + message.getPath())) {
-                saveFile = true;
-                if (message.getDefaultMessage() != null) {
-                    messages.set("Messages." + message.getPath(), message.getDefaultMessage());
-                } else {
-                    messages.set("Messages." + message.getPath(), message.getDefaultListMessage());
-                }
-            }
-        }
-
-        String tooManyArgs = messages.getString("Messages.Too-Many-Args");
-        String tooFewArgs = messages.getString("Messages.Not-Enough-Args");
-
-        if (tooManyArgs != null) {
-            FancyLogger.info("Found outdated config entry: " + tooManyArgs);
-            FancyLogger.info("Removing now, Please use `Correct-Usage` from now on." );
-
-            messages.set("Messages.Too-Many-Args", null);
-        }
-
-        if (tooFewArgs != null) {
-            FancyLogger.info("Found outdated config entry: " + tooFewArgs);
-            FancyLogger.info("Removing now, Please use `Correct-Usage` from now on." );
-
-            messages.set("Messages.Not-Enough-Args", null);
-        }
-
-        //if (saveFile) FileManager.Files.MESSAGES.saveFile();
-    }
-
-    /**
      * Get the message with a prefix.
      *
      * @return the completed message
