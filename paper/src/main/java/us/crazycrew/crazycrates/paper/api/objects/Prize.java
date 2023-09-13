@@ -1,13 +1,10 @@
 package us.crazycrew.crazycrates.paper.api.objects;
 
-import us.crazycrew.crazycrates.paper.CrazyCrates;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class Prize {
     

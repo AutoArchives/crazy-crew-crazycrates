@@ -3,13 +3,8 @@ package us.crazycrew.crazycrates.paper.api.enums.settings;
 import org.bukkit.plugin.java.JavaPlugin;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.Methods;
-import us.crazycrew.crazycrates.paper.api.FileManager;
-import com.ryderbelserion.cluster.api.adventure.FancyLogger;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;

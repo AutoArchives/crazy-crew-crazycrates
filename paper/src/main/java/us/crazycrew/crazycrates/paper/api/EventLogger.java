@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.paper.api.plugin.CrazyCratesLoader;
-
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
