@@ -42,7 +42,7 @@ public class CrazyCratesLoader extends CrazyCratesPlugin {
         super(dataFolder, Platform.Type.PAPER);
     }
 
-    public void enableLoader() {
+    public void install() {
         // Enable cluster bukkit api
         this.bukkitPlugin = new BukkitPlugin(this.plugin);
         this.bukkitPlugin.enable();
@@ -114,7 +114,7 @@ public class CrazyCratesLoader extends CrazyCratesPlugin {
         }
     }
 
-    public void disableLoader() {
+    public void uninstall() {
         // Reload plugin
         this.crazyManager.reload(true);
 
