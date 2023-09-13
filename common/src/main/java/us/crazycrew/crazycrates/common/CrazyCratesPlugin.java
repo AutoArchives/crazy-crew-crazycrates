@@ -5,6 +5,8 @@ import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.api.platforms.Platform;
 import us.crazycrew.crazycrates.common.config.ConfigManager;
 import us.crazycrew.crazycrates.common.config.api.AbstractPlugin;
+import us.crazycrew.crazycrates.common.config.types.PluginConfig;
+
 import java.io.File;
 
 public abstract class CrazyCratesPlugin extends AbstractPlugin {
@@ -21,7 +23,7 @@ public abstract class CrazyCratesPlugin extends AbstractPlugin {
         this.configManager = new ConfigManager(getDataFolder());
         this.configManager.load();
 
-        FancyLogger.setName("<white>[<gradient:#FE5F55:#6b55b5>CrazyCrates</gradient>]</white>");
+        FancyLogger.setName(this.configManager.getPluginConfig().getProperty(PluginConfig.console_prefix));
 
         super.apiWasLoadedByOurPlugin();
     }
