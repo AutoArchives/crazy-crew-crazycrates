@@ -33,7 +33,7 @@ public class PluginConfig implements SettingsHolder {
     public static final Property<String> command_prefix = PropertyInitializer.newProperty("command_prefix", "<red>[CrazyCrates]</red> ");
 
     @Comment("The console prefix you want shown when the logging messages show up!")
-    public static final Property<String> console_prefix = PropertyInitializer.newProperty("console_prefix" ,"<purple>[CrazyCrates</purple> ");
+    public static final Property<String> console_prefix = PropertyInitializer.newProperty("console_prefix" ,"<purple>[CrazyCrates]</purple> ");
 
     @Comment({
             "A temporary option to allow you to opt in for using MiniMessage.",
