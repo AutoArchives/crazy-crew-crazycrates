@@ -39,7 +39,7 @@ public class CrazyHandler extends CrazyCratesPlugin {
     private Methods methods;
 
     public CrazyHandler(File dataFolder) {
-        super(dataFolder, Platform.Type.PAPER);
+        super(dataFolder, Platform.type.paper);
     }
 
     public void install() {
@@ -53,7 +53,7 @@ public class CrazyHandler extends CrazyCratesPlugin {
         service.migrate();
 
         // Enable crazycrates api
-        super.enable();
+        super.enable(this.plugin.getServer().getConsoleSender());
 
         //TODO() Only use this when there is more then one file in locale folder.
         /*this.bukkitPlugin.getFileUtils().copyFiles(
