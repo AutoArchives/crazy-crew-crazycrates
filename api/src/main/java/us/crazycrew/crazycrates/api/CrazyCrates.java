@@ -9,7 +9,7 @@ public interface CrazyCrates {
 
     @NotNull UserManager getUserManager();
 
-    @NotNull Platform.Type getPlatform();
+    @NotNull Platform.type getPlatform();
 
     @NotNull File getDataFolder();
 

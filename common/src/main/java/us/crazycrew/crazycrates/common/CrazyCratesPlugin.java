@@ -14,7 +14,7 @@ public abstract class CrazyCratesPlugin extends AbstractPlugin {
 
     private ConfigManager configManager;
 
-    public CrazyCratesPlugin(File dataFolder, Platform.Type platform) {
+    public CrazyCratesPlugin(File dataFolder, Platform.type platform) {
         super(dataFolder, platform);
     }
 
