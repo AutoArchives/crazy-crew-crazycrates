@@ -4,9 +4,8 @@ import com.ryderbelserion.cluster.api.adventure.FancyLogger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import us.crazycrew.crazycrates.api.CrazyCrates;
-import us.crazycrew.crazycrates.api.CrazyCratesProvider;
+import us.crazycrew.crazycrates.api.CrazyCratesService;
 import us.crazycrew.crazycrates.api.platforms.Platform;
-import us.crazycrew.crazycrates.common.api.registry.PluginRegistry;
 import us.crazycrew.crazycrates.common.config.ConfigManager;
 import java.io.File;
 import java.util.List;
@@ -19,20 +18,20 @@ public abstract class AbstractPlugin implements CrazyCrates {
     @NotNull
     public abstract ConfigManager getConfigManager();
 
-    private final Platform.Type platform;
+    private final Platform.type platform;
     private final File dataFolder;
 
-    public AbstractPlugin(File dataFolder, Platform.Type platform) {
+    public AbstractPlugin(File dataFolder, Platform.type platform) {
         this.dataFolder = dataFolder;
         this.platform = platform;
     }
 
     public void enablePlugin() {
-        PluginRegistry.start(this);
+        CrazyCratesService.setService(this);
     }
 
     public void disablePlugin() {
-        PluginRegistry.stop();
+        CrazyCratesService.stopService();
     }
 
     /**
@@ -41,7 +40,7 @@ public abstract class AbstractPlugin implements CrazyCrates {
     public void apiWasLoadedByOurPlugin() {
         ClassLoader classLoader = this.platform.getClass().getClassLoader();
 
-        for (Class<?> apiClass : new Class[]{CrazyCrates.class, CrazyCratesProvider.class}) {
+        for (Class<?> apiClass : new Class[]{CrazyCrates.class, CrazyCratesService.class}) {
             ClassLoader apiClassLoader = apiClass.getClassLoader();
 
             if (!apiClassLoader.equals(classLoader)) {
@@ -67,7 +66,7 @@ public abstract class AbstractPlugin implements CrazyCrates {
 
     @NotNull
     @Override
-    public Platform.Type getPlatform() {
+    public Platform.type getPlatform() {
         return this.platform;
     }
 
