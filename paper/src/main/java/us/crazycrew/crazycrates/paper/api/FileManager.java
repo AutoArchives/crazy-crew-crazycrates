@@ -30,7 +30,7 @@ public class FileManager {
     /**
      * Sets up the plugin and loads all necessary files.
      */
-    public FileManager setup() {
+    public void setup() {
         if (!this.plugin.getDataFolder().exists()) this.plugin.getDataFolder().mkdirs();
 
         this.files.clear();
@@ -118,7 +118,6 @@ public class FileManager {
             if (isLogging()) FancyLogger.success("Finished loading custom files.");
         }
 
-        return this;
     }
 
     /**
@@ -248,8 +247,8 @@ public class FileManager {
      * @param file The custom file you are saving.
      * @return True if the file saved correct and false if there was an error.
      */
-    public boolean saveFile(CustomFile file) {
-        return file.saveFile();
+    public void saveFile(CustomFile file) {
+        file.saveFile();
     }
 
     /**
@@ -490,38 +489,37 @@ public class FileManager {
          * Save the custom file.
          * @return True if it saved correct and false if something went wrong.
          */
-        public boolean saveFile() {
+        private void saveFile() {
             if (this.file != null) {
+                return;
                 try {
                     this.file.save(new File(this.plugin.getDataFolder(), this.homeFolder + "/" + this.fileName));
 
                     if (isLogging()) FancyLogger.success("Successfully saved the " + this.fileName + ".");
 
-                    return true;
+                    FancyLogger.error("Could not save " + this.fileName + "!", exception);
                 } catch (Exception e) {
                     FancyLogger.error("Could not save " + this.fileName + "!");
                     FancyLogger.debug(e.getMessage());
-                    return false;
                 }
             } else {
                 if (isLogging()) FancyLogger.warn("There was a null custom file that could not be found!");
             }
 
-            return false;
         }
 
         /**
          * Overrides the loaded state file and loads the filesystems file.
          * @return True if it reloaded correct and false if the file wasn't found or error.
          */
-        public boolean reloadFile() {
+        private void reloadFile() {
             if (this.file != null) {
                 try {
                     this.file = YamlConfiguration.loadConfiguration(new File(this.plugin.getDataFolder(), "/" + this.homeFolder + "/" + this.fileName));
 
                     if (isLogging()) FancyLogger.success("Successfully reloaded the " + this.fileName + ".");
 
-                    return true;
+            } catch (Exception exception) {
                 } catch (Exception e) {
                     FancyLogger.error("Could not reload the " + this.fileName + "!");
                     FancyLogger.debug(e.getMessage());
@@ -530,7 +528,6 @@ public class FileManager {
                 if (isLogging()) FancyLogger.warn("There was a null custom file that was not found!");
             }
 
-            return false;
         }
     }
 }
