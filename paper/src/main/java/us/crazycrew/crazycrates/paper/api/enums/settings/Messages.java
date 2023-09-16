@@ -22,6 +22,7 @@ public enum Messages {
     NOT_ON_BLOCK("Not-On-Block", "&cYou must be standing on a block to use this Crate."),
     ALREADY_OPENING_CRATE("Already-Opening-Crate", "&cYou are already opening a Crate."),
     QUICK_CRATE_IN_USE("Quick-Crate-In-Use", "&cThat Crate is already in use. Please wait for the Crate to open up."),
+    NO_CRATE_PERMISSION("No-Crate-Permission", "&cYou do not have permission to use that crate."),
     WORLD_DISABLED("World-Disabled", "&cI am sorry but Crates are disabled in %world%."),
     RELOAD("Reload", "&3You have reloaded the Config and Data Files."),
     NOT_ONLINE("Not-Online", "&cThe player &6%player% &cis not online at this time."),
@@ -111,8 +112,8 @@ public enum Messages {
     }
 
     private static final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
-    private static final @NotNull CrazyHandler crazyHandler = plugin.getCrazyHandler()();
-    private static final @NotNull Methods methods = cratesLoader.getMethods();
+    private static final @NotNull CrazyHandler crazyHandler = plugin.getCrazyHandler();
+    private static final @NotNull Methods methods = crazyHandler.getMethods();
 
     /**
      * A method that will "convert" a StringList meaning it'll loop

@@ -76,6 +76,8 @@ public class Messages implements SettingsHolder {
     // Crates
     public static final Property<String> crate_requirements_not_a_crate = PropertyInitializer.newProperty("crates.requirements.not-a-crate", "<red>There is no crate called</red> <gold>{crate}.</gold>");
 
+    public static final Property<String> crate_requirements_no_permission = PropertyInitializer.newProperty("crates.requirements.no-permission", "<red>You do not have permission to use that crate</red>");
+
     public static final Property<String> crate_requirements_not_a_number = PropertyInitializer.newProperty("crates.requirements.not-a-number", "<gold>{number}</gold> <red>is not a number.</red>");
     public static final Property<String> crate_requirements_not_on_block = PropertyInitializer.newProperty("crates.requirements.not-on-block", "<red>You must be standing on a block to use</red> <gold>{crate}.</gold>");
 

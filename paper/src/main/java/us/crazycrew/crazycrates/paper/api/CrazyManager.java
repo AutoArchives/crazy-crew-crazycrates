@@ -382,6 +382,13 @@ public class CrazyManager {
             }
         }
 
+        if (!(player.hasPermission("crazycrates.open." + crate.getName()) || player.hasPermission("crazycrates.open.*"))) {
+            player.sendMessage(Messages.NO_CRATE_PERMISSION.getMessage());
+            removePlayerFromOpeningList(uuid);
+            CrateControlListener.inUse.remove(uuid);
+            return;
+        }
+
         addPlayerToOpeningList(uuid, crate);
 
         if (crate.getFile() != null) this.methods.broadCastMessage(crate.getFile(), player);

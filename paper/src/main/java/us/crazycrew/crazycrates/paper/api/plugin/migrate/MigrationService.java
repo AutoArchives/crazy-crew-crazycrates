@@ -314,6 +314,8 @@ public class MigrationService {
 
         String requiredKeys = yamlConfiguration.getString("Messages.Required-Keys");
 
+        String noCratePermission = yamlConfiguration.getString("Messages.No-Crate-Permission");
+
         this.messages.setProperty(Messages.unknown_command, convert(unknownCommand));
         this.messages.setProperty(Messages.no_teleporting, convert(noTeleporting));
         this.messages.setProperty(Messages.no_commands, convert(noCommandsWhileInCrate));
@@ -341,6 +343,7 @@ public class MigrationService {
         this.messages.setProperty(Messages.crate_requirements_not_a_number, convert(notANumber));
 
         this.messages.setProperty(Messages.crate_requirements_not_on_block, convert(notOnBlock));
+        this.messages.setProperty(Messages.crate_requirements_no_permission, convert(noCratePermission));
         this.messages.setProperty(Messages.crate_requirements_out_of_time, convert(outOfTime));
         this.messages.setProperty(Messages.crate_requirements_preview_disabled, convert(previewDisabled));
         this.messages.setProperty(Messages.crate_requirements_already_open, convert(crateAlreadyOpened));
