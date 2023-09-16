@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public class MigrationService {
     
@@ -42,15 +43,15 @@ public class MigrationService {
         copyMessages();
     }
 
-    private boolean copyPluginSettings() {
+    private void copyPluginSettings() {
         File input = new File(this.plugin.getDataFolder(),"config.yml");
 
         // The old configuration of config.yml.
-        YamlConfiguration config;
+        CompletableFuture<YamlConfiguration> future = CompletableFuture.supplyAsync(() -> YamlConfiguration.loadConfiguration(input));
 
-        config = YamlConfiguration.loadConfiguration(input);
+        YamlConfiguration config = future.join();
 
-        if (config.getString(this.prefix + "Prefix") == null) return false;
+        if (config.getString(this.prefix + "Prefix") == null) return;
 
         this.configManager = new ConfigManager(this.plugin.getDataFolder());
         this.configManager.load();
@@ -75,34 +76,30 @@ public class MigrationService {
 
             config.save(input);
 
-            return true;
         } catch (IOException exception) {
             exception.printStackTrace();
 
-            return false;
         }
     }
 
-    private boolean copyConfigSettings() {
+    private void copyConfigSettings() {
         File output = new File(this.plugin.getDataFolder(), "config-v1.yml");
 
         File configFile = new File(this.plugin.getDataFolder(), "config.yml");
 
+        CompletableFuture<YamlConfiguration> future = CompletableFuture.supplyAsync(() -> YamlConfiguration.loadConfiguration(configFile));
+
         // The old config file.
-        YamlConfiguration config;
+        YamlConfiguration config = future.join();
+
+        CompletableFuture<YamlConfiguration> future_v1 = CompletableFuture.supplyAsync(() -> YamlConfiguration.loadConfiguration(output));
 
         // The renamed config file.
-        YamlConfiguration config_v1;
+        YamlConfiguration config_v1 = future_v1.join();
 
-        // Only if the old value is found.
-        config = YamlConfiguration.loadConfiguration(configFile);
-
-        if (config.getString(this.prefix + "Enable-Crate-Menu") == null && !output.exists()) return false;
+        if (config.getString(this.prefix + "Enable-Crate-Menu") == null && !output.exists()) return;
 
         configFile.renameTo(output);
-
-        // Load the v1 output
-        config_v1 = YamlConfiguration.loadConfiguration(output);
 
         boolean enableCrateMenu = config_v1.getBoolean(this.prefix + "Enable-Crate-Menu");
         boolean crateLogFile = config_v1.getBoolean(this.prefix + "Crate-Actions.Log-File");
@@ -202,17 +199,18 @@ public class MigrationService {
 
         output.delete();
 
-        return true;
     }
 
-    private boolean copyMessages() {
+    private void copyMessages() {
         // The messages.yml
         File input = new File(this.plugin.getDataFolder(), "messages.yml");
 
-        if (!input.exists()) return false;
+        if (!input.exists()) return;
 
         // The old configuration of messages.yml
-        YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(input);
+        CompletableFuture<YamlConfiguration> future = CompletableFuture.supplyAsync(() -> YamlConfiguration.loadConfiguration(input));
+
+        YamlConfiguration yamlConfiguration = future.join();
 
         // All the values of the old file.
         String unknownCommand = yamlConfiguration.getString("Messages.Unknown-Command");
@@ -409,7 +407,6 @@ public class MigrationService {
                 )
         );*/
 
-        return true;
     }
 
     // Convert old placeholder lists.
