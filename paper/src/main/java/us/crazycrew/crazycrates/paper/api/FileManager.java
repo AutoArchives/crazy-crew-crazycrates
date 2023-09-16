@@ -48,11 +48,8 @@ public class FileManager {
                     File serverFile = new File(this.plugin.getDataFolder(), "/" + file.getFileLocation());
                     InputStream jarFile = getClass().getResourceAsStream("/" + file.getFileJar());
                     copyFile(jarFile, serverFile);
-                } catch (Exception e) {
-                    if (isLogging()) {
-                        FancyLogger.error("Failed to load file: " + file.getFileName());
-                        FancyLogger.debug(e.getMessage());
-                    }
+                } catch (Exception exception) {
+                    FancyLogger.error("Failed to load file: " + file.getFileName(), exception);
 
                     continue;
                 }
@@ -104,11 +101,8 @@ public class FileManager {
                                 if (fileName.toLowerCase().endsWith(".yml")) this.customFiles.add(new CustomFile(fileName, homeFolder));
 
                                 if (isLogging()) FancyLogger.info("Created new default file: " + homeFolder + "/" + fileName + ".");
-                            } catch (Exception e) {
-                                if (isLogging()) {
-                                    FancyLogger.error("Failed to create new default file: " + homeFolder + "/" + fileName + "!");
-                                    FancyLogger.debug(e.getMessage());
-                                }
+                            } catch (Exception exception) {
+                                FancyLogger.error("Failed to create new default file: " + homeFolder + "/" + fileName + "!", exception);
                             }
                         }
                     }
@@ -215,10 +209,10 @@ public class FileManager {
     public void saveFile(Files file) {
         try {
             this.configurations.get(file).save(this.files.get(file));
-        } catch (IOException e) {
-            FancyLogger.debug("Could not save " + file.getFileName() + "!");
-            FancyLogger.warn(e.getMessage());
-        }
+            } catch (IOException exception) {
+                FancyLogger.error("Could not save " + file.getFileName() + "!", exception);
+            }
+        });
     }
 
     /**
@@ -232,10 +226,9 @@ public class FileManager {
             try {
                 file.getFile().save(new File(this.plugin.getDataFolder(), file.getHomeFolder() + "/" + file.getFileName()));
 
-                if (isLogging()) FancyLogger.success("Successfully saved the " + file.getFileName() + ".");
-            } catch (Exception e) {
-                FancyLogger.error("Could not save " + file.getFileName() + "!");
-                FancyLogger.debug(e.getMessage());
+                if (isLogging()) FancyLogger.success("Successfully saved the " + customFile.getFileName() + ".");
+            } catch (IOException exception) {
+                FancyLogger.error("Could not save " + customFile.getFileName() + "!", exception);
             }
         } else {
             if (isLogging()) FancyLogger.warn("The file " + name + ".yml could not be found!");
@@ -496,11 +489,8 @@ public class FileManager {
                     this.file.save(new File(this.plugin.getDataFolder(), this.homeFolder + "/" + this.fileName));
 
                     if (isLogging()) FancyLogger.success("Successfully saved the " + this.fileName + ".");
-
+                } catch (IOException exception) {
                     FancyLogger.error("Could not save " + this.fileName + "!", exception);
-                } catch (Exception e) {
-                    FancyLogger.error("Could not save " + this.fileName + "!");
-                    FancyLogger.debug(e.getMessage());
                 }
             } else {
                 if (isLogging()) FancyLogger.warn("There was a null custom file that could not be found!");
@@ -520,10 +510,8 @@ public class FileManager {
                     if (isLogging()) FancyLogger.success("Successfully reloaded the " + this.fileName + ".");
 
             } catch (Exception exception) {
-                } catch (Exception e) {
-                    FancyLogger.error("Could not reload the " + this.fileName + "!");
-                    FancyLogger.debug(e.getMessage());
-                }
+                FancyLogger.error("Could not reload the " + this.fileName + "!", exception);
+            }
             } else {
                 if (isLogging()) FancyLogger.warn("There was a null custom file that was not found!");
             }
