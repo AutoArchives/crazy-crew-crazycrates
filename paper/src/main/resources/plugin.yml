@@ -19,131 +19,121 @@ commands:
     aliases: [key]
 
 permissions:
-  crazycrates.command.player.help:
+  crazycrates.help:
     default: true
     children:
-      crazycrates.command.player.key: true
+      crazycrates.key: true
 
-  crazycrates.command.player.menu:
+  crazycrates.crate-menu:
     default: true
 
-  crazycrates.command.player.key:
-    default: op
+  crazycrates.key:
+    default: false
 
-  crazycrates.command.player.key.others:
-    default: op
+  crazycrates.key-others:
+    default: false
     children:
-      crazycrates.command.player.key: true
+      crazycrates.key: true
 
-  crazycrates.command.players.*:
-    default: op
+  crazycrates.admin-access:
+    default: false
+
+  crazycrates.additem:
+    default: false
+
+  crazycrates.preview:
+    default: false
+
+  crazycrates.list:
+    default: false
     children:
-      crazycrates.command.player.key.others: true
-      crazycrates.command.player.help: true
-      crazycrates.command.player.menu: true
+      crazycrates.teleport: true
 
-  crazycrates.command.admin.*:
-    default: op
+  crazycrates.open:
+    default: false
+
+  crazycrates.open-others:
+    default: false
     children:
-      crazycrates.command.admin.schematic.*: true
-      crazycrates.command.admin.help: true
-      crazycrates.command.admin.convert: true
-      crazycrates.command.admin.debug: true
-      crazycrates.command.admin.setmenu: true
-      crazycrates.command.admin.giveall: true
-      crazycrates.command.admin.forceopen: true
-      crazycrates.command.admin.open.others: true
-      crazycrates.command.admin.list: true
-      crazycrates.command.admin.preview: true
-      crazycrates.command.admin.additem: true
-      crazycrates.command.admin.access: true
+      crazycrates.open: true
 
-  crazycrates.command.admin.additem:
-    default: op
-
-  crazycrates.command.admin.access:
-    default: op
-
-  crazycrates.command.admin.preview:
-    default: op
-
-  crazycrates.command.admin.list:
-    default: op
+  crazycrates.take-key:
+    default: false
     children:
-      crazycrates.command.admin.teleport: true
+      crazycrates.transfer: true
 
-  crazycrates.command.admin.open:
-    default: op
+  crazycrates.transfer:
+    default: false
 
-  crazycrates.command.admin.open.others:
-    default: op
+  crazycrates.force-open:
+    default: false
     children:
-      crazycrates.command.admin.open: true
+      crazycrates.open: true
+      crazycrates.open-others: true
 
-  crazycrates.command.admin.takekey:
-    default: op
+  crazycrates.teleport:
+    default: false
+
+  crazycrates.give-key:
+    default: false
+
+  crazycrates.give-random-key:
+    default: false
+
+  crazycrates.give-all:
+    default: false
     children:
-      crazycrates.command.player.transfer: true
+      crazycrates.give-key: true
+      crazycrates.give-random-key: true
+      crazycrates.take-key: true
+      crazycrates.transfer: true
 
-  crazycrates.command.player.transfer:
-    default: op
+  crazycrates.set-crate:
+    default: false
 
-  crazycrates.command.admin.forceopen:
-    default: op
-    children:
-      crazycrates.command.admin.open: true
-      crazycrates.command.admin.open.others: true
+  crazycrates.reload:
+    default: false
 
-  crazycrates.command.admin.teleport:
-    default: op
+  crazycrates.debug:
+    default: false
 
-  crazycrates.command.admin.givekey:
-    default: op
+  crazycrates.convert:
+    default: false
 
-  crazycrates.command.admin.giverandomkey:
-    default: op
+  crazycrates.schematic-save:
+    default: false
 
-  crazycrates.command.admin.giveall:
-    default: op
-    children:
-      crazycrates.command.admin.givekey: true
-      crazycrates.command.admin.giverandomkey: true
-      crazycrates.command.admin.takekey: true
-      crazycrates.command.player.transfer: true
-
-  crazycrates.command.admin.set:
-    default: op
-
-  crazycrates.command.admin.setmenu:
-    default: op
-    children:
-      crazycrates.command.admin.set: true
-
-  crazycrates.command.admin.reload:
-    default: op
-
-  crazycrates.command.admin.debug:
-    default: op
-
-  crazycrates.command.admin.convert:
-    default: op
-
-  crazycrates.command.admin.schematic.*:
-    default: op
-    children:
-      crazycrates.command.admin.schematic.save: true
-      crazycrates.command.admin.schematic.set: true
-
-  crazycrates.command.admin.schematic.save:
-    default: op
-
-  crazycrates.command.admin.schematic.set:
-    default: op
-
-  crazycrates.command.admin.help:
-    default: op
-    children:
-      crazycrates.command.admin.reload: true
+  crazycrates.schematic-set:
+    default: false
 
   crazycrates.open.*:
     default: true
+
+  crazycrates.players.*:
+    default: false
+    children:
+      crazycrates.key-others: true
+      crazycrates.crate-menu: true
+      crazycrates.help: true
+
+  crazycrates.schematic.*:
+    default: false
+    children:
+      crazycrates.schematic-save: true
+      crazycrates.schematic-set: true
+
+  crazycrates.admin.*:
+    default: false
+    children:
+      crazycrates.schematic.*: true
+      crazycrates.help: true
+      crazycrates.convert: true
+      crazycrates.debug: true
+      crazycrates.set-crate: true
+      crazycrates.give-all: true
+      crazycrates.force-open: true
+      crazycrates.open-others: true
+      crazycrates.list: true
+      crazycrates.preview: true
+      crazycrates.additem: true
+      crazycrates.admin-access: true
