@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.CompletableFuture;
 
 public class FileManager {
 
@@ -207,8 +208,9 @@ public class FileManager {
      * Saves the file from the loaded state to the file system.
      */
     public void saveFile(Files file) {
-        try {
-            this.configurations.get(file).save(this.files.get(file));
+        CompletableFuture.runAsync(() -> {
+            try {
+                this.configurations.get(file).save(this.files.get(file));
             } catch (IOException exception) {
                 FancyLogger.error("Could not save " + file.getFileName() + "!", exception);
             }
@@ -223,8 +225,9 @@ public class FileManager {
         CustomFile file = getFile(name);
 
         if (file != null) {
+        CompletableFuture.runAsync(() -> {
             try {
-                file.getFile().save(new File(this.plugin.getDataFolder(), file.getHomeFolder() + "/" + file.getFileName()));
+                customFile.getFile().save(new File(this.plugin.getDataFolder(), customFile.getHomeFolder() + "/" + customFile.getFileName()));
 
                 if (isLogging()) FancyLogger.success("Successfully saved the " + customFile.getFileName() + ".");
             } catch (IOException exception) {
@@ -238,7 +241,6 @@ public class FileManager {
     /**
      * Save a custom file.
      * @param file The custom file you are saving.
-     * @return True if the file saved correct and false if there was an error.
      */
     public void saveFile(CustomFile file) {
         file.saveFile();
@@ -248,7 +250,7 @@ public class FileManager {
      * Overrides the loaded state file and loads the file systems file.
      */
     public void reloadFile(Files file) {
-        this.configurations.put(file, YamlConfiguration.loadConfiguration(this.files.get(file)));
+        CompletableFuture.runAsync(() -> this.configurations.put(file, YamlConfiguration.loadConfiguration(this.files.get(file))));
     }
 
     /**
@@ -271,12 +273,9 @@ public class FileManager {
         }
     }
 
-    /**
-     * Overrides the loaded state file and loads the filesystems file.
-     * @return True if it reloaded correct and false if the file wasn't found.
-     */
-    public boolean reloadFile(CustomFile file) {
-        return file.reloadFile();
+        CompletableFuture.runAsync(() -> customFile.file = YamlConfiguration.loadConfiguration(new File(this.plugin.getDataFolder(), "/" + customFile.getHomeFolder() + "/" + customFile.getFileName())));
+
+        if (isLogging()) FancyLogger.success("Successfully reloaded the " + customFile.getFileName() + ".");
     }
 
     public void reloadAllFiles() {
@@ -431,6 +430,7 @@ public class FileManager {
                 }
             } else {
                 new File(this.plugin.getDataFolder(), "/" + homeFolder).mkdir();
+                CompletableFuture.runAsync(() -> this.file = YamlConfiguration.loadConfiguration(newFile));
 
                 if (isLogging()) FancyLogger.success("The folder " + homeFolder + "/ was not found so it was created.");
 
@@ -485,6 +485,8 @@ public class FileManager {
         private void saveFile() {
             if (this.file != null) {
                 return;
+
+            CompletableFuture.runAsync(() -> {
                 try {
                     this.file.save(new File(this.plugin.getDataFolder(), this.homeFolder + "/" + this.fileName));
 
@@ -505,7 +507,7 @@ public class FileManager {
         private void reloadFile() {
             if (this.file != null) {
                 try {
-                    this.file = YamlConfiguration.loadConfiguration(new File(this.plugin.getDataFolder(), "/" + this.homeFolder + "/" + this.fileName));
+                CompletableFuture.runAsync(() -> this.file = YamlConfiguration.loadConfiguration(new File(this.plugin.getDataFolder(), "/" + this.homeFolder + "/" + this.fileName)));
 
                     if (isLogging()) FancyLogger.success("Successfully reloaded the " + this.fileName + ".");
 
