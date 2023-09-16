@@ -514,7 +514,6 @@ public class FileManager {
                 CompletableFuture.runAsync(() -> this.file = YamlConfiguration.loadConfiguration(new File(this.plugin.getDataFolder(), "/" + this.homeFolder + "/" + this.fileName)));
 
                 if (isLogging()) FancyLogger.success("Successfully reloaded the " + this.fileName + ".");
-
             } catch (Exception exception) {
                 FancyLogger.error("Could not reload the " + this.fileName + "!", exception);
             }
