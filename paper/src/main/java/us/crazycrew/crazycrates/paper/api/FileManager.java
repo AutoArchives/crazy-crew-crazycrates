@@ -222,9 +222,13 @@ public class FileManager {
      * @param name The name of the custom file.
      */
     public void saveFile(String name) {
-        CustomFile file = getFile(name);
+        CustomFile customFile = getFile(name);
 
-        if (file != null) {
+        if (customFile == null) {
+            if (isLogging()) FancyLogger.warn("The file " + name + ".yml could not be found!");
+            return;
+        }
+
         CompletableFuture.runAsync(() -> {
             try {
                 customFile.getFile().save(new File(this.plugin.getDataFolder(), customFile.getHomeFolder() + "/" + customFile.getFileName()));
@@ -233,13 +237,12 @@ public class FileManager {
             } catch (IOException exception) {
                 FancyLogger.error("Could not save " + customFile.getFileName() + "!", exception);
             }
-        } else {
-            if (isLogging()) FancyLogger.warn("The file " + name + ".yml could not be found!");
-        }
+        });
     }
 
     /**
      * Save a custom file.
+     *
      * @param file The custom file you are saving.
      */
     public void saveFile(CustomFile file) {
@@ -257,21 +260,12 @@ public class FileManager {
      * Overrides the loaded state file and loads the file systems file.
      */
     public void reloadFile(String name) {
-        CustomFile file = getFile(name);
+        CustomFile customFile = getFile(name);
 
-        if (file != null) {
-            try {
-                file.file = YamlConfiguration.loadConfiguration(new File(this.plugin.getDataFolder(), "/" + file.getHomeFolder() + "/" + file.getFileName()));
-
-                if (isLogging()) FancyLogger.success("Successfully reloaded the " + file.getFileName() + ".");
-            } catch (Exception e) {
-                FancyLogger.error("Could not reload the " + file.getFileName() + "!");
-                FancyLogger.debug(e.getMessage());
-            }
-        } else {
+        if (customFile == null) {
             if (isLogging()) FancyLogger.warn("The file " + name + ".yml could not be found!");
+            return;
         }
-    }
 
         CompletableFuture.runAsync(() -> customFile.file = YamlConfiguration.loadConfiguration(new File(this.plugin.getDataFolder(), "/" + customFile.getHomeFolder() + "/" + customFile.getFileName())));
 
@@ -422,20 +416,27 @@ public class FileManager {
             this.fileName = name;
             this.homeFolder = homeFolder;
 
-            if (new File(this.plugin.getDataFolder(), "/" + homeFolder).exists()) {
-                if (new File(this.plugin.getDataFolder(), "/" + homeFolder + "/" + name).exists()) {
-                    this.file = YamlConfiguration.loadConfiguration(new File(this.plugin.getDataFolder(), "/" + homeFolder + "/" + name));
-                } else {
-                    this.file = null;
-                }
-            } else {
-                new File(this.plugin.getDataFolder(), "/" + homeFolder).mkdir();
-                CompletableFuture.runAsync(() -> this.file = YamlConfiguration.loadConfiguration(newFile));
+            File home = new File(this.plugin.getDataFolder(), "/" + homeFolder);
+
+            if (!home.exists()) {
+                home.mkdirs();
 
                 if (isLogging()) FancyLogger.success("The folder " + homeFolder + "/ was not found so it was created.");
 
                 this.file = null;
+
+                return;
             }
+
+            File newFile = new File(home, "/" + name);
+
+            if (newFile.exists()) {
+                CompletableFuture.runAsync(() -> this.file = YamlConfiguration.loadConfiguration(newFile));
+
+                return;
+            }
+
+            this.file = null;
         }
 
         /**
@@ -480,11 +481,13 @@ public class FileManager {
 
         /**
          * Save the custom file.
-         * @return True if it saved correct and false if something went wrong.
          */
         private void saveFile() {
-            if (this.file != null) {
+            if (this.file == null) {
+                if (isLogging()) FancyLogger.warn("There was a null custom file that could not be found!");
+
                 return;
+            }
 
             CompletableFuture.runAsync(() -> {
                 try {
@@ -494,30 +497,27 @@ public class FileManager {
                 } catch (IOException exception) {
                     FancyLogger.error("Could not save " + this.fileName + "!", exception);
                 }
-            } else {
-                if (isLogging()) FancyLogger.warn("There was a null custom file that could not be found!");
-            }
-
+            });
         }
 
         /**
          * Overrides the loaded state file and loads the filesystems file.
-         * @return True if it reloaded correct and false if the file wasn't found or error.
          */
         private void reloadFile() {
-            if (this.file != null) {
-                try {
+            if (this.file == null) {
+                if (isLogging()) FancyLogger.warn("There was a null custom file that could not be found!");
+
+                return;
+            }
+
+            try {
                 CompletableFuture.runAsync(() -> this.file = YamlConfiguration.loadConfiguration(new File(this.plugin.getDataFolder(), "/" + this.homeFolder + "/" + this.fileName)));
 
-                    if (isLogging()) FancyLogger.success("Successfully reloaded the " + this.fileName + ".");
+                if (isLogging()) FancyLogger.success("Successfully reloaded the " + this.fileName + ".");
 
             } catch (Exception exception) {
                 FancyLogger.error("Could not reload the " + this.fileName + "!", exception);
             }
-            } else {
-                if (isLogging()) FancyLogger.warn("There was a null custom file that was not found!");
-            }
-
         }
     }
 }
