@@ -1,5 +1,6 @@
 package us.crazycrew.crazycrates.paper;
 
+import com.ryderbelserion.cluster.api.utils.ColorUtils;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
@@ -82,6 +83,15 @@ public class Methods {
         }
 
         if (!prefix.isEmpty() && prefixToggle) commandSender.sendMessage(color(message.replaceAll("\\{prefix}", quoteReplacement(prefix))).replaceAll("\\{prefix}", quoteReplacement(prefix))); else commandSender.sendMessage(color(message));
+    }
+
+    private void legacy(CommandSender sender, String message) {
+        if (this.plugin.getCrazyHandler().getConfigManager().getPluginConfig().getProperty(PluginConfig.use_mini_message)) {
+            sender.sendMessage(ColorUtils.parse(message));
+            return;
+        }
+
+        sender.sendMessage(color(message));
     }
 
     public void sendCommand(String command) {
