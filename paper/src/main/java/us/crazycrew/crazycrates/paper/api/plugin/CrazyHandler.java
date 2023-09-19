@@ -65,7 +65,7 @@ public class CrazyHandler extends CrazyCratesPlugin {
         );*/
 
         this.fileManager = new FileManager();
-        this.fileManager.setLog(true)
+        this.fileManager
                 .registerDefaultGenerateFiles("CrateExample.yml", "/crates", "/crates")
                 .registerDefaultGenerateFiles("QuadCrateExample.yml", "/crates", "/crates")
                 .registerDefaultGenerateFiles("CosmicCrateExample.yml", "/crates", "/crates")
