@@ -78,6 +78,10 @@ public class CrazyCrates extends JavaPlugin {
         return this.crazyHandler;
     }
 
+    public boolean isLogging() {
+        return this.crazyHandler.getConfigManager().getPluginConfig().getProperty(PluginConfig.verbose_logging);
+    }
+
     private War war;
     private CSGO csgo;
     private Wheel wheel;

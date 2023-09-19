@@ -23,7 +23,7 @@ public class MetricsHandler {
 
     public void start() {
         if (this.metrics != null) {
-            if (this.isLogging) FancyLogger.warn("Metrics is already enabled.");
+            if (this.plugin.isLogging()) FancyLogger.warn("Metrics is already enabled.");
             return;
         }
 
@@ -37,18 +37,18 @@ public class MetricsHandler {
             this.metrics.addCustomChart(chart);
         });
 
-        if (this.isLogging) FancyLogger.success("Metrics has been enabled.");
+        if (this.plugin.isLogging()) FancyLogger.success("Metrics has been enabled.");
     }
 
     public void stop() {
         if (this.metrics == null) {
-            if (this.isLogging) FancyLogger.warn("Metrics isn't enabled so we do nothing.");
+            if (this.plugin.isLogging()) FancyLogger.warn("Metrics isn't enabled so we do nothing.");
             return;
         }
 
         this.metrics.shutdown();
         this.metrics = null;
 
-        if (this.isLogging) FancyLogger.success("Metrics has been turned off.");
+        if (this.plugin.isLogging()) FancyLogger.success("Metrics has been turned off.");
     }
 }

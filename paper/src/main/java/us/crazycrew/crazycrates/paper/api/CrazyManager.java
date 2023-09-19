@@ -154,18 +154,18 @@ public class CrazyManager {
 
         if (PluginSupport.DECENT_HOLOGRAMS.isPluginEnabled()) {
             this.hologramController = new DecentHologramsSupport();
-            if (this.isLogging) FancyLogger.info("DecentHolograms support has been enabled.");
+            if (this.plugin.isLogging()) FancyLogger.info("DecentHolograms support has been enabled.");
         } else if (PluginSupport.CMI.isPluginEnabled() && CMIModule.holograms.isEnabled()) {
             this.hologramController = new CMIHologramsSupport();
-            if (this.isLogging) FancyLogger.info("CMI Hologram support has been enabled.");
+            if (this.plugin.isLogging()) FancyLogger.info("CMI Hologram support has been enabled.");
         } else if (PluginSupport.HOLOGRAPHIC_DISPLAYS.isPluginEnabled()) {
             this.hologramController = new HolographicDisplaysSupport();
-            if (this.isLogging) FancyLogger.info("Holographic Displays support has been enabled.");
+            if (this.plugin.isLogging()) FancyLogger.info("Holographic Displays support has been enabled.");
         } else {
             FancyLogger.warn("No holograms plugin were found. If using CMI, make sure holograms module is enabled.");
         }
 
-        if (this.isLogging) FancyLogger.info("Loading all crate information...");
+        if (this.plugin.isLogging()) FancyLogger.info("Loading all crate information...");
 
         for (String crateName : this.fileManager.getAllCratesNames(this.plugin)) {
             try {
@@ -252,7 +252,7 @@ public class CrazyManager {
 
         this.crates.add(new Crate("Menu", "Menu", CrateType.MENU, new ItemStack(Material.AIR), new ArrayList<>(), null, 0, null, 0, 0, Collections.emptyList(), null));
 
-        if (this.isLogging) {
+        if (this.plugin.isLogging()) {
             FancyLogger.info("All crate information has been loaded.");
             FancyLogger.info("Loading all the physical crate locations.");
         }
@@ -293,7 +293,7 @@ public class CrazyManager {
         // Checking if all physical locations loaded
         if (loadedAmount > 0 || brokeAmount > 0) {
             if (brokeAmount <= 0) {
-                if (this.isLogging) FancyLogger.success("All physical crate locations have been loaded.");
+                if (this.plugin.isLogging()) FancyLogger.success("All physical crate locations have been loaded.");
             } else {
                 FancyLogger.info("Loaded " + loadedAmount + " physical crate locations.");
                 FancyLogger.error("Failed to load " + brokeAmount + " physical crate locations.");
@@ -301,7 +301,7 @@ public class CrazyManager {
         }
 
         // Loading schematic files
-        if (this.isLogging) FancyLogger.info("Searching for schematics to load.");
+        if (this.plugin.isLogging()) FancyLogger.info("Searching for schematics to load.");
 
         String[] schems = new File(this.plugin.getDataFolder() + "/schematics/").list();
 
@@ -310,11 +310,11 @@ public class CrazyManager {
             if (schematicName.endsWith(".nbt")) {
                 this.crateSchematics.add(new CrateSchematic(schematicName.replace(".nbt", ""), new File(this.plugin.getDataFolder() + "/schematics/" + schematicName)));
 
-                if (this.isLogging) FancyLogger.success(schematicName + " was successfully found and loaded.");
+                if (this.plugin.isLogging()) FancyLogger.success(schematicName + " was successfully found and loaded.");
             }
         }
 
-        if (this.isLogging) FancyLogger.success("All schematics were found and loaded.");
+        if (this.plugin.isLogging()) FancyLogger.success("All schematics were found and loaded.");
 
         cleanDataFile();
     }
@@ -324,7 +324,7 @@ public class CrazyManager {
         FileConfiguration data = Files.DATA.getFile();
 
         if (data.contains("Players")) {
-            if (this.isLogging) FancyLogger.info("Cleaning up the data.yml file.");
+            if (this.plugin.isLogging()) FancyLogger.info("Cleaning up the data.yml file.");
 
             List<String> removePlayers = new ArrayList<>();
 
@@ -348,14 +348,14 @@ public class CrazyManager {
             }
 
             if (!removePlayers.isEmpty()) {
-                if (this.isLogging) FancyLogger.warn(removePlayers.size() + " player's data has been marked to be removed.");
+                if (this.plugin.isLogging()) FancyLogger.warn(removePlayers.size() + " player's data has been marked to be removed.");
 
                 removePlayers.forEach(uuid -> data.set("Players." + uuid, null));
 
-                if (this.isLogging) FancyLogger.success("All empty player data has been removed.");
+                if (this.plugin.isLogging()) FancyLogger.success("All empty player data has been removed.");
             }
 
-            if (this.isLogging) FancyLogger.success("The data.yml file has been cleaned.");
+            if (this.plugin.isLogging()) FancyLogger.success("The data.yml file has been cleaned.");
             
             Files.DATA.saveFile();
         }
