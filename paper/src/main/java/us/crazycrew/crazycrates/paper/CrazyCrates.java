@@ -141,8 +141,6 @@ public class CrazyCrates extends JavaPlugin {
 
         this.fireCracker = new FireCracker();
 
-        this.crazyHandler.getCrazyManager().load(true);
-
         if (!this.crazyHandler.getCrazyManager().getBrokeCrateLocations().isEmpty()) pluginManager.registerEvents(new BrokeLocationsListener(), this);
 
         if (PluginSupport.PLACEHOLDERAPI.isPluginEnabled()) new PlaceholderAPISupport().register();
