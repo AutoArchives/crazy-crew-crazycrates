@@ -174,7 +174,7 @@ public class CrazyManager {
                 ArrayList<Prize> prizes = new ArrayList<>();
                 String previewName = file.contains("Crate.Preview-Name") ? file.getString("Crate.Preview-Name") : file.getString("Crate.Name");
                 ArrayList<Tier> tiers = new ArrayList<>();
-                int maxMassOpen =  file.contains("Crate.Max-Mass-Open") ? file.getInt("Crate.Max-Mass-Open") : 10;
+                int maxMassOpen = file.contains("Crate.Max-Mass-Open") ? file.getInt("Crate.Max-Mass-Open") : 10;
                 int requiredKeys = file.contains("Crate.RequiredKeys") ? file.getInt("Crate.RequiredKeys") : 0;
 
                 if (file.contains("Crate.Tiers") && file.getConfigurationSection("Crate.Tiers") != null) {
@@ -291,14 +291,12 @@ public class CrazyManager {
         }
 
         // Checking if all physical locations loaded
-        if (this.fileManager.isLogging()) {
-            if (loadedAmount > 0 || brokeAmount > 0) {
-                if (brokeAmount <= 0) {
-                    if (this.isLogging) FancyLogger.success("All physical crate locations have been loaded.");
-                } else {
-                    FancyLogger.info("Loaded " + loadedAmount + " physical crate locations.");
-                    FancyLogger.error("Failed to load " + brokeAmount + " physical crate locations.");
-                }
+        if (loadedAmount > 0 || brokeAmount > 0) {
+            if (brokeAmount <= 0) {
+                if (this.isLogging) FancyLogger.success("All physical crate locations have been loaded.");
+            } else {
+                FancyLogger.info("Loaded " + loadedAmount + " physical crate locations.");
+                FancyLogger.error("Failed to load " + brokeAmount + " physical crate locations.");
             }
         }
 
