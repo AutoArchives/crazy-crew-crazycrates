@@ -32,11 +32,9 @@ public class MenuManager {
     private final @NotNull CrazyManager crazyManager = this.crazyHandler.getCrazyManager();
     private final @NotNull BukkitUserManager userManager = this.crazyHandler.getUserManager();
 
-    private final @NotNull ConfigManager configManager = this.crazyHandler.getConfigManager();
-
-    private final @NotNull SettingsManager config = this.configManager.getConfig();
-    private final @NotNull SettingsManager mainMenuConfig = this.configManager.getMainMenuConfig();
-    private final @NotNull SettingsManager previewMenuConfig = this.configManager.getPreviewMenuConfig();
+    private final @NotNull SettingsManager config = ConfigManager.getConfig();
+    private final @NotNull SettingsManager mainMenuConfig = ConfigManager.getMainMenuConfig();
+    private final @NotNull SettingsManager previewMenuConfig = ConfigManager.getPreviewMenuConfig();
 
     private final HashMap<UUID, Integer> playerPage = new HashMap<>();
     private final HashMap<UUID, Crate> playerCrate = new HashMap<>();
