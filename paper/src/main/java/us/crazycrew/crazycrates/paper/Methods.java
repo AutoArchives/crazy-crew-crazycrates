@@ -12,6 +12,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import us.crazycrew.crazycrates.common.config.types.PluginConfig;
 import us.crazycrew.crazycrates.common.enums.Permissions;
+import us.crazycrew.crazycrates.paper.api.enums.Translation;
 import us.crazycrew.crazycrates.paper.api.enums.settings.Messages;
 import us.crazycrew.crazycrates.paper.api.events.PlayerPrizeEvent;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
@@ -71,27 +72,13 @@ public class Methods {
         }
     }
 
-    public void sendMessage(CommandSender commandSender, String message, boolean prefixToggle) {
-        if (message == null || message.isEmpty()) return;
-
-        String prefix = getPrefix();
-
-        if (commandSender instanceof Player player) {
-            if (!prefix.isEmpty() && prefixToggle) player.sendMessage(color(message.replaceAll("\\{prefix}", quoteReplacement(prefix))).replaceAll("\\{prefix}", quoteReplacement(prefix))); else player.sendMessage(color(message));
-
-            return;
-        }
-
-        if (!prefix.isEmpty() && prefixToggle) commandSender.sendMessage(color(message.replaceAll("\\{prefix}", quoteReplacement(prefix))).replaceAll("\\{prefix}", quoteReplacement(prefix))); else commandSender.sendMessage(color(message));
-    }
-
-    private void legacy(CommandSender sender, String message) {
+    public void sendMessage(CommandSender sender, Translation translation) {
         if (this.plugin.getCrazyHandler().getConfigManager().getPluginConfig().getProperty(PluginConfig.use_mini_message)) {
-            sender.sendMessage(ColorUtils.parse(message));
+            sender.sendMessage(translation.toComponent());
             return;
         }
 
-        sender.sendMessage(color(message));
+        sender.sendMessage(translation.toString().replaceAll("\\{prefix}", getPrefix()));
     }
 
     public void sendCommand(String command) {
