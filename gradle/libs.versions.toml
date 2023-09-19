@@ -1,5 +1,5 @@
 [versions]
-cluster = "0.7.1"
+cluster = "0.8"
 adventure = "4.14.0"
 
 [libraries]
