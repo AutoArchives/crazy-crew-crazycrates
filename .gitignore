@@ -15,7 +15,7 @@ jars
 
 paper/.gradle
 paper/build
-
+paper/run
 
 !paper/run/config/paper-world-defaults.yml
 !paper/run/config/paper-global.yml
