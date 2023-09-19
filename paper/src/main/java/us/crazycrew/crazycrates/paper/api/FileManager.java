@@ -208,13 +208,11 @@ public class FileManager {
      * Saves the file from the loaded state to the file system.
      */
     public void saveFile(Files file) {
-        CompletableFuture.runAsync(() -> {
-            try {
-                this.configurations.get(file).save(this.files.get(file));
-            } catch (IOException exception) {
-                FancyLogger.error("Could not save " + file.getFileName() + "!", exception);
-            }
-        });
+        try {
+            this.configurations.get(file).save(this.files.get(file));
+        } catch (IOException exception) {
+            FancyLogger.error("Could not save " + file.getFileName() + "!", exception);
+        }
     }
 
     /**
@@ -229,15 +227,13 @@ public class FileManager {
             return;
         }
 
-        CompletableFuture.runAsync(() -> {
-            try {
-                customFile.getFile().save(new File(this.plugin.getDataFolder(), customFile.getHomeFolder() + "/" + customFile.getFileName()));
+        try {
+            customFile.getFile().save(new File(this.plugin.getDataFolder(), customFile.getHomeFolder() + "/" + customFile.getFileName()));
 
-                if (isLogging()) FancyLogger.success("Successfully saved the " + customFile.getFileName() + ".");
-            } catch (IOException exception) {
-                FancyLogger.error("Could not save " + customFile.getFileName() + "!", exception);
-            }
-        });
+            if (isLogging()) FancyLogger.success("Successfully saved the " + customFile.getFileName() + ".");
+        } catch (IOException exception) {
+            FancyLogger.error("Could not save " + customFile.getFileName() + "!", exception);
+        }
     }
 
     /**
@@ -253,7 +249,7 @@ public class FileManager {
      * Overrides the loaded state file and loads the file systems file.
      */
     public void reloadFile(Files file) {
-        CompletableFuture.runAsync(() -> this.configurations.put(file, YamlConfiguration.loadConfiguration(this.files.get(file))));
+        this.configurations.put(file, YamlConfiguration.loadConfiguration(this.files.get(file)));
     }
 
     /**
@@ -267,7 +263,7 @@ public class FileManager {
             return;
         }
 
-        CompletableFuture.runAsync(() -> customFile.file = YamlConfiguration.loadConfiguration(new File(this.plugin.getDataFolder(), "/" + customFile.getHomeFolder() + "/" + customFile.getFileName())));
+        customFile.file = YamlConfiguration.loadConfiguration(new File(this.plugin.getDataFolder(), "/" + customFile.getHomeFolder() + "/" + customFile.getFileName()));
 
         if (isLogging()) FancyLogger.success("Successfully reloaded the " + customFile.getFileName() + ".");
     }
@@ -431,7 +427,7 @@ public class FileManager {
             File newFile = new File(home, "/" + name);
 
             if (newFile.exists()) {
-                CompletableFuture.runAsync(() -> this.file = YamlConfiguration.loadConfiguration(newFile));
+                this.file = YamlConfiguration.loadConfiguration(newFile);
 
                 return;
             }
@@ -489,15 +485,13 @@ public class FileManager {
                 return;
             }
 
-            CompletableFuture.runAsync(() -> {
-                try {
-                    this.file.save(new File(this.plugin.getDataFolder(), this.homeFolder + "/" + this.fileName));
+            try {
+                this.file.save(new File(this.plugin.getDataFolder(), this.homeFolder + "/" + this.fileName));
 
-                    if (isLogging()) FancyLogger.success("Successfully saved the " + this.fileName + ".");
-                } catch (IOException exception) {
-                    FancyLogger.error("Could not save " + this.fileName + "!", exception);
-                }
-            });
+                if (isLogging()) FancyLogger.success("Successfully saved the " + this.fileName + ".");
+            } catch (IOException exception) {
+                FancyLogger.error("Could not save " + this.fileName + "!", exception);
+            }
         }
 
         /**
@@ -511,7 +505,7 @@ public class FileManager {
             }
 
             try {
-                CompletableFuture.runAsync(() -> this.file = YamlConfiguration.loadConfiguration(new File(this.plugin.getDataFolder(), "/" + this.homeFolder + "/" + this.fileName)));
+                this.file = YamlConfiguration.loadConfiguration(new File(this.plugin.getDataFolder(), "/" + this.homeFolder + "/" + this.fileName));
 
                 if (isLogging()) FancyLogger.success("Successfully reloaded the " + this.fileName + ".");
             } catch (Exception exception) {
