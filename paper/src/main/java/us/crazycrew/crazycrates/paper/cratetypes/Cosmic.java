@@ -231,7 +231,7 @@ public class Cosmic implements Listener {
                             public void run() {
                                 try {
                                     startRoll(player, crate);
-                                } catch (Exception e) {
+                                } catch (Exception exception) {
                                     PlayerReceiveKeyEvent event = new PlayerReceiveKeyEvent(uuid, crate, PlayerReceiveKeyEvent.KeyReceiveReason.REFUND, 1);
                                     plugin.getServer().getPluginManager().callEvent(event);
 
@@ -242,8 +242,7 @@ public class Cosmic implements Listener {
 
                                         player.sendMessage(methods.getPrefix("&cAn issue has occurred and so a key refund was given."));
 
-                                        FancyLogger.error("An issue occurred when the user " + player.getName() + " was using the " + crate.getName() + " crate and so they were issued a key refund.");
-                                        FancyLogger.debug(e.getMessage());
+                                        FancyLogger.error("An issue occurred when the user " + player.getName() + " was using the " + crate.getName() + " crate and so they were issued a key refund.", exception);
                                     }
 
                                     return;

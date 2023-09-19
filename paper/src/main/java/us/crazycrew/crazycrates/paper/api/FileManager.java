@@ -1,5 +1,7 @@
 package us.crazycrew.crazycrates.paper.api;
 
+import us.crazycrew.crazycrates.common.config.ConfigManager;
+import us.crazycrew.crazycrates.common.config.types.PluginConfig;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import com.ryderbelserion.cluster.api.adventure.FancyLogger;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -13,13 +15,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.CompletableFuture;
 
 public class FileManager {
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
-
-    private boolean log = false;
 
     private final HashMap<Files, File> files = new HashMap<>();
     private final ArrayList<String> homeFolders = new ArrayList<>();
@@ -116,20 +115,11 @@ public class FileManager {
     }
 
     /**
-     * Turn on the logger system for the FileManager.
-     * @param log True to turn it on and false for it to be off.
-     */
-    public FileManager setLog(boolean log) {
-        this.log = log;
-        return this;
-    }
-
-    /**
      * Check if the logger is logging in console.
      * @return True if it is and false if it isn't.
      */
     public boolean isLogging() {
-        return this.log;
+        return ConfigManager.getPluginConfig().getProperty(PluginConfig.verbose_logging);
     }
 
     /**

@@ -182,9 +182,8 @@ public class Crate {
 
         try {
             return prizes.get(new Random().nextInt(prizes.size()));
-        } catch (IllegalArgumentException e) {
-            FancyLogger.error("Failed to find prize from the " + name + " crate for player " + player.getName() + ".");
-            FancyLogger.debug(e.getMessage());
+        } catch (IllegalArgumentException exception) {
+            FancyLogger.error("Failed to find prize from the " + name + " crate for player " + player.getName() + ".", exception);
 
             return null;
         }

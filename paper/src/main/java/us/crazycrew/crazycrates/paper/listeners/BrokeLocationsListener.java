@@ -1,9 +1,10 @@
 package us.crazycrew.crazycrates.paper.listeners;
 
 import org.bukkit.plugin.java.JavaPlugin;
+import us.crazycrew.crazycrates.common.config.ConfigManager;
+import us.crazycrew.crazycrates.common.config.types.PluginConfig;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.api.CrazyManager;
-import us.crazycrew.crazycrates.paper.api.FileManager;
 import us.crazycrew.crazycrates.paper.api.enums.BrokeLocation;
 import us.crazycrew.crazycrates.paper.api.objects.CrateLocation;
 import com.ryderbelserion.cluster.api.adventure.FancyLogger;
@@ -19,7 +20,6 @@ public class BrokeLocationsListener implements Listener {
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
     private final @NotNull CrazyHandler crazyHandler = this.plugin.getCrazyHandler();
-    private final @NotNull FileManager fileManager = this.crazyHandler.getFileManager();
     private final @NotNull CrazyManager crazyManager = this.crazyHandler.getCrazyManager();
     
     @EventHandler
@@ -42,7 +42,7 @@ public class BrokeLocationsListener implements Listener {
                 }
             }
 
-            if (this.fileManager.isLogging()) {
+            if (ConfigManager.getPluginConfig().getProperty(PluginConfig.verbose_logging)) {
                 FancyLogger.debug("Fixed " + fixedAmount + " broken crate locations.");
 
                 if (this.crazyManager.getBrokeCrateLocations().isEmpty()) FancyLogger.success("All broken crate locations have been fixed.");

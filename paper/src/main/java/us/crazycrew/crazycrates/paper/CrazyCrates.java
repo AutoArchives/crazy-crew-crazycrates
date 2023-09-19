@@ -244,6 +244,8 @@ public class CrazyCrates extends JavaPlugin {
     }
 
     private void printHooks() {
+        if (!ConfigManager.getPluginConfig().getProperty(PluginConfig.verbose_logging)) return;
+
         for (PluginSupport value : PluginSupport.values()) {
             if (value.isPluginEnabled()) {
                 FancyLogger.info("<gold>" + value.name() + "</gold> <bold><green>FOUND</green></bold>");

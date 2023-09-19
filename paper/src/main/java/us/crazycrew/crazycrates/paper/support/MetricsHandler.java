@@ -2,6 +2,8 @@ package us.crazycrew.crazycrates.paper.support;
 
 import org.bstats.charts.SimplePie;
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
+import us.crazycrew.crazycrates.common.config.ConfigManager;
+import us.crazycrew.crazycrates.common.config.types.PluginConfig;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import com.ryderbelserion.cluster.api.adventure.FancyLogger;
 import org.bstats.bukkit.Metrics;
@@ -16,11 +18,13 @@ public class MetricsHandler {
     private final @NotNull CrazyHandler crazyHandler = this.plugin.getCrazyHandler();
     private final @NotNull CrazyManager crazyManager = this.crazyHandler.getCrazyManager();
 
+    private final boolean isLogging = ConfigManager.getPluginConfig().getProperty(PluginConfig.verbose_logging);
+
     private Metrics metrics;
 
     public void start() {
         if (this.metrics != null) {
-            FancyLogger.error("Metrics is already enabled.");
+            if (this.isLogging) FancyLogger.error("Metrics is already enabled.");
             return;
         }
 
@@ -34,17 +38,17 @@ public class MetricsHandler {
             this.metrics.addCustomChart(chart);
         });
 
-        FancyLogger.success("Metrics has been enabled.");
+        if (this.isLogging) FancyLogger.success("Metrics has been enabled.");
     }
 
     public void stop() {
         if (this.metrics == null) {
-            FancyLogger.error("Metrics isn't enabled so we do nothing.");
+            if (this.isLogging) FancyLogger.error("Metrics isn't enabled so we do nothing.");
             return;
         }
 
         this.metrics.shutdown();
 
-        FancyLogger.success("Metrics has been turned off.");
+        if (this.isLogging) FancyLogger.success("Metrics has been turned off.");
     }
 }

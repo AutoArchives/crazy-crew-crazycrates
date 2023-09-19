@@ -22,6 +22,9 @@ public class PluginConfig implements SettingsHolder {
     })
     public static final Property<String> plugin_locale = PropertyInitializer.newProperty("plugin_locale", "en-US");
 
+    @Comment("Whether you want CrazyCrates to shut up or not, This option is ignored by errors.")
+    public static final Property<Boolean> verbose_logging = PropertyInitializer.newProperty("verbose_logging", true);
+
     @Comment({
             "Sends anonymous statistics about how the plugin is used to bstats.org.",
             "bstats is a service for plugin developers to find out how the plugin being used,",
