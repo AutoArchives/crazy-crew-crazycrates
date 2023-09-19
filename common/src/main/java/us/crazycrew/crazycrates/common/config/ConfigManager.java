@@ -75,16 +75,15 @@ public class ConfigManager {
         pluginConfig.reload();
 
         // Save en-US.yml
-        messages.reload();
+        messages.save();
 
-        //File messagesFile = new File(this.dataFolder, "/locale/" + pluginConfig.getProperty(PluginConfig.plugin_locale) + ".yml");
+        File messagesFile = new File(this.dataFolder, "/locale/" + pluginConfig.getProperty(PluginConfig.plugin_locale) + ".yml");
 
-        //TODO() Re-creating this causes the enum to be null... re-visit this idea
-        //messages = SettingsManagerBuilder
-        //        .withYamlFile(messagesFile)
-        //        .useDefaultMigrationService()
-        //        .configurationData(Messages.class)
-        //        .create();
+        messages = SettingsManagerBuilder
+                .withYamlFile(messagesFile)
+                .useDefaultMigrationService()
+                .configurationData(Messages.class)
+                .create();
 
         // Reload crate-menu.yml
         mainMenuConfig.reload();
