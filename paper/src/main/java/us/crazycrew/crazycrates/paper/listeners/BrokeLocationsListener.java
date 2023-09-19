@@ -42,7 +42,7 @@ public class BrokeLocationsListener implements Listener {
                 }
             }
 
-            if (ConfigManager.getPluginConfig().getProperty(PluginConfig.verbose_logging)) {
+            if (this.crazyHandler.getConfigManager().getPluginConfig().getProperty(PluginConfig.verbose_logging)) {
                 FancyLogger.debug("Fixed " + fixedAmount + " broken crate locations.");
 
                 if (this.crazyManager.getBrokeCrateLocations().isEmpty()) FancyLogger.success("All broken crate locations have been fixed.");

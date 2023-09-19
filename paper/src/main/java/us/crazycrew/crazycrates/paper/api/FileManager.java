@@ -119,7 +119,7 @@ public class FileManager {
      * @return True if it is and false if it isn't.
      */
     public boolean isLogging() {
-        return ConfigManager.getPluginConfig().getProperty(PluginConfig.verbose_logging);
+        return this.plugin.getCrazyHandler().getConfigManager().getPluginConfig().getProperty(PluginConfig.verbose_logging);
     }
 
     /**

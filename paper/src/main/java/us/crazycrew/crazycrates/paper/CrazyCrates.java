@@ -50,7 +50,7 @@ public class CrazyCrates extends JavaPlugin {
         this.crazyHandler = new CrazyHandler(getDataFolder());
         this.crazyHandler.install();
 
-        boolean useMiniMessage = ConfigManager.getPluginConfig().getProperty(PluginConfig.use_mini_message);
+        boolean useMiniMessage = this.crazyHandler.getConfigManager().getPluginConfig().getProperty(PluginConfig.use_mini_message);
 
         if (!useMiniMessage) {
             List.of(
@@ -244,7 +244,7 @@ public class CrazyCrates extends JavaPlugin {
     }
 
     private void printHooks() {
-        if (!ConfigManager.getPluginConfig().getProperty(PluginConfig.verbose_logging)) return;
+        if (!this.crazyHandler.getConfigManager().getPluginConfig().getProperty(PluginConfig.verbose_logging)) return;
 
         for (PluginSupport value : PluginSupport.values()) {
             if (value.isPluginEnabled()) {

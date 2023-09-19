@@ -1,5 +1,6 @@
 package us.crazycrew.crazycrates.paper;
 
+import ch.jalu.configme.SettingsManager;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
@@ -47,6 +48,8 @@ import static java.util.regex.Matcher.quoteReplacement;
 public class Methods {
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
+    private final @NotNull ConfigManager configManager = this.plugin.getCrazyHandler().getConfigManager();
+    private final @NotNull SettingsManager pluginConfig = this.configManager.getPluginConfig();
 
     private final Pattern hex_pattern = Pattern.compile("#[a-fA-F\\d]{6}");
 
@@ -73,7 +76,7 @@ public class Methods {
     }
 
     public void sendMessage(CommandSender sender, Translation translation) {
-        if (ConfigManager.getPluginConfig().getProperty(PluginConfig.use_mini_message)) {
+        if (this.pluginConfig.getProperty(PluginConfig.use_mini_message)) {
             sender.sendMessage(translation.getMessage().toComponent());
             return;
         }
@@ -155,9 +158,8 @@ public class Methods {
         }
     }
 
-    //TODO() Find prefix
     public String getPrefix() {
-        return color(ConfigManager.getPluginConfig().getProperty(PluginConfig.command_prefix));
+        return color(this.pluginConfig.getProperty(PluginConfig.command_prefix));
     }
 
     public String getPrefix(String msg) {

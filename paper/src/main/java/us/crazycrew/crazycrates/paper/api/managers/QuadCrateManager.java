@@ -44,7 +44,9 @@ public class QuadCrateManager {
     private final @NotNull CrazyManager crazyManager = this.crazyHandler.getCrazyManager();
     private final @NotNull ChestManager chestManager = this.crazyHandler.getChestManager();
     private final @NotNull Methods methods = this.crazyHandler.getMethods();
-    private final @NotNull SettingsManager config = ConfigManager.getConfig();
+
+    private final @NotNull ConfigManager configManager = this.crazyHandler.getConfigManager();
+    private final @NotNull SettingsManager config = this.configManager.getConfig();
 
     private static final List<QuadCrateManager> crateSessions = new ArrayList<>();
 

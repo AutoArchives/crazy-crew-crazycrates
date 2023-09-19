@@ -61,8 +61,9 @@ public class CrateBaseCommand extends BaseCommand {
     private final @NotNull EventLogger eventLogger = this.crazyHandler.getEventLogger();
     private final @NotNull Methods methods = this.crazyHandler.getMethods();
 
-    private final @NotNull SettingsManager config = ConfigManager.getConfig();
-    private final @NotNull SettingsManager menuConfig = ConfigManager.getMainMenuConfig();
+    private final @NotNull ConfigManager configManager = this.crazyHandler.getConfigManager();
+    private final @NotNull SettingsManager config = this.configManager.getConfig();
+    private final @NotNull SettingsManager menuConfig = this.configManager.getMainMenuConfig();
 
     @Default
     @Permission(value = "crazycrates.crate-menu", def = PermissionDefault.TRUE)

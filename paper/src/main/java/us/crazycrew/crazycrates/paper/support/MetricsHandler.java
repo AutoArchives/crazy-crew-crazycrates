@@ -18,7 +18,7 @@ public class MetricsHandler {
     private final @NotNull CrazyHandler crazyHandler = this.plugin.getCrazyHandler();
     private final @NotNull CrazyManager crazyManager = this.crazyHandler.getCrazyManager();
 
-    private final boolean isLogging = ConfigManager.getPluginConfig().getProperty(PluginConfig.verbose_logging);
+    private final boolean isLogging = this.crazyHandler.getConfigManager().getPluginConfig().getProperty(PluginConfig.verbose_logging);
 
     private Metrics metrics;
 

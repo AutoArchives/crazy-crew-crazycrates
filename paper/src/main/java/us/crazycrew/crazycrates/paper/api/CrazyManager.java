@@ -69,8 +69,9 @@ public class CrazyManager {
     private final @NotNull Methods methods = this.crazyHandler.getMethods();
 
     private final @NotNull ConfigManager configManager = this.crazyHandler.getConfigManager();
-    private final @NotNull SettingsManager config = ConfigManager.getConfig();
-    private final @NotNull SettingsManager menuConfig = ConfigManager.getMainMenuConfig();
+    private final @NotNull SettingsManager config = this.configManager.getConfig();
+    private final @NotNull SettingsManager menuConfig = this.configManager.getMainMenuConfig();
+    private final @NotNull SettingsManager pluginConfig = this.configManager.getPluginConfig();
 
     // All the crates that have been loaded.
     private final ArrayList<Crate> crates = new ArrayList<>();
@@ -108,7 +109,7 @@ public class CrazyManager {
     // Schematic locations for 1.13+.
     private final HashMap<UUID, Location[]> schemLocations = new HashMap<>();
 
-    private final boolean isLogging = ConfigManager.getPluginConfig().getProperty(PluginConfig.verbose_logging);
+    private final boolean isLogging = this.pluginConfig.getProperty(PluginConfig.verbose_logging);
 
     public void load(boolean serverStart) {
         if (serverStart) {
@@ -129,7 +130,7 @@ public class CrazyManager {
 
         this.configManager.reload();
 
-        boolean metrics = ConfigManager.getPluginConfig().getProperty(PluginConfig.toggle_metrics);
+        boolean metrics = this.pluginConfig.getProperty(PluginConfig.toggle_metrics);
 
         if (metrics) {
             metricsHandler.start();

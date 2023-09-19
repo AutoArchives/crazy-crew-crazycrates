@@ -25,7 +25,7 @@ public abstract class CrazyCratesPlugin extends AbstractPlugin {
         this.configManager.load();
 
         RootPlugin.setConsole(audience);
-        FancyLogger.setName(ConfigManager.getPluginConfig().getProperty(PluginConfig.console_prefix));
+        FancyLogger.setName(this.configManager.getPluginConfig().getProperty(PluginConfig.console_prefix));
 
         super.apiWasLoadedByOurPlugin();
     }

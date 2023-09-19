@@ -140,7 +140,7 @@ public enum Translation {
 
     private final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
     private final ConfigManager configManager = this.plugin.getCrazyHandler().getConfigManager();
-    private final SettingsManager messages = ConfigManager.getMessages();
+    private final SettingsManager messages = this.configManager.getMessages();
 
     private boolean isList() {
         return this.isList;
@@ -166,7 +166,7 @@ public enum Translation {
     }
 
     public Translation getMessage(Map<String, String> placeholders) {
-        boolean useAdventure = ConfigManager.getPluginConfig().getProperty(PluginConfig.use_mini_message);
+        boolean useAdventure = this.configManager.getPluginConfig().getProperty(PluginConfig.use_mini_message);
 
         // Get the string first.
         String message;

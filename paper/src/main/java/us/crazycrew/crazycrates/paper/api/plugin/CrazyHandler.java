@@ -93,7 +93,7 @@ public class CrazyHandler extends CrazyCratesPlugin {
         this.menuManager = new MenuManager();
         this.menuManager.loadButtons();
 
-        boolean metrics = ConfigManager.getPluginConfig().getProperty(PluginConfig.toggle_metrics);
+        boolean metrics = this.plugin.getCrazyHandler().getConfigManager().getPluginConfig().getProperty(PluginConfig.toggle_metrics);
 
         this.metrics = new MetricsHandler();
         if (metrics) this.metrics.start();

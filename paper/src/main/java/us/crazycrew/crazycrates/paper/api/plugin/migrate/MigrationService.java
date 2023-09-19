@@ -56,11 +56,11 @@ public class MigrationService {
         this.configManager = new ConfigManager(this.plugin.getDataFolder());
         this.configManager.load();
 
-        this.config = ConfigManager.getConfig();
-        this.messages = ConfigManager.getMessages();
-        this.pluginConfig = ConfigManager.getPluginConfig();
-        this.mainMenuConfig = ConfigManager.getMainMenuConfig();
-        this.previewMenuConfig = ConfigManager.getPreviewMenuConfig();
+        this.config = this.configManager.getConfig();
+        this.messages = this.configManager.getMessages();
+        this.pluginConfig = this.configManager.getPluginConfig();
+        this.mainMenuConfig = this.configManager.getMainMenuConfig();
+        this.previewMenuConfig = this.configManager.getPreviewMenuConfig();
 
         String oldPrefix = config.getString(this.prefix + "Prefix");
         boolean oldMetrics = config.getBoolean(this.prefix + "Toggle-Metrics");
@@ -75,10 +75,8 @@ public class MigrationService {
             this.pluginConfig.save();
 
             config.save(input);
-
         } catch (IOException exception) {
             exception.printStackTrace();
-
         }
     }
 
@@ -198,7 +196,6 @@ public class MigrationService {
         this.mainMenuConfig.save();
 
         output.delete();
-
     }
 
     private void copyMessages() {
@@ -406,7 +403,6 @@ public class MigrationService {
                         "en-US.yml"
                 )
         );*/
-
     }
 
     // Convert old placeholder lists.
