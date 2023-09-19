@@ -74,6 +74,7 @@ public class ConfigManager {
         // Reload plugin-config.yml
         this.pluginConfig.reload();
 
+        // Save en-US.yml
         this.messages.save();
 
         File messagesFile = new File(this.dataFolder, "/locale/" + this.pluginConfig.getProperty(PluginConfig.plugin_locale) + ".yml");
