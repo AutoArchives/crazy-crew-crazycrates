@@ -238,11 +238,10 @@ public class CrazyManager {
 
                 CrateHologram holo = new CrateHologram(file.getBoolean("Crate.Hologram.Toggle"), file.getDouble("Crate.Hologram.Height", 0.0), file.getStringList("Crate.Hologram.Message"));
                 this.crates.add(new Crate(crateName, previewName, crateType, getKey(file), prizes, file, newPlayersKeys, tiers, maxMassOpen, requiredKeys, prizeMessage, holo));
-            } catch (Exception e) {
+            } catch (Exception exception) {
                 this.brokecrates.add(crateName);
 
-                FancyLogger.error("There was an error while loading the " + crateName + ".yml file.");
-                FancyLogger.debug(e.getMessage());
+                FancyLogger.error("There was an error while loading the " + crateName + ".yml file.", exception);
             }
         }
 
@@ -280,9 +279,8 @@ public class CrazyManager {
                         this.brokeLocations.add(new BrokeLocation(locationName, crate, x, y, z, worldName));
                         brokeAmount++;
                     }
-                } catch (Exception e) {
-                    FancyLogger.error("Failed to create crate locations.");
-                    FancyLogger.debug(e.getMessage());
+                } catch (Exception exception) {
+                    FancyLogger.error("Failed to create crate locations.", exception);
                 }
             }
         }
