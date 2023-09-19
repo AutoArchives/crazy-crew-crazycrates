@@ -5,6 +5,8 @@ plugins {
 
     id("com.modrinth.minotaur") version("2.8.2")
 
+    id("xyz.jpenilla.run-paper") version("2.1.0")
+
     id("paper-plugin")
 }
 
@@ -65,6 +67,12 @@ tasks {
         ).forEach {
             relocate(it, "libs.$it")
         }
+    }
+
+    runServer {
+        jvmArgs("-Dnet.kyori.ansi.colorLevel=truecolor")
+
+        minecraftVersion("1.20.1")
     }
 
     processResources {

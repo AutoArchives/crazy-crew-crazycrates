@@ -15,3 +15,11 @@ jars
 
 paper/.gradle
 paper/build
+
+
+!paper/run/config/paper-world-defaults.yml
+!paper/run/config/paper-global.yml
+!paper/run/server.properties
+!paper/run/spigot.yml
+!paper/run/bukkit.yml
+!paper/run/eula.txt
