@@ -1,6 +1,5 @@
 package us.crazycrew.crazycrates.common.utils;
 
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import java.util.List;
 
 public class MiscUtils {
@@ -15,7 +14,7 @@ public class MiscUtils {
         StringBuilder message = new StringBuilder();
 
         for (String line : list) {
-            message.append(MiniMessage.miniMessage().deserialize(line)).append("\n");
+            message.append(line).append("\n");
         }
 
         return message.toString();
