@@ -74,11 +74,11 @@ public class Methods {
 
     public void sendMessage(CommandSender sender, Translation translation) {
         if (ConfigManager.getPluginConfig().getProperty(PluginConfig.use_mini_message)) {
-            sender.sendMessage(translation.toComponent());
+            sender.sendMessage(translation.getMessage().toComponent());
             return;
         }
 
-        sender.sendMessage(translation.toString().replaceAll("\\{prefix}", getPrefix()));
+        sender.sendMessage(translation.getMessage().toString().replaceAll("\\{prefix}", getPrefix()));
     }
 
     public void sendCommand(String command) {
