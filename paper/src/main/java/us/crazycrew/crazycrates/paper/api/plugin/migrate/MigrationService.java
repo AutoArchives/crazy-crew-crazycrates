@@ -56,11 +56,11 @@ public class MigrationService {
         this.configManager = new ConfigManager(this.plugin.getDataFolder());
         this.configManager.load();
 
-        this.config = this.configManager.getConfig();
-        this.messages = this.configManager.getMessages();
-        this.pluginConfig = this.configManager.getPluginConfig();
-        this.mainMenuConfig = this.configManager.getMainMenuConfig();
-        this.previewMenuConfig = this.configManager.getPreviewMenuConfig();
+        this.config = ConfigManager.getConfig();
+        this.messages = ConfigManager.getMessages();
+        this.pluginConfig = ConfigManager.getPluginConfig();
+        this.mainMenuConfig = ConfigManager.getMainMenuConfig();
+        this.previewMenuConfig = ConfigManager.getPreviewMenuConfig();
 
         String oldPrefix = config.getString(this.prefix + "Prefix");
         boolean oldMetrics = config.getBoolean(this.prefix + "Toggle-Metrics");
@@ -434,6 +434,7 @@ public class MigrationService {
                 .replaceAll("%prize%", "{prize}")
                 .replaceAll("%key-amount%", "{key-amount}")
                 .replaceAll("%prefix%", "{prefix}")
+                .replaceAll("%random%", "{random}")
                 .replaceAll("%id%", "{id}");
     }
 }

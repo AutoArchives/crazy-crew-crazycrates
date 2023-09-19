@@ -722,8 +722,8 @@ public class CrazyManager {
 
                 if (item == null) {
                     HashMap<String, String> placeholders = new HashMap<>();
-                    placeholders.put("%Crate%", prize.getCrate());
-                    placeholders.put("%Prize%", prize.getName());
+                    placeholders.put("{crate}", prize.getCrate());
+                    placeholders.put("{prize}", prize.getName());
                     player.sendMessage(Messages.PRIZE_ERROR.getMessage(placeholders));
                     continue;
                 }
@@ -751,22 +751,21 @@ public class CrazyManager {
             }
 
             for (String command : prize.getCommands()) { // /give %player% iron %random%:1-64
-                if (command.contains("%random%:")) {
+                if (command.contains("{random}:")) {
                     String cmd = command;
                     StringBuilder commandBuilder = new StringBuilder();
 
                     for (String word : cmd.split(" ")) {
-                        if (word.startsWith("%random%:")) {
-                            word = word.replace("%random%:", "");
+                        if (word.startsWith("{random}:")) {
+                            word = word.replace("{random}:", "");
 
                             try {
                                 long min = Long.parseLong(word.split("-")[0]);
                                 long max = Long.parseLong(word.split("-")[1]);
                                 commandBuilder.append(pickNumber(min, max)).append(" ");
-                            } catch (Exception e) {
+                            } catch (Exception exception) {
                                 commandBuilder.append("1 ");
-                                FancyLogger.error("The prize " + prize.getName() + " in the " + prize.getCrate() + " crate has caused an error when trying to run a command.");
-                                FancyLogger.debug("Command: " + cmd);
+                                FancyLogger.error("The prize " + prize.getName() + " in the " + prize.getCrate() + " crate has caused an error when trying to run " + cmd, exception);
                             }
                         } else {
                             commandBuilder.append(word).append(" ");
