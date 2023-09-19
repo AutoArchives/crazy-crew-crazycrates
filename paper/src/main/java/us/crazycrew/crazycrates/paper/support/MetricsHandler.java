@@ -2,7 +2,6 @@ package us.crazycrew.crazycrates.paper.support;
 
 import org.bstats.charts.SimplePie;
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
-import us.crazycrew.crazycrates.common.config.ConfigManager;
 import us.crazycrew.crazycrates.common.config.types.PluginConfig;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import com.ryderbelserion.cluster.api.adventure.FancyLogger;
@@ -48,6 +47,7 @@ public class MetricsHandler {
         }
 
         this.metrics.shutdown();
+        this.metrics = null;
 
         if (this.isLogging) FancyLogger.success("Metrics has been turned off.");
     }
