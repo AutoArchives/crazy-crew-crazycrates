@@ -69,8 +69,8 @@ public class CrazyManager {
     private final @NotNull Methods methods = this.crazyHandler.getMethods();
 
     private final @NotNull ConfigManager configManager = this.crazyHandler.getConfigManager();
-    private final @NotNull SettingsManager config = this.configManager.getConfig();
-    private final @NotNull SettingsManager menuConfig = this.configManager.getMainMenuConfig();
+    private final @NotNull SettingsManager config = ConfigManager.getConfig();
+    private final @NotNull SettingsManager menuConfig = ConfigManager.getMainMenuConfig();
 
     // All the crates that have been loaded.
     private final ArrayList<Crate> crates = new ArrayList<>();
@@ -127,7 +127,7 @@ public class CrazyManager {
 
         this.configManager.reload();
 
-        boolean metrics = this.configManager.getPluginConfig().getProperty(PluginConfig.toggle_metrics);
+        boolean metrics = ConfigManager.getPluginConfig().getProperty(PluginConfig.toggle_metrics);
 
         if (metrics) {
             metricsHandler.start();

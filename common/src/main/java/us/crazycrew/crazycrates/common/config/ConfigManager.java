@@ -19,27 +19,27 @@ public class ConfigManager {
         this.dataFolder = dataFolder;
     }
 
-    private SettingsManager pluginConfig;
-    private SettingsManager messages;
-    private SettingsManager config;
+    private static SettingsManager pluginConfig;
+    private static SettingsManager messages;
+    private static SettingsManager config;
 
-    private SettingsManager mainMenuConfig;
-    private SettingsManager previewMenuConfig;
+    private static SettingsManager mainMenuConfig;
+    private static SettingsManager previewMenuConfig;
 
     public void load() {
         // Create the plugin-config.yml file.
         File pluginConfigFile = new File(this.dataFolder, "plugin-config.yml");
 
         // Bind it to settings manager
-        this.pluginConfig = SettingsManagerBuilder
+        pluginConfig = SettingsManagerBuilder
                 .withYamlFile(pluginConfigFile)
                 .useDefaultMigrationService()
                 .configurationData(createPluginConfig())
                 .create();
 
-        File messagesFile = new File(this.dataFolder, "/locale/" + this.pluginConfig.getProperty(PluginConfig.plugin_locale) + ".yml");
+        File messagesFile = new File(this.dataFolder, "/locale/" + pluginConfig.getProperty(PluginConfig.plugin_locale) + ".yml");
 
-        this.messages = SettingsManagerBuilder
+        messages = SettingsManagerBuilder
                 .withYamlFile(messagesFile)
                 .useDefaultMigrationService()
                 .configurationData(Messages.class)
@@ -47,7 +47,7 @@ public class ConfigManager {
 
         File configFile = new File(this.dataFolder, "config.yml");
 
-        this.config = SettingsManagerBuilder
+        config = SettingsManagerBuilder
                 .withYamlFile(configFile)
                 .useDefaultMigrationService()
                 .configurationData(ConfigurationDataBuilder.createConfiguration(Config.class))
@@ -55,7 +55,7 @@ public class ConfigManager {
 
         File mainMenuFile = new File(this.dataFolder, "/menus/crate-menu.yml");
 
-        this.mainMenuConfig = SettingsManagerBuilder
+        mainMenuConfig = SettingsManagerBuilder
                 .withYamlFile(mainMenuFile)
                 .useDefaultMigrationService()
                 .configurationData(ConfigurationDataBuilder.createConfiguration(CrateMainMenu.class))
@@ -63,7 +63,7 @@ public class ConfigManager {
 
         File previewMenuFile = new File(this.dataFolder, "/menus/preview-menu.yml");
 
-        this.previewMenuConfig = SettingsManagerBuilder
+        previewMenuConfig = SettingsManagerBuilder
                 .withYamlFile(previewMenuFile)
                 .useDefaultMigrationService()
                 .configurationData(ConfigurationDataBuilder.createConfiguration(CratePreviewMenu.class))
@@ -72,45 +72,45 @@ public class ConfigManager {
 
     public void reload() {
         // Reload plugin-config.yml
-        this.pluginConfig.reload();
+        pluginConfig.reload();
 
         // Save en-US.yml
-        this.messages.save();
+        messages.reload();
 
-        File messagesFile = new File(this.dataFolder, "/locale/" + this.pluginConfig.getProperty(PluginConfig.plugin_locale) + ".yml");
+        //File messagesFile = new File(this.dataFolder, "/locale/" + pluginConfig.getProperty(PluginConfig.plugin_locale) + ".yml");
 
         //TODO() Re-creating this causes the enum to be null... re-visit this idea
-        this.messages = SettingsManagerBuilder
-                .withYamlFile(messagesFile)
-                .useDefaultMigrationService()
-                .configurationData(Messages.class)
-                .create();
+        //messages = SettingsManagerBuilder
+        //        .withYamlFile(messagesFile)
+        //        .useDefaultMigrationService()
+        //        .configurationData(Messages.class)
+        //        .create();
 
         // Reload crate-menu.yml
-        this.mainMenuConfig.reload();
+        mainMenuConfig.reload();
 
         // Reload preview-menu.yml
-        this.previewMenuConfig.reload();
+        previewMenuConfig.reload();
     }
 
-    public SettingsManager getConfig() {
-        return this.config;
+    public static SettingsManager getConfig() {
+        return config;
     }
 
-    public SettingsManager getPluginConfig() {
-        return this.pluginConfig;
+    public static SettingsManager getPluginConfig() {
+        return pluginConfig;
     }
 
-    public SettingsManager getMessages() {
-        return this.messages;
+    public static SettingsManager getMessages() {
+        return messages;
     }
 
-    public SettingsManager getMainMenuConfig() {
-        return this.mainMenuConfig;
+    public static SettingsManager getMainMenuConfig() {
+        return mainMenuConfig;
     }
 
-    public SettingsManager getPreviewMenuConfig() {
-        return this.previewMenuConfig;
+    public static SettingsManager getPreviewMenuConfig() {
+        return previewMenuConfig;
     }
 
     private ConfigurationData createPluginConfig() {

@@ -49,9 +49,8 @@ public class CrateControlListener implements Listener { // Crate Control
     private final @NotNull BukkitUserManager userManager = this.crazyHandler.getUserManager();
     private final @NotNull CrazyManager crazyManager = this.crazyHandler.getCrazyManager();
     private final @NotNull Methods methods = this.crazyHandler.getMethods();
-    private final @NotNull ConfigManager configManager = this.crazyHandler.getConfigManager();
-    private final @NotNull SettingsManager config = this.configManager.getConfig();
-    private final @NotNull SettingsManager mainMenuConfig = this.configManager.getMainMenuConfig();
+    private final @NotNull SettingsManager config = ConfigManager.getConfig();
+    private final @NotNull SettingsManager mainMenuConfig = ConfigManager.getMainMenuConfig();
     
     // This event controls when a player tries to click in a GUI based crate type. This will stop them from taking items out of their inventories.
     @EventHandler

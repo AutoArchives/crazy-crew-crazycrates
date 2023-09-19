@@ -1,6 +1,5 @@
 package us.crazycrew.crazycrates.paper;
 
-import com.ryderbelserion.cluster.api.utils.ColorUtils;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
@@ -10,6 +9,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import us.crazycrew.crazycrates.common.config.ConfigManager;
 import us.crazycrew.crazycrates.common.config.types.PluginConfig;
 import us.crazycrew.crazycrates.common.enums.Permissions;
 import us.crazycrew.crazycrates.paper.api.enums.Translation;
@@ -73,7 +73,7 @@ public class Methods {
     }
 
     public void sendMessage(CommandSender sender, Translation translation) {
-        if (this.plugin.getCrazyHandler().getConfigManager().getPluginConfig().getProperty(PluginConfig.use_mini_message)) {
+        if (ConfigManager.getPluginConfig().getProperty(PluginConfig.use_mini_message)) {
             sender.sendMessage(translation.toComponent());
             return;
         }
@@ -157,7 +157,7 @@ public class Methods {
 
     //TODO() Find prefix
     public String getPrefix() {
-        return color(this.plugin.getCrazyHandler().getConfigManager().getPluginConfig().getProperty(PluginConfig.command_prefix));
+        return color(ConfigManager.getPluginConfig().getProperty(PluginConfig.command_prefix));
     }
 
     public String getPrefix(String msg) {

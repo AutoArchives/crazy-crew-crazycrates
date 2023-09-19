@@ -1,6 +1,7 @@
 package us.crazycrew.crazycrates.paper;
 
 import org.jetbrains.annotations.NotNull;
+import us.crazycrew.crazycrates.common.config.ConfigManager;
 import us.crazycrew.crazycrates.common.config.types.PluginConfig;
 import us.crazycrew.crazycrates.paper.api.enums.settings.Messages;
 import us.crazycrew.crazycrates.paper.api.managers.QuadCrateManager;
@@ -49,7 +50,7 @@ public class CrazyCrates extends JavaPlugin {
         this.crazyHandler = new CrazyHandler(getDataFolder());
         this.crazyHandler.install();
 
-        boolean useMiniMessage = this.crazyHandler.getConfigManager().getPluginConfig().getProperty(PluginConfig.use_mini_message);
+        boolean useMiniMessage = ConfigManager.getPluginConfig().getProperty(PluginConfig.use_mini_message);
 
         if (!useMiniMessage) {
             List.of(
