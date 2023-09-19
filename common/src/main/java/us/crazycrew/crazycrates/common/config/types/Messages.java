@@ -67,7 +67,7 @@ public class Messages implements SettingsHolder {
 
     public static final Property<String> player_requirements_inventory_not_empty = PropertyInitializer.newProperty("player.inventory-not-empty", "<red>Inventory is not empty, Please make room before opening</red> <gold>{crate}.</gold>");
 
-    public static final Property<String> player_requirements_obtaining_keys = PropertyInitializer.newProperty("player.obtaining-keys", "gray>You have been given <gold>{amount} {key}</gold> <gray>Keys.");
+    public static final Property<String> player_requirements_obtaining_keys = PropertyInitializer.newProperty("player.obtaining-keys", "<gray>You have been given <gold>{amount} {key}</gold> <gray>Keys.");
 
     public static final Property<String> player_requirements_too_close_to_another_player = PropertyInitializer.newProperty("player.too-close-to-another-player", "<red>You are too close to a player that is opening their Crate.</red>");
 
@@ -134,17 +134,17 @@ public class Messages implements SettingsHolder {
 
     public static final Property<String> command_transfer_not_enough_keys = PropertyInitializer.newProperty("command.transfer.not-enough-keys", "<red>You do not have enough keys to transfer.</red>");
 
-    public static final Property<String> command_transfer_keys = PropertyInitializer.newProperty("command.transfer.transferred-keys", "gray>You have transferred</gray> <red>{amount} {crate}</red> <gray>keys to</gray> <red>{player}.</red>");
+    public static final Property<String> command_transfer_keys = PropertyInitializer.newProperty("command.transfer.transferred-keys", "<gray>You have transferred</gray> <red>{amount} {crate}</red> <gray>keys to</gray> <red>{player}.</red>");
 
     public static final Property<String> command_transfer_keys_received = PropertyInitializer.newProperty("command.transfer.transferred-keys-received", "<gray>You have received</gray> <red>{amount} {crate}</red> <gray>keys from</gray> <red>{player}.</red>");
 
-    public static final Property<String> command_keys_personal_no_virtual_keys = PropertyInitializer.newProperty("command.keys.personal.no-virtual-keys", "<dark_gray>(/dark_gray><gold>!</gold><dark_gray>)/dark_gray> <gray>You currently do not have any virtual keys.</gray>");
+    public static final Property<String> command_keys_personal_no_virtual_keys = PropertyInitializer.newProperty("command.keys.personal.no-virtual-keys", "<dark_gray>(</dark_gray><gold>!</gold><dark_gray>)</dark_gray> <gray>You currently do not have any virtual keys.</gray>");
 
     public static final Property<List<String>> command_keys_personal_virtual_keys_header = PropertyInitializer.newListProperty("command.keys.personal.virtual-keys-header", List.of(
-            "<dark_gray>(/dark_gray><gold>!</gold><dark_gray>)/dark_gray> <gray>A list of your current amount of keys.</gray>"
+            "<dark_gray>(</dark_gray><gold>!</gold><dark_gray>)</dark_gray> <gray>A list of your current amount of keys.</gray>"
     ));
 
-    public static final Property<String> command_keys_other_player_no_virtual_keys = PropertyInitializer.newProperty("command.keys.other-player.no-virtual-keys", "<dark_gray>(/dark_gray><gold>!</gold><dark_gray>)/dark_gray> <gray>The player</gray> <red>{player} <gray>does not have any keys.</gray>");
+    public static final Property<String> command_keys_other_player_no_virtual_keys = PropertyInitializer.newProperty("command.keys.other-player.no-virtual-keys", "<dark_gray>(</dark_gray><gold>!</gold><dark_gray>)</dark_gray> <gray>The player</gray> <red>{player} <gray>does not have any keys.</gray>");
 
     public static final Property<List<String>> command_keys_other_player_virtual_keys_header = PropertyInitializer.newListProperty("command.keys.other-player.virtual-keys-header", List.of(
             "<dark_gray>(</dark_gray><gold>!</gold><dark_gray>)</dark_gray> <gray>A list of</gray> <red>{player}''s</red> <gray>current amount of keys.</gray>"
