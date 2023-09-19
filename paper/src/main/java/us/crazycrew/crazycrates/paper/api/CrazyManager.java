@@ -788,7 +788,8 @@ public class CrazyManager {
                         message = PlaceholderAPI.setPlaceholders(player, message);
                     }
 
-                    this.methods.sendMessage(player, message.replaceAll("\\{player}", player.getName()).replaceAll("\\{player}", player.getName()).replaceAll("\\{reward}", quoteReplacement(prize.getDisplayItemBuilder().getName())).replaceAll("\\{crate}", crate.getCrateInventoryName()), false);
+                    //this.methods.sendMessage(player, message.replaceAll("\\{player}", player.getName()).replaceAll("\\{player}", player.getName()).replaceAll("\\{reward}",
+                    //        quoteReplacement(prize.getDisplayItemBuilder().getName())).replaceAll("\\{crate}", crate.getCrateInventoryName()), false);
                 }
 
                 return;
@@ -799,7 +800,8 @@ public class CrazyManager {
                     message = PlaceholderAPI.setPlaceholders(player, message);
                 }
 
-                this.methods.sendMessage(player, message.replaceAll("\\{player}", player.getName()).replaceAll("\\{player}", player.getName()).replaceAll("\\{reward}", quoteReplacement(prize.getDisplayItemBuilder().getName())).replaceAll("\\{crate}", crate.getCrateInventoryName()), false);
+                //this.methods.sendMessage(player, message.replaceAll("\\{player}", player.getName()).replaceAll("\\{player}", player.getName()).replaceAll("\\{reward}",
+                //        quoteReplacement(prize.getDisplayItemBuilder().getName())).replaceAll("\\{crate}", crate.getCrateInventoryName()), false);
             }
         } else {
             FancyLogger.warn("No prize was found when giving " + player.getName() + " a prize.");
