@@ -79,6 +79,7 @@ public class ConfigManager {
 
         File messagesFile = new File(this.dataFolder, "/locale/" + this.pluginConfig.getProperty(PluginConfig.plugin_locale) + ".yml");
 
+        //TODO() Re-creating this causes the enum to be null... re-visit this idea
         this.messages = SettingsManagerBuilder
                 .withYamlFile(messagesFile)
                 .useDefaultMigrationService()
