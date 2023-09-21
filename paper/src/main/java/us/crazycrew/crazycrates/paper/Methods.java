@@ -1,6 +1,7 @@
 package us.crazycrew.crazycrates.paper;
 
 import ch.jalu.configme.SettingsManager;
+import com.ryderbelserion.cluster.bukkit.utils.LegacyUtils;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
@@ -71,7 +72,7 @@ public class Methods {
         if (crateBroadcastBoolean && crateBroadcastBooleanExists != null && crateBroadcast != null) {
             if (crateBroadcast.isEmpty()) return;
 
-            this.plugin.getServer().broadcastMessage(color(crateBroadcast.replaceAll("\\{prefix}", quoteReplacement(getPrefix())).replaceAll("\\{player}", player.getName()).replaceAll("\\{prefix}", quoteReplacement(getPrefix())).replaceAll("\\{player}", player.getName())));
+            this.plugin.getServer().broadcastMessage(LegacyUtils.color(crateBroadcast.replaceAll("\\{prefix}", quoteReplacement(getPrefix())).replaceAll("\\{player}", player.getName())));
         }
     }
 
@@ -91,7 +92,7 @@ public class Methods {
     }
 
     public String sanitizeColor(String msg) {
-        return sanitizeFormat(color(msg));
+        return sanitizeFormat(LegacyUtils.color(msg));
     }
 
     public String removeColor(String msg) {
@@ -159,11 +160,11 @@ public class Methods {
     }
 
     public String getPrefix() {
-        return color(this.pluginConfig.getProperty(PluginConfig.command_prefix));
+        return this.pluginConfig.getProperty(PluginConfig.command_prefix);
     }
 
     public String getPrefix(String msg) {
-        return color(getPrefix() + msg);
+        return getPrefix() + msg;
     }
 
     public boolean isInventoryFull(Player player) {
