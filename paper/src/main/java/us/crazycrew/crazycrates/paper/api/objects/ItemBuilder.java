@@ -1,5 +1,6 @@
 package us.crazycrew.crazycrates.paper.api.objects;
 
+import com.ryderbelserion.cluster.bukkit.utils.LegacyUtils;
 import org.bukkit.Color;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
@@ -594,7 +595,7 @@ public class ItemBuilder {
      * @return The ItemBuilder with an updated name.
      */
     public ItemBuilder setName(String itemName) {
-        if (itemName != null) this.itemName = methods.color(itemName);
+        if (itemName != null) this.itemName = LegacyUtils.color(itemName);
 
         return this;
     }
@@ -642,7 +643,7 @@ public class ItemBuilder {
             this.itemLore.clear();
 
             for (String line : lore) {
-                this.itemLore.add(methods.color(line));
+                this.itemLore.add(LegacyUtils.color(line));
             }
         }
 
@@ -656,7 +657,7 @@ public class ItemBuilder {
      * @return The ItemBuilder with updated info.
      */
     public ItemBuilder addLore(String lore) {
-        if (lore != null) this.itemLore.add(methods.color(lore));
+        if (lore != null) this.itemLore.add(LegacyUtils.color(lore));
         return this;
     }
 

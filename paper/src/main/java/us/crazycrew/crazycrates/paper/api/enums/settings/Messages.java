@@ -1,5 +1,6 @@
 package us.crazycrew.crazycrates.paper.api.enums.settings;
 
+import com.ryderbelserion.cluster.bukkit.utils.LegacyUtils;
 import org.bukkit.plugin.java.JavaPlugin;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.Methods;
@@ -127,7 +128,7 @@ public enum Messages {
         StringBuilder message = new StringBuilder();
 
         for (String line : list) {
-            message.append(methods.color(line)).append("\n");
+            message.append(LegacyUtils.color(line)).append("\n");
         }
 
         return message.toString();
@@ -224,15 +225,15 @@ public enum Messages {
 
         if (isList) {
             if (exists) {
-                //message = methods.color(convertList(FileManager.Files.MESSAGES.getFile().getStringList("Messages." + path)));
+                //message = LegacyUtils.color(convertList(FileManager.Files.MESSAGES.getFile().getStringList("Messages." + path)));
             } else {
-                message = methods.color(convertList(getDefaultListMessage()));
+                message = LegacyUtils.color(convertList(getDefaultListMessage()));
             }
         } else {
             if (exists) {
-                //message = methods.color(FileManager.Files.MESSAGES.getFile().getString("Messages." + path));
+                //message = LegacyUtils.color(FileManager.Files.MESSAGES.getFile().getString("Messages." + path));
             } else {
-                message = methods.color(getDefaultMessage());
+                message = LegacyUtils.color(getDefaultMessage());
             }
         }
 
@@ -242,12 +243,12 @@ public enum Messages {
         }
 
         if (isList) { // Don't want to add a prefix to a list of messages.
-            return methods.color(message);
+            return LegacyUtils.color(message);
         } else { // If the message isn't a list.
             if (prefix) { // If the message needs a prefix.
                 return methods.getPrefix(message);
             } else { // If the message doesn't need a prefix.
-                return methods.color(message);
+                return LegacyUtils.color(message);
             }
         }
     }

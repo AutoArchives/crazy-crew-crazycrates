@@ -179,7 +179,7 @@ public class CrateBaseCommand extends BaseCommand {
 
         for (; size > 9; size -= 9) slots += 9;
 
-        Inventory inv = this.plugin.getServer().createInventory(null, slots, methods.color("&4&lAdmin Keys"));
+        Inventory inv = this.plugin.getServer().createInventory(null, slots, LegacyUtils.color("&4&lAdmin Keys"));
 
         for (Crate crate : this.crazyManager.getCrates()) {
             if (crate.getCrateType() != CrateType.MENU) {
@@ -204,12 +204,12 @@ public class CrateBaseCommand extends BaseCommand {
 
         brokecrates = brokecratesBuilder.toString();
 
-        sender.sendMessage(this.methods.color("&e&lCrates:&f " + crates));
+        sender.sendMessage(LegacyUtils.color("&e&lCrates:&f " + crates));
 
-        if (!brokecrates.isEmpty()) sender.sendMessage(this.methods.color("&6&lBroken Crates:&f " + brokecrates.substring(0, brokecrates.length() - 2)));
+        if (!brokecrates.isEmpty()) sender.sendMessage(LegacyUtils.color("&6&lBroken Crates:&f " + brokecrates.substring(0, brokecrates.length() - 2)));
 
-        sender.sendMessage(this.methods.color("&e&lAll Crate Locations:"));
-        sender.sendMessage(this.methods.color("&c[ID]&8, &c[Crate]&8, &c[World]&8, &c[X]&8, &c[Y]&8, &c[Z]"));
+        sender.sendMessage(LegacyUtils.color("&e&lAll Crate Locations:"));
+        sender.sendMessage(LegacyUtils.color("&c[ID]&8, &c[Crate]&8, &c[World]&8, &c[X]&8, &c[Y]&8, &c[Z]"));
         int line = 1;
 
         for (CrateLocation loc : this.crazyManager.getCrateLocations()) {
@@ -220,7 +220,7 @@ public class CrateBaseCommand extends BaseCommand {
             int y = loc.getLocation().getBlockY();
             int z = loc.getLocation().getBlockZ();
 
-            sender.sendMessage(this.methods.color("&8[&b" + line + "&8]: " + "&c" + loc.getID() + "&8, &c" + crate.getName() + "&8, &c" + world + "&8, &c" + x + "&8, &c" + y + "&8, &c" + z));
+            sender.sendMessage(LegacyUtils.color("&8[&b" + line + "&8]: " + "&c" + loc.getID() + "&8, &c" + crate.getName() + "&8, &c" + world + "&8, &c" + x + "&8, &c" + y + "&8, &c" + z));
             line++;
         }
     }
@@ -575,7 +575,7 @@ public class CrateBaseCommand extends BaseCommand {
         Crate crate = this.crazyManager.getCrateFromName(crateName);
 
         if (type == null || type == KeyType.FREE_KEY) {
-            sender.sendMessage(this.methods.color(this.methods.getPrefix() + "&cPlease use Virtual/V or Physical/P for a Key type."));
+            sender.sendMessage(LegacyUtils.color(this.methods.getPrefix() + "&cPlease use Virtual/V or Physical/P for a Key type."));
             return;
         }
 
@@ -640,7 +640,7 @@ public class CrateBaseCommand extends BaseCommand {
         Crate crate = this.crazyManager.getCrateFromName(crateName);
 
         if (type == null || type == KeyType.FREE_KEY) {
-            sender.sendMessage(this.methods.color(this.methods.getPrefix() + "&cPlease use Virtual/V or Physical/P for a Key type."));
+            sender.sendMessage(LegacyUtils.color(this.methods.getPrefix() + "&cPlease use Virtual/V or Physical/P for a Key type."));
             return;
         }
 
@@ -668,7 +668,7 @@ public class CrateBaseCommand extends BaseCommand {
         KeyType type = KeyType.getFromName(keyType);
 
         if (type == null || type == KeyType.FREE_KEY) {
-            sender.sendMessage(this.methods.color(this.methods.getPrefix() + "&cPlease use Virtual/V or Physical/P for a Key type."));
+            sender.sendMessage(LegacyUtils.color(this.methods.getPrefix() + "&cPlease use Virtual/V or Physical/P for a Key type."));
             return;
         }
 

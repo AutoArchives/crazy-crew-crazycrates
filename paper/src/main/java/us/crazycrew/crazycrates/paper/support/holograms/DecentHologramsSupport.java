@@ -1,24 +1,18 @@
 package us.crazycrew.crazycrates.paper.support.holograms;
 
-import org.bukkit.plugin.java.JavaPlugin;
-import us.crazycrew.crazycrates.paper.CrazyCrates;
+import com.ryderbelserion.cluster.bukkit.utils.LegacyUtils;
 import us.crazycrew.crazycrates.paper.api.interfaces.HologramController;
 import us.crazycrew.crazycrates.paper.api.objects.Crate;
 import us.crazycrew.crazycrates.common.crates.CrateHologram;
 import eu.decentsoftware.holograms.api.DHAPI;
 import eu.decentsoftware.holograms.api.holograms.Hologram;
 import org.bukkit.block.Block;
-import org.jetbrains.annotations.NotNull;
-import us.crazycrew.crazycrates.paper.api.plugin.CrazyHandler;
 import java.util.HashMap;
 import java.util.UUID;
 
 public class DecentHologramsSupport implements HologramController {
 
     private final HashMap<Block, Hologram> holograms = new HashMap<>();
-
-    private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
-    private final @NotNull CrazyHandler crazyHandler = this.plugin.getCrazyHandler();
     
     public void createHologram(Block block, Crate crate) {
         CrateHologram crateHologram = crate.getHologram();
@@ -29,7 +23,7 @@ public class DecentHologramsSupport implements HologramController {
 
         Hologram hologram = DHAPI.createHologram("CrazyCrates-" + UUID.randomUUID(), block.getLocation().add(.5, height, .5));
 
-        crateHologram.getMessages().forEach(line -> DHAPI.addHologramLine(hologram, this.crazyHandler.getMethods().color(line)));
+        crateHologram.getMessages().forEach(line -> DHAPI.addHologramLine(hologram, LegacyUtils.color(line)));
 
         this.holograms.put(block, hologram);
     }

@@ -1,6 +1,7 @@
 package us.crazycrew.crazycrates.paper.listeners;
 
 import ch.jalu.configme.SettingsManager;
+import com.ryderbelserion.cluster.bukkit.utils.LegacyUtils;
 import org.bukkit.SoundCategory;
 import us.crazycrew.crazycrates.common.config.ConfigManager;
 import us.crazycrew.crazycrates.common.config.types.Config;
@@ -241,7 +242,7 @@ public class CrateControlListener implements Listener { // Crate Control
 
                         if (key.hasItemMeta() && key.getItemMeta().hasDisplayName()) name = key.getItemMeta().getDisplayName();
 
-                        player.sendMessage(this.methods.getPrefix() + this.methods.color("&a&l+1 " + (name != null ? name : crate.getName())));
+                        player.sendMessage(this.methods.getPrefix() + LegacyUtils.color("&a&l+1 " + (name != null ? name : crate.getName())));
                     }
                 }
             }
