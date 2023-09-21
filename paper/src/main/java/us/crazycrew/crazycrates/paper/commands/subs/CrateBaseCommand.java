@@ -261,8 +261,8 @@ public class CrateBaseCommand extends BaseCommand {
     public void onAdminCrateAddItem(Player player, @Suggestion("crates") String crateName, @Suggestion("prizes") String prize) {
         ItemStack item = player.getInventory().getItemInMainHand();
 
-        if (item.getType() != Material.AIR) {
-            this.methods.sendMessage(player, Translation.command_add_item_no_item_in_hand);
+        if (item.getType() == Material.AIR) {
+            this.methods.sendMessage(player, Translation.command_add_item_no_item_in_hand.getMessage().toComponent(), Translation.command_add_item_no_item_in_hand.getMessage().toString());
             return;
         }
 
