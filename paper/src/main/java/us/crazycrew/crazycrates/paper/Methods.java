@@ -61,6 +61,15 @@ public class Methods {
         }
     }
 
+    public void sendMessage(CommandSender sender, List<Component> components, List<String> messages) {
+        if (this.pluginConfig.getProperty(PluginConfig.use_mini_message)) {
+            components.forEach(sender::sendMessage);
+            return;
+        }
+
+        messages.forEach(sender::sendMessage);
+    }
+
     public void sendMessage(CommandSender sender, Component component, String message) {
         if (this.pluginConfig.getProperty(PluginConfig.use_mini_message)) {
             sender.sendMessage(component);
@@ -136,7 +145,7 @@ public class Methods {
             return true;
         } else {
             if (!tabComplete) {
-                player.sendMessage(Messages.NO_PERMISSION.getMessage());
+                sendMessage(player, Translation.no_permission.getComponent(), Translation.no_permission.getString());
                 return false;
             }
 
