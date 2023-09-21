@@ -114,7 +114,7 @@ public class MenuManager {
     public ItemStack getNextButton(UUID uuid) {
         ItemBuilder button = new ItemBuilder(this.nextButton);
 
-        button.addLorePlaceholder("%Page%", (getPage(uuid) + 1) + "");
+        button.addLorePlaceholder("{page}", (getPage(uuid) + 1) + "");
 
         return button.build();
     }
@@ -126,7 +126,7 @@ public class MenuManager {
     public ItemStack getBackButton(UUID uuid) {
         ItemBuilder button = new ItemBuilder(this.backButton);
         
-        button.addLorePlaceholder("%Page%", (getPage(uuid) - 1) + "");
+        button.addLorePlaceholder("{page}", (getPage(uuid) - 1) + "");
 
         return button.build();
     }
