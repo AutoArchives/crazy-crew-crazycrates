@@ -2,6 +2,7 @@ package us.crazycrew.crazycrates.paper;
 
 import ch.jalu.configme.SettingsManager;
 import com.ryderbelserion.cluster.bukkit.utils.LegacyUtils;
+import net.kyori.adventure.text.Component;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
@@ -61,13 +62,13 @@ public class Methods {
         }
     }
 
-    public void sendMessage(CommandSender sender, Translation translation) {
+    public void sendMessage(CommandSender sender, Component component, String message) {
         if (this.pluginConfig.getProperty(PluginConfig.use_mini_message)) {
-            sender.sendMessage(translation.getMessage().toComponent());
+            sender.sendMessage(component);
             return;
         }
 
-        sender.sendMessage(translation.getMessage().toString().replaceAll("\\{prefix}", getPrefix()));
+        sender.sendMessage(message);
     }
 
     public void sendCommand(String command) {

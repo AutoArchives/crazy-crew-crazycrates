@@ -150,7 +150,7 @@ public class CrazyCrates extends JavaPlugin {
 
         if (PluginSupport.PLACEHOLDERAPI.isPluginEnabled()) new PlaceholderAPISupport().register();
 
-        this.manager.registerMessage(MessageKey.UNKNOWN_COMMAND, (sender, context) -> this.crazyHandler.getMethods().sendMessage(sender, Translation.unknown_command));
+        this.manager.registerMessage(MessageKey.UNKNOWN_COMMAND, (sender, context) -> this.crazyHandler.getMethods().sendMessage(sender, Translation.unknown_command.getMessage().toComponent(), Translation.unknown_command.getMessage().toString()));
 
         this.manager.registerMessage(MessageKey.TOO_MANY_ARGUMENTS, (sender, context) -> {
             String command = context.getCommand();
@@ -167,7 +167,7 @@ public class CrazyCrates extends JavaPlugin {
                 }
             }
 
-            if (correctUsage != null) this.crazyHandler.getMethods().sendMessage(sender, Translation.correct_usage.getMessage("{usage}", correctUsage));
+            if (correctUsage != null) this.crazyHandler.getMethods().sendMessage(sender, Translation.correct_usage.getMessage("{usage}", correctUsage).toComponent(), Translation.correct_usage.getMessage("{usage}", correctUsage).toString());
         });
 
         this.manager.registerMessage(MessageKey.NOT_ENOUGH_ARGUMENTS, (sender, context) -> {
@@ -187,16 +187,16 @@ public class CrazyCrates extends JavaPlugin {
                 }
             }
 
-            if (correctUsage != null) this.crazyHandler.getMethods().sendMessage(sender, Translation.correct_usage.getMessage("{usage}", correctUsage));
+            if (correctUsage != null) this.crazyHandler.getMethods().sendMessage(sender, Translation.correct_usage.getMessage("{usage}", correctUsage).toComponent(), Translation.correct_usage.getMessage("{usage}", correctUsage).toString());
         });
 
-        this.manager.registerMessage(MessageKey.INVALID_ARGUMENT, (sender, context) -> this.crazyHandler.getMethods().sendMessage(sender, Translation.target_not_online.getMessage("{player}", context.getTypedArgument())));
+        this.manager.registerMessage(MessageKey.INVALID_ARGUMENT, (sender, context) -> this.crazyHandler.getMethods().sendMessage(sender, Translation.target_not_online.getMessage("{player}", context.getTypedArgument()).toComponent(), Translation.target_not_online.getMessage("{player}", context.getTypedArgument()).toString()));
 
-        this.manager.registerMessage(BukkitMessageKey.NO_PERMISSION, (sender, context) -> this.crazyHandler.getMethods().sendMessage(sender, Translation.no_permission));
+        this.manager.registerMessage(BukkitMessageKey.NO_PERMISSION, (sender, context) -> this.crazyHandler.getMethods().sendMessage(sender, Translation.no_permission.getMessage().toComponent(), Translation.no_permission.getMessage().toString()));
 
-        this.manager.registerMessage(BukkitMessageKey.PLAYER_ONLY, (sender, context) -> this.crazyHandler.getMethods().sendMessage(sender, Translation.must_be_player));
+        this.manager.registerMessage(BukkitMessageKey.PLAYER_ONLY, (sender, context) -> this.crazyHandler.getMethods().sendMessage(sender, Translation.must_be_player.getMessage().toComponent(), Translation.must_be_player.getMessage().toString()));
 
-        this.manager.registerMessage(BukkitMessageKey.CONSOLE_ONLY, (sender, context) -> this.crazyHandler.getMethods().sendMessage(sender, Translation.must_be_console_sender));
+        this.manager.registerMessage(BukkitMessageKey.CONSOLE_ONLY, (sender, context) -> this.crazyHandler.getMethods().sendMessage(sender, Translation.must_be_console_sender.getMessage().toComponent(), Translation.must_be_console_sender.getMessage().toString()));
 
         this.manager.registerSuggestion(SuggestionKey.of("crates"), (sender, context) -> this.crazyHandler.getFileManager().getAllCratesNames(this).stream().toList());
 

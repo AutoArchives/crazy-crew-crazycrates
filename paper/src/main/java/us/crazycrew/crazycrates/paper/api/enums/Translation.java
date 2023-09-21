@@ -115,6 +115,7 @@ public enum Translation {
     private boolean isList = false;
 
     private Component message;
+    private String otherMessage;
     private String legacy;
 
     /**
@@ -166,8 +167,6 @@ public enum Translation {
     }
 
     public Translation getMessage(Map<String, String> placeholders) {
-        boolean useAdventure = this.configManager.getPluginConfig().getProperty(PluginConfig.use_mini_message);
-
         // Get the string first.
         String message;
 
@@ -183,17 +182,17 @@ public enum Translation {
             }
         }
 
-        if (useAdventure) this.message = ColorUtils.parse(message); else this.legacy = LegacyUtils.color(message);
+        this.otherMessage = message;
 
         return this;
     }
 
     public Component toComponent() {
-        return this.message;
+        return ColorUtils.parse(this.otherMessage.replaceAll("\\{prefix}", this.configManager.getPluginConfig().getProperty(PluginConfig.command_prefix)));
     }
 
     public String toString() {
-        return this.legacy;
+        return LegacyUtils.color(this.otherMessage.replaceAll("\\{prefix}", this.configManager.getPluginConfig().getProperty(PluginConfig.command_prefix)));
     }
 
     public List<Component> toListComponent() {
