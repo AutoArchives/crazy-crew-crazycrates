@@ -3,6 +3,7 @@ package us.crazycrew.crazycrates.paper;
 import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.common.config.ConfigManager;
 import us.crazycrew.crazycrates.common.config.types.PluginConfig;
+import us.crazycrew.crazycrates.paper.api.enums.Translation;
 import us.crazycrew.crazycrates.paper.api.enums.settings.Messages;
 import us.crazycrew.crazycrates.paper.api.managers.QuadCrateManager;
 import us.crazycrew.crazycrates.paper.api.objects.CrateLocation;
@@ -149,7 +150,7 @@ public class CrazyCrates extends JavaPlugin {
 
         if (PluginSupport.PLACEHOLDERAPI.isPluginEnabled()) new PlaceholderAPISupport().register();
 
-        this.manager.registerMessage(MessageKey.UNKNOWN_COMMAND, (sender, context) -> sender.sendMessage(Messages.UNKNOWN_COMMAND.getMessage()));
+        this.manager.registerMessage(MessageKey.UNKNOWN_COMMAND, (sender, context) -> this.crazyHandler.getMethods().sendMessage(sender, Translation.unknown_command));
 
         this.manager.registerMessage(MessageKey.TOO_MANY_ARGUMENTS, (sender, context) -> {
             String command = context.getCommand();
@@ -166,7 +167,7 @@ public class CrazyCrates extends JavaPlugin {
                 }
             }
 
-            if (correctUsage != null) sender.sendMessage(Messages.CORRECT_USAGE.getMessage().replaceAll("\\{usage}", correctUsage));
+            if (correctUsage != null) this.crazyHandler.getMethods().sendMessage(sender, Translation.correct_usage.getMessage("{usage}", correctUsage));
         });
 
         this.manager.registerMessage(MessageKey.NOT_ENOUGH_ARGUMENTS, (sender, context) -> {
@@ -186,24 +187,24 @@ public class CrazyCrates extends JavaPlugin {
                 }
             }
 
-            if (correctUsage != null) sender.sendMessage(Messages.CORRECT_USAGE.getMessage().replaceAll("\\{usage}", correctUsage));
+            if (correctUsage != null) this.crazyHandler.getMethods().sendMessage(sender, Translation.correct_usage.getMessage("{usage}", correctUsage));
         });
 
-        this.manager.registerMessage(MessageKey.INVALID_ARGUMENT, (sender, context) -> sender.sendMessage(Messages.NOT_ONLINE.getMessage().replaceAll("\\{player}", context.getTypedArgument())));
+        this.manager.registerMessage(MessageKey.INVALID_ARGUMENT, (sender, context) -> this.crazyHandler.getMethods().sendMessage(sender, Translation.target_not_online.getMessage("{player}", context.getTypedArgument())));
 
-        this.manager.registerMessage(BukkitMessageKey.NO_PERMISSION, (sender, context) -> sender.sendMessage(Messages.NO_PERMISSION.getMessage()));
+        this.manager.registerMessage(BukkitMessageKey.NO_PERMISSION, (sender, context) -> this.crazyHandler.getMethods().sendMessage(sender, Translation.no_permission));
 
-        this.manager.registerMessage(BukkitMessageKey.PLAYER_ONLY, (sender, context) -> sender.sendMessage(Messages.MUST_BE_A_PLAYER.getMessage()));
+        this.manager.registerMessage(BukkitMessageKey.PLAYER_ONLY, (sender, context) -> this.crazyHandler.getMethods().sendMessage(sender, Translation.must_be_player));
 
-        this.manager.registerMessage(BukkitMessageKey.CONSOLE_ONLY, (sender, context) -> sender.sendMessage(Messages.MUST_BE_A_CONSOLE_SENDER.getMessage()));
+        this.manager.registerMessage(BukkitMessageKey.CONSOLE_ONLY, (sender, context) -> this.crazyHandler.getMethods().sendMessage(sender, Translation.must_be_console_sender));
 
-        this.manager.registerSuggestion(SuggestionKey.of("crates"), (sender, context) -> getCrazyHandler().getFileManager().getAllCratesNames(this).stream().toList());
+        this.manager.registerSuggestion(SuggestionKey.of("crates"), (sender, context) -> this.crazyHandler.getFileManager().getAllCratesNames(this).stream().toList());
 
         this.manager.registerSuggestion(SuggestionKey.of("key-types"), (sender, context) -> List.of("virtual", "v", "physical", "p"));
 
         this.manager.registerSuggestion(SuggestionKey.of("online-players"), (sender, context) -> getServer().getOnlinePlayers().stream().map(Player::getName).toList());
 
-        this.manager.registerSuggestion(SuggestionKey.of("locations"), (sender, context) -> getCrazyHandler().getCrazyManager().getCrateLocations().stream().map(CrateLocation::getID).toList());
+        this.manager.registerSuggestion(SuggestionKey.of("locations"), (sender, context) -> this.crazyHandler.getCrazyManager().getCrateLocations().stream().map(CrateLocation::getID).toList());
 
         this.manager.registerSuggestion(SuggestionKey.of("prizes"), (sender, context) -> {
             List<String> numbers = new ArrayList<>();
@@ -216,7 +217,7 @@ public class CrazyCrates extends JavaPlugin {
         this.manager.registerSuggestion(SuggestionKey.of("numbers"), (sender, context) -> {
             List<String> numbers = new ArrayList<>();
 
-            for (int i = 1; i <= 250; i++) numbers.add(i + "");
+            for (int i = 1; i <= 250; i++) numbers.add(String.valueOf(i));
 
             return numbers;
         });
