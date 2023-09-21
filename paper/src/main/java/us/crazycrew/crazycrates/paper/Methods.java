@@ -41,8 +41,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import static java.util.regex.Matcher.quoteReplacement;
 
 @SuppressWarnings("deprecation")
@@ -51,19 +49,6 @@ public class Methods {
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
     private final @NotNull ConfigManager configManager = this.plugin.getCrazyHandler().getConfigManager();
     private final @NotNull SettingsManager pluginConfig = this.configManager.getPluginConfig();
-
-    private final Pattern hex_pattern = Pattern.compile("#[a-fA-F\\d]{6}");
-
-    public String color(String message) {
-        Matcher matcher = this.hex_pattern.matcher(message);
-        StringBuilder buffer = new StringBuilder();
-
-        while (matcher.find()) {
-            matcher.appendReplacement(buffer, net.md_5.bungee.api.ChatColor.of(matcher.group()).toString());
-        }
-
-        return ChatColor.translateAlternateColorCodes('&', matcher.appendTail(buffer).toString());
-    }
 
     public void broadCastMessage(FileConfiguration crateFile, Player player) {
         String crateBroadcast = crateFile.getString("Crate.BroadCast");
