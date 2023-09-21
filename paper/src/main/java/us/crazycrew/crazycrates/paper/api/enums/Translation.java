@@ -156,6 +156,14 @@ public enum Translation {
         return this.messages.getProperty(property);
     }
 
+    public Component getComponent() {
+        return getMessage().toComponent();
+    }
+
+    public String getString() {
+        return getMessage().toString();
+    }
+
     public Translation getMessage() {
         return getMessage(new HashMap<>());
     }
