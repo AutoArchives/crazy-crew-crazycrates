@@ -74,6 +74,9 @@ public class ConfigManager {
         // Reload plugin-config.yml
         this.pluginConfig.reload();
 
+        // Reload config.yml
+        this.config.reload();
+
         // Save en-US.yml
         this.messages.save();
 
