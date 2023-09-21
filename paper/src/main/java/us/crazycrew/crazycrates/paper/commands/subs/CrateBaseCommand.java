@@ -279,6 +279,7 @@ public class CrateBaseCommand extends BaseCommand {
             FancyLogger.error("Failed to add a new prize to the " + crate.getName() + " crate.", exception);
         }
 
+        //TODO() Stop reloading all crates, reload only a single crate.
         this.crazyManager.load(false);
 
         HashMap<String, String> placeholders = new HashMap<>();
