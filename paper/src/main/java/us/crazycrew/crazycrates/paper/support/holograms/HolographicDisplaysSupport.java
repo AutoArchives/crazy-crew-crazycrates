@@ -18,7 +18,7 @@ public class HolographicDisplaysSupport implements HologramController {
 
     private final @NotNull CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
 
-    private final @NotNull HolographicDisplaysAPI api = HolographicDisplaysAPI.get(plugin);
+    private final @NotNull HolographicDisplaysAPI api = HolographicDisplaysAPI.get(this.plugin);
 
     @Override
     public void createHologram(Block block, Crate crate) {
