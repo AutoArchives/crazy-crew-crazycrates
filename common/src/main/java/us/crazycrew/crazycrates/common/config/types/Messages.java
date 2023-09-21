@@ -43,6 +43,8 @@ public class Messages implements SettingsHolder {
     // Errors
     public static final Property<String> no_prizes_found = PropertyInitializer.newProperty("errors.no-prizes-found", "<red>This crate contains no prizes that you can win.</red>");
 
+    public static final Property<String> key_refund = PropertyInitializer.newProperty("errors.key-refund", "<red>There was an error with prize {crate} so you've been refunded your key");
+
     public static final Property<String> no_schematics_found = PropertyInitializer.newProperty("errors.no-schematics-found", "<red>No schematic were found, Please re-generate them by deleting the folder or checking for errors!</red>");
 
     public static final Property<List<String>> prize_error = PropertyInitializer.newListProperty("errors.prize-error", List.of(

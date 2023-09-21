@@ -31,6 +31,7 @@ public enum Translation {
     no_schematics_found(Messages.no_schematics_found),
 
     prize_error(Messages.prize_error, true),
+    key_refund(Messages.key_refund),
 
     internal_error(Messages.internal_error),
 
