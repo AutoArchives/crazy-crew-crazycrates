@@ -1,6 +1,7 @@
 package us.crazycrew.crazycrates.paper.commands.subs;
 
 import ch.jalu.configme.SettingsManager;
+import com.ryderbelserion.cluster.bukkit.utils.LegacyUtils;
 import dev.triumphteam.cmd.core.annotation.ArgName;
 import dev.triumphteam.cmd.core.annotation.Command;
 import dev.triumphteam.cmd.core.annotation.Default;
