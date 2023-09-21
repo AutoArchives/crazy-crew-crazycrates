@@ -424,6 +424,8 @@ public class MigrationService {
                 .replaceAll("%number%", "{number}")
                 .replaceAll("%reward%", "{reward}")
                 .replaceAll("%amount%", "{amount}")
+                .replaceAll("%slot%", "{slot}")
+                .replaceAll("%cratetype%", "{cratetype}")
                 .replaceAll("%page%", "{page}")
                 .replaceAll("%keys%", "{keys}")
                 .replaceAll("%usage%", "{usage}")

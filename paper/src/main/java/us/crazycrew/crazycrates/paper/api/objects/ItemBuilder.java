@@ -516,7 +516,7 @@ public class ItemBuilder {
     /**
      * Set the type of item and its metadata in the builder.
      *
-     * @param material The string must be in this form: %Material% or %Material%:%MetaData%
+     * @param material The string must be in this form: {Material} or {Material}:{MetaData}
      * @return The ItemBuilder with updated info.
      */
     public ItemBuilder setMaterial(String material) {

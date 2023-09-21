@@ -73,7 +73,7 @@ public class Cosmic implements Listener {
         int slot = 1;
 
         for (int i = 0; i < 27; i++) {
-            inv.setItem(i, manager.getMysteryCrate().setAmount(slot).addNamePlaceholder("%Slot%", slot + "").addLorePlaceholder("%Slot%", slot + "").build());
+            inv.setItem(i, manager.getMysteryCrate().setAmount(slot).addNamePlaceholder("{crate}", slot + "").addLorePlaceholder("{crate}", slot + "").build());
             slot++;
         }
     }
@@ -177,7 +177,7 @@ public class Cosmic implements Listener {
                             if (!this.glass.containsKey(uuid)) this.glass.put(uuid, new ArrayList<>());
 
                             if (this.glass.get(uuid).size() < totalPrizes) {
-                                e.setCurrentItem(manager.getPickedCrate().setAmount(pickedSlot).addNamePlaceholder("%Slot%", pickedSlot + "").addLorePlaceholder("%Slot%", pickedSlot + "").build());
+                                e.setCurrentItem(manager.getPickedCrate().setAmount(pickedSlot).addNamePlaceholder("{slot}", pickedSlot + "").addLorePlaceholder("{slot}", pickedSlot + "").build());
                                 this.glass.get(uuid).add(slot);
                             }
 
@@ -187,7 +187,7 @@ public class Cosmic implements Listener {
                         } else if (nbtItem.hasKey("Cosmic-Picked-Crate")) {
                             if (!this.glass.containsKey(uuid)) this.glass.put(uuid, new ArrayList<>());
 
-                            e.setCurrentItem(manager.getMysteryCrate().setAmount(pickedSlot).addNamePlaceholder("%Slot%", pickedSlot + "").addLorePlaceholder("%Slot%", pickedSlot + "").build());
+                            e.setCurrentItem(manager.getMysteryCrate().setAmount(pickedSlot).addNamePlaceholder("{slot}", pickedSlot + "").addLorePlaceholder("{slot}", pickedSlot + "").build());
                             ArrayList<Integer> l = new ArrayList<>();
 
                             for (int i : this.glass.get(uuid)) if (i != slot) l.add(i);

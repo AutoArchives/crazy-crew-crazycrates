@@ -73,7 +73,7 @@ public class Messages implements SettingsHolder {
 
     public static final Property<String> player_requirements_too_close_to_another_player = PropertyInitializer.newProperty("player.too-close-to-another-player", "<red>You are too close to a player that is opening their Crate.</red>");
 
-    public static final Property<String> player_requirements_required_keys = PropertyInitializer.newProperty("player.required-keys", "<gray>You need</gray> <red>%key-amount%</red> <gray>keys to open</gray> <red>%crate%.</red> <gray>You have</gray> <red>%amount%.</red>");
+    public static final Property<String> player_requirements_required_keys = PropertyInitializer.newProperty("player.required-keys", "<gray>You need</gray> <red>{key-amount}</red> <gray>keys to open</gray> <red>{crate}.</red> <gray>You have</gray> <red>{amount}.</red>");
 
     // Crates
     public static final Property<String> crate_requirements_not_a_crate = PropertyInitializer.newProperty("crates.requirements.not-a-crate", "<red>There is no crate called</red> <gold>{crate}.</gold>");

@@ -15,9 +15,9 @@ public class CrateMainMenu implements SettingsHolder {
 
     @Comment({"""
             The title of /crates menu.
-            Available Placeholders: %crate%
+            Available Placeholders: {crate}
             """})
-    public static final Property<String> crate_menu_title = PropertyInitializer.newProperty("settings.crate-menu.title","<red>Crate Preview</red> <dark_gray>:</dark_gray> <reset>%crate%");
+    public static final Property<String> crate_menu_title = PropertyInitializer.newProperty("settings.crate-menu.title","<red>Crate Preview</red> <dark_gray>:</dark_gray> <reset>{crate}");
 
     @Comment({"""
             Choose how large this menu should be.

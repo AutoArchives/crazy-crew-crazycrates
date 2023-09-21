@@ -223,10 +223,10 @@ public class MenuManager {
                             .setCrateName(crate.getName())
                             .setPlayerName(file.getString(path + "Player"))
                             .setGlow(file.getBoolean(path + "Glowing"))
-                            .addLorePlaceholder("%Keys%", NumberFormat.getNumberInstance().format(this.userManager.getVirtualKeys(uuid, crate.getName())))
-                            .addLorePlaceholder("%Keys_Physical%", NumberFormat.getNumberInstance().format(this.userManager.getPhysicalKeys(uuid, crate.getName())))
-                            .addLorePlaceholder("%Keys_Total%", NumberFormat.getNumberInstance().format(this.userManager.getTotalKeys(uuid, crate.getName())))
-                            .addLorePlaceholder("%Player%", player.getName())
+                            .addLorePlaceholder("{keys}", NumberFormat.getNumberInstance().format(this.userManager.getVirtualKeys(uuid, crate.getName())))
+                            .addLorePlaceholder("{keys_physical}", NumberFormat.getNumberInstance().format(this.userManager.getPhysicalKeys(uuid, crate.getName())))
+                            .addLorePlaceholder("{keys_total}", NumberFormat.getNumberInstance().format(this.userManager.getTotalKeys(uuid, crate.getName())))
+                            .addLorePlaceholder("{player}", player.getName())
                             .build());
                 }
             }

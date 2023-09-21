@@ -751,7 +751,7 @@ public class CrazyManager {
                 }
             }
 
-            for (String command : prize.getCommands()) { // /give %player% iron %random%:1-64
+            for (String command : prize.getCommands()) { // /give {player} iron %random%:1-64
                 if (command.contains("{random}:")) {
                     String cmd = command;
                     StringBuilder commandBuilder = new StringBuilder();

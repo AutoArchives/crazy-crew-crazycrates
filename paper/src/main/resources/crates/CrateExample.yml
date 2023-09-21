@@ -24,11 +24,11 @@ Crate:
   # Enables/Disables the Broadcasts message when they open a crate.
   OpeningBroadCast: true
   # Message that is broadcast when opening the crate.
-  BroadCast: '%prefix%&6&l%player%&r &7is opening a &7&lBasic Chest&7.'
+  BroadCast: '{prefix}&6&l{player}&r &7is opening a &7&lBasic Chest&7.'
   # A default message if the prize doesn't have any Messages
   # i.e Messages: [] or the value isn't there.
   Prize-Message:
-    - '&7You have won &c%reward% &7from &c%crate%.'
+    - '&7You have won &c{reward} &7from &c{crate}.'
   # Item the crate is in the GUI
   Item: 'CHEST'
   # If the crate in the main /cc GUI is glowing or not.
@@ -38,7 +38,7 @@ Crate:
   # The lore of the item in the GUI.
   Lore:
     - '&7This crate contains strange objects.'
-    - '&7You have &6%Keys% keys &7to open this crate with.'
+    - '&7You have &6{keys} keys &7to open this crate with.'
     - '&7&l(&e&l!&7&l) Right click to view rewards.'
   Preview:
     # Turn on and off the preview for this crate.
@@ -108,12 +108,12 @@ Crate:
       # Items: []
 
       Commands: # You can run any plugin command here.
-        - 'broadcast &6&l%player%&r &7won %reward%! WOW'
+        - 'broadcast &6&l{player}&r &7won {reward}! WOW'
       # If you do not want to send commands, Set the "Commands:" to look like the line below.
       # Commands: []
 
       Messages: # Send any message you want to the player.
-        - '&cYou won a &r%reward%!'
+        - '&cYou won a &r{reward}!'
       # If you do not want to send messages, Set the "Messages:" to look like the line below.
       # Messages: []
 
@@ -158,10 +158,10 @@ Crate:
       Chance: 20
       Firework: true
       Commands:
-        - 'eco give %player% 1000'
-      # - 'lp user %player% permission set crazycrates.blacklist.basic.3' -> This is the line where you would give the user the permission.
+        - 'eco give {player} 1000'
+      # - 'lp user {player} permission set crazycrates.blacklist.basic.3' -> This is the line where you would give the user the permission.
       Messages:
-        - '&7You just won &r%reward%.'
+        - '&7You just won &r{reward}.'
       BlackListed-Permissions:
         - 'crazycrates.blacklist.basic.3'
       Alternative-Prize:
@@ -169,4 +169,4 @@ Crate:
         Messages:
           - '&r &8[&bCrazyCrates&8]: &7You have already won that prize, so enjoy some gold nuggets.'
         Commands:
-          - 'give %player% gold_nugget 16'
+          - 'give {player} gold_nugget 16'

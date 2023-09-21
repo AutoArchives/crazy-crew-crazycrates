@@ -5,7 +5,7 @@ Crate:
   StartingKeys: 0
   RequiredKeys: 0
   Prize-Message:
-    - '&7You have won &c%reward% &7from &c%crate%.'
+    - '&7You have won &c{reward} &7from &c{crate}.'
   Max-Mass-Open: 10
   InGUI: true
   Slot: 23
@@ -17,7 +17,7 @@ Crate:
   Lore:
     - '&7This crate contains strange objects,'
     - '&7from somewhere beyond this planet.'
-    - '&7You have &6%Keys% keys &7to open this crate with.'
+    - '&7You have &6{keys} keys &7to open this crate with.'
     - '&7&l(&e&l!&7&l) Right click to view rewards.'
   Preview:
     Toggle: true
@@ -38,7 +38,7 @@ Crate:
       Item: 'GLASS_PANE'
       Name: '&f&l???'
       Lore:
-        - '&7You have chosen #%slot%.'
+        - '&7You have chosen #{slot}.'
   PhysicalKey:
     Name: '&d&lGalactic Crate &b&lKey'
     Lore:
@@ -93,7 +93,7 @@ Crate:
       Items:
         - 'Item:GRASS_BLOCK, Amount:32, Name:&d&lGalactic Grass'
       Commands:
-        - 'broadcast &6&l%player%&r &7has just won some &r%reward%.'
+        - 'broadcast &6&l{player}&r &7has just won some &r{reward}.'
     2:
       DisplayName: '&b&lCheap Helmet'
       DisplayItem: 'GOLDEN_HELMET'
@@ -137,7 +137,7 @@ Crate:
         - 'UnCommon'
         - 'Rare'
       Commands:
-        - 'eco give %player% 1000'
+        - 'eco give {player} 1000'
     4:
       DisplayName: '&b&lCrazy &4&lSword'
       DisplayItem: 'GOLDEN_SWORD'
@@ -171,7 +171,7 @@ Crate:
       Tiers:
         - 'Rare'
       Commands:
-        - 'eco give %player% 1000000'
+        - 'eco give {player} 1000000'
     6:
       DisplayName: '&b&lCrazy Crate &6&lKey &7(x2)'
       DisplayItem: 'TRIPWIRE_HOOK'
@@ -188,4 +188,4 @@ Crate:
         - 'UnCommon'
         - 'Rare'
       Commands:
-        - 'cc give physical crazy 2 %player%'
+        - 'cc give physical crazy 2 {player}'
