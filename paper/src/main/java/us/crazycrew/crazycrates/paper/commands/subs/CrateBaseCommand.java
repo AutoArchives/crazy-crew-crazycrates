@@ -482,7 +482,7 @@ public class CrateBaseCommand extends BaseCommand {
         Block block = player.getTargetBlock(null, 5);
 
         if (block.isEmpty()) {
-            this.methods.sendMessage(player, Translation.must_be_looking_at_block.getMessage().toComponent(), Translation.must_be_looking_at_block.getMessage().toString());
+            this.methods.sendMessage(player, Translation.must_be_looking_at_block.getComponent(), Translation.must_be_looking_at_block.getString());
             return;
         }
 

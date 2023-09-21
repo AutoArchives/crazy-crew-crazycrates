@@ -210,7 +210,11 @@ public class CrateControlListener implements Listener { // Crate Control
                                 player.playSound(player.getLocation(), sound, SoundCategory.PLAYERS, 1f, 1f);
                             }
 
-                            this.methods.sendMessage(player, Translation.no_keys.getComponent(), Translation.no_keys.getString());
+                            HashMap<String, String> placeholders = new HashMap<>();
+                            placeholders.put("{key}", keyName);
+                            placeholders.put("{crate}", crate.getName());
+
+                            this.methods.sendMessage(player, Translation.no_keys.getMessage(placeholders).toComponent(), Translation.no_keys.getMessage(placeholders).toString());
                         }
                     }
                 }
