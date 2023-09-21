@@ -21,7 +21,7 @@ public class Config implements SettingsHolder {
     @Override
     public void registerComments(CommentsConfiguration conf) {
         String[] header = {
-                "Support: https://discord.gg/crazycrew",
+                "Support: https://discord.gg/badbones-s-live-chat-182615261403283459",
                 "Github: https://github.com/Crazy-Crew",
                 "",
                 "Issues: https://github.com/Crazy-Crew/CrazyCrates/issues",
