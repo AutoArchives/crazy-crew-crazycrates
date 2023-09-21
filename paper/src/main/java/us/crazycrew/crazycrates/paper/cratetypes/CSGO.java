@@ -86,9 +86,10 @@ public class CSGO implements Listener {
 
         if (this.userManager.takeKeys(1, player.getUniqueId(), crate.getName(), keyType, checkHand)) {
             startCSGO(player, inv, crate);
-        } else {
-            this.crazyManager.removePlayerFromOpeningList(uuid);
+            return;
         }
+
+        this.crazyManager.removePlayerFromOpeningList(uuid);
     }
     
     private void startCSGO(Player player, final Inventory inv, Crate crate) {

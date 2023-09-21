@@ -31,28 +31,29 @@ public class CrateOnTheGo implements Listener {
         final Player player = e.getPlayer();
         final UUID uuid = player.getUniqueId();
 
-        if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            ItemStack item = player.getInventory().getItemInMainHand();
-            
-            if (item == null || item.getType() == Material.AIR) return;
-            
-            for (Crate crate : this.crazyManager.getCrates()) {
-                if (crate.getCrateType() == CrateType.CRATE_ON_THE_GO && this.methods.isSimilar(item, crate)) {
-                    e.setCancelled(true);
-                    this.crazyManager.addPlayerToOpeningList(uuid, crate);
+        if (e.getAction() != Action.RIGHT_CLICK_BLOCK) return;
 
-                    this.methods.removeItem(item, player);
+        ItemStack item = player.getInventory().getItemInMainHand();
 
-                    Prize prize = crate.pickPrize(player);
+        if (item.getType() == Material.AIR) return;
 
-                    this.crazyManager.givePrize(player, prize, crate);
-                    this.plugin.getServer().getPluginManager().callEvent(new PlayerPrizeEvent(uuid, crate, this.crazyManager.getOpeningCrate(uuid).getName(), prize));
+        for (Crate crate : this.crazyManager.getCrates()) {
+            if (crate.getCrateType() != CrateType.CRATE_ON_THE_GO && !this.methods.isSimilar(item, crate)) return;
 
-                    if (prize.useFireworks()) this.methods.firework(player.getLocation().add(0, 1, 0));
+            e.setCancelled(true);
 
-                    this.crazyManager.removePlayerFromOpeningList(uuid);
-                }
-            }
+            this.crazyManager.addPlayerToOpeningList(uuid, crate);
+
+            this.methods.removeItem(item, player);
+
+            Prize prize = crate.pickPrize(player);
+
+            this.crazyManager.givePrize(player, prize, crate);
+            this.plugin.getServer().getPluginManager().callEvent(new PlayerPrizeEvent(uuid, crate, this.crazyManager.getOpeningCrate(uuid).getName(), prize));
+
+            if (prize.useFireworks()) this.methods.firework(player.getLocation().add(0, 1, 0));
+
+            this.crazyManager.removePlayerFromOpeningList(uuid);
         }
     }
 }

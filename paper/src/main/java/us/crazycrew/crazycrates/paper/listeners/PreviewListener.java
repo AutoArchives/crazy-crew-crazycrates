@@ -24,29 +24,27 @@ public class PreviewListener implements Listener {
         Player player = (Player) e.getWhoClicked();
         UUID uuid = player.getUniqueId();
 
-        if (e.getClickedInventory() == null) return;
+        if (e.getClickedInventory() == null || this.menuManager.getPlayerCrate().get(uuid) == null) return;
 
-        if (this.menuManager.getPlayerCrate().get(uuid) != null) {
-            Crate crate = this.menuManager.getPlayerCrate().get(player.getUniqueId());
+        Crate crate = this.menuManager.getPlayerCrate().get(player.getUniqueId());
 
-            if (crate.isPreview(e.getView())) {
-                e.setCancelled(true);
+        if (!crate.isPreview(e.getView())) return;
 
-                if (e.getCurrentItem() != null) {
-                    if (e.getRawSlot() == crate.getAbsoluteItemPosition(4)) { // Clicked the menu button.
-                        if (this.menuManager.playerInMenu(player)) this.crazyHandler.getMenuManager().openMainMenu(player);
-                    } else if (e.getRawSlot() == crate.getAbsoluteItemPosition(5)) { // Clicked the next button.
-                        if (this.menuManager.getPage(uuid) < crate.getMaxPage()) {
-                            nextPage(uuid);
-                            this.menuManager.openPreview(player, crate);
-                        }
-                    } else if (e.getRawSlot() == crate.getAbsoluteItemPosition(3)) { // Clicked the back button.
-                        if (this.menuManager.getPage(uuid) > 1 && this.menuManager.getPage(uuid) <= crate.getMaxPage()) {
-                            backPage(uuid);
-                            this.menuManager.openPreview(player, crate);
-                        }
-                    }
-                }
+        e.setCancelled(true);
+
+        if (e.getCurrentItem() == null) return;
+
+        if (e.getRawSlot() == crate.getAbsoluteItemPosition(4)) { // Clicked the menu button.
+            if (this.menuManager.playerInMenu(player)) this.crazyHandler.getMenuManager().openMainMenu(player);
+        } else if (e.getRawSlot() == crate.getAbsoluteItemPosition(5)) { // Clicked the next button.
+            if (this.menuManager.getPage(uuid) < crate.getMaxPage()) {
+                nextPage(uuid);
+                this.menuManager.openPreview(player, crate);
+            }
+        } else if (e.getRawSlot() == crate.getAbsoluteItemPosition(3)) { // Clicked the back button.
+            if (this.menuManager.getPage(uuid) > 1 && this.menuManager.getPage(uuid) <= crate.getMaxPage()) {
+                backPage(uuid);
+                this.menuManager.openPreview(player, crate);
             }
         }
     }

@@ -57,56 +57,57 @@ public class QuadCrate implements Listener {
         final Player player = e.getPlayer();
         final UUID uuid = player.getUniqueId();
 
-        if (inSession(uuid)) {
-            QuadCrateManager session = getSession(uuid);
+        if (!inSession(uuid)) return;
 
-            if (e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.LEFT_CLICK_BLOCK) {
-                Block block = e.getClickedBlock();
+        QuadCrateManager session = getSession(uuid);
 
-                if (block != null && session != null && session.getCrateLocations().contains(block.getLocation())) {
-                    e.setCancelled(true);
+        if (e.getAction() != Action.RIGHT_CLICK_BLOCK || e.getAction() != Action.LEFT_CLICK_BLOCK) return;
 
-                    if (!session.getCratesOpened().get(block.getLocation())) {
+        Block block = e.getClickedBlock();
 
-                        this.chestManager.openChest(block, true);
+        if (block == null || session == null) return;
 
-                        Crate crate = session.getCrate();
-                        Prize prize = crate.pickPrize(player, block.getLocation().add(.5, 1.3, .5));
-                        this.crazyManager.givePrize(player, prize, crate);
+        if (!session.getCrateLocations().contains(block.getLocation())) return;
 
-                        ItemBuilder itemBuilder = ItemBuilder.convertItemStack(prize.getDisplayItem());
-                        itemBuilder.addLore(new Random().nextInt(Integer.MAX_VALUE) + ""); // Makes sure items don't merge
+        e.setCancelled(true);
 
-                        ItemStack item = itemBuilder.build();
-                        NBTItem nbtItem = new NBTItem(item);
-                        nbtItem.setBoolean("crazycrates-item", true);
-                        item = nbtItem.getItem();
-                        Item reward = player.getWorld().dropItem(block.getLocation().add(.5, 1, .5), item);
+        if (!session.getCratesOpened().get(block.getLocation())) {
+            this.chestManager.openChest(block, true);
 
-                        reward.setMetadata("betterdrops_ignore", new FixedMetadataValue(plugin, true));
-                        reward.setVelocity(new Vector(0, .2, 0));
+            Crate crate = session.getCrate();
+            Prize prize = crate.pickPrize(player, block.getLocation().add(.5, 1.3, .5));
+            this.crazyManager.givePrize(player, prize, crate);
 
-                        reward.setCustomName(prize.getDisplayItem().getItemMeta().getDisplayName());
-                        reward.setCustomNameVisible(true);
-                        reward.setPickupDelay(Integer.MAX_VALUE);
+            ItemBuilder itemBuilder = ItemBuilder.convertItemStack(prize.getDisplayItem());
+            itemBuilder.addLore(new Random().nextInt(Integer.MAX_VALUE) + ""); // Makes sure items don't merge
 
-                        session.getCratesOpened().put(block.getLocation(), true);
+            ItemStack item = itemBuilder.build();
+            NBTItem nbtItem = new NBTItem(item);
+            nbtItem.setBoolean("crazycrates-item", true);
+            item = nbtItem.getItem();
+            Item reward = player.getWorld().dropItem(block.getLocation().add(.5, 1, .5), item);
 
-                        session.addReward(reward);
+            reward.setMetadata("betterdrops_ignore", new FixedMetadataValue(plugin, true));
+            reward.setVelocity(new Vector(0, .2, 0));
 
-                        if (session.allCratesOpened()) { // All 4 crates have been opened
-                            new BukkitRunnable() {
-                                @Override
-                                public void run() {
-                                    session.endCrate();
-                                    //TODO() make volume/pitch configurable and sound type configurable.
-                                    //TODO() Adopt the new sound system including custom sounds.
-                                    player.playSound(player.getLocation(), Sound.BLOCK_STONE_STEP, SoundCategory.BLOCKS, 1f, 1f);
-                                }
-                            }.runTaskLater(plugin, 60);
-                        }
+            reward.setCustomName(prize.getDisplayItem().getItemMeta().getDisplayName());
+            reward.setCustomNameVisible(true);
+            reward.setPickupDelay(Integer.MAX_VALUE);
+
+            session.getCratesOpened().put(block.getLocation(), true);
+
+            session.addReward(reward);
+
+            if (session.allCratesOpened()) { // All 4 crates have been opened
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        session.endCrate();
+                        //TODO() make volume/pitch configurable and sound type configurable.
+                        //TODO() Adopt the new sound system including custom sounds.
+                        player.playSound(player.getLocation(), Sound.BLOCK_STONE_STEP, SoundCategory.BLOCKS, 1f, 1f);
                     }
-                }
+                }.runTaskLater(plugin, 60);
             }
         }
     }
