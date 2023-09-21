@@ -1,5 +1,5 @@
 plugins {
-    id("java-plugin")
+    id("root-plugin")
 }
 
 project.group = "${rootProject.group}"
