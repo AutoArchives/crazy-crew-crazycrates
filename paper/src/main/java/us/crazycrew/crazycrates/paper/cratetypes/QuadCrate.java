@@ -159,7 +159,7 @@ public class QuadCrate implements Listener {
         final UUID uuid = player.getUniqueId();
 
         if (inSession(uuid) && !player.hasPermission("crazycrates.admin")) {
-            player.sendMessage(Messages.NO_COMMANDS_WHILE_CRATE_OPENED.getMessage("%Player%", player.getName()));
+            this.crazyHandler.getMethods().sendMessage(player, Translation.no_commands.getMessage().toComponent(), Translation.no_commands.getMessage().toString());
             e.setCancelled(true);
         }
     }
@@ -170,7 +170,7 @@ public class QuadCrate implements Listener {
         final UUID uuid = player.getUniqueId();
 
         if (inSession(uuid) && e.getCause() == TeleportCause.ENDER_PEARL) {
-            player.sendMessage(Messages.NO_TELEPORTING.getMessage("%Player%", player.getName()));
+            this.crazyHandler.getMethods().sendMessage(player, Translation.no_teleporting.getMessage().toComponent(), Translation.no_teleporting.getMessage().toString());
             e.setCancelled(true);
         }
     }

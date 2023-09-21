@@ -74,14 +74,14 @@ public class MenuListener implements Listener {
                                     this.crazyHandler.getMenuManager().setPlayerInMenu(player, true);
                                     this.crazyHandler.getMenuManager().openNewPreview(player, crate);
                                 } else {
-                                    player.sendMessage(Messages.PREVIEW_DISABLED.getMessage());
+                                    this.methods.sendMessage(player, Translation.preview_disabled.getComponent(), Translation.preview_disabled.getString());
                                 }
 
                                 return;
                             }
 
                             if (this.crazyManager.isInOpeningList(uuid)) {
-                                player.sendMessage(Messages.CRATE_ALREADY_OPENED.getMessage());
+                                this.methods.sendMessage(player, Translation.already_open.getComponent(), Translation.already_open.getString());
                                 return;
                             }
 
@@ -106,21 +106,21 @@ public class MenuListener implements Listener {
                                     player.playSound(player.getLocation(), sound, SoundCategory.PLAYERS, 1f, 1f);
                                 }
 
-                                player.sendMessage(Messages.NO_VIRTUAL_KEY.getMessage());
+                                this.methods.sendMessage(player, Translation.no_virtual_keys.getComponent(), Translation.no_virtual_keys.getString());
                                 return;
                             }
 
                             if (this.config.getProperty(Config.disabled_worlds_toggle)) {
                                 for (String world : getDisabledWorlds()) {
                                     if (world.equalsIgnoreCase(player.getWorld().getName())) {
-                                        player.sendMessage(Messages.WORLD_DISABLED.getMessage("%World%", player.getWorld().getName()));
+                                        this.methods.sendMessage(player, Translation.world_disabled.getMessage("{world}", player.getWorld().getName()).toComponent(), Translation.world_disabled.getMessage("{world}", player.getWorld().getName()).toString());
                                         return;
                                     }
                                 }
                             }
 
                             if (this.methods.isInventoryFull(player)) {
-                                player.sendMessage(Messages.INVENTORY_FULL.getMessage());
+                                this.methods.sendMessage(player, Translation.inventory_not_empty.getComponent(), Translation.inventory_not_empty.getString());
                                 return;
                             }
 

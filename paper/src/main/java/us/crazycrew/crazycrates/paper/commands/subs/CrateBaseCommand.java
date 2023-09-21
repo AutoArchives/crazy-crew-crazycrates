@@ -493,7 +493,7 @@ public class CrateBaseCommand extends BaseCommand {
 
         this.crazyManager.addCrateLocation(block.getLocation(), crate);
 
-        this.methods.sendMessage(player, Translation.physical_crate_created.getMessage("{crate}", crate.getName()).toComponent(), Translation.physical_crate_created.getMessage("{crate}", crate.getName()).toString());
+        this.methods.sendMessage(player, Translation.physical_crate_created.getMessage("{crate}", crate.getName()).toListComponent(), Translation.physical_crate_created.getMessage("{crate}", crate.getName()).toListString());
     }
 
     @SubCommand("give-random")
@@ -601,7 +601,7 @@ public class CrateBaseCommand extends BaseCommand {
             this.userManager.takeKeys(amount, uuid, crate.getName(), type, false);
         } else {
             if (!this.userManager.takeKeys(amount, uuid, crate.getName(), type, false)) {
-                sender.sendMessage(Messages.INTERNAL_ERROR.getMessage());
+                this.methods.sendMessage(sender, Translation.internal_error.getComponent(), Translation.internal_error.getString());
             } else {
                 this.userManager.takeKeys(amount, uuid, crate.getName(), type, false);
 

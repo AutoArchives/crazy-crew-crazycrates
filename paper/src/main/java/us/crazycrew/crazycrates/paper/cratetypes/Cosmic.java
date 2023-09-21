@@ -204,7 +204,8 @@ public class Cosmic implements Listener {
 
                         if (keyType == KeyType.PHYSICAL_KEY && !this.userManager.hasPhysicalKey(uuid, crate.getName(), this.checkHands.get(uuid))) {
                             player.closeInventory();
-                            player.sendMessage(Messages.NO_KEY.getMessage());
+
+                            this.methods.sendMessage(player, Translation.no_keys.getMessage().toComponent(), Translation.no_keys.getMessage().toString());
 
                             if (this.crazyManager.isInOpeningList(uuid)) {
                                 this.crazyManager.removePlayerFromOpeningList(uuid);

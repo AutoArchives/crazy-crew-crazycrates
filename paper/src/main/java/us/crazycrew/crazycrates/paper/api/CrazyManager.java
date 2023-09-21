@@ -2,6 +2,8 @@ package us.crazycrew.crazycrates.paper.api;
 
 import ch.jalu.configme.SettingsManager;
 import com.Zrips.CMI.Modules.ModuleHandling.CMIModule;
+import com.ryderbelserion.cluster.api.utils.ColorUtils;
+import com.ryderbelserion.cluster.bukkit.utils.LegacyUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -374,15 +376,15 @@ public class CrazyManager {
 
         if (crate.getCrateType() != CrateType.MENU) {
             if (!crate.canWinPrizes(player)) {
-                player.sendMessage(Messages.NO_PRIZES_FOUND.getMessage());
+                this.methods.sendMessage(player, Translation.no_prizes_found.getComponent(), Translation.no_prizes_found.getString());
                 removePlayerFromOpeningList(uuid);
                 removePlayerKeyType(uuid);
                 return;
             }
         }
 
-        if (!(player.hasPermission("crazycrates.open." + crate.getName()) || player.hasPermission("crazycrates.open.*"))) {
-            player.sendMessage(Messages.NO_CRATE_PERMISSION.getMessage());
+        if (!(player.hasPermission("crazycrates.open." + crate.getName()) || !player.hasPermission("crazycrates.open.*"))) {
+            this.methods.sendMessage(player, Translation.crate_no_permission.getComponent(), Translation.crate_no_permission.getString());
             removePlayerFromOpeningList(uuid);
             CrateControlListener.inUse.remove(uuid);
             return;
@@ -397,7 +399,7 @@ public class CrazyManager {
                 boolean openMenu = this.menuConfig.getProperty(CrateMainMenu.crate_menu_toggle);
 
                 if (openMenu) this.crazyHandler.getMenuManager().openMainMenu(player);
-                else player.sendMessage(Messages.FEATURE_DISABLED.getMessage());
+                else this.methods.sendMessage(player, Translation.feature_disabled.getComponent(), Translation.feature_disabled.getString());
             }
             case COSMIC -> this.plugin.getCosmic().openCosmic(player, crate, keyType, checkHand);
             case CSGO -> this.plugin.getCsgo().openCSGO(player, crate, keyType, checkHand);
@@ -417,12 +419,12 @@ public class CrazyManager {
             }
             case FIRE_CRACKER -> {
                 if (CrateControlListener.inUse.containsValue(location)) {
-                    player.sendMessage(Messages.QUICK_CRATE_IN_USE.getMessage());
+                    this.methods.sendMessage(player, Translation.in_use.getComponent(), Translation.in_use.getString());
                     removePlayerFromOpeningList(uuid);
                     return;
                 } else {
                     if (virtualCrate) {
-                        player.sendMessage(Messages.CANT_BE_A_VIRTUAL_CRATE.getMessage());
+                        this.methods.sendMessage(player, Translation.cannot_be_a_virtual_crate.getComponent(), Translation.cannot_be_a_virtual_crate.getString());
                         removePlayerFromOpeningList(uuid);
                         return;
                     } else {
@@ -433,12 +435,12 @@ public class CrazyManager {
             }
             case QUICK_CRATE -> {
                 if (CrateControlListener.inUse.containsValue(location)) {
-                    player.sendMessage(Messages.QUICK_CRATE_IN_USE.getMessage());
+                    this.methods.sendMessage(player, Translation.in_use.getComponent(), Translation.in_use.getString());
                     removePlayerFromOpeningList(uuid);
                     return;
                 } else {
                     if (virtualCrate && location.equals(player.getLocation())) {
-                        player.sendMessage(Messages.CANT_BE_A_VIRTUAL_CRATE.getMessage());
+                        this.methods.sendMessage(player, Translation.cannot_be_a_virtual_crate.getComponent(), Translation.cannot_be_a_virtual_crate.getString());
                         removePlayerFromOpeningList(uuid);
                         return;
                     } else {
@@ -449,7 +451,7 @@ public class CrazyManager {
             }
             case CRATE_ON_THE_GO -> {
                 if (virtualCrate) {
-                    player.sendMessage(Messages.CANT_BE_A_VIRTUAL_CRATE.getMessage());
+                    this.methods.sendMessage(player, Translation.cannot_be_a_virtual_crate.getComponent(), Translation.cannot_be_a_virtual_crate.getString());
                     removePlayerFromOpeningList(uuid);
                     return;
                 } else {
@@ -723,7 +725,7 @@ public class CrazyManager {
                     HashMap<String, String> placeholders = new HashMap<>();
                     placeholders.put("{crate}", prize.getCrate());
                     placeholders.put("{prize}", prize.getName());
-                    player.sendMessage(Messages.PRIZE_ERROR.getMessage(placeholders));
+                    this.methods.sendMessage(player, Translation.prize_error.getMessage(placeholders).toListComponent(), Translation.prize_error.getMessage(placeholders).toListString());
                     continue;
                 }
 
@@ -777,7 +779,7 @@ public class CrazyManager {
 
                 if (PluginSupport.PLACEHOLDERAPI.isPluginEnabled()) command = PlaceholderAPI.setPlaceholders(player, command);
 
-                this.methods.sendCommand(command.replaceAll("\\{player}", player.getName()).replaceAll("\\{player}", player.getName()).replaceAll("\\{reward}", quoteReplacement(prize.getDisplayItemBuilder().getUpdatedName())).replaceAll("\\{crate}", crate.getCrateInventoryName()));
+                this.methods.sendCommand(command.replaceAll("\\{player}", player.getName()).replaceAll("\\{reward}", quoteReplacement(prize.getDisplayItemBuilder().getUpdatedName())).replaceAll("\\{crate}", crate.getCrateInventoryName()));
             }
 
             if (!crate.getPrizeMessage().isEmpty() && prize.getMessages().isEmpty()) {
@@ -786,8 +788,9 @@ public class CrazyManager {
                         message = PlaceholderAPI.setPlaceholders(player, message);
                     }
 
-                    //this.methods.sendMessage(player, message.replaceAll("\\{player}", player.getName()).replaceAll("\\{player}", player.getName()).replaceAll("\\{reward}",
-                    //        quoteReplacement(prize.getDisplayItemBuilder().getName())).replaceAll("\\{crate}", crate.getCrateInventoryName()), false);
+                    String newString = message.replaceAll("\\{player}", player.getName()).replaceAll("\\{reward}", prize.getDisplayItemBuilder().getName()).replaceAll("\\{crate}", crate.getCrateInventoryName());
+
+                    this.methods.sendMessage(player, ColorUtils.parse(newString), LegacyUtils.color(newString));
                 }
 
                 return;
@@ -798,8 +801,9 @@ public class CrazyManager {
                     message = PlaceholderAPI.setPlaceholders(player, message);
                 }
 
-                //this.methods.sendMessage(player, message.replaceAll("\\{player}", player.getName()).replaceAll("\\{player}", player.getName()).replaceAll("\\{reward}",
-                //        quoteReplacement(prize.getDisplayItemBuilder().getName())).replaceAll("\\{crate}", crate.getCrateInventoryName()), false);
+                String newString = message.replaceAll("\\{player}", player.getName()).replaceAll("\\{reward}", prize.getDisplayItemBuilder().getName()).replaceAll("\\{crate}", crate.getCrateInventoryName());
+
+                this.methods.sendMessage(player, ColorUtils.parse(newString), LegacyUtils.color(newString));
             }
         } else {
             FancyLogger.warn("No prize was found when giving " + player.getName() + " a prize.");

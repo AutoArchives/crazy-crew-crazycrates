@@ -146,7 +146,11 @@ public class BukkitUserManager extends UserManager {
                     addVirtualKeys(amount, player.getUniqueId(), crate.getName());
 
                     if (this.config.getProperty(Config.give_virtual_keys_message)) {
-                        player.sendMessage(Messages.CANNOT_GIVE_PLAYER_KEYS.getMessage().replaceAll("\\{amount}", String.valueOf(amount)).replaceAll("\\{key}", crate.getName()));
+                        HashMap<String, String> placeholders = new HashMap<>();
+                        placeholders.put("{amount}", String.valueOf(amount));
+                        placeholders.put("{key}", String.valueOf(crate.getName()));
+
+                        this.methods.sendMessage(player, Translation.command_give_cannot_give_player_keys.getMessage(placeholders).toComponent(), Translation.command_give_cannot_give_player_keys.getMessage(placeholders).toString());
                     }
 
                     return;
@@ -393,8 +397,7 @@ public class BukkitUserManager extends UserManager {
 
             return true;
         } catch (Exception exception) {
-            FancyLogger.error("Could not add keys to offline player with uuid: " + uuid);
-            FancyLogger.debug(exception.getMessage());
+            FancyLogger.error("Could not add keys to offline player with uuid: " + uuid, exception);
             return false;
         }
     }
