@@ -120,11 +120,11 @@ val description = """
 ## Fixes:
  * Fixed giving keys to offline players.
 
-## Optimizations:
- * Stopped storing the player object in hashmap's or arraylist's when we didn't need to, We only store the UUID as god intended.
+## Performance:
+* No longer use the player object in hashmap's/arrays just the uuid as god intended.
 
-## Developers / APi:
-This is nerd talk so only read this if you need to.
+## Developers / API:
+### This is nerd talk so only read this if you need to.
  * Re-organized code to be a bit more consistent.
  * Cleaned up the command classes to be more readable
  * Removed wildcard imports
