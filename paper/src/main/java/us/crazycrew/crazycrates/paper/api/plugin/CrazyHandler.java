@@ -126,7 +126,8 @@ public class CrazyHandler extends CrazyCratesPlugin {
     }
 
     @Override
-    public @Nullable String identifyClassLoader(ClassLoader classLoader) throws Exception {
+    @Nullable
+    public String identifyClassLoader(ClassLoader classLoader) throws Exception {
         Class<?> classLoaderClass = Class.forName("org.bukkit.plugin.java.PluginClassLoader");
 
         if (classLoaderClass.isInstance(classLoader)) {
@@ -140,43 +141,52 @@ public class CrazyHandler extends CrazyCratesPlugin {
      * Inherited methods.
      */
     @Override
-    public @NotNull ConfigManager getConfigManager() {
+    @NotNull
+    public ConfigManager getConfigManager() {
         return super.getConfigManager();
     }
 
     @Override
-    public @NotNull BukkitUserManager getUserManager() {
+    @NotNull
+    public BukkitUserManager getUserManager() {
         return this.userManager;
     }
 
     /**
      * Internal methods.
      */
-    public @NotNull FileManager getFileManager() {
+    @NotNull
+    public FileManager getFileManager() {
         return this.fileManager;
     }
 
-    public @NotNull Methods getMethods() {
+    @NotNull
+    public Methods getMethods() {
         return this.methods;
     }
 
-    public @NotNull CrazyManager getCrazyManager() {
+    @NotNull
+    public CrazyManager getCrazyManager() {
         return this.crazyManager;
     }
 
-    public @NotNull MenuManager getMenuManager() {
+    @NotNull
+    public MenuManager getMenuManager() {
         return this.menuManager;
     }
 
-    public @NotNull MetricsHandler getMetrics() {
+    @NotNull
+    public MetricsHandler getMetrics() {
         return this.metrics;
     }
 
-    public @NotNull ChestManager getChestManager() {
+    @NotNull
+    public ChestManager getChestManager() {
         return this.chestManager;
     }
 
-    public @NotNull EventLogger getEventLogger() {
+    @NotNull
+    public EventLogger getEventLogger() {
         return this.eventLogger;
     }
 }
