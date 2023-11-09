@@ -19,7 +19,6 @@ import org.bukkit.inventory.meta.*;
 import org.bukkit.inventory.meta.trim.ArmorTrim;
 import org.bukkit.inventory.meta.trim.TrimMaterial;
 import org.bukkit.inventory.meta.trim.TrimPattern;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
@@ -96,6 +95,9 @@ public class ItemBuilder {
     // Custom Data
     private int customModelData;
     private boolean useCustomModelData;
+
+    @NotNull
+    private static final CrazyCrates plugin = CrazyCrates.get();
 
     /**
      * Create a blank item builder.
@@ -203,9 +205,6 @@ public class ItemBuilder {
 
         this.customMaterial = itemBuilder.customMaterial;
     }
-
-    @NotNull
-    private final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
 
     /**
      * Gets the nbt item.
@@ -330,7 +329,7 @@ public class ItemBuilder {
     /**
      * Returns the amount of the item stack.
      */
-    public Integer getAmount() {
+    public int getAmount() {
         return this.itemAmount;
     }
 
@@ -1056,7 +1055,6 @@ public class ItemBuilder {
         } catch (Exception exception) {
             itemBuilder.setMaterial(Material.RED_TERRACOTTA).setName("&c&lERROR").setLore(Arrays.asList("&cThere is an error", "&cFor : &c" + (placeHolder != null ? placeHolder : "")));
 
-            CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
             plugin.getLogger().log(Level.WARNING, "An error has occurred with the item builder: ", exception);
         }
 

@@ -2,16 +2,13 @@ package us.crazycrew.crazycrates.paper.api.enums;
 
 import ch.jalu.configme.SettingsManager;
 import ch.jalu.configme.properties.Property;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.common.config.ConfigManager;
 import us.crazycrew.crazycrates.common.config.types.Messages;
 import us.crazycrew.crazycrates.common.config.types.PluginConfig;
 import us.crazycrew.crazycrates.common.utils.StringUtils;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
-import us.crazycrew.crazycrates.paper.utils.MiscUtils;
 import us.crazycrew.crazycrates.paper.utils.MsgUtils;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -105,8 +102,13 @@ public enum Translation {
         this.isList = isList;
     }
 
-    private final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
+    @NotNull
+    private final CrazyCrates plugin = CrazyCrates.get();
+
+    @NotNull
     private final ConfigManager configManager = this.plugin.getCrazyHandler().getConfigManager();
+
+    @NotNull
     private final SettingsManager configuration = this.configManager.getMessages();
 
     private boolean isList() {

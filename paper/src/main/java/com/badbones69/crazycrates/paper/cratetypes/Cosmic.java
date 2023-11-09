@@ -17,6 +17,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.api.enums.types.KeyType;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.api.crates.CrateManager;
@@ -33,8 +34,10 @@ import java.util.logging.Level;
 @SuppressWarnings("ALL")
 public class Cosmic implements Listener {
 
-    private static final CrazyCrates plugin = CrazyCrates.getPlugin(CrazyCrates.class);
+    @NotNull
+    private static final CrazyCrates plugin = CrazyCrates.get();
 
+    @NotNull
     private static final CrateManager crateManager = plugin.getCrateManager();
 
     private static final HashMap<Player, List<Integer>> glass = new HashMap<>();

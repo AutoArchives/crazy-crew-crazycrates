@@ -13,7 +13,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
 import us.crazycrew.crazycrates.paper.CrazyHandler;
@@ -24,7 +23,7 @@ import java.util.List;
 public class CrateOpenListener implements Listener {
 
     @NotNull
-    private final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
+    private final CrazyCrates plugin = CrazyCrates.get();
 
     @NotNull
     private final CrazyHandler crazyHandler = this.plugin.getCrazyHandler();
@@ -62,8 +61,6 @@ public class CrateOpenListener implements Listener {
         this.crateManager.addPlayerToOpeningList(player, crate);
         if (crate.getCrateType() != CrateType.cosmic) this.crazyHandler.getUserManager().addOpenedCrate(player.getUniqueId(), crate.getName());
 
-        JavaPlugin plugin = event.getPlugin();
-
         FileConfiguration configuration = event.getConfiguration();
 
         String broadcastMessage = configuration.getString("Crate.BroadCast", "");
@@ -71,7 +68,7 @@ public class CrateOpenListener implements Listener {
 
         if (broadcastToggle) {
             if (!broadcastMessage.isBlank()) {
-                plugin.getServer().broadcastMessage(MsgUtils.color(broadcastMessage.replaceAll("%prefix%", MsgUtils.getPrefix())).replaceAll("%player%", player.getName()));
+                event.getPlugin().getServer().broadcastMessage(MsgUtils.color(broadcastMessage.replaceAll("%prefix%", MsgUtils.getPrefix())).replaceAll("%player%", player.getName()));
             }
         }
 

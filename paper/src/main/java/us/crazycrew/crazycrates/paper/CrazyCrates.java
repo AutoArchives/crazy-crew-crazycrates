@@ -35,6 +35,11 @@ import java.util.List;
 
 public class CrazyCrates extends JavaPlugin {
 
+    @NotNull
+    public static CrazyCrates get() {
+        return JavaPlugin.getPlugin(CrazyCrates.class);
+    }
+
     private final BukkitCommandManager<CommandSender> commandManager = BukkitCommandManager.create(this);
 
     private CrazyHandler crazyHandler;

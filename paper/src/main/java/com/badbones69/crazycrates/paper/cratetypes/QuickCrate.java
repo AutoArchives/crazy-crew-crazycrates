@@ -1,5 +1,6 @@
 package com.badbones69.crazycrates.paper.cratetypes;
 
+import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import com.badbones69.crazycrates.paper.api.events.PlayerPrizeEvent;
 import us.crazycrew.crazycrates.paper.api.support.holograms.HologramHandler;
@@ -34,8 +35,10 @@ public class QuickCrate implements Listener {
     public static final List<Entity> allRewards = new ArrayList<>();
     public static final HashMap<Player, Entity> rewards = new HashMap<>();
 
-    private static final CrazyCrates plugin = CrazyCrates.getPlugin(CrazyCrates.class);
+    @NotNull
+    private static final CrazyCrates plugin = CrazyCrates.get();
 
+    @NotNull
     private static final ChestManager chestManager = plugin.getCrazyHandler().getChestManager();
 
     public static void openCrate(final Player player, final Location loc, Crate crate, KeyType keyType, HologramHandler hologramHandler) {

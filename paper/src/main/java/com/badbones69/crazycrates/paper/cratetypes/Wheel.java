@@ -1,5 +1,6 @@
 package com.badbones69.crazycrates.paper.cratetypes;
 
+import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.api.crates.CrateManager;
 import com.badbones69.crazycrates.paper.api.objects.Crate;
@@ -25,8 +26,10 @@ public class Wheel implements Listener {
     
     public static Map<Player, HashMap<Integer, ItemStack>> rewards = new HashMap<>();
 
-    private static final CrazyCrates plugin = CrazyCrates.getPlugin(CrazyCrates.class);
+    @NotNull
+    private static final CrazyCrates plugin = CrazyCrates.get();
 
+    @NotNull
     private static final CrateManager crateManager = plugin.getCrateManager();
     
     public static void startWheel(final Player player, Crate crate, KeyType keyType, boolean checkHand) {
