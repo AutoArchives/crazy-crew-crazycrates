@@ -13,7 +13,7 @@ import us.crazycrew.crazycrates.paper.utils.MsgUtils;
 public abstract class InventoryBuilder implements InventoryHolder {
 
     @NotNull
-    private final CrazyCrates plugin = CrazyCrates.get();
+    public final CrazyCrates plugin = CrazyCrates.get();
 
     private final Inventory inventory;
     private final Player player;
