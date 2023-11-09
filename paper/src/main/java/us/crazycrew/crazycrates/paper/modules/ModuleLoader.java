@@ -13,7 +13,7 @@ public class ModuleLoader {
     private EventRegistry registry;
 
     public void load() {
-        this.registry = new EventRegistry();
+        if (this.registry == null) this.registry = new EventRegistry();
 
         this.modules.forEach(module -> {
             if (module.isEnabled()) {
