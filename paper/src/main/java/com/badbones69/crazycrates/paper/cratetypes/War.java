@@ -1,5 +1,6 @@
 package com.badbones69.crazycrates.paper.cratetypes;
 
+import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.api.crates.CrateManager;
 import com.badbones69.crazycrates.paper.api.events.PlayerPrizeEvent;
@@ -14,7 +15,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
@@ -28,8 +28,11 @@ import java.util.UUID;
 public class War implements Listener {
     
     private static final String crateNameString = "Crate.CrateName";
-    private static final CrazyCrates plugin = CrazyCrates.getPlugin(CrazyCrates.class);
 
+    @NotNull
+    private static final CrazyCrates plugin = CrazyCrates.get();
+
+    @NotNull
     private static final CrateManager crateManager = plugin.getCrateManager();
 
     private static HashMap<ItemStack, String> colorCodes;

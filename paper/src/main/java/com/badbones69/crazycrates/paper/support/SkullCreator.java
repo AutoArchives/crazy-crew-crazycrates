@@ -1,5 +1,6 @@
 package com.badbones69.crazycrates.paper.support;
 
+import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -21,7 +22,8 @@ import java.util.UUID;
  */
 public class SkullCreator {
 
-    private static final CrazyCrates plugin = CrazyCrates.getPlugin(CrazyCrates.class);
+    @NotNull
+    private static final CrazyCrates plugin = CrazyCrates.get();
     
     /**
      * Creates a player skull based on a player's name.

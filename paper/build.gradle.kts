@@ -28,15 +28,16 @@ dependencies {
 
     api(project(":core"))
 
+    implementation(libs.cluster.paper)
+
     implementation(libs.triumphcmds)
+    implementation(libs.triumphgui)
 
     implementation(libs.metrics)
 
     implementation(libs.nbtapi)
 
     compileOnly(libs.holographicdisplays)
-
-    //compileOnly("net.kyori", "adventure-platform-bukkit", "4.3.1")
 
     compileOnly(libs.decentholograms)
 
@@ -49,25 +50,11 @@ dependencies {
     compileOnly(fileTree("libs").include("*.jar"))
 }
 
-val component: SoftwareComponent = components["java"]
-
 tasks {
     runServer {
         jvmArgs("-Dnet.kyori.ansi.colorLevel=truecolor")
 
         minecraftVersion("1.20.2")
-    }
-
-    publishing {
-        publications {
-            create<MavenPublication>("maven") {
-                groupId = rootProject.group.toString()
-                artifactId = "${rootProject.name.lowercase()}-${project.name.lowercase()}-api"
-                version = rootProject.version.toString()
-
-                from(component)
-            }
-        }
     }
 
     shadowJar {
@@ -105,7 +92,7 @@ val file = file("${rootProject.rootDir}/jars/${rootProject.name}-${rootProject.v
 
 val description = """
 ## Fixes:
- * Fix not crates being wrongly labeled as virtual crates if they are quadcrate, quickcrate or ones that need to be in the physical world.
+ * Fixed the menu button still showing up in crate previews when the config option is disabled.
 
 ## Other:
  * [Feature Requests](https://github.com/Crazy-Crew/${rootProject.name}/issues)

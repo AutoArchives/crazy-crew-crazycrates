@@ -18,7 +18,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
@@ -38,7 +37,7 @@ public class CrateControlListener implements Listener { // Crate Control
     public static final HashMap<Player, Location> inUse = new HashMap<>();
 
     @NotNull
-    private final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
+    private final CrazyCrates plugin = CrazyCrates.get();
 
     @NotNull
     private final InventoryManager inventoryManager = this.plugin.getCrazyHandler().getInventoryManager();
@@ -117,6 +116,8 @@ public class CrateControlListener implements Listener { // Crate Control
                         CrateMainMenu crateMainMenu = new CrateMainMenu(player, this.config.getProperty(Config.inventory_size), this.config.getProperty(Config.inventory_name));
 
                         player.openInventory(crateMainMenu.build().getInventory());
+                    } else {
+                        player.sendMessage(Translation.feature_disabled.getString());
                     }
 
                     return;
@@ -180,9 +181,12 @@ public class CrateControlListener implements Listener { // Crate Control
                         KeyType keyType = isPhysical ? KeyType.physical_key : KeyType.virtual_key;
 
                         // Only cosmic crate type uses this method.
-                        if (crate.getCrateType() == CrateType.cosmic) this.crateManager.addPlayerKeyType(player, keyType);
+                        if (crate.getCrateType() == CrateType.cosmic) {
+                            this.crateManager.addPlayerKeyType(player, keyType);
+                        }
 
                         this.crateManager.addPlayerToOpeningList(player, crate);
+
                         this.crateManager.openCrate(player, crate, keyType, crateLocation.getLocation(), false,true);
                     } else {
                         if (crate.getCrateType() != CrateType.crate_on_the_go) {

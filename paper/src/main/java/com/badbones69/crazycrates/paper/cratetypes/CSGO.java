@@ -1,5 +1,6 @@
 package com.badbones69.crazycrates.paper.cratetypes;
 
+import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.api.crates.CrateManager;
 import com.badbones69.crazycrates.paper.api.objects.Crate;
@@ -22,8 +23,10 @@ import java.util.List;
 
 public class CSGO implements Listener {
 
-    private static final CrazyCrates plugin = CrazyCrates.getPlugin(CrazyCrates.class);
+    @NotNull
+    private static final CrazyCrates plugin = CrazyCrates.get();
 
+    @NotNull
     private static final CrateManager crateManager = plugin.getCrateManager();
     
     private static void setGlass(Inventory inv) {

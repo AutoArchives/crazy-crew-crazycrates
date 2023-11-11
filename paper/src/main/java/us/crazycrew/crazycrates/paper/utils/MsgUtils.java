@@ -4,7 +4,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.common.config.types.PluginConfig;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import java.util.regex.Matcher;
@@ -14,7 +14,8 @@ import static java.util.regex.Matcher.quoteReplacement;
 @SuppressWarnings("ALL")
 public class MsgUtils {
 
-    private static final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
+    @NotNull
+    private static final CrazyCrates plugin = CrazyCrates.get();
 
     public static String color(String message) {
         Matcher matcher = Pattern.compile("#[a-fA-F\\d]{6}").matcher(message);

@@ -3,6 +3,7 @@ package us.crazycrew.crazycrates.paper;
 import com.badbones69.crazycrates.paper.api.EventLogger;
 import com.badbones69.crazycrates.paper.api.FileManager;
 import com.badbones69.crazycrates.paper.api.FileManager.Files;
+import com.ryderbelserion.cluster.paper.modules.ModuleLoader;
 import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.common.CrazyCratesPlugin;
 import us.crazycrew.crazycrates.common.config.types.PluginConfig;
@@ -14,7 +15,6 @@ import us.crazycrew.crazycrates.paper.api.users.BukkitUserManager;
 import us.crazycrew.crazycrates.paper.api.support.structures.blocks.ChestManager;
 import us.crazycrew.crazycrates.paper.api.crates.menus.InventoryManager;
 import us.crazycrew.crazycrates.paper.commands.CommandManager;
-import us.crazycrew.crazycrates.paper.modules.ModuleLoader;
 import us.crazycrew.crazycrates.paper.utils.FileUtils;
 
 public class CrazyHandler extends CrazyCratesPlugin {

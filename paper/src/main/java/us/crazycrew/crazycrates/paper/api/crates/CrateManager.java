@@ -6,6 +6,7 @@ import com.badbones69.crazycrates.paper.api.FileManager.Files;
 import com.badbones69.crazycrates.paper.api.enums.BrokeLocation;
 import com.badbones69.crazycrates.paper.api.managers.QuadCrateManager;
 import com.badbones69.crazycrates.paper.cratetypes.CSGO;
+import com.badbones69.crazycrates.paper.cratetypes.Cosmic;
 import com.badbones69.crazycrates.paper.cratetypes.FireCracker;
 import com.badbones69.crazycrates.paper.cratetypes.QuickCrate;
 import com.badbones69.crazycrates.paper.cratetypes.Roulette;
@@ -37,7 +38,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
 import us.crazycrew.crazycrates.common.crates.CrateHologram;
@@ -63,7 +63,7 @@ import java.util.logging.Level;
 public class CrateManager {
 
     @NotNull
-    private final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
+    private final CrazyCrates plugin = CrazyCrates.get();
 
     @NotNull
     private final FileManager fileManager = this.plugin.getFileManager();
@@ -361,6 +361,9 @@ public class CrateManager {
 
                     player.openInventory(crateMainMenu.build().getInventory());
                 } else player.sendMessage(Translation.feature_disabled.getString());
+            }
+            case cosmic -> {
+                if (callCrateEvent(player, crate, keyType, checkHand)) Cosmic.openCosmic(player, crate, keyType, checkHand);
             }
             case csgo -> {
                 if (callCrateEvent(player, crate, keyType, checkHand)) CSGO.openCSGO(player, crate, keyType, checkHand);

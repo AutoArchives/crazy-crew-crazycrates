@@ -5,7 +5,7 @@ shadow_version = "8.1.1"
 
 jetbrains_kotlin = "1.9.10"
 
-cluster_version = "2.4"
+cluster_version = "2.6"
 kyori_version = "4.14.0"
 
 [plugins]
@@ -25,6 +25,7 @@ annotations = { module = "org.jetbrains:annotations", version = "24.0.1" }
 kotlin = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "jetbrains_kotlin" }
 
 triumphcmds = { module = "dev.triumphteam:triumph-cmd-bukkit", version = "2.0.0-SNAPSHOT" }
+triumphgui = { module = "dev.triumphteam:triumph-gui", version = "3.1.7" }
 
 configme = { module = "ch.jalu:configme", version = "1.4.1" }
 

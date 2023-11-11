@@ -13,4 +13,6 @@ dependencies {
     }
 
     compileOnly(libs.annotations)
+
+    compileOnly(libs.cluster.api)
 }

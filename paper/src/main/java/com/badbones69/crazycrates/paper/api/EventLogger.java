@@ -28,7 +28,7 @@ import java.util.logging.Level;
 public class EventLogger {
 
     @NotNull
-    private final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
+    private final CrazyCrates plugin = CrazyCrates.get();
 
     private final String fileName = Files.LOGS.getFileName();
 

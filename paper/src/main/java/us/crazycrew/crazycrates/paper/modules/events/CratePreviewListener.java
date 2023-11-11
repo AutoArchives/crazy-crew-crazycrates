@@ -2,6 +2,7 @@ package us.crazycrew.crazycrates.paper.modules.events;
 
 import ch.jalu.configme.SettingsManager;
 import com.badbones69.crazycrates.paper.api.objects.Crate;
+import com.ryderbelserion.cluster.paper.modules.ModuleHandler;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,13 +12,16 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.common.config.ConfigManager;
 import us.crazycrew.crazycrates.common.config.types.Config;
+import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.CrazyHandler;
 import us.crazycrew.crazycrates.paper.api.crates.menus.InventoryManager;
 import us.crazycrew.crazycrates.paper.api.crates.menus.types.CrateMainMenu;
 import us.crazycrew.crazycrates.paper.api.crates.menus.types.CratePreviewMenu;
-import us.crazycrew.crazycrates.paper.modules.ModuleHandler;
 
 public class CratePreviewListener extends ModuleHandler {
+
+    @NotNull
+    private final CrazyCrates plugin = CrazyCrates.get();
 
     @NotNull
     private final CrazyHandler crazyHandler = this.plugin.getCrazyHandler();
@@ -31,7 +35,7 @@ public class CratePreviewListener extends ModuleHandler {
     @NotNull
     private final SettingsManager config = this.configManager.getConfig();
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onInventoryClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
 
@@ -55,7 +59,7 @@ public class CratePreviewListener extends ModuleHandler {
 
         Crate crate = this.inventoryManager.getCratePreview(player);
 
-        if (event.getRawSlot() == crate.getAbsoluteItemPosition(4)) { // Clicked the menu button.
+        if (event.getRawSlot() == crate.getAbsoluteItemPosition(4) && this.crazyHandler.getConfigManager().getConfig().getProperty(Config.enable_crate_menu)) { // Clicked the menu button.
             if (this.inventoryManager.inCratePreview(player)) {
                 this.inventoryManager.removeViewer(player);
                 this.inventoryManager.closeCratePreview(player);

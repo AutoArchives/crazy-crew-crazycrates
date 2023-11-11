@@ -1,9 +1,11 @@
 package us.crazycrew.crazycrates.paper.modules.events;
 
 import ch.jalu.configme.SettingsManager;
+import com.ryderbelserion.cluster.paper.modules.ModuleHandler;
 import org.bukkit.Material;
 import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.common.config.types.Config;
+import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.api.crates.CrateManager;
 import com.badbones69.crazycrates.paper.api.objects.Crate;
 import de.tr7zw.changeme.nbtapi.NBTItem;
@@ -19,10 +21,12 @@ import us.crazycrew.crazycrates.paper.CrazyHandler;
 import us.crazycrew.crazycrates.paper.api.crates.menus.types.CrateMainMenu;
 import us.crazycrew.crazycrates.paper.api.enums.Translation;
 import us.crazycrew.crazycrates.paper.api.crates.menus.InventoryManager;
-import us.crazycrew.crazycrates.paper.modules.ModuleHandler;
 import us.crazycrew.crazycrates.paper.utils.MiscUtils;
 
 public class CrateMenuListener extends ModuleHandler {
+
+    @NotNull
+    private final CrazyCrates plugin = CrazyCrates.get();
 
     @NotNull
     private final InventoryManager inventoryManager = this.plugin.getCrazyHandler().getInventoryManager();
@@ -36,7 +40,7 @@ public class CrateMenuListener extends ModuleHandler {
     @NotNull
     private final CrateManager crateManager = this.plugin.getCrateManager();
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onInventoryClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
 

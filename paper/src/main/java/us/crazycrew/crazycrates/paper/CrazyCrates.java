@@ -2,6 +2,7 @@ package us.crazycrew.crazycrates.paper;
 
 import com.badbones69.crazycrates.paper.api.CrazyManager;
 import com.badbones69.crazycrates.paper.api.EventLogger;
+import com.ryderbelserion.cluster.paper.modules.ModuleLoader;
 import us.crazycrew.crazycrates.paper.api.crates.CrateManager;
 import com.badbones69.crazycrates.paper.api.FileManager;
 import com.badbones69.crazycrates.paper.api.managers.quadcrates.SessionManager;
@@ -27,13 +28,17 @@ import us.crazycrew.crazycrates.common.config.types.PluginConfig;
 import us.crazycrew.crazycrates.paper.api.support.placeholders.PlaceholderAPISupport;
 import us.crazycrew.crazycrates.paper.listeners.MiscListener;
 import us.crazycrew.crazycrates.paper.api.support.libraries.PluginSupport;
-import us.crazycrew.crazycrates.paper.modules.ModuleLoader;
 import us.crazycrew.crazycrates.paper.listeners.crates.CrateOpenListener;
 import us.crazycrew.crazycrates.paper.modules.events.CrateAdminListener;
 import us.crazycrew.crazycrates.paper.utils.MsgUtils;
 import java.util.List;
 
 public class CrazyCrates extends JavaPlugin {
+
+    @NotNull
+    public static CrazyCrates get() {
+        return JavaPlugin.getPlugin(CrazyCrates.class);
+    }
 
     private final BukkitCommandManager<CommandSender> commandManager = BukkitCommandManager.create(this);
 
@@ -56,7 +61,6 @@ public class CrazyCrates extends JavaPlugin {
         new com.badbones69.crazycrates.paper.CrazyCrates().enable();
 
         // Register listeners
-        //this.crazyHandler.getModuleLoader().addModule(new CrateGuiListener());
         this.crazyHandler.getModuleLoader().addModule(new CratePreviewListener());
         this.crazyHandler.getModuleLoader().addModule(new CrateAdminListener());
         this.crazyHandler.getModuleLoader().addModule(new CrateMenuListener());

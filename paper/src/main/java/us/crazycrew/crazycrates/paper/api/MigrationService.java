@@ -3,7 +3,6 @@ package us.crazycrew.crazycrates.paper.api;
 import ch.jalu.configme.SettingsManager;
 import us.crazycrew.crazycrates.paper.CrazyCrates;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.common.config.ConfigManager;
 import us.crazycrew.crazycrates.common.config.types.PluginConfig;
@@ -15,7 +14,7 @@ import java.util.logging.Level;
 public class MigrationService {
 
     @NotNull
-    private final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
+    private final CrazyCrates plugin = CrazyCrates.get();
 
     public void migrate() {
         File input = new File(this.plugin.getDataFolder(), "config.yml");

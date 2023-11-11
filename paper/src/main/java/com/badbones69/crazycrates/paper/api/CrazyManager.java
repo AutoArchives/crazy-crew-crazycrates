@@ -12,7 +12,6 @@ import com.badbones69.crazycrates.paper.api.enums.BrokeLocation;
 import com.badbones69.crazycrates.paper.api.events.PlayerReceiveKeyEvent;
 import com.badbones69.crazycrates.paper.api.events.PlayerReceiveKeyEvent.KeyReceiveReason;
 import us.crazycrew.crazycrates.paper.commands.subs.CrateBaseCommand;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.api.users.UserManager;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -30,7 +29,7 @@ import java.util.logging.Level;
 public class CrazyManager {
 
     @NotNull
-    private final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
+    private final CrazyCrates plugin = CrazyCrates.get();
 
     /**
      * Opens a crate for a player.
@@ -541,7 +540,7 @@ public class CrazyManager {
      */
     @ApiStatus.ScheduledForRemoval(inVersion = "2.0")
     @Deprecated(since = "1.16", forRemoval = true)
-    public Integer getTotalKeys(Player player, Crate crate) {
+    public int getTotalKeys(Player player, Crate crate) {
         UserManager userManager = this.plugin.getCrazyHandler().getUserManager();
 
         UUID uuid = player.getUniqueId();

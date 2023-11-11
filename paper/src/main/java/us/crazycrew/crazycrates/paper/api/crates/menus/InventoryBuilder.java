@@ -13,7 +13,7 @@ import us.crazycrew.crazycrates.paper.utils.MsgUtils;
 public abstract class InventoryBuilder implements InventoryHolder {
 
     @NotNull
-    public final CrazyCrates plugin = CrazyCrates.getPlugin(CrazyCrates.class);
+    public final CrazyCrates plugin = CrazyCrates.get();
 
     private final Inventory inventory;
     private final Player player;
@@ -75,6 +75,10 @@ public abstract class InventoryBuilder implements InventoryHolder {
 
     public void title(String title) {
         this.title = title;
+    }
+
+    public String getTitle() {
+        return this.title;
     }
 
     public boolean contains(String message) {

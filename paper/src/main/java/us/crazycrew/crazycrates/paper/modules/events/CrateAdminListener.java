@@ -2,11 +2,11 @@ package us.crazycrew.crazycrates.paper.modules.events;
 
 import com.badbones69.crazycrates.api.enums.Permissions;
 import com.badbones69.crazycrates.paper.api.objects.Crate;
+import com.ryderbelserion.cluster.paper.modules.ModuleHandler;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.ClickType;
-import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
@@ -14,16 +14,17 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.api.enums.types.KeyType;
 import us.crazycrew.crazycrates.api.users.UserManager;
+import us.crazycrew.crazycrates.paper.CrazyCrates;
 import us.crazycrew.crazycrates.paper.api.crates.CrateManager;
 import us.crazycrew.crazycrates.paper.api.crates.menus.types.CrateAdminMenu;
-import us.crazycrew.crazycrates.paper.api.crates.menus.types.CratePreviewMenu;
-import us.crazycrew.crazycrates.paper.api.crates.menus.types.CratePrizeMenu;
 import us.crazycrew.crazycrates.paper.api.enums.Translation;
-import us.crazycrew.crazycrates.paper.modules.ModuleHandler;
 import us.crazycrew.crazycrates.paper.utils.MiscUtils;
 import java.util.HashMap;
 
 public class CrateAdminListener extends ModuleHandler {
+
+    @NotNull
+    private final CrazyCrates plugin = CrazyCrates.get();
 
     @NotNull
     private final CrateManager crateManager = this.plugin.getCrateManager();
@@ -31,7 +32,7 @@ public class CrateAdminListener extends ModuleHandler {
     @NotNull
     private final UserManager userManager = this.plugin.getCrazyHandler().getUserManager();
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onInventoryClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
 

@@ -4,7 +4,6 @@ import us.crazycrew.crazycrates.paper.CrazyCrates;
 import com.badbones69.crazycrates.paper.api.FileManager;
 import com.badbones69.crazycrates.paper.api.managers.CosmicCrateManager;
 import com.badbones69.crazycrates.paper.api.managers.CrateManager;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
 import us.crazycrew.crazycrates.common.crates.CrateHologram;
@@ -22,7 +21,6 @@ import us.crazycrew.crazycrates.paper.api.crates.menus.types.CratePreviewMenu;
 import us.crazycrew.crazycrates.paper.utils.MiscUtils;
 import us.crazycrew.crazycrates.paper.utils.MsgUtils;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
@@ -53,7 +51,7 @@ public class Crate {
     private final CrateHologram hologram;
 
     @NotNull
-    private final CrazyCrates plugin = JavaPlugin.getPlugin(CrazyCrates.class);
+    private final CrazyCrates plugin = CrazyCrates.get();
 
     @NotNull
     private final InventoryManager inventoryManager = this.plugin.getCrazyHandler().getInventoryManager();
