@@ -359,11 +359,6 @@ public class CrateBaseCommand extends BaseCommand {
             return;
         }
 
-        if (crate.getCrateType() == CrateType.crate_on_the_go || crate.getCrateType() == CrateType.quick_crate || crate.getCrateType() == CrateType.fire_cracker || crate.getCrateType() == CrateType.quad_crate) {
-            player.sendMessage(Translation.cant_be_a_virtual_crate.getString());
-            return;
-        }
-
         if (this.crateManager.isInOpeningList(player)) {
             player.sendMessage(Translation.already_opening_crate.getString());
             return;
