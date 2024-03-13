@@ -20,6 +20,8 @@ public class CrazyCratesPaper extends JavaPlugin {
         this.cluster = new ClusterPackage(this);
 
         this.instance = new CrazyCrates(new PaperServer());
+
+        this.instance.getKeyManager().loadKeys();
     }
 
     @Override
