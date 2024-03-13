@@ -1,6 +1,9 @@
 package us.crazycrew.crazycrates;
 
 import org.jetbrains.annotations.NotNull;
+import us.crazycrew.crazycrates.api.CrazyCratesService;
+import us.crazycrew.crazycrates.api.ICrazyCrates;
+import us.crazycrew.crazycrates.api.users.UserManager;
 import us.crazycrew.crazycrates.platform.Server;
 import us.crazycrew.crazycrates.platform.config.ConfigManager;
 import us.crazycrew.crazycrates.platform.config.KeyManager;
@@ -8,12 +11,14 @@ import java.io.File;
 import java.util.logging.Logger;
 
 @SuppressWarnings("ClassCanBeRecord")
-public class CrazyCrates {
+public class CrazyCrates implements ICrazyCrates {
 
     private final Server server;
 
     public CrazyCrates(final Server server) {
         this.server = server;
+
+        CrazyCratesService.register(this);
 
         CrazyCratesProvider.register(this);
     }
@@ -24,6 +29,8 @@ public class CrazyCrates {
 
     public void disable() {
         ConfigManager.save();
+
+        CrazyCratesService.unregister();
 
         CrazyCratesProvider.unregister();
     }
@@ -50,5 +57,10 @@ public class CrazyCrates {
 
     public @NotNull Server getServer() {
         return this.server;
+    }
+
+    @Override
+    public @NotNull UserManager getUserManager() {
+        return this.server.getUserManager();
     }
 }
