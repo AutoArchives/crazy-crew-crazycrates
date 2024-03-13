@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 @SuppressWarnings("ClassCanBeRecord")
 public class CrazyCrates {
 
-    private Server server;
+    private final Server server;
 
     public CrazyCrates(final Server server) {
         this.server = server;
@@ -21,18 +21,12 @@ public class CrazyCrates {
     }
 
     public void reload() {
-        // Reload the config.
         ConfigManager.reload();
-
-        // Make key directory if it doesn't exist.
-        this.server.getKeyFolder().mkdirs();
     }
 
     public void disable() {
-        // Save the config files.
         ConfigManager.save();
 
-        // Unregister the provider.
         CrazyCratesProvider.unregister();
     }
 
