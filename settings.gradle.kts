@@ -18,7 +18,7 @@ dependencyResolutionManagement {
     versionCatalogs {
         create("libs") {
             version("adventure4", "4.16.0")
-            version("cluster", "6.7")
+            version("cluster", "6.8.1")
 
             library("holographicdisplays", "me.filoghost.holographicdisplays", "holographicdisplays-api").version("3.0.0")
 
