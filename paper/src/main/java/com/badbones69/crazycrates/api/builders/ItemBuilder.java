@@ -1,6 +1,6 @@
 package com.badbones69.crazycrates.api.builders;
 
-import com.badbones69.crazycrates.CrazyCratesPaper;
+import com.badbones69.crazycrates.CrazyCratesPaperOld;
 import com.badbones69.crazycrates.api.enums.PersistentKeys;
 import com.badbones69.crazycrates.api.utils.MiscUtils;
 import com.badbones69.crazycrates.api.utils.MsgUtils;
@@ -51,7 +51,7 @@ import java.util.stream.Collectors;
 public class ItemBuilder {
 
     @NotNull
-    private final CrazyCratesPaper plugin = CrazyCratesPaper.get();
+    private final CrazyCratesPaperOld plugin = CrazyCratesPaperOld.get();
 
     // Items
     private Material material = Material.STONE;
@@ -1206,7 +1206,7 @@ public class ItemBuilder {
         } catch (Exception exception) {
             itemBuilder.setMaterial(Material.RED_TERRACOTTA).setName("&c&lERROR").setLore(Arrays.asList("&cThere is an error", "&cFor : &c" + (placeHolder != null ? placeHolder : "")));
 
-            CrazyCratesPaper plugin = CrazyCratesPaper.get();
+            CrazyCratesPaperOld plugin = CrazyCratesPaperOld.get();
             plugin.getLogger().log(Level.WARNING, "An error has occurred with the item builder: ", exception);
         }
 

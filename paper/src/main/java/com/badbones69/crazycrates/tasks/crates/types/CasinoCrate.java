@@ -1,13 +1,13 @@
 package com.badbones69.crazycrates.tasks.crates.types;
 
-import com.badbones69.crazycrates.CrazyCratesPaper;
+import com.badbones69.crazycrates.CrazyCratesPaperOld;
 import com.badbones69.crazycrates.api.builders.CrateBuilder;
 import com.badbones69.crazycrates.api.enums.PersistentKeys;
 import com.badbones69.crazycrates.api.objects.Crate;
 import com.badbones69.crazycrates.api.utils.MiscUtils;
 import com.badbones69.crazycrates.api.PrizeManager;
 import com.badbones69.crazycrates.tasks.BukkitUserManager;
-import com.badbones69.crazycrates.tasks.crates.CrateManager;
+import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
 import org.bukkit.SoundCategory;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -23,7 +23,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class CasinoCrate extends CrateBuilder {
 
     @NotNull
-    private final CrateManager crateManager = this.plugin.getCrateManager();
+    private final BukkitCrateManager crateManager = this.plugin.getCrateManager();
 
     @NotNull
     private final BukkitUserManager userManager = this.plugin.getUserManager();
@@ -31,7 +31,7 @@ public class CasinoCrate extends CrateBuilder {
     public CasinoCrate(Crate crate, Player player, int size) {
         super(crate, player, size);
 
-        runTaskTimer(CrazyCratesPaper.get(), 1, 1);
+        runTaskTimer(CrazyCratesPaperOld.get(), 1, 1);
     }
 
     private int counter = 0;

@@ -18,7 +18,7 @@ dependencyResolutionManagement {
     versionCatalogs {
         create("libs") {
             version("adventure4", "4.16.0")
-            version("cluster", "6.3")
+            version("cluster", "6.7")
 
             library("holographicdisplays", "me.filoghost.holographicdisplays", "holographicdisplays-api").version("3.0.0")
 
@@ -29,7 +29,7 @@ dependencyResolutionManagement {
             library("simpleyaml", "com.github.Carleslc.Simple-YAML", "Simple-Yaml").version("1.8.4")
 
             library("cluster_paper", "com.ryderbelserion.cluster", "paper").versionRef("cluster")
-            library("cluster_api", "com.ryderbelserion.cluster", "paper").versionRef("cluster")
+            library("cluster_api", "com.ryderbelserion.cluster", "api").versionRef("cluster")
 
             library("adventure4", "net.kyori", "adventure-text-minimessage").versionRef("adventure4")
             library("minimessage4", "net.kyori", "adventure-api").versionRef("adventure4")

@@ -1,9 +1,9 @@
 package com.badbones69.crazycrates.listeners.crates;
 
-import com.badbones69.crazycrates.CrazyCratesPaper;
+import com.badbones69.crazycrates.CrazyCratesPaperOld;
 import com.badbones69.crazycrates.api.PrizeManager;
 import com.badbones69.crazycrates.api.enums.PersistentKeys;
-import com.badbones69.crazycrates.tasks.crates.CrateManager;
+import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
 import com.badbones69.crazycrates.api.events.PlayerPrizeEvent;
 import com.badbones69.crazycrates.api.objects.Crate;
 import com.badbones69.crazycrates.api.objects.Prize;
@@ -26,10 +26,10 @@ import com.badbones69.crazycrates.api.utils.MiscUtils;
 public class MobileCrateListener implements Listener {
 
     @NotNull
-    private final CrazyCratesPaper plugin = CrazyCratesPaper.get();
+    private final CrazyCratesPaperOld plugin = CrazyCratesPaperOld.get();
 
     @NotNull
-    private final CrateManager crateManager = this.plugin.getCrateManager();
+    private final BukkitCrateManager crateManager = this.plugin.getCrateManager();
 
     @EventHandler
     public void onCrateUse(PlayerInteractEvent event) {

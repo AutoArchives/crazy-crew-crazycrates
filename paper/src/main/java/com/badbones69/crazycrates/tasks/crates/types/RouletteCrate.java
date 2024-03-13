@@ -4,7 +4,7 @@ import com.badbones69.crazycrates.api.objects.Crate;
 import com.badbones69.crazycrates.api.objects.Prize;
 import com.badbones69.crazycrates.api.PrizeManager;
 import com.badbones69.crazycrates.tasks.BukkitUserManager;
-import com.badbones69.crazycrates.tasks.crates.CrateManager;
+import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -18,7 +18,7 @@ import com.badbones69.crazycrates.api.utils.MiscUtils;
 public class RouletteCrate extends CrateBuilder {
 
     @NotNull
-    private final CrateManager crateManager = this.plugin.getCrateManager();
+    private final BukkitCrateManager crateManager = this.plugin.getCrateManager();
 
     @NotNull
     private final BukkitUserManager userManager = this.plugin.getUserManager();

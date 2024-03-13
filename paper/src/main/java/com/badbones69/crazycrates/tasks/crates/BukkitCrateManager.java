@@ -18,6 +18,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.persistence.PersistentDataContainer;
+import us.crazycrew.crazycrates.api.crates.CrateManager;
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
 import us.crazycrew.crazycrates.api.enums.types.KeyType;
 import com.badbones69.crazycrates.api.enums.PersistentKeys;
@@ -42,7 +43,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.api.crates.CrateHologram;
 import us.crazycrew.crazycrates.api.crates.quadcrates.CrateSchematic;
-import com.badbones69.crazycrates.CrazyCratesPaper;
+import com.badbones69.crazycrates.CrazyCratesPaperOld;
 import com.badbones69.crazycrates.support.holograms.types.CMIHologramsSupport;
 import com.badbones69.crazycrates.support.holograms.types.DecentHologramsSupport;
 import com.badbones69.crazycrates.support.holograms.types.HolographicDisplaysSupport;
@@ -59,10 +60,10 @@ import java.util.TimerTask;
 import java.util.UUID;
 import java.util.logging.Level;
 
-public class CrateManager {
+public class BukkitCrateManager extends CrateManager {
 
     @NotNull
-    private final CrazyCratesPaper plugin = CrazyCratesPaper.get();
+    private final CrazyCratesPaperOld plugin = CrazyCratesPaperOld.get();
 
     @NotNull
     private final FileManager fileManager = this.plugin.getFileManager();

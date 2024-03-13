@@ -6,7 +6,7 @@ import com.badbones69.crazycrates.api.objects.Prize;
 import com.badbones69.crazycrates.api.ChestManager;
 import com.badbones69.crazycrates.api.PrizeManager;
 import com.badbones69.crazycrates.tasks.BukkitUserManager;
-import com.badbones69.crazycrates.tasks.crates.CrateManager;
+import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
 import org.bukkit.Location;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -27,7 +27,7 @@ import java.util.logging.Level;
 public class QuickCrate extends CrateBuilder {
 
     @NotNull
-    private final CrateManager crateManager = this.plugin.getCrateManager();
+    private final BukkitCrateManager crateManager = this.plugin.getCrateManager();
 
     @NotNull
     private final BukkitUserManager userManager = this.plugin.getUserManager();

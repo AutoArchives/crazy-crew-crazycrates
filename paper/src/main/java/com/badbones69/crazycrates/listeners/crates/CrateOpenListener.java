@@ -1,8 +1,8 @@
 package com.badbones69.crazycrates.listeners.crates;
 
-import com.badbones69.crazycrates.CrazyCratesPaper;
+import com.badbones69.crazycrates.CrazyCratesPaperOld;
 import com.badbones69.crazycrates.tasks.BukkitUserManager;
-import com.badbones69.crazycrates.tasks.crates.CrateManager;
+import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
 import com.badbones69.crazycrates.api.enums.Messages;
 import com.badbones69.crazycrates.api.events.CrateOpenEvent;
 import com.badbones69.crazycrates.api.objects.Crate;
@@ -20,10 +20,10 @@ import java.util.List;
 public class CrateOpenListener implements Listener {
 
     @NotNull
-    private final CrazyCratesPaper plugin = CrazyCratesPaper.get();
+    private final CrazyCratesPaperOld plugin = CrazyCratesPaperOld.get();
 
     @NotNull
-    private final CrateManager crateManager = this.plugin.getCrateManager();
+    private final BukkitCrateManager crateManager = this.plugin.getCrateManager();
 
     @NotNull
     private final BukkitUserManager userManager = this.plugin.getUserManager();

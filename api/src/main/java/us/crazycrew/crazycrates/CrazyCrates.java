@@ -3,6 +3,7 @@ package us.crazycrew.crazycrates;
 import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.api.CrazyCratesService;
 import us.crazycrew.crazycrates.api.ICrazyCrates;
+import us.crazycrew.crazycrates.api.crates.CrateManager;
 import us.crazycrew.crazycrates.api.users.UserManager;
 import us.crazycrew.crazycrates.platform.Server;
 import us.crazycrew.crazycrates.platform.config.ConfigManager;
@@ -28,7 +29,7 @@ public class CrazyCrates implements ICrazyCrates {
     }
 
     public void reload() {
-        // Reload the config
+        // Reload the config.
         ConfigManager.reload();
 
         // Make key directory if it doesn't exist.
@@ -53,11 +54,22 @@ public class CrazyCrates implements ICrazyCrates {
     }
 
     @NotNull
-    public Server getServer() {
-        return this.server;
+    public CrateManager getCrateManager() {
+        return getServer().getCrateManager();
     }
 
+    @NotNull
+    public KeyManager getKeyManager() {
+        return getServer().getKeyManager();
+    }
+
+    @NotNull
     public Logger getLogger() {
         return getServer().getLogger();
+    }
+
+    @NotNull
+    public Server getServer() {
+        return this.server;
     }
 }

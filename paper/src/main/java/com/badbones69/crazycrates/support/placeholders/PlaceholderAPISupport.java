@@ -1,9 +1,9 @@
 package com.badbones69.crazycrates.support.placeholders;
 
-import com.badbones69.crazycrates.tasks.crates.CrateManager;
+import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.apache.commons.lang3.StringUtils;
-import com.badbones69.crazycrates.CrazyCratesPaper;
+import com.badbones69.crazycrates.CrazyCratesPaperOld;
 import com.badbones69.crazycrates.api.objects.Crate;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.OfflinePlayer;
@@ -17,13 +17,13 @@ import java.util.concurrent.CompletableFuture;
 public class PlaceholderAPISupport extends PlaceholderExpansion {
 
     @NotNull
-    private final CrazyCratesPaper plugin = CrazyCratesPaper.get();
+    private final CrazyCratesPaperOld plugin = CrazyCratesPaperOld.get();
 
     @NotNull
     private final BukkitUserManager userManager = this.plugin.getUserManager();
 
     @NotNull
-    private final CrateManager crateManager = this.plugin.getCrateManager();
+    private final BukkitCrateManager crateManager = this.plugin.getCrateManager();
 
     @Override
     public String onRequest(OfflinePlayer player, @NotNull String identifier) {

@@ -10,7 +10,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
-import com.badbones69.crazycrates.CrazyCratesPaper;
+import com.badbones69.crazycrates.CrazyCratesPaperOld;
 import com.badbones69.crazycrates.api.FileManager;
 import com.badbones69.crazycrates.tasks.crates.other.CosmicCrateManager;
 import com.badbones69.crazycrates.tasks.crates.other.AbstractCrateManager;
@@ -67,7 +67,7 @@ public class Crate {
     private final CrateHologram hologram;
 
     @NotNull
-    private final CrazyCratesPaper plugin = CrazyCratesPaper.get();
+    private final CrazyCratesPaperOld plugin = CrazyCratesPaperOld.get();
 
     @NotNull
     private final InventoryManager inventoryManager = this.plugin.getInventoryManager();

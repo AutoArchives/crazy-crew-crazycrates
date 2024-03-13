@@ -14,11 +14,9 @@ repositories {
 }
 
 dependencies {
-    compileOnlyApi(libs.bundles.adventure)
+    compileOnlyApi(libs.cluster.api)
 
     compileOnly(libs.configme)
-
-    api(libs.simpleyaml)
 }
 
 java {
@@ -44,7 +42,7 @@ tasks {
         publications {
             create<MavenPublication>("maven") {
                 group = project.group
-                artifactId = "api"
+                artifactId = project.name
                 version = "0.4"
 
                 from(component)

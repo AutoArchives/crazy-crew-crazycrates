@@ -1,7 +1,7 @@
 package com.badbones69.crazycrates.api.builders.types;
 
 import ch.jalu.configme.SettingsManager;
-import com.badbones69.crazycrates.CrazyCratesPaper;
+import com.badbones69.crazycrates.CrazyCratesPaperOld;
 import com.badbones69.crazycrates.api.enums.Messages;
 import com.badbones69.crazycrates.api.objects.Crate;
 import com.badbones69.crazycrates.api.builders.ItemBuilder;
@@ -9,7 +9,7 @@ import com.badbones69.crazycrates.api.utils.ItemUtils;
 import com.badbones69.crazycrates.api.utils.MiscUtils;
 import com.badbones69.crazycrates.tasks.BukkitUserManager;
 import com.badbones69.crazycrates.tasks.InventoryManager;
-import com.badbones69.crazycrates.tasks.crates.CrateManager;
+import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
@@ -162,7 +162,7 @@ public class CrateMainMenu extends InventoryBuilder {
     public static class CrateMenuListener implements Listener {
 
         @NotNull
-        private final CrazyCratesPaper plugin = CrazyCratesPaper.get();
+        private final CrazyCratesPaperOld plugin = CrazyCratesPaperOld.get();
 
         @NotNull
         private final InventoryManager inventoryManager = this.plugin.getInventoryManager();
@@ -171,7 +171,7 @@ public class CrateMainMenu extends InventoryBuilder {
         private final SettingsManager config = ConfigManager.getConfig();
 
         @NotNull
-        private final CrateManager crateManager = this.plugin.getCrateManager();
+        private final BukkitCrateManager crateManager = this.plugin.getCrateManager();
 
         @NotNull
         private final UserManager userManager = this.plugin.getUserManager();

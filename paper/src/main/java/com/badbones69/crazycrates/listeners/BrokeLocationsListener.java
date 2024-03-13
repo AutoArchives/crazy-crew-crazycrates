@@ -1,6 +1,6 @@
 package com.badbones69.crazycrates.listeners;
 
-import com.badbones69.crazycrates.CrazyCratesPaper;
+import com.badbones69.crazycrates.CrazyCratesPaperOld;
 import com.badbones69.crazycrates.api.objects.other.BrokeLocation;
 import com.badbones69.crazycrates.api.objects.other.CrateLocation;
 import com.badbones69.crazycrates.api.utils.MiscUtils;
@@ -9,7 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.WorldLoadEvent;
 import org.jetbrains.annotations.NotNull;
-import com.badbones69.crazycrates.tasks.crates.CrateManager;
+import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,10 +17,10 @@ import java.util.List;
 public class BrokeLocationsListener implements Listener {
 
     @NotNull
-    private final CrazyCratesPaper plugin = CrazyCratesPaper.get();
+    private final CrazyCratesPaperOld plugin = CrazyCratesPaperOld.get();
 
     @NotNull
-    private final CrateManager crateManager = this.plugin.getCrateManager();
+    private final BukkitCrateManager crateManager = this.plugin.getCrateManager();
     
     @EventHandler
     public void onWorldLoad(WorldLoadEvent event) {

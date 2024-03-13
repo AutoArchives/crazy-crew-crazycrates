@@ -1,6 +1,7 @@
 package com.badbones69.crazycrates.commands;
 
 import com.badbones69.crazycrates.api.objects.other.CrateLocation;
+import com.badbones69.crazycrates.api.utils.FileUtils;
 import com.badbones69.crazycrates.commands.relations.ArgumentRelations;
 import com.badbones69.crazycrates.commands.relations.MiscRelations;
 import com.badbones69.crazycrates.commands.subs.CrateBaseCommand;
@@ -10,14 +11,14 @@ import dev.triumphteam.cmd.core.suggestion.SuggestionKey;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import com.badbones69.crazycrates.CrazyCratesPaper;
+import com.badbones69.crazycrates.CrazyCratesPaperOld;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CommandManager {
 
     @NotNull
-    private final CrazyCratesPaper plugin = CrazyCratesPaper.get();
+    private final CrazyCratesPaperOld plugin = CrazyCratesPaperOld.get();
 
     @NotNull
     private final BukkitCommandManager<CommandSender> bukkitCommandManager = this.plugin.getCommandManager();
@@ -30,7 +31,7 @@ public class CommandManager {
         new ArgumentRelations().build();
 
         this.bukkitCommandManager.registerSuggestion(SuggestionKey.of("crates"), (sender, context) -> {
-            List<String> crates = new ArrayList<>(this.plugin.getFileManager().getAllCratesNames());
+            List<String> crates = new ArrayList<>(FileUtils.getAllCratesNames());
 
             crates.add("Menu");
 

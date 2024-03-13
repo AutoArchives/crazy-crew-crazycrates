@@ -22,8 +22,8 @@ import org.bukkit.World;
 
 import us.crazycrew.crazycrates.platform.config.ConfigManager;
 import us.crazycrew.crazycrates.platform.config.impl.ConfigKeys;
-import com.badbones69.crazycrates.CrazyCratesPaper;
-import com.badbones69.crazycrates.tasks.crates.CrateManager;
+import com.badbones69.crazycrates.CrazyCratesPaperOld;
+import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
 import com.badbones69.crazycrates.api.EventManager;
 import com.badbones69.crazycrates.api.FileManager;
 import com.badbones69.crazycrates.api.FileManager.Files;
@@ -60,7 +60,7 @@ import java.util.logging.Level;
 public class CrateBaseCommand extends BaseCommand {
 
     @NotNull
-    private final CrazyCratesPaper plugin = CrazyCratesPaper.get();
+    private final CrazyCratesPaperOld plugin = CrazyCratesPaperOld.get();
 
     @NotNull
     private final UserManager userManager = this.plugin.getUserManager();
@@ -69,7 +69,7 @@ public class CrateBaseCommand extends BaseCommand {
     private final InventoryManager inventoryManager = this.plugin.getInventoryManager();
 
     @NotNull
-    private final CrateManager crateManager = this.plugin.getCrateManager();
+    private final BukkitCrateManager crateManager = this.plugin.getCrateManager();
 
     @NotNull
     private final FileManager fileManager = this.plugin.getFileManager();
@@ -717,7 +717,7 @@ public class CrateBaseCommand extends BaseCommand {
     }
 
     public record CustomPlayer(String name) {
-        private static final CrazyCratesPaper plugin = CrazyCratesPaper.getPlugin(CrazyCratesPaper.class);
+        private static final CrazyCratesPaperOld plugin = CrazyCratesPaperOld.getPlugin(CrazyCratesPaperOld.class);
 
         public @NotNull OfflinePlayer getOfflinePlayer() {
             CompletableFuture<UUID> future = CompletableFuture.supplyAsync(() -> plugin.getServer().getOfflinePlayer(name)).thenApply(OfflinePlayer::getUniqueId);
