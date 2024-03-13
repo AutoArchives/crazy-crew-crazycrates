@@ -7,6 +7,7 @@ import us.crazycrew.crazycrates.platform.config.KeyManager;
 import java.io.File;
 import java.util.logging.Logger;
 
+@SuppressWarnings("ClassCanBeRecord")
 public class CrazyCrates {
 
     private Server server;
