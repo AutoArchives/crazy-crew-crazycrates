@@ -1,53 +1,59 @@
-package com.badbones69.crazycrates.tasks;
+package us.crazycrew.crazycrates.platform.config;
 
 import ch.jalu.configme.SettingsManager;
 import ch.jalu.configme.SettingsManagerBuilder;
 import ch.jalu.configme.resource.YamlFileResourceOptions;
-import com.badbones69.crazycrates.CrazyCratesPaper;
+import org.simpleyaml.configuration.ConfigurationSection;
+import org.simpleyaml.configuration.file.YamlConfiguration;
+import us.crazycrew.crazycrates.platform.Server;
 import us.crazycrew.crazycrates.platform.config.impl.ConfigKeys;
 import us.crazycrew.crazycrates.platform.config.impl.messages.CommandKeys;
 import us.crazycrew.crazycrates.platform.config.impl.messages.CrateKeys;
 import us.crazycrew.crazycrates.platform.config.impl.messages.ErrorKeys;
 import us.crazycrew.crazycrates.platform.config.impl.messages.MiscKeys;
 import us.crazycrew.crazycrates.platform.config.impl.messages.PlayerKeys;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MigrationManager {
 
-    private static final @NotNull CrazyCratesPaper plugin = JavaPlugin.getPlugin(CrazyCratesPaper.class);
-
-    public static void migrate() {
-        File directory = new File(plugin.getDataFolder(), "backups");
+    public static void migrate(Server server) {
+        File directory = new File(server.getFolder(), "backups");
         directory.mkdirs();
 
         // Update the config file.
-        copyConfig(directory);
+        copyConfig(directory, server.getFolder(), server.getLogger());
 
         // Update the messages file.
-        copyMessages(directory);
+        copyMessages(directory, server.getFolder(), server.getLogger());
 
         // Grab values from the plugin-config.yml if it even exists.
-        copyPluginConfig();
+        copyPluginConfig(server.getFolder(), server.getLogger());
     }
 
-    private static void copyPluginConfig() {
-        File input = new File(plugin.getDataFolder(), "plugin-config.yml");
+    private static void copyPluginConfig(File folder, Logger logger) {
+        File input = new File(folder, "plugin-config.yml");
 
         if (!input.exists()) return;
 
-        YamlConfiguration configuration = CompletableFuture.supplyAsync(() -> YamlConfiguration.loadConfiguration(input)).join();
+        YamlConfiguration configuration = CompletableFuture.supplyAsync(() -> {
+            try {
+                return YamlConfiguration.loadConfiguration(input);
+            } catch (IOException exception) {
+                logger.log(Level.SEVERE, "Failed to load: plugin-config.yml.", exception);
+                return null;
+            }
+        }).join();
 
         YamlFileResourceOptions builder = YamlFileResourceOptions.builder().indentationSize(2).build();
 
         SettingsManager config = SettingsManagerBuilder
-                .withYamlFile(new File(plugin.getDataFolder(), "config.yml"), builder)
+                .withYamlFile(new File(folder, "config.yml"), builder)
                 .useDefaultMigrationService()
                 .configurationData(ConfigKeys.class)
                 .create();
@@ -61,15 +67,22 @@ public class MigrationManager {
         config.save();
 
         // Delete old file.
-        if (input.delete()) plugin.getLogger().warning("Successfully migrated " + input.getName());
+        if (input.delete()) logger.warning("Successfully migrated " + input.getName());
     }
 
-    private static void copyMessages(File directory) {
+    private static void copyMessages(File directory, File folder, Logger logger) {
         // Create the file object.
-        File input = new File(plugin.getDataFolder(), "messages.yml");
+        File input = new File(folder, "messages.yml");
 
         // Load the configuration.
-        YamlConfiguration old = CompletableFuture.supplyAsync(() -> YamlConfiguration.loadConfiguration(input)).join();
+        YamlConfiguration old = CompletableFuture.supplyAsync(() -> {
+            try {
+                return YamlConfiguration.loadConfiguration(input);
+            } catch (IOException exception) {
+                logger.log(Level.SEVERE, "Failed to load: messages.yml.", exception);
+                return null;
+            }
+        }).join();
 
         if (old.getString("Messages.No-Teleporting") == null) return;
 
@@ -79,7 +92,14 @@ public class MigrationManager {
             input.renameTo(newFile);
         }
         
-        YamlConfiguration configuration = CompletableFuture.supplyAsync(() -> YamlConfiguration.loadConfiguration(newFile)).join();
+        YamlConfiguration configuration = CompletableFuture.supplyAsync(() -> {
+            try {
+                return YamlConfiguration.loadConfiguration(newFile);
+            } catch (IOException exception) {
+                logger.log(Level.SEVERE, "Failed to load: messages-v1.yml.", exception);
+                return null;
+            }
+        }).join();
 
         YamlFileResourceOptions builder = YamlFileResourceOptions.builder().indentationSize(2).build();
 
@@ -222,12 +242,19 @@ public class MigrationManager {
         messages.save();
     }
 
-    private static void copyConfig(File directory) {
+    private static void copyConfig(File directory, File folder, Logger logger) {
         // Create the file object.
-        File input = new File(plugin.getDataFolder(), "config.yml");
+        File input = new File(folder, "config.yml");
 
         // Load the configuration.
-        YamlConfiguration old = CompletableFuture.supplyAsync(() -> YamlConfiguration.loadConfiguration(input)).join();
+        YamlConfiguration old = CompletableFuture.supplyAsync(() -> {
+            try {
+                return YamlConfiguration.loadConfiguration(input);
+            } catch (IOException exception) {
+                logger.log(Level.SEVERE, "Failed to load: config.yml.", exception);
+                return null;
+            }
+        }).join();
 
         String settings = "Settings.";
 
@@ -239,7 +266,14 @@ public class MigrationManager {
             input.renameTo(newFile);
         }
 
-        YamlConfiguration configuration = CompletableFuture.supplyAsync(() -> YamlConfiguration.loadConfiguration(newFile)).join();
+        YamlConfiguration configuration = CompletableFuture.supplyAsync(() -> {
+            try {
+                return YamlConfiguration.loadConfiguration(newFile);
+            } catch (IOException exception) {
+                logger.log(Level.SEVERE, "Failed to load: config-v1.yml.", exception);
+                return null;
+            }
+        }).join();
 
         YamlFileResourceOptions builder = YamlFileResourceOptions.builder().indentationSize(2).build();
 

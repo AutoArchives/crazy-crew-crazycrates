@@ -2,12 +2,10 @@ package com.badbones69.crazycrates.platform;
 
 import com.badbones69.crazycrates.CrazyCratesPaper;
 import com.badbones69.crazycrates.tasks.BukkitUserManager;
-import com.badbones69.crazycrates.tasks.InventoryManager;
-import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.platform.Server;
-import us.crazycrew.crazycrates.platform.config.KeyManager;
+import us.crazycrew.crazycrates.platform.keys.KeyManager;
 import java.io.File;
 import java.util.logging.Logger;
 

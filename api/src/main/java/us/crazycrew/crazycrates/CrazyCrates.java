@@ -6,7 +6,8 @@ import us.crazycrew.crazycrates.api.ICrazyCrates;
 import us.crazycrew.crazycrates.api.users.UserManager;
 import us.crazycrew.crazycrates.platform.Server;
 import us.crazycrew.crazycrates.platform.config.ConfigManager;
-import us.crazycrew.crazycrates.platform.config.KeyManager;
+import us.crazycrew.crazycrates.platform.config.MigrationManager;
+import us.crazycrew.crazycrates.platform.keys.KeyManager;
 import java.io.File;
 import java.util.logging.Logger;
 
@@ -17,6 +18,8 @@ public class CrazyCrates implements ICrazyCrates {
 
     public CrazyCrates(final Server server) {
         this.server = server;
+
+        MigrationManager.migrate(this.server);
 
         CrazyCratesService.register(this);
 

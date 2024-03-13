@@ -1,7 +1,7 @@
 package us.crazycrew.crazycrates.platform;
 
 import us.crazycrew.crazycrates.api.users.UserManager;
-import us.crazycrew.crazycrates.platform.config.KeyManager;
+import us.crazycrew.crazycrates.platform.keys.KeyManager;
 import java.io.File;
 import java.util.logging.Logger;
 

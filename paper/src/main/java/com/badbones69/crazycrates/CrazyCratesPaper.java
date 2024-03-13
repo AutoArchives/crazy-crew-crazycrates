@@ -24,7 +24,6 @@ import com.badbones69.crazycrates.support.metrics.MetricsManager;
 import com.badbones69.crazycrates.support.placeholders.PlaceholderAPISupport;
 import com.badbones69.crazycrates.tasks.BukkitUserManager;
 import com.badbones69.crazycrates.tasks.InventoryManager;
-import com.badbones69.crazycrates.tasks.MigrationManager;
 import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
 import com.ryderbelserion.cluster.ClusterPackage;
 import dev.triumphteam.cmd.bukkit.BukkitCommandManager;
@@ -59,8 +58,6 @@ public class CrazyCratesPaper extends JavaPlugin {
 
     @Override
     public void onLoad() {
-        MigrationManager.migrate();
-
         ConfigManager.load(getDataFolder());
 
         int radius = DedicatedServer.getServer().getSpawnProtectionRadius();
