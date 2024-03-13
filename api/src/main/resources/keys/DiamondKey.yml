@@ -2,12 +2,13 @@ item:
   # The material of the key.
   material: 'TRIPWIRE_HOOK'
   # The name of the key.
-  name: '&9&lCasino Crate Key'
+  name: '&b&lDiamond Crate Key'
   # The lore of the key.
   lore:
     - '&7A special key'
     - '&7For a special Crate.'
-  item-flags: []
+  # The flags on the item.
+  flags: []
   # If the key should be unbreakable.
   unbreakable: false
   # If the key should glow.
