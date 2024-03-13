@@ -13,6 +13,12 @@ public class KeyManager {
 
     public KeyManager(Server server) {
         this.server = server;
+
+
+        List.of(
+                "CasinoKey.yml",
+                "DiamondKey.yml"
+        ).forEach(key -> FileUtils.copyFile(server.getKeyFolder().toPath(), "keys", key));
     }
 
     private final Map<String, FileConfiguration> keys = new HashMap<>();
