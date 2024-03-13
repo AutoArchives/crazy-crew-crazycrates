@@ -1,12 +1,11 @@
-package us.crazycrew.crazycrates.platform.config;
+package us.crazycrew.crazycrates.platform.keys;
 
 import com.ryderbelserion.cluster.utils.FileUtils;
 import us.crazycrew.crazycrates.platform.Server;
-import us.crazycrew.crazycrates.platform.config.keys.KeyConfig;
+import us.crazycrew.crazycrates.platform.keys.KeyConfig;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

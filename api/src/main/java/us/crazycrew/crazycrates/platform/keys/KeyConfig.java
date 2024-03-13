@@ -1,4 +1,4 @@
-package us.crazycrew.crazycrates.platform.config.keys;
+package us.crazycrew.crazycrates.platform.keys;
 
 import org.simpleyaml.configuration.file.YamlConfiguration;
 import java.io.File;
