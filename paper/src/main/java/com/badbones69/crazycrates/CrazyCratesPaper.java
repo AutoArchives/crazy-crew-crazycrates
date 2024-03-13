@@ -126,9 +126,6 @@ public class CrazyCratesPaper extends JavaPlugin {
         // Load example files.
         FileUtils.loadFiles();
 
-        // Load the buttons.
-        this.inventoryManager.loadButtons();
-
         // Load the crates.
         this.crateManager.loadCrates();
 
