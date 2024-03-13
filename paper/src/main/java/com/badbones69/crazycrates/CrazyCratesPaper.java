@@ -37,7 +37,6 @@ import us.crazycrew.crazycrates.platform.config.ConfigManager;
 import us.crazycrew.crazycrates.platform.config.impl.ConfigKeys;
 import java.util.List;
 import java.util.Timer;
-
 import static com.badbones69.crazycrates.api.utils.MiscUtils.isLogging;
 import static com.badbones69.crazycrates.api.utils.MiscUtils.registerPermissions;
 
@@ -68,14 +67,7 @@ public class CrazyCratesPaper extends JavaPlugin {
     private MetricsManager metrics;
 
     @Override
-    public void onEnable() {
-        // Migrate as early as possible.
-        MigrationManager.migrate();
-
-        // Load the config files.
-        ConfigManager.load(getDataFolder());
-
-
+    public void onLoad() {
         int radius = DedicatedServer.getServer().getSpawnProtectionRadius();
 
         if (radius > 0) {
