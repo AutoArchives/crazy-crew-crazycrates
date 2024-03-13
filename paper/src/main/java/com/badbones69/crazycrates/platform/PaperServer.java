@@ -14,11 +14,13 @@ public class PaperServer implements Server, ICrazyCrates {
     @NotNull
     private final CrazyCratesPaper plugin = JavaPlugin.getPlugin(CrazyCratesPaper.class);
 
+    @NotNull
     @Override
     public File getFolder() {
         return this.plugin.getDataFolder();
     }
 
+    @NotNull
     @Override
     public Logger getLogger() {
         return this.plugin.getLogger();

@@ -63,7 +63,6 @@ public class CrazyCratesPaper extends JavaPlugin {
     private BukkitUserManager userManager;
     private CrateManager crateManager;
     private FileManager fileManager;
-
     private MetricsManager metrics;
     private PaperServer server;
 
@@ -82,6 +81,15 @@ public class CrazyCratesPaper extends JavaPlugin {
                 ).forEach(getLogger()::warning);
             }
         }
+    }
+
+    @Override
+    public void onEnable() {
+        // Migrate as early as possible.
+        MigrationManager.migrate();
+
+        // Load the config files.
+        ConfigManager.load(getDataFolder());
 
         // Register permissions that we need.
         registerPermissions();
@@ -90,8 +98,6 @@ public class CrazyCratesPaper extends JavaPlugin {
 
         // The file manager is depended on by the user manager.
         this.fileManager = new FileManager();
-
-        // Register files.
         this.fileManager.registerDefaultGenerateFiles("CrateExample.yml", "/crates", "/crates")
                 .registerDefaultGenerateFiles("QuadCrateExample.yml", "/crates", "/crates")
                 .registerDefaultGenerateFiles("CosmicCrateExample.yml", "/crates", "/crates")
