@@ -11,9 +11,12 @@ public class KeyManager {
 
     private final Server server;
 
+    private final Logger logger;
+
     public KeyManager(Server server) {
         this.server = server;
 
+        this.logger = this.server.getLogger();
 
         List.of(
                 "CasinoKey.yml",
