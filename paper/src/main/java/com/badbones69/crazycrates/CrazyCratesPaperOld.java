@@ -127,7 +127,7 @@ public class CrazyCratesPaperOld extends JavaPlugin {
         this.userManager = new BukkitUserManager();
 
         // Init api
-        this.instance = new CrazyCrates(null);
+        //this.instance = new CrazyCrates(null);
 
         // Load holograms.
         this.crateManager.loadHolograms();
