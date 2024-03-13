@@ -6,6 +6,7 @@ import us.crazycrew.crazycrates.api.ICrazyCrates;
 import us.crazycrew.crazycrates.api.users.UserManager;
 import us.crazycrew.crazycrates.platform.Server;
 import us.crazycrew.crazycrates.platform.config.ConfigManager;
+import us.crazycrew.crazycrates.platform.config.KeyManager;
 import java.util.logging.Logger;
 
 public class CrazyCrates implements ICrazyCrates {
@@ -16,7 +17,10 @@ public class CrazyCrates implements ICrazyCrates {
         // Create server object.
         this.server = server;
 
-        // Register legacy provider
+        // Make key directory if it doesn't exist.
+        this.server.getKeyFolder().mkdirs();
+
+        // Register legacy provider.
         CrazyCratesService.register(this);
 
         // Register provider.
@@ -24,10 +28,15 @@ public class CrazyCrates implements ICrazyCrates {
     }
 
     public void reload() {
+        // Reload the config
         ConfigManager.reload();
+
+        // Make key directory if it doesn't exist.
+        this.server.getKeyFolder().mkdirs();
     }
 
     public void disable() {
+        // Save the config files.
         ConfigManager.save();
 
         // Unregister legacy provider.
