@@ -115,6 +115,8 @@ public class CrazyCratesPaper extends JavaPlugin {
 
         this.inventoryManager.loadButtons();
 
+        this.crateManager.loadHolograms();
+
         this.instance.getKeyManager().loadKeys();
 
         this.crateManager.loadCrates();
