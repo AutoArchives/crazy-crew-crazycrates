@@ -157,18 +157,7 @@ Crate:
       Chance: 25
       MaxRange: 100
       Slot: 24
-  PhysicalKey:
-    # Name of the Key.
-    Name: '&9&lCasino Crate Key'
-    # Lore of the Key.
-    Lore:
-      - '&7A special Key'
-      - '&7For a special Crate.'
-    # The item the key is.
-    Item: 'TRIPWIRE_HOOK'
-    # Makes the key look enchanted.
-    Glowing: true
-    # Settings for the holograms.
+  # Settings for the holograms.
   Hologram:
     # Toggle on and off the holograms for the crates.
     Toggle: true

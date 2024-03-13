@@ -99,18 +99,7 @@ Crate:
       Name: ' '
       # The item that shows in the border. Can be glass or any other item.
       Item: 'GRAY_STAINED_GLASS_PANE'
-  PhysicalKey:
-    # Name of the Key.
-    Name: '&4&lWar Crate &b&lKey'
-    # Lore of the Key.
-    Lore:
-      - '&7A special Key'
-      - '&7For a special Crate.'
-    # The item the key is.
-    Item: 'TRIPWIRE_HOOK'
-    # Makes the key look enchanted.
-    Glowing: true
-    # Settings for the holograms.
+  # Settings for the holograms.
   Hologram:
     # Toggle on and off the holograms for the crates.
     Toggle: true

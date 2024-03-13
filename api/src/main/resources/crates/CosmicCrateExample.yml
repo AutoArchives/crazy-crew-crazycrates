@@ -82,13 +82,6 @@ Crate:
       Name: '&f&l???'
       Lore:
         - '&7You have chosen #%slot%.'
-  PhysicalKey:
-    Name: '&d&lGalactic Crate &b&lKey'
-    Lore:
-      - '&7A special Key'
-      - '&7For a special Crate.'
-    Item: 'TRIPWIRE_HOOK'
-    Glowing: true
   Hologram:
     Toggle: true
     Height: 1.5

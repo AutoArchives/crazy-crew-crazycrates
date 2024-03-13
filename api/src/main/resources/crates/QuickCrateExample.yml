@@ -81,13 +81,6 @@ Crate:
       # The name of the border item.
       Name: ' '
       Item: 'YELLOW_STAINED_GLASS_PANE'
-  PhysicalKey:
-    Name: '&e&lClassic Crate &c&lKey'
-    Lore:
-      - '&7A special Key'
-      - '&7For a special Crate.'
-    Item: 'TRIPWIRE_HOOK'
-    Glowing: True
   Hologram:
     Toggle: true
     Height: 1.5
