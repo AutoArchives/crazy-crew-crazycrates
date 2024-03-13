@@ -9,10 +9,16 @@ base {
     archivesName.set("${rootProject.name}-${project.name}")
 }
 
+repositories {
+    maven("https://jitpack.io/")
+}
+
 dependencies {
     compileOnlyApi(libs.bundles.adventure)
 
     compileOnly(libs.configme)
+
+    api(libs.simpleyaml)
 }
 
 java {

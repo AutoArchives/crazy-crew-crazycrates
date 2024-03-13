@@ -26,6 +26,8 @@ dependencyResolutionManagement {
 
             library("triumphcmds", "dev.triumphteam", "triumph-cmd-bukkit").version("2.0.0-SNAPSHOT")
 
+            library("simpleyaml", "com.github.Carleslc.Simple-YAML", "Simple-Yaml").version("1.8.4")
+
             library("cluster_paper", "com.ryderbelserion.cluster", "paper").versionRef("cluster")
             library("cluster_api", "com.ryderbelserion.cluster", "paper").versionRef("cluster")
 
