@@ -73,7 +73,8 @@ public class KeyManager {
 
     public FileConfiguration getConfig(String keyName) {
         if (!hasKey(keyName)) {
-            //todo() add logger support.
+            this.logger.warning(keyName + " does not exist so we cannot get a configuration.");
+
             return null;
         }
 
@@ -86,7 +87,8 @@ public class KeyManager {
 
     public void removeKey(String keyName) {
         if (!hasKey(keyName)) {
-            //todo() add logger support.
+            this.logger.warning(keyName + " does not exist.");
+
             return;
         }
 
@@ -95,7 +97,7 @@ public class KeyManager {
 
     public void addKey(String keyName, FileConfiguration config) {
         if (hasKey(keyName)) {
-            //todo() add logger support.
+            this.logger.warning(keyName + " already exists.");
             return;
         }
 
