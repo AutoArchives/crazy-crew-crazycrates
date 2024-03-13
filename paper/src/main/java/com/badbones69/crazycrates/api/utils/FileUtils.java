@@ -9,6 +9,8 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -19,6 +21,45 @@ public class FileUtils {
 
     public static void copyFiles(Path directory, String folder, List<String> names) {
         names.forEach(name -> copyFile(directory, folder, name));
+    }
+
+    /**
+     * @return A list of crate names.
+     */
+    public static List<String> getAllCratesNames() {
+        List<String> files = new ArrayList<>();
+
+        File crateDirectory = new File(plugin.getDataFolder(), "/crates");
+
+        String[] file = crateDirectory.list();
+
+        if (file != null) {
+            File[] filesList = crateDirectory.listFiles();
+
+            if (filesList != null) {
+                for (File directory : filesList) {
+                    if (directory.isDirectory()) {
+                        String[] folder = directory.list();
+
+                        if (folder != null) {
+                            for (String name : folder) {
+                                if (!name.endsWith(".yml")) continue;
+
+                                files.add(name.replaceAll(".yml", ""));
+                            }
+                        }
+                    }
+                }
+            }
+
+            for (String name : file) {
+                if (!name.endsWith(".yml")) continue;
+
+                files.add(name.replaceAll(".yml", ""));
+            }
+        }
+
+        return Collections.unmodifiableList(files);
     }
 
     public static void loadFiles() {
