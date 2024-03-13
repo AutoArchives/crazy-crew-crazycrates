@@ -65,6 +65,7 @@ public class CrazyCratesPaper extends JavaPlugin {
     private FileManager fileManager;
 
     private MetricsManager metrics;
+    private PaperServer server;
 
     @Override
     public void onLoad() {
@@ -219,6 +220,12 @@ public class CrazyCratesPaper extends JavaPlugin {
     public FileManager getFileManager() {
         return this.fileManager;
     }
+
+    @NotNull
+    public PaperServer getPaperServer() {
+        return this.server;
+    }
+
 
     @NotNull
     public MetricsManager getMetrics() {
