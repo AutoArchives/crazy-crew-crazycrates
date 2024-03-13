@@ -20,7 +20,9 @@ public class PaperServer implements Server {
 
     public PaperServer() {
         this.folder = this.plugin.getDataFolder();
+
         this.keyFolder = new File(this.folder, "keys");
+        this.keyFolder.mkdirs();
 
         this.keyManager = new KeyManager(this);
     }
