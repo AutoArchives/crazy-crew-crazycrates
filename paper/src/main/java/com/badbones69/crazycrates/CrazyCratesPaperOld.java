@@ -95,7 +95,7 @@ public class CrazyCratesPaperOld extends JavaPlugin {
         // Register permissions that we need.
         registerPermissions();
 
-        PaperServer server = new PaperServer(null, null, null);
+        PaperServer server = new PaperServer();
 
         // The file manager is depended on by the user manager.
         this.fileManager = new FileManager();
@@ -118,16 +118,16 @@ public class CrazyCratesPaperOld extends JavaPlugin {
                 .setup();
 
         // Create key manager.
-        this.keyManager = new KeyManager();
+        this.keyManager = new KeyManager(this.instance.getServer());
         // Load keys.
-        this.keyManager.loadKeys(server);
+        this.keyManager.loadKeys();
 
         this.inventoryManager = new InventoryManager();
         this.crateManager = new BukkitCrateManager();
         this.userManager = new BukkitUserManager();
 
         // Init api
-        this.instance = new CrazyCrates(server);
+        this.instance = new CrazyCrates(null);
 
         // Load holograms.
         this.crateManager.loadHolograms();

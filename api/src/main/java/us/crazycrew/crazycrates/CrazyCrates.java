@@ -1,31 +1,32 @@
 package us.crazycrew.crazycrates;
 
 import org.jetbrains.annotations.NotNull;
-import us.crazycrew.crazycrates.api.CrazyCratesService;
-import us.crazycrew.crazycrates.api.ICrazyCrates;
-import us.crazycrew.crazycrates.api.crates.CrateManager;
-import us.crazycrew.crazycrates.api.users.UserManager;
 import us.crazycrew.crazycrates.platform.Server;
 import us.crazycrew.crazycrates.platform.config.ConfigManager;
 import us.crazycrew.crazycrates.platform.config.KeyManager;
+import java.io.File;
 import java.util.logging.Logger;
 
-public class CrazyCrates implements ICrazyCrates {
+public class CrazyCrates {
 
-    private final Server server;
+    private Server server;
 
-    public CrazyCrates(Server server) {
+    public CrazyCrates(final Server server) {
+        this.server = server;
+
+        // Register the provider.
+        CrazyCratesProvider.register(this);
+    }
+
+    public void enable(Server server) {
+        // Load the config files.
+        ConfigManager.load(server.getFolder());
+
         // Create server object.
         this.server = server;
 
         // Make key directory if it doesn't exist.
         this.server.getKeyFolder().mkdirs();
-
-        // Register legacy provider.
-        CrazyCratesService.register(this);
-
-        // Register provider.
-        CrazyCratesProvider.register(this);
     }
 
     public void reload() {
@@ -40,36 +41,31 @@ public class CrazyCrates implements ICrazyCrates {
         // Save the config files.
         ConfigManager.save();
 
-        // Unregister legacy provider.
-        CrazyCratesService.unregister();
-
-        // Unregister provider.
+        // Unregister the provider.
         CrazyCratesProvider.unregister();
     }
 
-    @NotNull
-    @Override
-    public UserManager getUserManager() {
-        return getServer().getUserManager();
+    public @NotNull KeyManager getKeyManager() {
+        return this.server.getKeyManager();
     }
 
-    @NotNull
-    public CrateManager getCrateManager() {
-        return getServer().getCrateManager();
+    public @NotNull File[] getKeyFiles() {
+        return this.server.getKeyFiles();
     }
 
-    @NotNull
-    public KeyManager getKeyManager() {
-        return getServer().getKeyManager();
+    public @NotNull File getKeyFolder() {
+        return this.server.getKeyFolder();
     }
 
-    @NotNull
-    public Logger getLogger() {
-        return getServer().getLogger();
+    public @NotNull Logger getLogger() {
+        return this.server.getLogger();
     }
 
-    @NotNull
-    public Server getServer() {
+    public @NotNull File getFolder() {
+        return this.server.getFolder();
+    }
+
+    public @NotNull Server getServer() {
         return this.server;
     }
 }

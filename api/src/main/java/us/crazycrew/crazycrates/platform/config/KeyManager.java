@@ -9,10 +9,16 @@ import java.util.Map;
 
 public class KeyManager {
 
+    private final Server server;
+
+    public KeyManager(Server server) {
+        this.server = server;
+    }
+
     private final Map<String, FileConfiguration> keys = new HashMap<>();
 
-    public void loadKeys(Server server) {
-        File[] files = server.getKeyFiles();
+    public void loadKeys() {
+        File[] files = this.server.getKeyFiles();
 
         // if files is null, return.
         if (files == null) {
@@ -21,11 +27,13 @@ public class KeyManager {
 
         for (File file : files) {
             String fileName = file.getName();
+
+            this.server.getLogger().warning("File: " + fileName);
         }
     }
 
-    public void reloadKeys(Server server) {
-        File[] files = server.getKeyFiles();
+    public void reloadKeys() {
+        File[] files = this.server.getKeyFiles();
 
         // if files is null, return.
         if (files == null) {
@@ -40,7 +48,7 @@ public class KeyManager {
         for (Map.Entry<String, FileConfiguration> key : this.keys.entrySet()) {
             String fileName = key.getKey();
 
-            File file = new File(server.getKeyFolder(), fileName);
+            File file = new File(this.server.getKeyFolder(), fileName);
 
             // Check if file exists.
             if (file.exists()) {

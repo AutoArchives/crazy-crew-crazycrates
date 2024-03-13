@@ -1,7 +1,5 @@
 package us.crazycrew.crazycrates.platform;
 
-import us.crazycrew.crazycrates.api.crates.CrateManager;
-import us.crazycrew.crazycrates.api.users.UserManager;
 import us.crazycrew.crazycrates.platform.config.KeyManager;
 import java.io.File;
 import java.util.logging.Logger;
@@ -18,8 +16,8 @@ public interface Server {
 
     KeyManager getKeyManager();
 
-    UserManager getUserManager();
+    //UserManager getUserManager();
 
-    CrateManager getCrateManager();
+    //CrateManager getCrateManager();
 
 }

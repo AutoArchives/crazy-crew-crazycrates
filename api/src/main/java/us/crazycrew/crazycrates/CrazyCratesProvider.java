@@ -10,11 +10,11 @@ import org.jetbrains.annotations.ApiStatus;
  */
 public class CrazyCratesProvider {
 
-    private static CrazyCrates instance = null;
+    private static CrazyCrates instance;
 
     public static CrazyCrates get() {
         if (instance == null) {
-            throw new IllegalStateException("CrazyCrates API is not loaded.");
+            throw new IllegalStateException("CrazyCrates is not loaded.");
         }
 
         return instance;
@@ -26,16 +26,12 @@ public class CrazyCratesProvider {
     }
 
     @ApiStatus.Internal
-    static void register(CrazyCrates instance) {
-        if (CrazyCratesProvider.instance != null) {
-            return;
-        }
-
+    public static void register(CrazyCrates instance) {
         CrazyCratesProvider.instance = instance;
     }
 
     @ApiStatus.Internal
-    static void unregister() {
+    public static void unregister() {
         CrazyCratesProvider.instance = null;
     }
 }
