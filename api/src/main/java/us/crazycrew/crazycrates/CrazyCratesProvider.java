@@ -26,12 +26,18 @@ public class CrazyCratesProvider {
     }
 
     @ApiStatus.Internal
-    public static void register(CrazyCrates instance) {
+    static void register(CrazyCrates instance) {
+        if (CrazyCratesProvider.instance != null) {
+            instance.getLogger().warning("CrazyCrates is already enabled.");
+
+            return;
+        }
+
         CrazyCratesProvider.instance = instance;
     }
 
     @ApiStatus.Internal
-    public static void unregister() {
+    static void unregister() {
         CrazyCratesProvider.instance = null;
     }
 }
