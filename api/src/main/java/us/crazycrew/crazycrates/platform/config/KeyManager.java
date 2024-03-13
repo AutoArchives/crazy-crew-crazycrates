@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,7 +30,7 @@ public class KeyManager {
         ).forEach(key -> FileUtils.copyFile(server.getKeyFolder().toPath(), "keys", key));
     }
 
-    private final Map<String, KeyConfig> keys = new HashMap<>();
+    private final Map<String, KeyConfig> keys = new ConcurrentHashMap<>();
 
     public void loadKeys() {
         File[] files = this.server.getKeyFiles();
