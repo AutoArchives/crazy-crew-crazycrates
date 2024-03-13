@@ -1,11 +1,17 @@
 package us.crazycrew.crazycrates.platform.config;
 
+import com.ryderbelserion.cluster.utils.FileUtils;
 import org.simpleyaml.configuration.file.FileConfiguration;
+import org.simpleyaml.configuration.file.YamlConfiguration;
 import us.crazycrew.crazycrates.platform.Server;
 import java.io.File;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class KeyManager {
 
@@ -29,40 +35,44 @@ public class KeyManager {
     public void loadKeys() {
         File[] files = this.server.getKeyFiles();
 
-        // if files is null, return.
         if (files == null) {
             return;
         }
 
         for (File file : files) {
-            String fileName = file.getName();
+            String fileName = file.getName().replace(".yml", "");
 
-            this.server.getLogger().warning("File: " + fileName);
+            try {
+                this.keys.put(fileName, YamlConfiguration.loadConfiguration(file));
+            } catch (IOException exception) {
+                this.logger.log(Level.SEVERE, "Failed to load: " + fileName + ".", exception);
+            }
         }
     }
 
     public void reloadKeys() {
         File[] files = this.server.getKeyFiles();
 
-        // if files is null, return.
         if (files == null) {
             return;
         }
 
-        // If the map is empty, return.
         if (this.keys.isEmpty()) {
             return;
         }
 
         for (Map.Entry<String, FileConfiguration> key : this.keys.entrySet()) {
-            String fileName = key.getKey();
+            String fileName = key.getKey().replace(".yml", "");
 
             File file = new File(this.server.getKeyFolder(), fileName);
 
-            // Check if file exists.
             if (file.exists()) {
-                // Reload it
-                //key.getValue().reload();
+                try {
+                    key.getValue().save(file);
+                    key.getValue().load(file);
+                } catch (IOException exception) {
+                    this.logger.log(Level.SEVERE, "Failed to save/load: " + fileName + ".", exception);
+                }
 
                 return;
             }
