@@ -14,19 +14,9 @@ public class CrazyCrates {
     public CrazyCrates(final Server server) {
         this.server = server;
 
-        // Register the provider.
+        ConfigManager.load(this.server.getFolder());
+
         CrazyCratesProvider.register(this);
-    }
-
-    public void enable(Server server) {
-        // Load the config files.
-        ConfigManager.load(server.getFolder());
-
-        // Create server object.
-        this.server = server;
-
-        // Make key directory if it doesn't exist.
-        this.server.getKeyFolder().mkdirs();
     }
 
     public void reload() {
