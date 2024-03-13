@@ -1,16 +1,16 @@
 package com.badbones69.crazycrates.support.metrics;
 
-import com.badbones69.crazycrates.CrazyCratesPaperOld;
+import com.badbones69.crazycrates.CrazyCratesPaper;
 import com.badbones69.crazycrates.api.utils.MiscUtils;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.SimplePie;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
 
 public class MetricsManager {
 
-    @NotNull
-    private final CrazyCratesPaperOld plugin = CrazyCratesPaperOld.get();
+    private final @NotNull CrazyCratesPaper plugin = JavaPlugin.getPlugin(CrazyCratesPaper.class);
 
     private Metrics metrics;
 

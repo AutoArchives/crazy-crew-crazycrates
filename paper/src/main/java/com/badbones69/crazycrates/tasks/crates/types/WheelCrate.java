@@ -23,11 +23,9 @@ import java.util.Map;
 
 public class WheelCrate extends CrateBuilder {
 
-    @NotNull
-    private final BukkitCrateManager crateManager = this.plugin.getCrateManager();
+    private final @NotNull BukkitCrateManager crateManager = this.plugin.getCrateManager();
 
-    @NotNull
-    private final BukkitUserManager userManager = this.plugin.getUserManager();
+    private final @NotNull BukkitUserManager userManager = this.plugin.getUserManager();
 
     public WheelCrate(Crate crate, Player player, int size) {
         super(crate, player, size);

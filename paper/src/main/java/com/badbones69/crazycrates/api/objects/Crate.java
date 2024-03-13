@@ -1,5 +1,6 @@
 package com.badbones69.crazycrates.api.objects;
 
+import com.badbones69.crazycrates.CrazyCratesPaper;
 import com.badbones69.crazycrates.api.builders.ItemBuilder;
 import com.badbones69.crazycrates.api.builders.types.CrateTierMenu;
 import com.badbones69.crazycrates.api.enums.PersistentKeys;
@@ -9,8 +10,8 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.plugin.java.JavaPlugin;
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
-import com.badbones69.crazycrates.CrazyCratesPaperOld;
 import com.badbones69.crazycrates.api.FileManager;
 import com.badbones69.crazycrates.tasks.crates.other.CosmicCrateManager;
 import com.badbones69.crazycrates.tasks.crates.other.AbstractCrateManager;
@@ -66,14 +67,11 @@ public class Crate {
     private final List<Tier> tiers;
     private final CrateHologram hologram;
 
-    @NotNull
-    private final CrazyCratesPaperOld plugin = CrazyCratesPaperOld.get();
+    private final @NotNull CrazyCratesPaper plugin = JavaPlugin.getPlugin(CrazyCratesPaper.class);
 
-    @NotNull
-    private final InventoryManager inventoryManager = this.plugin.getInventoryManager();
+    private final @NotNull InventoryManager inventoryManager = this.plugin.getInventoryManager();
 
-    @NotNull
-    private final FileManager fileManager = this.plugin.getFileManager();
+    private final @NotNull FileManager fileManager = this.plugin.getFileManager();
 
     private final int maxMassOpen;
     private final int requiredKeys;

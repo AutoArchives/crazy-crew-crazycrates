@@ -1,7 +1,8 @@
 package com.badbones69.crazycrates.support;
 
+import com.badbones69.crazycrates.CrazyCratesPaper;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-import com.badbones69.crazycrates.CrazyCratesPaperOld;
 
 public enum PluginSupport {
 
@@ -14,8 +15,7 @@ public enum PluginSupport {
     
     private final String name;
 
-    @NotNull
-    private final CrazyCratesPaperOld plugin = CrazyCratesPaperOld.get();
+    private final @NotNull CrazyCratesPaper plugin = JavaPlugin.getPlugin(CrazyCratesPaper.class);
 
     /**
      * @param name the name of the plugin.

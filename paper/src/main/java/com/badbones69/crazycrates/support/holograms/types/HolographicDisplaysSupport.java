@@ -1,9 +1,10 @@
 package com.badbones69.crazycrates.support.holograms.types;
 
 
+import com.badbones69.crazycrates.CrazyCratesPaper;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.api.crates.CrateHologram;
-import com.badbones69.crazycrates.CrazyCratesPaperOld;
 import com.badbones69.crazycrates.api.objects.Crate;
 import me.filoghost.holographicdisplays.api.HolographicDisplaysAPI;
 import me.filoghost.holographicdisplays.api.hologram.Hologram;
@@ -16,11 +17,9 @@ import java.util.Map;
 
 public class HolographicDisplaysSupport extends HologramManager {
 
-    @NotNull
-    private final CrazyCratesPaperOld plugin = CrazyCratesPaperOld.get();
+    private final @NotNull CrazyCratesPaper plugin = JavaPlugin.getPlugin(CrazyCratesPaper.class);
 
-    @NotNull
-    private final HolographicDisplaysAPI api = HolographicDisplaysAPI.get(this.plugin);
+    private final @NotNull HolographicDisplaysAPI api = HolographicDisplaysAPI.get(this.plugin);
     
     private final Map<Block, Hologram> holograms = new HashMap<>();
 

@@ -1,8 +1,9 @@
 package com.badbones69.crazycrates.commands.subs;
 
-import com.badbones69.crazycrates.CrazyCratesPaperOld;
+import com.badbones69.crazycrates.CrazyCratesPaper;
 import com.badbones69.crazycrates.api.objects.Crate;
 import com.badbones69.crazycrates.api.utils.MiscUtils;
+import com.badbones69.crazycrates.tasks.BukkitUserManager;
 import com.google.common.collect.Lists;
 import dev.triumphteam.cmd.bukkit.annotation.Permission;
 import dev.triumphteam.cmd.core.BaseCommand;
@@ -10,6 +11,7 @@ import dev.triumphteam.cmd.core.annotation.*;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import com.badbones69.crazycrates.api.enums.Messages;
 import us.crazycrew.crazycrates.api.users.UserManager;
@@ -22,11 +24,9 @@ import java.util.Map;
 @Description("Views the amount of keys you/others have.")
 public class BaseKeyCommand extends BaseCommand {
 
-    @NotNull
-    private final CrazyCratesPaperOld plugin = CrazyCratesPaperOld.get();
+    private final @NotNull CrazyCratesPaper plugin = JavaPlugin.getPlugin(CrazyCratesPaper.class);
 
-    @NotNull
-    private final UserManager userManager = this.plugin.getUserManager();
+    private final @NotNull BukkitUserManager userManager = this.plugin.getUserManager();
 
     @Default
     @Permission("crazycrates.command.player.key")

@@ -1,9 +1,10 @@
 package com.badbones69.crazycrates.tasks.crates.other.quadcrates;
 
+import com.badbones69.crazycrates.CrazyCratesPaper;
 import org.bukkit.SoundCategory;
+import org.bukkit.plugin.java.JavaPlugin;
 import us.crazycrew.crazycrates.platform.config.ConfigManager;
 import us.crazycrew.crazycrates.platform.config.impl.ConfigKeys;
-import com.badbones69.crazycrates.CrazyCratesPaperOld;
 import com.badbones69.crazycrates.api.objects.Crate;
 import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
 import com.badbones69.crazycrates.api.enums.Messages;
@@ -32,11 +33,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class QuadCrateManager {
 
-    @NotNull
-    private final CrazyCratesPaperOld plugin = CrazyCratesPaperOld.get();
+    private final @NotNull CrazyCratesPaper plugin = JavaPlugin.getPlugin(CrazyCratesPaper.class);
 
-    @NotNull
-    private final BukkitCrateManager crateManager = this.plugin.getCrateManager();
+    private final @NotNull BukkitCrateManager crateManager = this.plugin.getCrateManager();
 
     private static final List<QuadCrateManager> crateSessions = new ArrayList<>();
 

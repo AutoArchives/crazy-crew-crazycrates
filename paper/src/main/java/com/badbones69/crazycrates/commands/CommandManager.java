@@ -1,5 +1,6 @@
 package com.badbones69.crazycrates.commands;
 
+import com.badbones69.crazycrates.CrazyCratesPaper;
 import com.badbones69.crazycrates.api.objects.other.CrateLocation;
 import com.badbones69.crazycrates.api.utils.FileUtils;
 import com.badbones69.crazycrates.commands.relations.ArgumentRelations;
@@ -10,18 +11,16 @@ import dev.triumphteam.cmd.bukkit.BukkitCommandManager;
 import dev.triumphteam.cmd.core.suggestion.SuggestionKey;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-import com.badbones69.crazycrates.CrazyCratesPaperOld;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CommandManager {
 
-    @NotNull
-    private final CrazyCratesPaperOld plugin = CrazyCratesPaperOld.get();
+    private final @NotNull CrazyCratesPaper plugin = JavaPlugin.getPlugin(CrazyCratesPaper.class);
 
-    @NotNull
-    private final BukkitCommandManager<CommandSender> bukkitCommandManager = this.plugin.getCommandManager();
+    private final @NotNull BukkitCommandManager<CommandSender> bukkitCommandManager = this.plugin.getCommandManager();
 
     /**
      * Loads commands.

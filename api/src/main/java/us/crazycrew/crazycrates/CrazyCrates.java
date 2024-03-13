@@ -15,8 +15,6 @@ public class CrazyCrates {
     public CrazyCrates(final Server server) {
         this.server = server;
 
-        ConfigManager.load(this.server.getFolder());
-
         CrazyCratesProvider.register(this);
     }
 
