@@ -22,7 +22,9 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
+import us.crazycrew.crazycrates.api.users.UserManager;
 import us.crazycrew.crazycrates.platform.config.ConfigManager;
+import us.crazycrew.crazycrates.platform.config.KeyManager;
 import us.crazycrew.crazycrates.platform.config.impl.ConfigKeys;
 import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
 import com.badbones69.crazycrates.api.EventManager;
@@ -48,7 +50,6 @@ import com.badbones69.crazycrates.api.enums.Messages;
 import com.badbones69.crazycrates.api.utils.FileUtils;
 import com.badbones69.crazycrates.api.utils.MiscUtils;
 import com.badbones69.crazycrates.api.utils.MsgUtils;
-import us.crazycrew.crazycrates.api.users.UserManager;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -65,6 +66,8 @@ public class CrateBaseCommand extends BaseCommand {
     private final @NotNull BukkitUserManager userManager = this.plugin.getUserManager();
 
     private final @NotNull InventoryManager inventoryManager = this.plugin.getInventoryManager();
+
+    private final @NotNull KeyManager keyManager = this.plugin.getInstance().getKeyManager();
 
     private final @NotNull BukkitCrateManager crateManager = this.plugin.getCrateManager();
 
@@ -160,6 +163,8 @@ public class CrateBaseCommand extends BaseCommand {
     public void onReload(CommandSender sender) {
         ConfigManager.reload();
 
+        this.keyManager.reloadKeys();
+
         this.fileManager.reloadAllFiles();
         this.fileManager.setup();
 
@@ -178,8 +183,8 @@ public class CrateBaseCommand extends BaseCommand {
         // Close previews
         if (this.config.getProperty(ConfigKeys.take_out_of_preview)) {
             this.plugin.getServer().getOnlinePlayers().forEach(player -> {
-                if (inventoryManager.inCratePreview(player)) {
-                    inventoryManager.closeCratePreview(player);
+                if (this.inventoryManager.inCratePreview(player)) {
+                    this.inventoryManager.closeCratePreview(player);
 
                     if (this.config.getProperty(ConfigKeys.send_preview_taken_out_message)) {
                         player.sendMessage(Messages.reloaded_forced_out_of_preview.getMessage(player));

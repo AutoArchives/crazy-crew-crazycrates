@@ -212,6 +212,10 @@ public class CrazyCratesPaper extends JavaPlugin {
         return this.fileManager;
     }
 
+    public @NotNull CrazyCrates getInstance() {
+        return this.instance;
+    }
+
     public @NotNull MetricsManager getMetrics() {
         return this.metrics;
     }
