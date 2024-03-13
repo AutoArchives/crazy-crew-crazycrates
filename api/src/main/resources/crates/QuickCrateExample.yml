@@ -26,6 +26,9 @@ Crate:
     # Supports %prefix which returns our prefix, %player% which uses the player name
     commands:
       - 'put your command here.'
+  keys:
+    - 'CasinoKey'
+    - 'DiamondKey'
   sound:
     # The sound options when the animation is cycling.
     cycle-sound:
