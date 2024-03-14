@@ -63,7 +63,7 @@ public class Prize {
                 .setDamage(section.getInt("DisplayDamage", 0));
 
         if (this.section.contains("DisplayTrim.Pattern")) {
-            TrimPattern pattern = ItemUtils.getTrimPattern(this.section.getString("DisplayTrim.Pattern", "SENTRY"));
+            TrimPattern pattern = ItemUtils.getTrimPattern(this.section.getString("DisplayTrim.Pattern", "sentry").toLowerCase());
 
             if (pattern != null) {
                 this.displayItem.setTrimPattern(pattern);
@@ -71,7 +71,7 @@ public class Prize {
         }
 
         if (this.section.contains("DisplayTrim.Material")) {
-            TrimMaterial material = ItemUtils.getTrimMaterial(this.section.getString("DisplayTrim.Material", "QUARTZ"));
+            TrimMaterial material = ItemUtils.getTrimMaterial(this.section.getString("DisplayTrim.Material", "quartz").toLowerCase());
 
             if (material != null) {
                 this.displayItem.setTrimMaterial(material);
