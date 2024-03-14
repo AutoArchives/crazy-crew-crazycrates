@@ -1,10 +1,9 @@
 package com.badbones69.crazycrates.tasks.crates.types;
 
 import com.badbones69.crazycrates.api.events.PlayerPrizeEvent;
-import com.badbones69.crazycrates.api.objects.Crate;
-import com.badbones69.crazycrates.api.objects.Prize;
 import com.badbones69.crazycrates.api.ChestManager;
 import com.badbones69.crazycrates.api.PrizeManager;
+import com.badbones69.crazycrates.api.objects.Crate;
 import com.badbones69.crazycrates.tasks.BukkitUserManager;
 import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
 import org.bukkit.Location;
@@ -37,7 +36,7 @@ public class QuickCrate extends CrateBuilder {
     @Override
     public void open(KeyType type, boolean checkHand) {
         // If the crate type is not fire cracker.
-        if (!isFireCracker()) {
+        /*if (!isFireCracker()) {
             // If the crate event failed.
             if (isCrateEventValid(type, checkHand)) {
                 return;
@@ -170,7 +169,7 @@ public class QuickCrate extends CrateBuilder {
             public void run() {
                 crateManager.endQuickCrate(getPlayer(), getLocation(), getCrate(), false);
             }
-        }.runTaskLater(this.plugin, 40));
+        }.runTaskLater(this.plugin, 40));*/
     }
     @Override
     public void run() {

@@ -16,7 +16,6 @@ import org.bukkit.inventory.InventoryView;
 import org.jetbrains.annotations.NotNull;
 import com.badbones69.crazycrates.api.utils.MsgUtils;
 import java.util.List;
-import static java.util.regex.Matcher.quoteReplacement;
 
 @SuppressWarnings("ALL")
 public abstract class InventoryBuilder implements InventoryHolder {
@@ -88,10 +87,9 @@ public abstract class InventoryBuilder implements InventoryHolder {
 
             if (!commands.isEmpty()) {
                 commands.forEach(value -> {
-                    String command = value.replaceAll("%player%", quoteReplacement(player.getName()))
-                            .replaceAll("%crate%", quoteReplacement(crate.getName()));
+                    //String command = value.replaceAll("%player%", quoteReplacement(player.getName())).replaceAll("%crate%", quoteReplacement(crate.getName()));
 
-                    MiscUtils.sendCommand(command);
+                    //MiscUtils.sendCommand(command);
                 });
 
                 return true;

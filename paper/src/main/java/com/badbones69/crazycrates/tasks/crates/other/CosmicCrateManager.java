@@ -1,9 +1,9 @@
 package com.badbones69.crazycrates.tasks.crates.other;
 
 import com.badbones69.crazycrates.api.PrizeManager;
+import com.badbones69.crazycrates.api.builders.ItemBuilder;
 import com.badbones69.crazycrates.api.objects.Crate;
 import com.badbones69.crazycrates.api.objects.Tier;
-import com.badbones69.crazycrates.api.builders.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -104,7 +104,7 @@ public class CosmicCrateManager extends AbstractCrateManager {
             PersistentDataContainer container = itemMeta.getPersistentDataContainer();
 
             if (container.has(PersistentKeys.crate_tier.getNamespacedKey())) {
-                return crate.getTier(container.get(PersistentKeys.crate_tier.getNamespacedKey(), PersistentDataType.STRING));
+                //return crate.getTier(container.get(PersistentKeys.crate_tier.getNamespacedKey(), PersistentDataType.STRING));
             }
 
             // In case there is no tier.

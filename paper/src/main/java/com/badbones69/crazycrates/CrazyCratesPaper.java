@@ -93,10 +93,10 @@ public class CrazyCratesPaper extends JavaPlugin {
         this.fileManager = new FileManager();
         this.fileManager.registerDefaultGenerateFiles("CrateExample.yml", "/crates", "/crates")
                 .registerDefaultGenerateFiles("QuadCrateExample.yml", "/crates", "/crates")
-                .registerDefaultGenerateFiles("CosmicCrateExample.yml", "/crates", "/crates")
+                //.registerDefaultGenerateFiles("CosmicCrateExample.yml", "/crates", "/crates")
                 .registerDefaultGenerateFiles("QuickCrateExample.yml", "/crates", "/crates")
                 .registerDefaultGenerateFiles("WarCrateExample.yml", "/crates", "/crates")
-                .registerDefaultGenerateFiles("CasinoExample.yml", "/crates", "/crates")
+                //.registerDefaultGenerateFiles("CasinoExample.yml", "/crates", "/crates")
                 .registerDefaultGenerateFiles("classic.nbt", "/schematics", "/schematics")
                 .registerDefaultGenerateFiles("nether.nbt", "/schematics", "/schematics")
                 .registerDefaultGenerateFiles("outdoors.nbt", "/schematics", "/schematics")

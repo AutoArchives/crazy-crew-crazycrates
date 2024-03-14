@@ -2,10 +2,10 @@ package com.badbones69.crazycrates.support.holograms.types;
 
 
 import com.badbones69.crazycrates.CrazyCratesPaper;
+import com.badbones69.crazycrates.api.objects.Crate;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.api.crates.CrateHologram;
-import com.badbones69.crazycrates.api.objects.Crate;
 import me.filoghost.holographicdisplays.api.HolographicDisplaysAPI;
 import me.filoghost.holographicdisplays.api.hologram.Hologram;
 import org.bukkit.block.Block;
@@ -25,7 +25,7 @@ public class HolographicDisplaysSupport extends HologramManager {
 
     @Override
     public void createHologram(Block block, Crate crate) {
-        CrateHologram crateHologram = crate.getHologram();
+        CrateHologram crateHologram = crate.getCrateHologram();
 
         if (!crateHologram.isEnabled()) return;
 

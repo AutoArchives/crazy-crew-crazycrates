@@ -5,8 +5,6 @@ import com.badbones69.crazycrates.api.PrizeManager;
 import com.badbones69.crazycrates.api.enums.PersistentKeys;
 import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
 import com.badbones69.crazycrates.api.events.PlayerPrizeEvent;
-import com.badbones69.crazycrates.api.objects.Crate;
-import com.badbones69.crazycrates.api.objects.Prize;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -32,7 +30,7 @@ public class MobileCrateListener implements Listener {
 
     @EventHandler
     public void onCrateUse(PlayerInteractEvent event) {
-        Player player = event.getPlayer();
+        /*Player player = event.getPlayer();
 
         if (event.getHand() == EquipmentSlot.OFF_HAND) return;
 
@@ -70,6 +68,6 @@ public class MobileCrateListener implements Listener {
 
         if (prize.useFireworks()) MiscUtils.spawnFirework(player.getLocation().add(0, 1, 0), null);
 
-        this.crateManager.removePlayerFromOpeningList(player);
+        this.crateManager.removePlayerFromOpeningList(player);*/
     }
 }

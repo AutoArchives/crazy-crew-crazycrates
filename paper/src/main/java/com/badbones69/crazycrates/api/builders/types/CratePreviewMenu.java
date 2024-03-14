@@ -23,7 +23,6 @@ import us.crazycrew.crazycrates.platform.config.impl.ConfigKeys;
 import com.badbones69.crazycrates.api.builders.InventoryBuilder;
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class CratePreviewMenu extends InventoryBuilder {
@@ -60,7 +59,7 @@ public class CratePreviewMenu extends InventoryBuilder {
     }
 
     private void setDefaultItems(Inventory inventory) {
-        if (getCrate().isBorderToggle()) {
+        /*if (getCrate().isBorderToggle()) {
             List<Integer> borderItems = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8);
 
             for (int i : borderItems) { // Top Border slots
@@ -94,14 +93,14 @@ public class CratePreviewMenu extends InventoryBuilder {
             }
         } else {
             inventory.setItem(getCrate().getAbsoluteItemPosition(5), this.inventoryManager.getNextButton(getPlayer()));
-        }
+        }*/
     }
 
     private List<ItemStack> getPageItems(int page) {
-        List<ItemStack> list = !this.isTier ? getCrate().getPreviewItems(getPlayer()) : getCrate().getPreviewItems(this.tier, getPlayer());
+        //List<ItemStack> list = !this.isTier ? getCrate().getPreviewItems(getPlayer()) : getCrate().getPreviewItems(this.tier, getPlayer());
         List<ItemStack> items = new ArrayList<>();
 
-        if (page <= 0) page = 1;
+        /*if (page <= 0) page = 1;
 
         int max = getCrate().getMaxSlots() - (getCrate().isBorderToggle() ? 18 : getCrate().getMaxSlots() >= list.size() ? 0 : getCrate().getMaxSlots() != 9 ? 9 : 0);
         int index = page * max - max;
@@ -119,7 +118,7 @@ public class CratePreviewMenu extends InventoryBuilder {
             for (; index < endIndex; index++) {
                 if (index < list.size()) items.add(list.get(index));
             }
-        }
+        }*/
 
         return items;
     }
@@ -134,7 +133,7 @@ public class CratePreviewMenu extends InventoryBuilder {
 
         @EventHandler
         public void onInventoryClick(InventoryClickEvent event) {
-            Inventory inventory = event.getInventory();
+            /*Inventory inventory = event.getInventory();
 
             if (!(inventory.getHolder(false) instanceof CratePreviewMenu holder)) return;
 
@@ -199,7 +198,7 @@ public class CratePreviewMenu extends InventoryBuilder {
 
                     this.inventoryManager.openCratePreview(player, crate);
                 }
-            }
+            }*/
         }
     }
 }

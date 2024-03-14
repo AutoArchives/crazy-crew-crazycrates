@@ -104,15 +104,17 @@ public class EventManager {
 
     @SuppressWarnings("DEPRECATIONS")
     private static String setEntryData(String string, Player player, CommandSender sender, Crate crate, KeyType keyType) {
-        return string.replace("%player%", player.getName()).replace("%crate_name%", crate.getName()).replace("%sender%", sender.getName())
+        return "";
+        /*return string.replace("%player%", player.getName()).replace("%crate_name%", crate.getName()).replace("%sender%", sender.getName())
                 .replace("%crate_type%", crate.getCrateType().getName()).replace("%key_name%", crate.getKeyName())
-                .replace("%key_type%", keyType.getName()).replace("%key_item%", crate.getKey().getType().toString());
+                .replace("%key_type%", keyType.getName()).replace("%key_item%", crate.getKey().getType().toString());*/
     }
 
     private static String setEntryData(String string, OfflinePlayer player, CommandSender sender, Crate crate, KeyType keyType) {
-        return string.replace("%player%", player.getName()).replace("%crate_name%", crate.getName()).replace("%sender%", sender.getName())
+        return "";
+        /*return string.replace("%player%", player.getName()).replace("%crate_name%", crate.getName()).replace("%sender%", sender.getName())
                 .replace("%crate_type%", crate.getCrateType().getName()).replace("%key_name%", crate.getKeyName())
-                .replace("%key_type%", keyType.getName()).replace("%key_item%", crate.getKey().getType().toString());
+                .replace("%key_type%", keyType.getName()).replace("%key_item%", crate.getKey().getType().toString());*/
     }
 
     public enum KeyEventType {

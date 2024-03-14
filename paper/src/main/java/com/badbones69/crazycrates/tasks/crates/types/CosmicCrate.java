@@ -2,10 +2,9 @@ package com.badbones69.crazycrates.tasks.crates.types;
 
 import com.badbones69.crazycrates.api.PrizeManager;
 import com.badbones69.crazycrates.api.enums.PersistentKeys;
-import com.badbones69.crazycrates.api.objects.Tier;
+import com.badbones69.crazycrates.api.objects.Crate;
 import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
 import com.badbones69.crazycrates.tasks.crates.other.CosmicCrateManager;
-import com.badbones69.crazycrates.api.objects.Crate;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -19,12 +18,12 @@ public class CosmicCrate extends CrateBuilder {
     private final @NotNull BukkitCrateManager crateManager = this.plugin.getCrateManager();
 
     public CosmicCrate(Crate crate, Player player, int size) {
-        super(crate, player, size, crate.getFile().getString("Crate.CrateName") + " - Choose");
+        super(crate, player, size, crate.getSection().getString("Crate.CrateName") + " - Choose");
     }
 
     @Override
     public void open(KeyType type, boolean checkHand) {
-        // If the crate event failed.
+        /*// If the crate event failed.
         if (isCrateEventValid(type, checkHand)) {
             return;
         }
@@ -51,7 +50,7 @@ public class CosmicCrate extends CrateBuilder {
         this.crateManager.addPlayerKeyType(getPlayer(), type);
         this.crateManager.addHands(getPlayer(), checkHand);
 
-        getPlayer().openInventory(getInventory());
+        getPlayer().openInventory(getInventory());*/
     }
 
     @Override

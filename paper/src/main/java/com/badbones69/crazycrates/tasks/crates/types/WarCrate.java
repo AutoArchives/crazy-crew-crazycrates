@@ -1,7 +1,7 @@
 package com.badbones69.crazycrates.tasks.crates.types;
 
-import com.badbones69.crazycrates.api.objects.Crate;
 import com.badbones69.crazycrates.api.builders.ItemBuilder;
+import com.badbones69.crazycrates.api.objects.Crate;
 import com.badbones69.crazycrates.tasks.BukkitUserManager;
 import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
 import org.bukkit.Material;
@@ -32,7 +32,7 @@ public class WarCrate extends CrateBuilder {
     @Override
     public void open(KeyType type, boolean checkHand) {
         // Crate event failed so we return.
-        if (isCrateEventValid(type, checkHand)) {
+        /*if (isCrateEventValid(type, checkHand)) {
             return;
         }
 
@@ -81,14 +81,14 @@ public class WarCrate extends CrateBuilder {
                     crateManager.addPicker(getPlayer(), true);
                 }
             }
-        }.runTaskTimer(this.plugin, 1, 3));
+        }.runTaskTimer(this.plugin, 1, 3));*/
     }
 
     private void setRandomPrizes() {
         if (!this.crateManager.isInOpeningList(getPlayer()) && !(getInventory().getHolder(false) instanceof CratePrizeMenu)) return;
 
         for (int index = 0; index < 9; index++) {
-            setItem(index, getCrate().pickPrize(getPlayer()).getDisplayItem(getPlayer()));
+            //setItem(index, getCrate().pickPrize(getPlayer()).getDisplayItem(getPlayer()));
         }
     }
 

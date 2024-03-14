@@ -4,7 +4,6 @@ import com.badbones69.crazycrates.CrazyCratesPaper;
 import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.apache.commons.lang3.StringUtils;
-import com.badbones69.crazycrates.api.objects.Crate;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -31,7 +30,7 @@ public class PlaceholderAPISupport extends PlaceholderExpansion {
         Player human = (Player) player;
 
         // This is if the person opening the gui is to be used.
-        for (Crate crate : this.crateManager.getUsableCrates()) {
+        /*for (Crate crate : this.crateManager.getUsableCrates()) {
             if (identifier.equalsIgnoreCase(crate.getName())) {
                 return NumberFormat.getNumberInstance().format(this.userManager.getVirtualKeys(human.getUniqueId(), crate.getName()));
             }
@@ -51,7 +50,7 @@ public class PlaceholderAPISupport extends PlaceholderExpansion {
             if (identifier.equalsIgnoreCase("crates_opened")) {
                 return NumberFormat.getNumberInstance().format(this.userManager.getTotalCratesOpened(human.getUniqueId()));
             }
-        }
+        }*/
 
         // Gets the {player_name} or whatever
         int index = identifier.lastIndexOf("_");
@@ -80,7 +79,7 @@ public class PlaceholderAPISupport extends PlaceholderExpansion {
             return NumberFormat.getNumberInstance().format(this.userManager.getTotalCratesOpened(uuid));
         }
 
-        Crate crate = this.plugin.getCrateManager().getCrateFromName(crateName);
+        /*Crate crate = this.plugin.getCrateManager().getCrateFromName(crateName);
 
         if (crate == null) {
             this.plugin.getLogger().warning("Crate: " + crateName + " is not a valid crate name.");
@@ -103,7 +102,7 @@ public class PlaceholderAPISupport extends PlaceholderExpansion {
 
         if (result.endsWith("opened")) { // %crazycrates_<player>_<crate>_opened%
             return NumberFormat.getNumberInstance().format(this.userManager.getCrateOpened(uuid, crate.getName()));
-        }
+        }*/
 
         return "N/A";
     }

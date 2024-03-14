@@ -5,7 +5,6 @@ import com.badbones69.crazycrates.tasks.BukkitUserManager;
 import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
 import com.badbones69.crazycrates.api.enums.Messages;
 import com.badbones69.crazycrates.api.events.CrateOpenEvent;
-import com.badbones69.crazycrates.api.objects.Crate;
 import com.badbones69.crazycrates.support.PluginSupport;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -29,7 +28,7 @@ public class CrateOpenListener implements Listener {
     @EventHandler
     public void onCrateOpen(CrateOpenEvent event) {
         Player player = event.getPlayer();
-        Crate crate = event.getCrate();
+        /*Crate crate = event.getCrate();
 
         if (crate.getCrateType() != CrateType.menu) {
             if (!crate.canWinPrizes(player)) {
@@ -86,6 +85,6 @@ public class CrateOpenListener implements Listener {
                     this.plugin.getServer().dispatchCommand(this.plugin.getServer().getConsoleSender(), builder);
                 });
             }
-        }
+        }*/
     }
 }

@@ -100,17 +100,17 @@ public class CasinoCrate extends CrateBuilder {
             return;
         }
 
-        boolean keyCheck = this.userManager.takeKeys(1, getPlayer().getUniqueId(), getCrate().getName(), type, checkHand);
+        //boolean keyCheck = this.userManager.takeKeys(1, getPlayer().getUniqueId(), getCrate().getName(), type, checkHand);
 
-        if (!keyCheck) {
+        //if (!keyCheck) {
             // Send the message about failing to take the key.
-            MiscUtils.failedToTakeKey(getPlayer(), getCrate().getName());
+            //MiscUtils.failedToTakeKey(getPlayer(), getCrate().getName());
 
             // Remove from opening list.
-            this.crateManager.removePlayerFromOpeningList(getPlayer());
+            //this.crateManager.removePlayerFromOpeningList(getPlayer());
 
-            return;
-        }
+            //return;
+        //}
 
         setDisplayItems(true);
 
@@ -118,7 +118,7 @@ public class CasinoCrate extends CrateBuilder {
     }
 
     private void setDisplayItems(boolean isStatic) {
-        ConfigurationSection section = getCrate().getFile().getConfigurationSection("Crate.random");
+        //ConfigurationSection section = getCrate().getFile().getConfigurationSection("Crate.random");
 
         if (isStatic) {
             for (int index = 0; index < 27; index++) {
@@ -126,7 +126,7 @@ public class CasinoCrate extends CrateBuilder {
             }
         }
 
-        if (section != null) {
+        /*if (section != null) {
             boolean isRandom = section.getBoolean("toggle", false);
 
             String row_uno = section.getString("types.row-1");
@@ -162,7 +162,7 @@ public class CasinoCrate extends CrateBuilder {
             setItem(6, getDisplayItem(getCrate().getTier(row_tres)));
             setItem(15, getDisplayItem(getCrate().getTier(row_tres)));
             setItem(24, getDisplayItem(getCrate().getTier(row_tres)));
-        }
+        }*/
     }
 
     private void cycle() {

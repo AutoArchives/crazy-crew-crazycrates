@@ -1,8 +1,7 @@
 package com.badbones69.crazycrates.tasks.crates.types;
 
-import com.badbones69.crazycrates.api.objects.Crate;
-import com.badbones69.crazycrates.api.objects.Prize;
 import com.badbones69.crazycrates.api.PrizeManager;
+import com.badbones69.crazycrates.api.objects.Crate;
 import com.badbones69.crazycrates.tasks.BukkitUserManager;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -24,7 +23,7 @@ public class CrateOnTheGo extends CrateBuilder {
     @Override
     public void open(KeyType type, boolean checkHand) {
         // Crate event failed so we return.
-        if (isCrateEventValid(KeyType.physical_key, checkHand)) {
+        /*if (isCrateEventValid(KeyType.physical_key, checkHand)) {
             return;
         }
 
@@ -45,7 +44,7 @@ public class CrateOnTheGo extends CrateBuilder {
 
         if (prize.useFireworks()) MiscUtils.spawnFirework(getPlayer().getLocation().add(0, 1, 0), null);
 
-        this.crateManager.removePlayerKeyType(getPlayer());
+        this.crateManager.removePlayerKeyType(getPlayer());*/
     }
 
     @Override

@@ -53,7 +53,8 @@ public abstract class CrateBuilder extends BukkitRunnable {
         this.player = player;
         this.size = size;
 
-        this.builder = new CratePrizeMenu(crate, player, size, crate.getCrateInventoryName());
+        //crate.getCrateInventoryName()
+        this.builder = new CratePrizeMenu(crate, player, size, "");
         this.inventory = this.builder.build().getInventory();
     }
 
@@ -100,7 +101,8 @@ public abstract class CrateBuilder extends BukkitRunnable {
         this.player = player;
         this.size = size;
 
-        this.builder = new CratePrizeMenu(crate, player, size, crate.getCrateInventoryName());
+        //crate.getCrateInventoryName()
+        this.builder = new CratePrizeMenu(crate, player, size, "");
         this.inventory = this.builder.build().getInventory();
     }
 
@@ -203,7 +205,8 @@ public abstract class CrateBuilder extends BukkitRunnable {
      */
     @NotNull
     public String getTitle() {
-        return this.crate.getCrateInventoryName();
+        //crate.getCrateInventoryName()
+        return "";
     }
 
     /**
@@ -244,7 +247,7 @@ public abstract class CrateBuilder extends BukkitRunnable {
      */
     @NotNull
     public FileConfiguration getFile() {
-        return this.crate.getFile();
+        return null;
     }
 
     /**
@@ -331,7 +334,7 @@ public abstract class CrateBuilder extends BukkitRunnable {
      * @return true if cancelled otherwise false.
      */
     public boolean isCrateEventValid(KeyType keyType, boolean checkHand) {
-        CrateOpenEvent event = new CrateOpenEvent(this.player, this.crate, keyType, checkHand, this.crate.getFile());
+        /*CrateOpenEvent event = new CrateOpenEvent(this.player, this.crate, keyType, checkHand, this.crate.getFile());
         event.callEvent();
 
         if (event.isCancelled()) {
@@ -342,9 +345,9 @@ public abstract class CrateBuilder extends BukkitRunnable {
                     " 1) No valid prizes can be found, Likely a yaml issue.",
                     " 2) The player does not have the permission to open the crate."
             ).forEach(this.plugin.getLogger()::warning);
-        }
+        }*/
 
-        return event.isCancelled();
+        return true;
     }
 
     protected boolean isCancelled = false;
@@ -362,14 +365,16 @@ public abstract class CrateBuilder extends BukkitRunnable {
      * @return the display item of the picked prize.
      */
     public ItemStack getDisplayItem() {
-        return getCrate().pickPrize(getPlayer()).getDisplayItem(getPlayer());
+        return new ItemStack(Material.STRING);
+        //return getCrate().pickPrize(getPlayer()).getDisplayItem(getPlayer());
     }
 
     /**
      * @return the display item of the picked prize with a tier.
      */
     public ItemStack getDisplayItem(Tier tier) {
-        return getCrate().pickPrize(getPlayer(), tier).getDisplayItem(getPlayer());
+        return new ItemStack(Material.STRING);
+        //return getCrate().pickPrize(getPlayer(), tier).getDisplayItem(getPlayer());
     }
 
     /**

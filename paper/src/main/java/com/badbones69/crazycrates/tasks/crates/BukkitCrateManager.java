@@ -6,6 +6,9 @@ import com.badbones69.crazycrates.CrazyCratesPaper;
 import com.badbones69.crazycrates.api.FileManager;
 import com.badbones69.crazycrates.api.FileManager.Files;
 import com.badbones69.crazycrates.api.builders.CrateBuilder;
+import com.badbones69.crazycrates.api.objects.Crate;
+import com.badbones69.crazycrates.api.objects.Prize;
+import com.badbones69.crazycrates.api.objects.Tier;
 import com.badbones69.crazycrates.api.objects.other.BrokeLocation;
 import com.badbones69.crazycrates.api.ChestManager;
 import com.badbones69.crazycrates.api.builders.ItemBuilder;
@@ -16,8 +19,6 @@ import com.badbones69.crazycrates.tasks.crates.types.CsgoCrate;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.permissions.Permission;
-import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.plugin.java.JavaPlugin;
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
@@ -29,10 +30,7 @@ import us.crazycrew.crazycrates.platform.config.impl.ConfigKeys;
 import com.badbones69.crazycrates.api.builders.types.CrateMainMenu;
 import com.badbones69.crazycrates.api.enums.Messages;
 import com.badbones69.crazycrates.support.holograms.HologramManager;
-import com.badbones69.crazycrates.api.objects.Crate;
 import com.badbones69.crazycrates.api.objects.other.CrateLocation;
-import com.badbones69.crazycrates.api.objects.Prize;
-import com.badbones69.crazycrates.api.objects.Tier;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -88,9 +86,9 @@ public class BukkitCrateManager {
             this.plugin.getServer().getOnlinePlayers().forEach(player -> this.plugin.getInventoryManager().closeCratePreview(player));
 
             // Grab the new file.
-            FileConfiguration file = crate.getFile();
+            FileConfiguration file = null;
 
-            crate.purge();
+            //crate.purge();
 
             // Profit?
             List<Prize> prizes = new ArrayList<>();
@@ -105,11 +103,11 @@ public class BukkitCrateManager {
 
                     if (prizeSection != null) {
                         for (String tier : prizeSection.getStringList("Tiers")) {
-                            for (Tier key : crate.getTiers()) {
+                            /*for (Tier key : crate.getTiers()) {
                                 if (key.getName().equalsIgnoreCase(tier)) {
                                     tierPrizes.add(key);
                                 }
-                            }
+                            }*/
                         }
 
                         Prize alternativePrize = null;
@@ -120,35 +118,36 @@ public class BukkitCrateManager {
                             boolean isEnabled = alternativeSection.getBoolean("Toggle");
 
                             if (isEnabled) {
-                                alternativePrize = new Prize(prizeSection.getString("DisplayName", WordUtils.capitalizeFully(prizeSection.getString("DisplayItem", "STONE").replaceAll("_", " "))), prizeSection.getName(), alternativeSection);
+                                //alternativePrize = new Prize(prizeSection.getString("DisplayName",
+                                //        WordUtils.capitalizeFully(prizeSection.getString("DisplayItem", "STONE").replaceAll("_", " "))), prizeSection.getName(), alternativeSection);
                             }
                         }
 
-                        prizes.add(new Prize(
+                        /*prizes.add(new Prize(
                                 prizeSection,
                                 tierPrizes,
                                 crate.getName(),
                                 alternativePrize
-                        ));
+                        ));*/
                     }
                 }
             }
 
-            crate.setPrize(prizes);
-            crate.setPreviewItems(crate.getPreviewItems());
+            //crate.setPrize(prizes);
+            //crate.setPreviewItems(crate.getPreviewItems());
 
             for (UUID uuid : this.plugin.getInventoryManager().getViewers()) {
                 Player player = this.plugin.getServer().getPlayer(uuid);
 
                 if (player != null) {
-                    this.plugin.getInventoryManager().openNewCratePreview(player, crate, crate.getCrateType() == CrateType.cosmic || crate.getCrateType() == CrateType.casino);
+                    //this.plugin.getInventoryManager().openNewCratePreview(player, crate, crate.getCrateType() == CrateType.cosmic || crate.getCrateType() == CrateType.casino);
                 }
             }
 
             this.plugin.getInventoryManager().purge();
         } catch (Exception exception) {
-            this.brokeCrates.add(crate.getName());
-            this.plugin.getLogger().log(Level.WARNING, "There was an error while loading the " + crate.getName() + ".yml file.", exception);
+            //this.brokeCrates.add(crate.getName());
+            //this.plugin.getLogger().log(Level.WARNING, "There was an error while loading the " + crate.getName() + ".yml file.", exception);
         }
     }
 
@@ -201,7 +200,7 @@ public class BukkitCrateManager {
                         ConfigurationSection tierSection = file.getConfigurationSection(path);
 
                         if (tierSection != null) {
-                            tiers.add(new Tier(tier, tierSection));
+                            //tiers.add(new Tier(tier, tierSection));
                         }
                     }
                 }
@@ -229,9 +228,9 @@ public class BukkitCrateManager {
                         if (prizeSection != null) {
                             for (String tier : prizeSection.getStringList("Tiers")) {
                                 for (Tier key : tiers) {
-                                    if (key.getName().equalsIgnoreCase(tier)) {
-                                        tierPrizes.add(key);
-                                    }
+                                    //if (key.getName().equalsIgnoreCase(tier)) {
+                                   //     tierPrizes.add(key);
+                                    //}
                                 }
                             }
 
@@ -241,11 +240,12 @@ public class BukkitCrateManager {
                                 boolean isEnabled = alternativeSection.getBoolean("Toggle");
 
                                 if (isEnabled) {
-                                    alternativePrize = new Prize(prizeSection.getString("DisplayName", WordUtils.capitalizeFully(prizeSection.getString("DisplayItem", "STONE").replaceAll("_", " "))), prizeSection.getName(), alternativeSection);
+                                    //alternativePrize = new Prize(prizeSection.getString("DisplayName",
+                                            //WordUtils.capitalizeFully(prizeSection.getString("DisplayItem", "STONE").replaceAll("_", " "))), prizeSection.getName(), alternativeSection);
                                 }
                             }
 
-                            prizes.add(new Prize(prizeSection, tierPrizes, crateName, alternativePrize));
+                            //prizes.add(new Prize(prizeSection, tierPrizes, crateName, alternativePrize));
                         }
                     }
                 }
@@ -258,27 +258,23 @@ public class BukkitCrateManager {
 
                 List<String> prizeMessage = file.contains("Crate.Prize-Message") ? file.getStringList("Crate.Prize-Message") : Collections.emptyList();
 
-                CrateHologram holo = new CrateHologram(file.getBoolean("Crate.Hologram.Toggle"), file.getDouble("Crate.Hologram.Height", 0.0), file.getInt("Crate.Hologram.Range", 8), file.getStringList("Crate.Hologram.Message"));
-                addCrate(new Crate(crateName, previewName, crateType, getKey(file), file.getString("Crate.PhysicalKey.Name"), prizes, file, newPlayersKeys, tiers, maxMassOpen, requiredKeys, prizeMessage, holo));
+                // crateName, the name of the file without.yml
+                // previewName, the preview name - Crate.Preview-Name
+                // crateType, the crate type - Crate.CrateType
+                // keyName, the key name - Crate.PhysicalKey.Name
+                // requiredKeys, the keys - Crate.RequiredKeys
+                // maxMassOpen, the max amount of keys a player can open - Crate.Max-Mass-Open
 
-                Permission doesExist = this.plugin.getServer().getPluginManager().getPermission("crazycrates.open." + crateName);
-
-                if (doesExist == null) {
-                    Permission permission = new Permission(
-                            "crazycrates.open." + crateName,
-                            "Allows you to open " + crateName,
-                            PermissionDefault.TRUE
-                    );
-
-                    this.plugin.getServer().getPluginManager().addPermission(permission);
-                }
+                CrateHologram holo = new CrateHologram(file.getBoolean("Crate.Hologram.Toggle"), file.getDouble("Crate.Hologram.Height", 0.0), file.getInt("Crate.Hologram.Range", 8),
+                        file.getStringList("Crate.Hologram.Message"));
+                //addCrate(new Crate(crateName, previewName, crateType, getKey(file), file.getString("Crate.PhysicalKey.Name"), prizes, file, newPlayersKeys, tiers, maxMassOpen, requiredKeys, prizeMessage, holo));
             } catch (Exception exception) {
                 this.brokeCrates.add(crateName);
                 this.plugin.getLogger().log(Level.WARNING, "There was an error while loading the " + crateName + ".yml file.", exception);
             }
         }
 
-        addCrate(new Crate("Menu", "Menu", CrateType.menu, new ItemStack(Material.AIR), "", new ArrayList<>(), null, 0, null, 0, 0, Collections.emptyList(), null));
+        //addCrate(new Crate("Menu", "Menu", CrateType.menu, new ItemStack(Material.AIR), "", new ArrayList<>(), null, 0, null, 0, 0, Collections.emptyList(), null));
 
         if (MiscUtils.isLogging()) {
             List.of(
@@ -415,7 +411,7 @@ public class BukkitCrateManager {
                     Map<String, String> placeholders = new HashMap<>();
 
                     placeholders.put("{cratetype}", crate.getCrateType().getName());
-                    placeholders.put("{crate}", crate.getName());
+                    //placeholders.put("{crate}", crate.getName());
 
                     player.sendMessage(Messages.cant_be_a_virtual_crate.getMessage(placeholders, player));
                     removePlayerFromOpeningList(player);
@@ -426,7 +422,7 @@ public class BukkitCrateManager {
             }
             case fire_cracker -> {
                 if (this.cratesInUse.containsValue(location)) {
-                    player.sendMessage(Messages.crate_in_use.getMessage("{crate}", crate.getName(), player));
+                    //player.sendMessage(Messages.crate_in_use.getMessage("{crate}", crate.getName(), player));
                     removePlayerFromOpeningList(player);
                     return;
                 }
@@ -435,7 +431,7 @@ public class BukkitCrateManager {
                     Map<String, String> placeholders = new HashMap<>();
 
                     placeholders.put("{cratetype}", crate.getCrateType().getName());
-                    placeholders.put("{crate}", crate.getName());
+                    //placeholders.put("{crate}", crate.getName());
 
                     player.sendMessage(Messages.cant_be_a_virtual_crate.getMessage(placeholders, player));
                     removePlayerFromOpeningList(player);
@@ -449,7 +445,7 @@ public class BukkitCrateManager {
                     Map<String, String> placeholders = new HashMap<>();
 
                     placeholders.put("{cratetype}", crate.getCrateType().getName());
-                    placeholders.put("{crate}", crate.getName());
+                    //placeholders.put("{crate}", crate.getName());
 
                     player.sendMessage(Messages.cant_be_a_virtual_crate.getMessage(placeholders, player));
                     removePlayerFromOpeningList(player);
@@ -460,7 +456,7 @@ public class BukkitCrateManager {
             }
             case quick_crate -> {
                 if (this.cratesInUse.containsValue(location)) {
-                    player.sendMessage(Messages.crate_in_use.getMessage("{crate}", crate.getName(), player));
+                    //player.sendMessage(Messages.crate_in_use.getMessage("{crate}", crate.getName(), player));
                     removePlayerFromOpeningList(player);
                     return;
                 }
@@ -469,7 +465,7 @@ public class BukkitCrateManager {
                     Map<String, String> placeholders = new HashMap<>();
 
                     placeholders.put("{cratetype}", crate.getCrateType().getName());
-                    placeholders.put("{crate}", crate.getName());
+                    //placeholders.put("{crate}", crate.getName());
 
                     player.sendMessage(Messages.cant_be_a_virtual_crate.getMessage(placeholders, player));
                     removePlayerFromOpeningList(player);
@@ -482,11 +478,11 @@ public class BukkitCrateManager {
                 crateBuilder = new CsgoCrate(crate, player, 27);
 
                 if (MiscUtils.isLogging()) {
-                    List.of(
+                    /*List.of(
                             crate.getCrateInventoryName() + " has an invalid crate type. Your Value: " + crate.getFile().getString("Crate.CrateType"),
                             "We will use " + CrateType.csgo.getName() + " until you change the crate type.",
                             "Valid Crate Types: CSGO/Casino/Cosmic/QuadCrate/QuickCrate/Roulette/CrateOnTheGo/FireCracker/Wonder/Wheel/War"
-                    ).forEach(line -> this.plugin.getLogger().warning(line));
+                    ).forEach(line -> this.plugin.getLogger().warning(line));*/
                 }
             }
         }
@@ -762,14 +758,14 @@ public class BukkitCrateManager {
         if (this.giveNewPlayersKeys) { // Checks if any crate gives new players keys and if not then no need to do all this stuff.
             String uuid = player.getUniqueId().toString();
 
-            if (!player.hasPlayedBefore()) {
+            /*if (!player.hasPlayedBefore()) {
                 this.plugin.getCrateManager().getUsableCrates().stream()
                         .filter(Crate :: doNewPlayersGetKeys)
                         .forEach(crate -> {
                             Files.DATA.getFile().set("Players." + uuid + "." + crate.getName(), crate.getNewPlayerKeys());
                             Files.DATA.saveFile();
                         });
-            }
+            }*/
         }
     }
 
@@ -823,7 +819,7 @@ public class BukkitCrateManager {
             }
         }
 
-        locations.set("Locations." + id + ".Crate", crate.getName());
+        //locations.set("Locations." + id + ".Crate", crate.getName());
         locations.set("Locations." + id + ".World", location.getWorld().getName());
         locations.set("Locations." + id + ".X", location.getBlockX());
         locations.set("Locations." + id + ".Y", location.getBlockY());
@@ -884,9 +880,9 @@ public class BukkitCrateManager {
      */
     public Crate getCrateFromName(String name) {
         for (Crate crate : this.crates) {
-            if (crate.getName().equalsIgnoreCase(name)) {
-                return crate;
-            }
+            //if (crate.getName().equalsIgnoreCase(name)) {
+            //    return crate;
+            //}
         }
 
         return null;
@@ -1058,13 +1054,14 @@ public class BukkitCrateManager {
                 return false;
             }
 
-            return crate.getName().equals(pair.split(":")[1]);
+            //return crate.getName().equals(pair.split(":")[1]);
         }
 
         // Get the crate name.
         String crateName = ItemUtils.getKey(itemMeta);
 
-        return crate.getName().equals(crateName);
+        //return crate.getName().equals(crateName);
+        return true;
     }
 
     public Crate getCrateNameFromOldKey(ItemMeta itemMeta) {
@@ -1169,11 +1166,11 @@ public class BukkitCrateManager {
             List<String> noKeys = new ArrayList<>();
 
             for (Crate crate : getUsableCrates()) {
-                if (data.getInt("Players." + uuid + "." + crate.getName()) <= 0) {
-                    noKeys.add(crate.getName());
-                } else {
-                    hasKeys = true;
-                }
+                //if (data.getInt("Players." + uuid + "." + crate.getName()) <= 0) {
+                    //noKeys.add(crate.getName());
+                //} else {
+                //    hasKeys = true;
+                //}
             }
 
             if (hasKeys) {

@@ -3,7 +3,6 @@ package com.badbones69.crazycrates.listeners;
 import ch.jalu.configme.SettingsManager;
 import com.badbones69.crazycrates.CrazyCratesPaper;
 import com.badbones69.crazycrates.api.events.KeyCheckEvent;
-import com.badbones69.crazycrates.api.objects.Crate;
 import com.badbones69.crazycrates.api.objects.other.CrateLocation;
 import com.badbones69.crazycrates.tasks.BukkitUserManager;
 import org.bukkit.GameMode;
@@ -86,14 +85,14 @@ public class CrateControlListener implements Listener {
 
         if (crateLocation.getCrateType() == CrateType.menu) return;
 
-        Crate crate = crateLocation.getCrate();
+        /*Crate crate = crateLocation.getCrate();
 
         if (crate.isPreviewEnabled()) {
             this.inventoryManager.addViewer(player);
             this.inventoryManager.openNewCratePreview(player, crateLocation.getCrate(), crate.getCrateType() == CrateType.cosmic || crate.getCrateType() == CrateType.casino);
         } else {
             player.sendMessage(Messages.preview_disabled.getMessage("{crate}", crate.getName(), player));
-        }
+        }*/
     }
     
     // This must run as highest, so it doesn't cause other plugins to check
@@ -121,7 +120,7 @@ public class CrateControlListener implements Listener {
         // If location is null, return.
         if (crateLocation == null) return;
 
-        Crate crate = crateLocation.getCrate();
+        /*Crate crate = crateLocation.getCrate();
 
         // If crate is null, return.
         if (crate == null) return;
@@ -226,7 +225,7 @@ public class CrateControlListener implements Listener {
             }
 
             player.sendMessage(Messages.no_keys.getMessage(placeholders, player));
-        }
+        }*/
     }
 
     @EventHandler
@@ -234,12 +233,12 @@ public class CrateControlListener implements Listener {
         for (Block block : event.getBlocks()) {
             Location location = block.getLocation();
 
-            Crate crate = this.crateManager.getCrateFromLocation(location);
+            /*Crate crate = this.crateManager.getCrateFromLocation(location);
 
             if (crate != null) {
                 event.setCancelled(true);
                 return;
-            }
+            }*/
         }
     }
 
@@ -248,12 +247,12 @@ public class CrateControlListener implements Listener {
         for (Block block : event.getBlocks()) {
             Location location = block.getLocation();
 
-            Crate crate = this.crateManager.getCrateFromLocation(location);
+            /*Crate crate = this.crateManager.getCrateFromLocation(location);
 
             if (crate != null) {
                 event.setCancelled(true);
                 return;
-            }
+            }*/
         }
     }
 

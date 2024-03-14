@@ -1,12 +1,12 @@
 package com.badbones69.crazycrates.api;
 
 import com.badbones69.crazycrates.CrazyCratesPaper;
-import com.badbones69.crazycrates.api.objects.Tier;
 import com.badbones69.crazycrates.api.builders.ItemBuilder;
-import org.apache.commons.lang.WordUtils;
-import com.badbones69.crazycrates.api.events.PlayerPrizeEvent;
 import com.badbones69.crazycrates.api.objects.Crate;
 import com.badbones69.crazycrates.api.objects.Prize;
+import com.badbones69.crazycrates.api.objects.Tier;
+import org.apache.commons.lang.WordUtils;
+import com.badbones69.crazycrates.api.events.PlayerPrizeEvent;
 import com.badbones69.crazycrates.api.enums.Messages;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.entity.Player;
@@ -34,7 +34,7 @@ public class PrizeManager {
      * @param prize the player is being given.
      */
     public static void givePrize(Player player, Prize prize, Crate crate) {
-        if (prize == null) {
+        /*if (prize == null) {
             if (MiscUtils.isLogging()) plugin.getLogger().warning("No prize was found when giving " + player.getName() + " a prize.");
 
             return;
@@ -119,11 +119,11 @@ public class PrizeManager {
 
         for (String message : prize.getMessages()) {
             sendMessage(player, prize, crate, message);
-        }
+        }*/
     }
 
     private static void sendMessage(Player player, Prize prize, Crate crate, String message) {
-        String display = prize.getDisplayItemBuilder().getName();
+        /*String display = prize.getDisplayItemBuilder().getName();
 
         String name = display == null || display.isEmpty() ? MsgUtils.color(WordUtils.capitalizeFully(prize.getDisplayItemBuilder().getMaterial().getKey().getKey().replaceAll("_", " "))) : display;
 
@@ -132,7 +132,7 @@ public class PrizeManager {
                 .replaceAll("%reward%", quoteReplacement(name))
                 .replaceAll("%crate%", quoteReplacement(crate.getCrateInventoryName()));
 
-        MsgUtils.sendMessage(player, MiscUtils.isPapiActive() ? PlaceholderAPI.setPlaceholders(player, defaultMessage) : defaultMessage, false);
+        MsgUtils.sendMessage(player, MiscUtils.isPapiActive() ? PlaceholderAPI.setPlaceholders(player, defaultMessage) : defaultMessage, false);*/
     }
 
     /**
@@ -143,7 +143,7 @@ public class PrizeManager {
      * @param prize the player is being given.
      */
     public static void givePrize(Player player, Crate crate, Prize prize) {
-        if (prize != null) {
+        /*if (prize != null) {
             givePrize(player, prize, crate);
 
             if (prize.useFireworks()) MiscUtils.spawnFirework(player.getLocation().add(0, 1, 0), null);
@@ -151,21 +151,21 @@ public class PrizeManager {
             plugin.getServer().getPluginManager().callEvent(new PlayerPrizeEvent(player, crate, crate.getName(), prize));
         } else {
             player.sendMessage(MsgUtils.getPrefix("&cNo prize was found, please report this issue if you think this is an error."));
-        }
+        }*/
     }
 
     public static void getPrize(Crate crate, Inventory inventory, int slot, Player player) {
-        ItemStack item = inventory.getItem(slot);
+        /*ItemStack item = inventory.getItem(slot);
 
         if (item == null) return;
 
         Prize prize = crate.getPrize(item);
 
-        givePrize(player, prize, crate);
+        givePrize(player, prize, crate);*/
     }
 
     public static Tier getTier(Crate crate) {
-        if (crate.getTiers() != null && !crate.getTiers().isEmpty()) {
+        /*if (crate.getTiers() != null && !crate.getTiers().isEmpty()) {
             for (int stopLoop = 0; stopLoop <= 100; stopLoop++) {
                 for (Tier tier : crate.getTiers()) {
                     int chance = tier.getChance();
@@ -177,7 +177,7 @@ public class PrizeManager {
                     }
                 }
             }
-        }
+        }*/
 
         return null;
     }

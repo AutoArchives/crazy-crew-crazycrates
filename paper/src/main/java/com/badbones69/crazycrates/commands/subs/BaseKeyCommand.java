@@ -14,8 +14,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import com.badbones69.crazycrates.api.enums.Messages;
-import us.crazycrew.crazycrates.api.users.UserManager;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,7 +72,7 @@ public class BaseKeyCommand extends BaseCommand {
 
         Map<Crate, Integer> keys = new HashMap<>();
 
-        this.plugin.getCrateManager().getUsableCrates().forEach(crate -> keys.put(crate, this.userManager.getVirtualKeys(player.getUniqueId(), crate.getName())));
+        //this.plugin.getCrateManager().getUsableCrates().forEach(crate -> keys.put(crate, this.userManager.getVirtualKeys(player.getUniqueId(), crate.getName())));
 
         boolean hasKeys = false;
 
@@ -86,9 +84,9 @@ public class BaseKeyCommand extends BaseCommand {
 
                 hasKeys = true;
 
-                placeholders.put("{crate}", crate.getFile().getString("Crate.Name"));
+                //placeholders.put("{crate}", crate.getFile().getString("Crate.Name"));
                 placeholders.put("{keys}", String.valueOf(amount));
-                placeholders.put("{crate_opened}", String.valueOf(this.userManager.getCrateOpened(player.getUniqueId(), crate.getName())));
+                //placeholders.put("{crate_opened}", String.valueOf(this.userManager.getCrateOpened(player.getUniqueId(), crate.getName())));
 
                 message.add(Messages.per_crate.getMessage(placeholders, player));
             }

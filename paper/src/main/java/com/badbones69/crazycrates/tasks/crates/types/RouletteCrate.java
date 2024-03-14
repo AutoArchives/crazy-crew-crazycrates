@@ -1,8 +1,7 @@
 package com.badbones69.crazycrates.tasks.crates.types;
 
-import com.badbones69.crazycrates.api.objects.Crate;
-import com.badbones69.crazycrates.api.objects.Prize;
 import com.badbones69.crazycrates.api.PrizeManager;
+import com.badbones69.crazycrates.api.objects.Crate;
 import com.badbones69.crazycrates.tasks.BukkitUserManager;
 import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
 import org.bukkit.SoundCategory;
@@ -28,7 +27,7 @@ public class RouletteCrate extends CrateBuilder {
     @Override
     public void open(KeyType type, boolean checkHand) {
         // Crate event failed so we return.
-        if (isCrateEventValid(type, checkHand)) {
+        /*if (isCrateEventValid(type, checkHand)) {
             return;
         }
 
@@ -109,7 +108,7 @@ public class RouletteCrate extends CrateBuilder {
                     }
                 }
             }
-        }.runTaskTimer(this.plugin, 2, 2));
+        }.runTaskTimer(this.plugin, 2, 2));*/
     }
 
     private void setGlass() {

@@ -1,10 +1,9 @@
 package com.badbones69.crazycrates.tasks.crates.types;
 
 import com.badbones69.crazycrates.api.events.PlayerPrizeEvent;
-import com.badbones69.crazycrates.api.objects.Crate;
-import com.badbones69.crazycrates.api.objects.Prize;
 import com.badbones69.crazycrates.api.PrizeManager;
 import com.badbones69.crazycrates.api.builders.ItemBuilder;
+import com.badbones69.crazycrates.api.objects.Crate;
 import com.badbones69.crazycrates.tasks.BukkitUserManager;
 import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
 import org.bukkit.Material;
@@ -37,25 +36,25 @@ public class WonderCrate extends CrateBuilder {
             return;
         }
 
-        boolean keyCheck = this.userManager.takeKeys(1, getPlayer().getUniqueId(), getCrate().getName(), type, checkHand);
+        //boolean keyCheck = this.userManager.takeKeys(1, getPlayer().getUniqueId(), getCrate().getName(), type, checkHand);
 
-        if (!keyCheck) {
+        //if (!keyCheck) {
             // Send the message about failing to take the key.
-            MiscUtils.failedToTakeKey(getPlayer(), getCrate().getName());
+            //MiscUtils.failedToTakeKey(getPlayer(), getCrate().getName());
 
             // Remove from opening list.
-            this.crateManager.removePlayerFromOpeningList(getPlayer());
+            //this.crateManager.removePlayerFromOpeningList(getPlayer());
 
-            return;
-        }
+            //return;
+        //}
 
         final List<String> slots = new ArrayList<>();
 
         for (int index = 0; index < getSize(); index++) {
-            Prize prize = getCrate().pickPrize(getPlayer());
+            //Prize prize = getCrate().pickPrize(getPlayer());
             slots.add(String.valueOf(index));
 
-            setItem(index, prize.getDisplayItem(getPlayer()));
+            //setItem(index, prize.getDisplayItem(getPlayer()));
         }
 
         getPlayer().openInventory(getInventory());
@@ -69,7 +68,7 @@ public class WonderCrate extends CrateBuilder {
 
             final List<Integer> other = new ArrayList<>();
 
-            Prize prize = null;
+            //Prize prize = null;
 
             @Override
             public void run() {
@@ -86,8 +85,8 @@ public class WonderCrate extends CrateBuilder {
                     setItem(this.slot2, material);
 
                     for (String slot : slots) {
-                        this.prize = getCrate().pickPrize(getPlayer());
-                        setItem(Integer.parseInt(slot), this.prize.getDisplayItem(getPlayer()));
+                        //this.prize = getCrate().pickPrize(getPlayer());
+                        //setItem(Integer.parseInt(slot), this.prize.getDisplayItem(getPlayer()));
                     }
 
                     this.slot1++;
@@ -107,13 +106,13 @@ public class WonderCrate extends CrateBuilder {
 
                     getPlayer().closeInventory(InventoryCloseEvent.Reason.UNLOADED);
 
-                    PrizeManager.givePrize(getPlayer(), this.prize, getCrate());
+                    //PrizeManager.givePrize(getPlayer(), this.prize, getCrate());
 
                     playSound("stop-sound", SoundCategory.PLAYERS, "ENTITY_PLAYER_LEVELUP");
 
-                    if (this.prize.useFireworks()) MiscUtils.spawnFirework(getPlayer().getLocation().add(0, 1, 0), null);
+                    //if (this.prize.useFireworks()) MiscUtils.spawnFirework(getPlayer().getLocation().add(0, 1, 0), null);
 
-                    plugin.getServer().getPluginManager().callEvent(new PlayerPrizeEvent(getPlayer(), getCrate(), getCrate().getName(), this.prize));
+                    //plugin.getServer().getPluginManager().callEvent(new PlayerPrizeEvent(getPlayer(), getCrate(), getCrate().getName(), this.prize));
                     crateManager.removePlayerFromOpeningList(getPlayer());
 
                     return;

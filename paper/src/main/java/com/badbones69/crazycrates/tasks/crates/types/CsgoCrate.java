@@ -1,9 +1,8 @@
 package com.badbones69.crazycrates.tasks.crates.types;
 
-import com.badbones69.crazycrates.api.objects.Crate;
-import com.badbones69.crazycrates.api.objects.Prize;
 import com.badbones69.crazycrates.api.PrizeManager;
 import com.badbones69.crazycrates.api.builders.ItemBuilder;
+import com.badbones69.crazycrates.api.objects.Crate;
 import com.badbones69.crazycrates.tasks.BukkitUserManager;
 import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
 import org.bukkit.Material;
@@ -32,7 +31,7 @@ public class CsgoCrate extends CrateBuilder {
     @Override
     public void open(KeyType type, boolean checkHand) {
         // Crate event failed so we return.
-        if (isCrateEventValid(type, checkHand)) {
+        /*if (isCrateEventValid(type, checkHand)) {
             return;
         }
 
@@ -114,11 +113,11 @@ public class CsgoCrate extends CrateBuilder {
                     }
                 }
             }
-        }.runTaskTimer(this.plugin, 1, 1));
+        }.runTaskTimer(this.plugin, 1, 1));*/
     }
 
     private void populate() {
-        HashMap<Integer, ItemStack> glass = new HashMap<>();
+        /*HashMap<Integer, ItemStack> glass = new HashMap<>();
 
         for (int index = 0; index < 10; index++) {
             if (index < 9 && index != 3) glass.put(index, getInventory().getItem(index));
@@ -165,11 +164,11 @@ public class CsgoCrate extends CrateBuilder {
         // Set display items.
         for (int index = 9; index > 8 && index < 18; index++) {
             setItem(index, getCrate().pickPrize(getPlayer()).getDisplayItem(getPlayer()));
-        }
+        }*/
     }
 
     private void moveItemsAndSetGlass() {
-        List<ItemStack> items = new ArrayList<>();
+       /*List<ItemStack> items = new ArrayList<>();
 
         for (int i = 9; i > 8 && i < 17; i++) {
             items.add(getInventory().getItem(i));
@@ -179,7 +178,7 @@ public class CsgoCrate extends CrateBuilder {
 
         for (int i = 0; i < 8; i++) {
             setItem(i + 10, items.get(i));
-        }
+        }*/
     }
 
     @Override

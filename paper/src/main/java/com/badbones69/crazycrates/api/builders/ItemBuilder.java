@@ -666,9 +666,12 @@ public class ItemBuilder {
 
     /**
      * @param damage the damage value of the item.
+     * @return the ItemBuilder with updated damage.
      */
-    public void setDamage(int damage) {
+    public ItemBuilder setDamage(int damage) {
         this.itemDamage = damage;
+
+        return this;
     }
 
     /**

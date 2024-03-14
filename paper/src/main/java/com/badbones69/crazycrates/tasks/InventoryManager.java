@@ -2,9 +2,8 @@ package com.badbones69.crazycrates.tasks;
 
 import ch.jalu.configme.SettingsManager;
 import com.badbones69.crazycrates.api.enums.PersistentKeys;
-import com.badbones69.crazycrates.api.objects.Crate;
 import com.badbones69.crazycrates.api.builders.ItemBuilder;
-import org.bukkit.Bukkit;
+import com.badbones69.crazycrates.api.objects.Crate;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -105,13 +104,13 @@ public class InventoryManager {
         this.crateViewers.put(player.getUniqueId(), crate);
 
         if (isTierPreview) {
-            player.openInventory(crate.getTierPreview(player));
+            //player.openInventory(crate.getTierPreview(player));
             return;
         }
 
         setPage(player, 1);
 
-        player.openInventory(crate.getPreview(player));
+        //player.openInventory(crate.getPreview(player));
     }
 
     public void addCrateViewer(Player player, Crate crate) {
@@ -121,7 +120,7 @@ public class InventoryManager {
     public void openCratePreview(Player player, Crate crate) {
         this.crateViewers.put(player.getUniqueId(), crate);
 
-        player.openInventory(crate.getPreview(player));
+        //player.openInventory(crate.getPreview(player));
     }
 
     public void closeCratePreview(Player player) {
@@ -162,13 +161,13 @@ public class InventoryManager {
     }
 
     public void setPage(Player player, int page) {
-        int max = this.crateViewers.get(player.getUniqueId()).getMaxPage();
+        //int max = this.crateViewers.get(player.getUniqueId()).getMaxPage();
 
-        if (page < 1) {
-            page = 1;
-        } else if (page >= max) {
-            page = max;
-        }
+        //if (page < 1) {
+        //    page = 1;
+        //} else if (page >= max) {
+        //    page = max;
+        //}
 
         this.pageViewers.put(player.getUniqueId(), page);
     }

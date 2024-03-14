@@ -43,7 +43,7 @@ public class CrateTierMenu extends InventoryBuilder {
     }
 
     private void setDefaultItems() {
-        getTiers().forEach(tier -> getInventory().setItem(tier.getSlot(), tier.getTierItem(getPlayer())));
+        /*getTiers().forEach(tier -> getInventory().setItem(tier.getSlot(), tier.getTierItem(getPlayer())));
 
         if (getCrate().isPreviewTierBorderToggle()) {
             List<Integer> borderItems = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8);
@@ -59,7 +59,7 @@ public class CrateTierMenu extends InventoryBuilder {
             }
         }
 
-        if (this.inventoryManager.inCratePreview(getPlayer()) && this.config.getProperty(ConfigKeys.enable_crate_menu)) getInventory().setItem(getCrate().getAbsolutePreviewItemPosition(4), this.inventoryManager.getMenuButton(getPlayer()));
+        if (this.inventoryManager.inCratePreview(getPlayer()) && this.config.getProperty(ConfigKeys.enable_crate_menu)) getInventory().setItem(getCrate().getAbsolutePreviewItemPosition(4), this.inventoryManager.getMenuButton(getPlayer()));*/
     }
 
     public static class CrateTierListener implements Listener {
@@ -86,9 +86,9 @@ public class CrateTierMenu extends InventoryBuilder {
 
             if (!item.hasItemMeta()) return;
 
-            Crate crate = this.inventoryManager.getCratePreview(player);
+            //Crate crate = this.inventoryManager.getCratePreview(player);
 
-            if (crate == null) return;
+            //if (crate == null) return;
 
             ItemMeta itemMeta = item.getItemMeta();
 
@@ -98,7 +98,7 @@ public class CrateTierMenu extends InventoryBuilder {
                 if (this.inventoryManager.inCratePreview(player)) {
                     if (holder.overrideMenu()) return;
 
-                    crate.playSound(player, player.getLocation(), "click-sound", "UI_BUTTON_CLICK", SoundCategory.PLAYERS);
+                    //crate.playSound(player, player.getLocation(), "click-sound", "UI_BUTTON_CLICK", SoundCategory.PLAYERS);
 
                     this.inventoryManager.removeViewer(player);
                     this.inventoryManager.closeCratePreview(player);
@@ -112,15 +112,15 @@ public class CrateTierMenu extends InventoryBuilder {
             }
 
             if (container.has(PersistentKeys.preview_tier_button.getNamespacedKey())) {
-                crate.playSound(player, player.getLocation(), "click-sound", "UI_BUTTON_CLICK", SoundCategory.PLAYERS);
+                //crate.playSound(player, player.getLocation(), "click-sound", "UI_BUTTON_CLICK", SoundCategory.PLAYERS);
 
                 String tierName = container.get(PersistentKeys.preview_tier_button.getNamespacedKey(), PersistentDataType.STRING);
 
-                Tier tier = crate.getTier(tierName);
+                //Tier tier = crate.getTier(tierName);
 
-                Inventory cratePreviewMenu = crate.getPreview(player, this.inventoryManager.getPage(player), true, tier);
+                //Inventory cratePreviewMenu = crate.getPreview(player, this.inventoryManager.getPage(player), true, tier);
 
-                player.openInventory(cratePreviewMenu);
+                //player.openInventory(cratePreviewMenu);
             }
         }
     }

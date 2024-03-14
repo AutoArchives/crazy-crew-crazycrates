@@ -3,7 +3,6 @@ package com.badbones69.crazycrates.api.builders.types;
 import ch.jalu.configme.SettingsManager;
 import com.badbones69.crazycrates.CrazyCratesPaper;
 import com.badbones69.crazycrates.api.enums.Messages;
-import com.badbones69.crazycrates.api.objects.Crate;
 import com.badbones69.crazycrates.api.builders.ItemBuilder;
 import com.badbones69.crazycrates.api.utils.ItemUtils;
 import com.badbones69.crazycrates.api.utils.MiscUtils;
@@ -23,13 +22,11 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
 import us.crazycrew.crazycrates.platform.config.ConfigManager;
 import us.crazycrew.crazycrates.platform.config.impl.ConfigKeys;
 import com.badbones69.crazycrates.api.builders.InventoryBuilder;
 import us.crazycrew.crazycrates.api.enums.types.KeyType;
-import us.crazycrew.crazycrates.api.users.UserManager;
 import java.text.NumberFormat;
 import java.util.List;
 
@@ -112,7 +109,7 @@ public class CrateMainMenu extends InventoryBuilder {
             }
         }
 
-        for (Crate crate : this.plugin.getCrateManager().getUsableCrates()) {
+        /*for (Crate crate : this.plugin.getCrateManager().getUsableCrates()) {
             FileConfiguration file = crate.getFile();
 
             if (file != null) {
@@ -142,18 +139,18 @@ public class CrateMainMenu extends InventoryBuilder {
                             .build());
                 }
             }
-        }
+        }*/
 
         return this;
     }
 
     private String getCrates(String option) {
-        for (Crate crate : this.plugin.getCrateManager().getUsableCrates()) {
+        /*for (Crate crate : this.plugin.getCrateManager().getUsableCrates()) {
             option = option.replaceAll("%" + crate.getName().toLowerCase() + "}", this.userManager.getVirtualKeys(getPlayer().getUniqueId(), crate.getName()) + "")
                     .replaceAll("%" + crate.getName().toLowerCase() + "_physical%", this.userManager.getPhysicalKeys(getPlayer().getUniqueId(), crate.getName()) + "")
                     .replaceAll("%" + crate.getName().toLowerCase() + "_total%", this.userManager.getTotalKeys(getPlayer().getUniqueId(), crate.getName()) + "")
                     .replaceAll("%" + crate.getName().toLowerCase() + "_opened%", this.userManager.getCrateOpened(getPlayer().getUniqueId(), crate.getName()) + "");
-        }
+        }*/
 
         return option;
     }
@@ -186,7 +183,7 @@ public class CrateMainMenu extends InventoryBuilder {
 
             if (!item.hasItemMeta()) return;
 
-            Crate crate = this.plugin.getCrateManager().getCrateFromName(ItemUtils.getKey(item.getItemMeta()));
+            /*Crate crate = this.plugin.getCrateManager().getCrateFromName(ItemUtils.getKey(item.getItemMeta()));
 
             if (crate == null) return;
 
@@ -243,7 +240,7 @@ public class CrateMainMenu extends InventoryBuilder {
                 return;
             }
 
-            this.crateManager.openCrate(player, crate, keyType, player.getLocation(), true, false);
+            this.crateManager.openCrate(player, crate, keyType, player.getLocation(), true, false);*/
         }
     }
 }

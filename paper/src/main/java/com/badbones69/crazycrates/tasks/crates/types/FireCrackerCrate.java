@@ -28,7 +28,7 @@ public class FireCrackerCrate extends CrateBuilder {
     @Override
     public void open(KeyType type, boolean checkHand) {
         // Crate event failed so we return.
-        if (isCrateEventValid(type, checkHand)) {
+        /*if (isCrateEventValid(type, checkHand)) {
             return;
         }
 
@@ -72,7 +72,7 @@ public class FireCrackerCrate extends CrateBuilder {
                     quickCrate.open(KeyType.free_key, false);
                 }
             }
-        }.runTaskTimer(this.plugin, 0, 2));
+        }.runTaskTimer(this.plugin, 0, 2));*/
     }
 
     @Override
