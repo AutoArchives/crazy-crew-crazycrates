@@ -1,26 +1,25 @@
 package com.badbones69.crazycrates.platform;
 
 import com.badbones69.crazycrates.CrazyCratesPaper;
-import com.badbones69.crazycrates.tasks.BukkitUserManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.platform.Server;
+import us.crazycrew.crazycrates.platform.config.ConfigManager;
+import us.crazycrew.crazycrates.platform.config.impl.ConfigKeys;
 import us.crazycrew.crazycrates.platform.keys.KeyManager;
 import java.io.File;
 import java.util.logging.Logger;
 
-public class PaperServer implements Server {
+public class PaperServer extends Server {
 
     private final @NotNull CrazyCratesPaper plugin = JavaPlugin.getPlugin(CrazyCratesPaper.class);
 
     private final KeyManager keyManager;
-    private final BukkitUserManager userManager;
-    private final File keyFolder;
     private final File crateFolder;
-
+    private final File keyFolder;
     private final File folder;
 
-    public PaperServer(BukkitUserManager userManager) {
+    public PaperServer() {
         this.folder = this.plugin.getDataFolder();
 
         this.keyFolder = new File(this.folder, "keys");
@@ -29,9 +28,7 @@ public class PaperServer implements Server {
         this.crateFolder = new File(this.folder, "crates");
         this.crateFolder.mkdirs();
 
-        this.keyManager = new KeyManager(this);
-
-        this.userManager = userManager;
+        this.keyManager = new KeyManager();
     }
 
     @Override
@@ -40,12 +37,22 @@ public class PaperServer implements Server {
     }
 
     @Override
+    public @NotNull Logger getLogger() {
+        return this.plugin.getLogger();
+    }
+
+    @Override
+    public boolean isLogging() {
+        return ConfigManager.getConfig().getProperty(ConfigKeys.verbose_logging);
+    }
+
+    @Override
     public @NotNull File getKeyFolder() {
         return this.keyFolder;
     }
 
     @Override
-    public File getCrateFolder() {
+    public @NotNull File getCrateFolder() {
         return this.crateFolder;
     }
 
@@ -55,22 +62,12 @@ public class PaperServer implements Server {
     }
 
     @Override
-    public File[] getCrateFiles() {
+    public @NotNull File[] getCrateFiles() {
         return this.crateFolder.listFiles((dir, name) -> name.endsWith(".yml"));
-    }
-
-    @Override
-    public @NotNull Logger getLogger() {
-        return this.plugin.getLogger();
     }
 
     @Override
     public @NotNull KeyManager getKeyManager() {
         return this.keyManager;
-    }
-
-    @Override
-    public @NotNull BukkitUserManager getUserManager() {
-        return this.userManager;
     }
 }

@@ -1,26 +1,51 @@
 package us.crazycrew.crazycrates.platform;
 
-import us.crazycrew.crazycrates.api.users.UserManager;
+import com.ryderbelserion.cluster.utils.FileUtils;
+import us.crazycrew.crazycrates.CrazyCratesProvider;
+import us.crazycrew.crazycrates.platform.config.ConfigManager;
 import us.crazycrew.crazycrates.platform.keys.KeyManager;
 import java.io.File;
+import java.util.List;
 import java.util.logging.Logger;
 
-public interface Server {
+public abstract class Server {
 
-    File getFolder();
+    public Server() {
+        CrazyCratesProvider.register(this);
+    }
 
-    File getKeyFolder();
+    public void enable() {
+        List.of(
+                "CrateExample.yml",
+                "WarCrateExample.yml",
+                "QuickCrateExample.yml",
+                "QuadCrateExample.yml"
+        ).forEach(line -> FileUtils.copyFile(getCrateFolder().toPath(), "crates", line));
+    }
 
-    File[] getKeyFiles();
+    public void reload() {
+        ConfigManager.reload();
+    }
 
-    File getCrateFolder();
+    public void disable() {
+        ConfigManager.save();
 
-    File[] getCrateFiles();
+        CrazyCratesProvider.unregister();
+    }
 
-    Logger getLogger();
+    public abstract Logger getLogger();
 
-    KeyManager getKeyManager();
+    public abstract boolean isLogging();
 
-    UserManager getUserManager();
+    public abstract File getFolder();
 
+    public abstract File getKeyFolder();
+
+    public abstract File getCrateFolder();
+
+    public abstract File[] getKeyFiles();
+
+    public abstract File[] getCrateFiles();
+
+    public abstract KeyManager getKeyManager();
 }

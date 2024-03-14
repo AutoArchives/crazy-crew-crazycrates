@@ -1,8 +1,9 @@
 package us.crazycrew.crazycrates.platform.keys;
 
 import com.ryderbelserion.cluster.utils.FileUtils;
+import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.platform.Server;
-import us.crazycrew.crazycrates.platform.keys.KeyConfig;
+import us.crazycrew.crazycrates.CrazyCratesProvider;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
@@ -14,25 +15,21 @@ import java.util.logging.Logger;
 
 public class KeyManager {
 
-    private final Server server;
+    private final @NotNull Server instance = CrazyCratesProvider.get();
 
-    private final Logger logger;
+    private final @NotNull Logger logger = this.instance.getLogger();
 
-    public KeyManager(Server server) {
-        this.server = server;
-
-        this.logger = this.server.getLogger();
-
+    public KeyManager() {
         List.of(
                 "CasinoKey.yml",
                 "DiamondKey.yml"
-        ).forEach(key -> FileUtils.copyFile(server.getKeyFolder().toPath(), "keys", key));
+        ).forEach(key -> FileUtils.copyFile(this.instance.getKeyFolder().toPath(), "keys", key));
     }
 
     private final Map<String, KeyConfig> keys = new ConcurrentHashMap<>();
 
     public void loadKeys() {
-        File[] files = this.server.getKeyFiles();
+        File[] files = this.instance.getKeyFiles();
 
         if (files == null) {
             return;
@@ -54,7 +51,7 @@ public class KeyManager {
     }
 
     public void reloadKeys() {
-        File[] files = this.server.getKeyFiles();
+        File[] files = this.instance.getKeyFiles();
 
         if (files == null) {
             return;
@@ -67,7 +64,7 @@ public class KeyManager {
         for (Map.Entry<String, KeyConfig> key : this.keys.entrySet()) {
             String fileName = key.getKey().replace(".yml", "");
 
-            File file = new File(this.server.getKeyFolder(), fileName);
+            File file = new File(this.instance.getKeyFolder(), fileName);
 
             if (file.exists()) {
                 try {

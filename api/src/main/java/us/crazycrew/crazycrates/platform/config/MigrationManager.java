@@ -3,9 +3,11 @@ package us.crazycrew.crazycrates.platform.config;
 import ch.jalu.configme.SettingsManager;
 import ch.jalu.configme.SettingsManagerBuilder;
 import ch.jalu.configme.resource.YamlFileResourceOptions;
+import org.jetbrains.annotations.NotNull;
 import org.simpleyaml.configuration.ConfigurationSection;
 import org.simpleyaml.configuration.file.YamlConfiguration;
 import us.crazycrew.crazycrates.platform.Server;
+import us.crazycrew.crazycrates.CrazyCratesProvider;
 import us.crazycrew.crazycrates.platform.config.impl.ConfigKeys;
 import us.crazycrew.crazycrates.platform.config.impl.messages.CommandKeys;
 import us.crazycrew.crazycrates.platform.config.impl.messages.CrateKeys;
@@ -22,18 +24,20 @@ import java.util.logging.Logger;
 
 public class MigrationManager {
 
-    public static void migrate(Server server) {
-        File directory = new File(server.getFolder(), "backups");
+    private static final @NotNull Server instance = CrazyCratesProvider.get();
+
+    public static void migrate() {
+        File directory = new File(instance.getFolder(), "backups");
         directory.mkdirs();
 
         // Update the config file.
-        copyConfig(directory, server.getFolder(), server.getLogger());
+        copyConfig(directory, instance.getFolder(), instance.getLogger());
 
         // Update the messages file.
-        copyMessages(directory, server.getFolder(), server.getLogger());
+        copyMessages(directory, instance.getFolder(), instance.getLogger());
 
         // Grab values from the plugin-config.yml if it even exists.
-        copyPluginConfig(server.getFolder(), server.getLogger());
+        copyPluginConfig(instance.getFolder(), instance.getLogger());
     }
 
     private static void copyPluginConfig(File folder, Logger logger) {

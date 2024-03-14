@@ -3,6 +3,9 @@ package us.crazycrew.crazycrates.platform.config;
 import ch.jalu.configme.SettingsManager;
 import ch.jalu.configme.SettingsManagerBuilder;
 import ch.jalu.configme.resource.YamlFileResourceOptions;
+import org.jetbrains.annotations.NotNull;
+import us.crazycrew.crazycrates.platform.Server;
+import us.crazycrew.crazycrates.CrazyCratesProvider;
 import us.crazycrew.crazycrates.platform.config.impl.ConfigKeys;
 import us.crazycrew.crazycrates.platform.config.impl.messages.CommandKeys;
 import us.crazycrew.crazycrates.platform.config.impl.messages.CrateKeys;
@@ -13,19 +16,21 @@ import java.io.File;
 
 public class ConfigManager {
 
+    private static final @NotNull Server instance = CrazyCratesProvider.get();
+
     private static SettingsManager config;
 
     private static SettingsManager messages;
 
-    public static void load(File dataFolder) {
+    public static void load() {
         config = SettingsManagerBuilder
-                .withYamlFile(new File(dataFolder, "config.yml"), getBuilder())
+                .withYamlFile(new File(instance.getFolder(), "config.yml"), getBuilder())
                 .useDefaultMigrationService()
                 .configurationData(ConfigKeys.class)
                 .create();
 
         messages = SettingsManagerBuilder
-                .withYamlFile(new File(dataFolder, "messages.yml"), getBuilder())
+                .withYamlFile(new File(instance.getFolder(), "messages.yml"), getBuilder())
                 .useDefaultMigrationService()
                 .configurationData(MiscKeys.class, ErrorKeys.class, PlayerKeys.class, CrateKeys.class, CommandKeys.class)
                 .create();
