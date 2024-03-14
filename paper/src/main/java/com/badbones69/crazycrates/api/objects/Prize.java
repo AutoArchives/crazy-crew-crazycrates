@@ -1,326 +1,167 @@
 package com.badbones69.crazycrates.api.objects;
 
-import com.badbones69.crazycrates.api.enums.PersistentKeys;
 import com.badbones69.crazycrates.api.builders.ItemBuilder;
-import com.badbones69.crazycrates.api.utils.MiscUtils;
+import com.badbones69.crazycrates.api.enums.PersistentKeys;
+import com.ryderbelserion.cluster.utils.ItemUtils;
 import org.apache.commons.lang.WordUtils;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.Registry;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.trim.TrimMaterial;
 import org.bukkit.inventory.meta.trim.TrimPattern;
-import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import java.util.ArrayList;
+import org.simpleyaml.configuration.ConfigurationSection;
 import java.util.Collections;
 import java.util.List;
 
 public class Prize {
 
-    private final List<ItemStack> items = new ArrayList<>();
-
-    private List<String> permissions = new ArrayList<>();
-    private ItemBuilder displayItem = new ItemBuilder();
-    private final List<String> commands;
-    private final List<String> messages;
-    private boolean firework = false;
-    private String crateName = "";
-    private final String prizeName;
-    private int maxRange = 100;
-    private final String prizeNumber;
-    private int chance = 0;
-
-    private List<Tier> tiers = new ArrayList<>();
-    private final List<ItemBuilder> builders;
-    private Prize alternativePrize;
-
     private final ConfigurationSection section;
 
-    public Prize(ConfigurationSection section, List<Tier> tierPrizes, String crateName, Prize alternativePrize) {
+
+    private final ItemBuilder displayItem;
+
+    private final List<String> commands;
+    private final List<String> messages;
+
+    private final String prizeNumber;
+
+    private final boolean isFirework;
+
+    private final int maxRange;
+    private final int chance;
+
+    /**
+     * Builds a prize object.
+     *
+     * @param section the config section of the prize.
+     */
+    public Prize(ConfigurationSection section) {
         this.section = section;
 
-        this.prizeNumber = section.getName();
+        this.prizeNumber = this.section.getName();
 
-        this.crateName = crateName;
+        this.commands = section.getStringList("Commands") == null ? Collections.emptyList() : section.getStringList("Commands");
+        this.messages = section.getStringList("Messages") == null ? Collections.emptyList() : section.getStringList("Messages");
 
-        List<?> list = section.getList("Editor-Items");
+        this.isFirework = section.getBoolean("Firework", false);
 
-        if (list != null) {
-            for (Object key : list) {
-                this.items.add((ItemStack) key);
+        this.maxRange = section.getInt("MaxRange", 100);
+        this.chance = section.getInt("Chance", 25);
+
+        this.displayItem = new ItemBuilder()
+                .setMaterial(this.section.getString("DisplayItem", "RED_TERRACOTTA"))
+                .setName(this.section.getString("DisplayName", WordUtils.capitalizeFully(section.getString("DisplayItem", "RED_TERRACOTTA").replaceAll("_", " "))))
+                .setLore(section.getStringList("Lore") == null ? Collections.emptyList() : section.getStringList("Lore"))
+                .setGlow(section.getBoolean("Glowing", false))
+                .setUnbreakable(section.getBoolean("Unbreakable", false))
+                .hideItemFlags(section.getBoolean("HideItemFlags", false))
+                .addItemFlags(section.getStringList("Flags") == null ? Collections.emptyList() : section.getStringList("Flags"))
+                .addPatterns(section.getStringList("Patterns") == null ? Collections.emptyList() : section.getStringList("Patterns"))
+                .setPlayerName(section.getString("Player", " "))
+                .setDamage(section.getInt("DisplayDamage", 0));
+
+        if (this.section.contains("DisplayTrim.Pattern")) {
+            TrimPattern pattern = ItemUtils.getTrimPattern(this.section.getString("DisplayTrim.Pattern", "SENTRY"));
+
+            if (pattern != null) {
+                this.displayItem.setTrimPattern(pattern);
             }
         }
 
-        this.builders = ItemBuilder.convertStringList(this.section.getStringList("Items"), this.prizeNumber);
+        if (this.section.contains("DisplayTrim.Material")) {
+            TrimMaterial material = ItemUtils.getTrimMaterial(this.section.getString("DisplayTrim.Material", "QUARTZ"));
 
-        this.tiers = tierPrizes;
-
-        this.alternativePrize = alternativePrize;
-
-        this.prizeName = section.getString("DisplayName", WordUtils.capitalizeFully(section.getString("DisplayItem", "STONE").replaceAll("_", " ")));
-        this.maxRange = section.getInt("MaxRange", 100);
-        this.chance = section.getInt("Chance", 50);
-        this.firework = section.getBoolean("Firework", false);
-
-        this.messages = section.contains("Messages") ? section.getStringList("Messages") : Collections.emptyList();
-        this.commands = section.contains("Commands") ? section.getStringList("Commands") : Collections.emptyList();
-
-        this.permissions = section.contains("BlackListed-Permissions") ? section.getStringList("BlackListed-Permissions") : Collections.emptyList();
-
-        if (!this.permissions.isEmpty()) {
-            this.permissions.replaceAll(String::toLowerCase);
+            if (material != null) {
+                this.displayItem.setTrimMaterial(material);
+            }
         }
 
-        this.displayItem = display();
+        if (this.section.contains("DisplayEnchantments")) {
+            for (String enchant : this.section.getStringList("DisplayEnchantments")) {
+                Enchantment enchantment = ItemUtils.getEnchantment(enchant.split(":")[0]);
+
+                if (enchantment != null) {
+                    this.displayItem.addEnchantment(enchantment, Integer.parseInt(enchant.split(":")[1]));
+                }
+            }
+        }
+
+        ItemMeta itemMeta = this.displayItem.getItemMeta();
+        itemMeta.getPersistentDataContainer().set(PersistentKeys.crate_prize.getNamespacedKey(), PersistentDataType.STRING, this.section.getName());
+        this.displayItem.setItemMeta(itemMeta);
     }
 
     /**
-     * Create a new prize.
-     * This option is used only for Alternative Prizes.
+     * @return the configuration section of the prize.
+     */
+    public ConfigurationSection getSection() {
+        return this.section;
+    }
+
+    /**
+     * Gets the name of the section which can be "fuckyou" or "1"
      *
-     * @param section the configuration section.
-     */
-    public Prize(String prizeName, String prizeNumber, ConfigurationSection section) {
-        this.prizeName = prizeName;
-
-        this.builders = ItemBuilder.convertStringList(section.getStringList("Items"), prizeNumber);
-
-        this.messages = section.getStringList("Messages");
-        this.commands = section.getStringList("Commands");
-
-        this.prizeNumber = prizeNumber;
-
-        this.section = section;
-    }
-    
-    /**
-     * @return the name of the prize.
-     */
-    public String getPrizeName() {
-        return this.prizeName;
-    }
-
-    /**
-     * @return the prize number.
+     * @return the name of the section.
      */
     public String getPrizeNumber() {
         return this.prizeNumber;
     }
 
     /**
-     * @return the display item that is shown for the preview and the winning prize.
-     */
-    public ItemStack getDisplayItem() {
-        ItemStack itemStack = this.displayItem.build();
-
-        itemStack.editMeta(itemMeta -> itemMeta.getPersistentDataContainer().set(PersistentKeys.crate_prize.getNamespacedKey(), PersistentDataType.STRING, this.prizeName));
-
-        return itemStack;
-    }
-
-    /**
-     * @return the display item that is shown for the preview and the winning prize.
-     */
-    public ItemStack getDisplayItem(Player player) {
-        ItemStack itemStack = this.displayItem.setTarget(player).build();
-
-        itemStack.editMeta(itemMeta -> itemMeta.getPersistentDataContainer().set(PersistentKeys.crate_prize.getNamespacedKey(), PersistentDataType.STRING, this.prizeName));
-
-        return itemStack;
-    }
-
-    /**
-     * @return the ItemBuilder of the display item.
-     */
-    public ItemBuilder getDisplayItemBuilder() {
-        return this.displayItem;
-    }
-    
-    /**
-     * @return the list of tiers the prize is in.
-     */
-    public List<Tier> getTiers() {
-        return this.tiers;
-    }
-    
-    /**
-     * @return the messages sent to the player.
-     */
-    public List<String> getMessages() {
-        return this.messages;
-    }
-    
-    /**
-     * @return the commands that are run when the player wins.
+     * @return A list of commands to execute.
      */
     public List<String> getCommands() {
-        return this.commands;
+        return commands;
     }
-    
+
     /**
-     * @return the Editor ItemStacks that are given to the player that wins.
+     * @return A list of messages to send.
      */
-    public List<ItemStack> getItems() {
-        return this.items;
+    public List<String> getMessages() {
+        return messages;
     }
-    
+
     /**
-     * @return the ItemBuilders for all the custom items made from the Items: option.
+     * Whether to spawn a firework
+     *
+     * @return true or false
      */
-    public List<ItemBuilder> getItemBuilders() {
-        return this.builders;
+    public boolean isFirework() {
+        return isFirework;
     }
-    
+
     /**
-     * @return the name of the crate the prize is in.
-     */
-    public String getCrateName() {
-        return this.crateName;
-    }
-    
-    /**
-     * @return the chance the prize has of being picked.
-     */
-    public int getChance() {
-        return this.chance;
-    }
-    
-    /**
-     * @return the max range of the prize.
+     * @return the max range of the chance.
      */
     public int getMaxRange() {
-        return this.maxRange;
+        return maxRange;
     }
-    
+
     /**
-     * @return true if a firework explosion is played and false if not.
+     * @return the chance the prize can be won.
      */
-    public boolean useFireworks() {
-        return this.firework;
+    public int getChance() {
+        return chance;
     }
-    
+
     /**
-     * @return the alternative prize the player wins if they have a blacklist permission.
+     * Build an itemstack with no PlaceholderAPI support.
+     *
+     * @return an itemstack.
      */
-    public Prize getAlternativePrize() {
-        return this.alternativePrize;
+    public ItemStack getDisplayItem() {
+        return this.displayItem.build();
     }
-    
+
     /**
-     * @return true if the prize doesn't have an alternative prize and false if it does.
+     * Build an itemstack with PlaceholderAPI Support.
+     *
+     * @param player the player to use as reference.
+     * @return an itemstack.
      */
-    public boolean hasAlternativePrize() {
-        return this.alternativePrize == null;
-    }
-    
-    /**
-     * @return true if they prize has blacklist permissions and false if not.
-     */
-    public boolean hasPermission(Player player) {
-        if (player.isOp()) {
-            return false;
-        }
-
-        for (String permission : this.permissions) {
-            if (player.hasPermission(permission)) return true;
-        }
-
-        return false;
-    }
-
-    private ItemBuilder display() {
-        ItemBuilder builder = new ItemBuilder();
-
-        try {
-            String material = this.section.getString("DisplayItem", "RED_TERRACOTTA");
-
-            int amount = this.section.getInt("DisplayAmount", 1);
-            List<String> lore = this.section.getStringList("Lore");
-            boolean isGlowing = this.section.getBoolean("Glowing", false);
-            boolean isUnbreakable = this.section.getBoolean("Unbreakable", false);
-            boolean hideItemFlags = this.section.getBoolean("HideItemFlags", false);
-            List<String> itemFlags = this.section.getStringList("Flags");
-            List<String> patterns = this.section.getStringList("Patterns");
-            String playerName = this.section.getString("Player", "");
-
-            builder.setMaterial(material)
-                    .setAmount(amount)
-                    .setName(this.prizeName)
-                    .setLore(lore)
-                    .setGlow(isGlowing)
-                    .setUnbreakable(isUnbreakable)
-                    .hideItemFlags(hideItemFlags)
-                    .addItemFlags(itemFlags)
-                    .addPatterns(patterns)
-                    .setPlayerName(playerName);
-
-            NamespacedKey cratePrize = PersistentKeys.crate_prize.getNamespacedKey();
-
-            ItemMeta itemMeta = builder.getItemMeta();
-
-            itemMeta.getPersistentDataContainer().set(cratePrize, PersistentDataType.STRING, this.section.getName());
-
-            builder.setItemMeta(itemMeta);
-
-            int displayDamage = this.section.getInt("DisplayDamage", 0);
-
-            builder.setDamage(displayDamage);
-
-            if (this.section.contains("DisplayTrim.Pattern")) {
-                NamespacedKey key = null;
-
-                String trimPattern = this.section.getString("DisplayTrim.Pattern");
-
-                if (trimPattern != null) {
-                    key = NamespacedKey.minecraft(trimPattern.toLowerCase());
-                }
-
-                if (key != null) {
-                    TrimPattern registry = Registry.TRIM_PATTERN.get(key);
-                    builder.setTrimPattern(registry);
-                }
-            }
-
-            if (this.section.contains("DisplayTrim.Material")) {
-                NamespacedKey key = null;
-
-                String trimMaterial = this.section.getString("DisplayTrim.Material");
-
-                if (trimMaterial != null) {
-                    key = NamespacedKey.minecraft(trimMaterial.toLowerCase());
-                }
-
-                if (key != null) {
-                    TrimMaterial registry = Registry.TRIM_MATERIAL.get(key);
-                    builder.setTrimMaterial(registry);
-                }
-            }
-
-            if (this.section.contains("DisplayEnchantments")) {
-                for (String name : this.section.getStringList("DisplayEnchantments")) {
-                    Enchantment enchantment = MiscUtils.getEnchantment(name.split(":")[0]);
-
-                    if (enchantment != null) {
-                        builder.addEnchantments(enchantment, Integer.parseInt(name.split(":")[1]));
-                    }
-                }
-            }
-
-            return builder;
-        } catch (Exception exception) {
-            List<String> list = new ArrayList<>() {{
-               add("&cThere was an error with one of your prizes!");
-               add("&cThe reward in question is labeled: &e" + section.getName() + " &cin crate: &e" + crateName);
-               add("&cName of the reward is " + section.getString("DisplayName"));
-               add("&cIf you are confused, Stop by our discord for support!");
-            }};
-
-            return new ItemBuilder(new ItemStack(Material.RED_TERRACOTTA)).setName("&c&lERROR").setLore(list);
-        }
+    public ItemStack getDisplayItem(Player player) {
+        return this.displayItem.setTarget(player).build();
     }
 }

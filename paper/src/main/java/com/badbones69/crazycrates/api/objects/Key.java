@@ -1,4 +1,4 @@
-package com.badbones69.crazycrates.api.objects.v2;
+package com.badbones69.crazycrates.api.objects;
 
 import com.badbones69.crazycrates.api.builders.ItemBuilder;
 import com.ryderbelserion.cluster.utils.ItemUtils;
