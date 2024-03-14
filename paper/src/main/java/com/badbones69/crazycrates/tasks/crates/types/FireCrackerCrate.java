@@ -1,25 +1,12 @@
 package com.badbones69.crazycrates.tasks.crates.types;
 
 import com.badbones69.crazycrates.api.objects.Crate;
-import com.badbones69.crazycrates.tasks.BukkitUserManager;
-import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
-import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.api.enums.types.KeyType;
 import com.badbones69.crazycrates.api.builders.CrateBuilder;
-import com.badbones69.crazycrates.api.utils.MiscUtils;
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class FireCrackerCrate extends CrateBuilder {
-
-    private final @NotNull BukkitCrateManager crateManager = this.plugin.getCrateManager();
-
-    private final @NotNull BukkitUserManager userManager = this.plugin.getUserManager();
 
     public FireCrackerCrate(Crate crate, Player player, int size, Location location) {
         super(crate, player, size, location);

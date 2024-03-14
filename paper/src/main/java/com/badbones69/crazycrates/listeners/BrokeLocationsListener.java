@@ -1,29 +1,20 @@
 package com.badbones69.crazycrates.listeners;
 
 import com.badbones69.crazycrates.CrazyCratesPaper;
-import com.badbones69.crazycrates.api.objects.other.BrokeLocation;
-import com.badbones69.crazycrates.api.objects.other.CrateLocation;
-import com.badbones69.crazycrates.api.utils.MiscUtils;
-import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.WorldLoadEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
-import java.util.ArrayList;
-import java.util.List;
 
 // Only use for this class is to check if for broken locations and to try and fix them when the server loads the world.
 public class BrokeLocationsListener implements Listener {
 
     private final @NotNull CrazyCratesPaper plugin = JavaPlugin.getPlugin(CrazyCratesPaper.class);
-
-    private final @NotNull BukkitCrateManager crateManager = this.plugin.getCrateManager();
     
     @EventHandler
     public void onWorldLoad(WorldLoadEvent event) {
-        if (this.crateManager.getBrokeLocations().isEmpty()) return;
+        /*if (this.crateManager.getBrokeLocations().isEmpty()) return;
 
         int fixedAmount = 0;
         List<BrokeLocation> fixedWorlds = new ArrayList<>();
@@ -49,6 +40,6 @@ public class BrokeLocationsListener implements Listener {
             this.plugin.getLogger().warning("Fixed " + fixedAmount + " broken crate locations.");
 
             if (this.crateManager.getBrokeLocations().isEmpty()) this.plugin.getLogger().warning("All broken crate locations have been fixed.");
-        }
+        }*/
     }
 }

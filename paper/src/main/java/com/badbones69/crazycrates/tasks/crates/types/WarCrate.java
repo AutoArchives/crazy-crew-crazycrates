@@ -2,14 +2,9 @@ package com.badbones69.crazycrates.tasks.crates.types;
 
 import com.badbones69.crazycrates.api.builders.ItemBuilder;
 import com.badbones69.crazycrates.api.objects.Crate;
-import com.badbones69.crazycrates.tasks.BukkitUserManager;
-import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
 import org.bukkit.Material;
-import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.api.enums.types.KeyType;
 import com.badbones69.crazycrates.api.builders.CrateBuilder;
 import com.badbones69.crazycrates.api.builders.types.CratePrizeMenu;
@@ -18,10 +13,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class WarCrate extends CrateBuilder {
-
-    private final @NotNull BukkitCrateManager crateManager = this.plugin.getCrateManager();
-
-    private final @NotNull BukkitUserManager userManager = this.plugin.getUserManager();
 
     private final Map<ItemStack, String> colorCodes = new HashMap<>();
 
@@ -85,7 +76,7 @@ public class WarCrate extends CrateBuilder {
     }
 
     private void setRandomPrizes() {
-        if (!this.crateManager.isInOpeningList(getPlayer()) && !(getInventory().getHolder(false) instanceof CratePrizeMenu)) return;
+        //if (!this.crateManager.isInOpeningList(getPlayer()) && !(getInventory().getHolder(false) instanceof CratePrizeMenu)) return;
 
         for (int index = 0; index < 9; index++) {
             //setItem(index, getCrate().pickPrize(getPlayer()).getDisplayItem(getPlayer()));
@@ -93,7 +84,7 @@ public class WarCrate extends CrateBuilder {
     }
 
     private void setRandomGlass() {
-        if (!this.crateManager.isInOpeningList(getPlayer()) && !(getInventory().getHolder(false) instanceof CratePrizeMenu)) return;
+        //if (!this.crateManager.isInOpeningList(getPlayer()) && !(getInventory().getHolder(false) instanceof CratePrizeMenu)) return;
 
         if (this.colorCodes.isEmpty()) getColorCode();
 

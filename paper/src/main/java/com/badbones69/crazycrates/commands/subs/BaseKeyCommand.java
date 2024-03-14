@@ -3,7 +3,6 @@ package com.badbones69.crazycrates.commands.subs;
 import com.badbones69.crazycrates.CrazyCratesPaper;
 import com.badbones69.crazycrates.api.objects.Crate;
 import com.badbones69.crazycrates.api.utils.MiscUtils;
-import com.badbones69.crazycrates.tasks.BukkitUserManager;
 import com.google.common.collect.Lists;
 import dev.triumphteam.cmd.bukkit.annotation.Permission;
 import dev.triumphteam.cmd.core.BaseCommand;
@@ -24,14 +23,12 @@ public class BaseKeyCommand extends BaseCommand {
 
     private final @NotNull CrazyCratesPaper plugin = JavaPlugin.getPlugin(CrazyCratesPaper.class);
 
-    private final @NotNull BukkitUserManager userManager = this.plugin.getUserManager();
-
     @Default
     @Permission("crazycrates.command.player.key")
     public void viewPersonal(Player player) {
         Map<String, String> placeholders = new HashMap<>();
 
-        placeholders.put("{crates_opened}", String.valueOf(this.userManager.getTotalCratesOpened(player.getUniqueId())));
+        //placeholders.put("{crates_opened}", String.valueOf(this.userManager.getTotalCratesOpened(player.getUniqueId())));
 
         getKeys(player, player, Messages.virtual_keys_header.getMessage(placeholders, player), Messages.no_virtual_keys.getMessage(player));
     }
@@ -48,7 +45,7 @@ public class BaseKeyCommand extends BaseCommand {
         Map<String, String> placeholders = new HashMap<>();
 
         placeholders.put("{player}", target.getName());
-        placeholders.put("{crates_opened}", String.valueOf(this.userManager.getTotalCratesOpened(target.getUniqueId())));
+        //placeholders.put("{crates_opened}", String.valueOf(this.userManager.getTotalCratesOpened(target.getUniqueId())));
 
         String header = Messages.other_player_no_keys_header.getMessage(placeholders, sender instanceof Player ? (Player) sender : null);
 

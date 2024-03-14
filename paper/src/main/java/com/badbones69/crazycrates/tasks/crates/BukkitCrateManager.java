@@ -16,7 +16,6 @@ import com.badbones69.crazycrates.api.utils.MiscUtils;
 import com.badbones69.crazycrates.tasks.crates.types.*;
 import com.badbones69.crazycrates.tasks.crates.types.CasinoCrate;
 import com.badbones69.crazycrates.tasks.crates.types.CsgoCrate;
-import org.apache.commons.lang.WordUtils;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -305,7 +304,8 @@ public class BukkitCrateManager {
                     int y = locations.getInt("Locations." + locationName + ".Y");
                     int z = locations.getInt("Locations." + locationName + ".Z");
                     Location location = new Location(world, x, y, z);
-                    Crate crate = this.plugin.getCrateManager().getCrateFromName(locations.getString("Locations." + locationName + ".Crate"));
+
+                    /*Crate crate = this.plugin.getCrateManager().getCrateFromName(locations.getString("Locations." + locationName + ".Crate"));
 
                     if (world != null && crate != null) {
                         this.crateLocations.add(new CrateLocation(locationName, crate, location));
@@ -318,7 +318,7 @@ public class BukkitCrateManager {
                     } else {
                         this.brokeLocations.add(new BrokeLocation(locationName, crate, x, y, z, worldName));
                         brokeAmount++;
-                    }
+                    }*/
 
                 } catch (Exception ignored) {}
             }
@@ -1267,9 +1267,9 @@ public class BukkitCrateManager {
         removePlayerFromOpeningList(player);
 
         if (!useQuickCrateAgain) {
-            HologramManager handler = this.plugin.getCrateManager().getHolograms();
+            //HologramManager handler = this.plugin.getCrateManager().getHolograms();
 
-            if (handler != null && crate != null) handler.createHologram(location.getBlock(), crate);
+            //if (handler != null && crate != null) handler.createHologram(location.getBlock(), crate);
         }
     }
 

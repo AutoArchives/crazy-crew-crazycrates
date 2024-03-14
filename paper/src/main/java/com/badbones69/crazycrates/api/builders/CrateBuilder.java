@@ -164,14 +164,14 @@ public abstract class CrateBuilder extends BukkitRunnable {
      * @param task task to add.
      */
     public void addCrateTask(BukkitTask task) {
-        this.plugin.getCrateManager().addCrateTask(this.player, task);
+        //this.plugin.getCrateManager().addCrateTask(this.player, task);
     }
 
     /**
      * Remove crate task.
      */
     public void removeTask() {
-        this.plugin.getCrateManager().removeCrateTask(this.player);
+        //this.plugin.getCrateManager().removeCrateTask(this.player);
     }
 
     /**
@@ -179,7 +179,7 @@ public abstract class CrateBuilder extends BukkitRunnable {
      */
     public void cancelCrateTask() {
         // Cancel
-        this.plugin.getCrateManager().getCrateTask(this.player).cancel();
+        //this.plugin.getCrateManager().getCrateTask(this.player).cancel();
 
         // Remove the task.
         removeTask();
@@ -189,7 +189,8 @@ public abstract class CrateBuilder extends BukkitRunnable {
      * @return true or false.
      */
     public boolean hasCrateTask() {
-        return this.plugin.getCrateManager().hasCrateTask(this.player);
+        return true;
+        //return this.plugin.getCrateManager().hasCrateTask(this.player);
     }
 
     /**

@@ -1,21 +1,11 @@
 package com.badbones69.crazycrates.tasks.crates.types;
 
-import com.badbones69.crazycrates.api.PrizeManager;
-import com.badbones69.crazycrates.api.enums.PersistentKeys;
 import com.badbones69.crazycrates.api.objects.Crate;
-import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
-import com.badbones69.crazycrates.tasks.crates.other.CosmicCrateManager;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataType;
-import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.api.enums.types.KeyType;
 import com.badbones69.crazycrates.api.builders.CrateBuilder;
 
 public class CosmicCrate extends CrateBuilder {
-
-    private final @NotNull BukkitCrateManager crateManager = this.plugin.getCrateManager();
 
     public CosmicCrate(Crate crate, Player player, int size) {
         super(crate, player, size, crate.getSection().getString("Crate.CrateName") + " - Choose");

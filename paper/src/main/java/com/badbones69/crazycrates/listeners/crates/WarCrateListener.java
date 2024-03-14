@@ -1,30 +1,19 @@
 package com.badbones69.crazycrates.listeners.crates;
 
 import com.badbones69.crazycrates.CrazyCratesPaper;
-import com.badbones69.crazycrates.api.events.PlayerPrizeEvent;
-import com.badbones69.crazycrates.api.PrizeManager;
-import org.bukkit.Material;
-import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
-import us.crazycrew.crazycrates.api.enums.types.CrateType;
 import com.badbones69.crazycrates.api.builders.types.CratePrizeMenu;
-import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
-import com.badbones69.crazycrates.api.utils.MiscUtils;
 
 public class WarCrateListener implements Listener {
 
     private final @NotNull CrazyCratesPaper plugin = JavaPlugin.getPlugin(CrazyCratesPaper.class);
-
-    private final @NotNull BukkitCrateManager crateManager = this.plugin.getCrateManager();
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {

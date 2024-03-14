@@ -1,32 +1,15 @@
 package com.badbones69.crazycrates.listeners.crates;
 
 import com.badbones69.crazycrates.CrazyCratesPaper;
-import com.badbones69.crazycrates.api.PrizeManager;
-import com.badbones69.crazycrates.api.enums.PersistentKeys;
-import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
-import com.badbones69.crazycrates.api.events.PlayerPrizeEvent;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-import us.crazycrew.crazycrates.api.enums.types.CrateType;
-import com.badbones69.crazycrates.api.utils.ItemUtils;
-import com.badbones69.crazycrates.api.utils.MiscUtils;
 
 public class MobileCrateListener implements Listener {
 
     private final @NotNull CrazyCratesPaper plugin = JavaPlugin.getPlugin(CrazyCratesPaper.class);
-
-    private final @NotNull BukkitCrateManager crateManager = this.plugin.getCrateManager();
 
     @EventHandler
     public void onCrateUse(PlayerInteractEvent event) {

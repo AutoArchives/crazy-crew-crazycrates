@@ -9,13 +9,10 @@ import us.crazycrew.crazycrates.api.enums.types.KeyType;
 import us.crazycrew.crazycrates.api.crates.quadcrates.CrateSchematic;
 import com.badbones69.crazycrates.api.builders.CrateBuilder;
 import com.badbones69.crazycrates.support.StructureHandler;
-import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
 import com.badbones69.crazycrates.tasks.crates.other.quadcrates.QuadCrateManager;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class QuadCrate extends CrateBuilder {
-
-    private final @NotNull BukkitCrateManager crateManager = this.plugin.getCrateManager();
 
     private final Location location;
 
@@ -32,12 +29,12 @@ public class QuadCrate extends CrateBuilder {
             return;
         }
 
-        CrateSchematic crateSchematic = this.crateManager.getCrateSchematics().get(ThreadLocalRandom.current().nextInt(this.crateManager.getCrateSchematics().size()));
-        StructureHandler handler = new StructureHandler(crateSchematic.getSchematicFile());
-        CrateLocation crateLocation = this.crateManager.getCrateLocation(this.location);
-        QuadCrateManager session = new QuadCrateManager(getPlayer(), getCrate(), type, crateLocation.getLocation(), checkHand, handler);
+        //CrateSchematic crateSchematic = this.crateManager.getCrateSchematics().get(ThreadLocalRandom.current().nextInt(this.crateManager.getCrateSchematics().size()));
+        //StructureHandler handler = new StructureHandler(crateSchematic.getSchematicFile());
+        //CrateLocation crateLocation = this.crateManager.getCrateLocation(this.location);
+        //QuadCrateManager session = new QuadCrateManager(getPlayer(), getCrate(), type, crateLocation.getLocation(), checkHand, handler);
 
-        session.startCrate();
+        //session.startCrate();
     }
 
     @Override

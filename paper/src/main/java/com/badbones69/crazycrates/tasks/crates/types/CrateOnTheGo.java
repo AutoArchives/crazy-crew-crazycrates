@@ -1,20 +1,11 @@
 package com.badbones69.crazycrates.tasks.crates.types;
 
-import com.badbones69.crazycrates.api.PrizeManager;
 import com.badbones69.crazycrates.api.objects.Crate;
-import com.badbones69.crazycrates.tasks.BukkitUserManager;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.api.enums.types.KeyType;
 import com.badbones69.crazycrates.api.builders.CrateBuilder;
-import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
-import com.badbones69.crazycrates.api.utils.MiscUtils;
 
 public class CrateOnTheGo extends CrateBuilder {
-
-    private final @NotNull BukkitCrateManager crateManager = this.plugin.getCrateManager();
-
-    private final @NotNull BukkitUserManager userManager = this.plugin.getUserManager();
 
     public CrateOnTheGo(Crate crate, Player player) {
         super(crate, player);

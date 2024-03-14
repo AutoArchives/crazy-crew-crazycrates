@@ -1,7 +1,6 @@
 package com.badbones69.crazycrates.support.placeholders;
 
 import com.badbones69.crazycrates.CrazyCratesPaper;
-import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.apache.commons.lang3.StringUtils;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
@@ -9,18 +8,12 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-import com.badbones69.crazycrates.tasks.BukkitUserManager;
-import java.text.NumberFormat;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 public class PlaceholderAPISupport extends PlaceholderExpansion {
 
     private final @NotNull CrazyCratesPaper plugin = JavaPlugin.getPlugin(CrazyCratesPaper.class);
-
-    private final @NotNull BukkitUserManager userManager = this.plugin.getUserManager();
-
-    private final @NotNull BukkitCrateManager crateManager = this.plugin.getCrateManager();
 
     @Override
     public String onRequest(OfflinePlayer player, @NotNull String identifier) {
@@ -75,9 +68,9 @@ public class PlaceholderAPISupport extends PlaceholderExpansion {
     }
 
     private String getKeys(UUID uuid, String identifier, String crateName, String value) {
-        if (this.plugin.getCrateManager().getCrateFromName(crateName) == null && identifier.endsWith("opened")) { // %crazycrates_<player>_opened%
-            return NumberFormat.getNumberInstance().format(this.userManager.getTotalCratesOpened(uuid));
-        }
+        //if (this.plugin.getCrateManager().getCrateFromName(crateName) == null && identifier.endsWith("opened")) { // %crazycrates_<player>_opened%
+        //    return NumberFormat.getNumberInstance().format(this.userManager.getTotalCratesOpened(uuid));
+        //}
 
         /*Crate crate = this.plugin.getCrateManager().getCrateFromName(crateName);
 

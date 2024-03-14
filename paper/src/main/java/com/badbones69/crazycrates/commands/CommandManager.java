@@ -1,7 +1,6 @@
 package com.badbones69.crazycrates.commands;
 
 import com.badbones69.crazycrates.CrazyCratesPaper;
-import com.badbones69.crazycrates.api.objects.other.CrateLocation;
 import com.badbones69.crazycrates.api.utils.FileUtils;
 import com.badbones69.crazycrates.commands.relations.ArgumentRelations;
 import com.badbones69.crazycrates.commands.relations.MiscRelations;
@@ -41,12 +40,12 @@ public class CommandManager {
 
         this.bukkitCommandManager.registerSuggestion(SuggestionKey.of("online-players"), (sender, context) -> this.plugin.getServer().getOnlinePlayers().stream().map(Player::getName).toList());
 
-        this.bukkitCommandManager.registerSuggestion(SuggestionKey.of("locations"), (sender, context) -> this.plugin.getCrateManager().getCrateLocations().stream().map(CrateLocation::getID).toList());
+        //this.bukkitCommandManager.registerSuggestion(SuggestionKey.of("locations"), (sender, context) -> this.plugin.getCrateManager().getCrateLocations().stream().map(CrateLocation::getID).toList());
 
         this.bukkitCommandManager.registerSuggestion(SuggestionKey.of("prizes"), (sender, context) -> {
             List<String> numbers = new ArrayList<>();
 
-            this.plugin.getCrateManager().getCrateFromName(context.getArgs().get(0)).getPrizes().forEach(prize -> numbers.add(prize.getPrizeNumber()));
+            //this.plugin.getCrateManager().getCrateFromName(context.getArgs().get(0)).getPrizes().forEach(prize -> numbers.add(prize.getPrizeNumber()));
 
             return numbers;
         });

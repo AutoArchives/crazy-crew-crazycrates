@@ -23,7 +23,7 @@ public class MetricsManager {
 
         this.metrics = new Metrics(this.plugin, 4514);
 
-        this.plugin.getCrateManager().getUsableCrates().forEach(crate -> {
+        /*this.plugin.getCrateManager().getUsableCrates().forEach(crate -> {
             CrateType crateType = crate.getCrateType();
 
             // If the crate type is null. don't add to the pie chart.
@@ -32,7 +32,7 @@ public class MetricsManager {
             SimplePie chart = new SimplePie("crate_types", crateType::getName);
 
             this.metrics.addCustomChart(chart);
-        });
+        });*/
 
         if (MiscUtils.isLogging()) this.plugin.getLogger().fine("Metrics has been enabled.");
     }

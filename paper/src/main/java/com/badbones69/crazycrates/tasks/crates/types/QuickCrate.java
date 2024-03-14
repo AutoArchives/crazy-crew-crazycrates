@@ -1,33 +1,12 @@
 package com.badbones69.crazycrates.tasks.crates.types;
 
-import com.badbones69.crazycrates.api.events.PlayerPrizeEvent;
-import com.badbones69.crazycrates.api.ChestManager;
-import com.badbones69.crazycrates.api.PrizeManager;
 import com.badbones69.crazycrates.api.objects.Crate;
-import com.badbones69.crazycrates.tasks.BukkitUserManager;
-import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
 import org.bukkit.Location;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
-import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.api.enums.types.KeyType;
-import us.crazycrew.crazycrates.platform.config.ConfigManager;
-import us.crazycrew.crazycrates.platform.config.impl.ConfigKeys;
 import com.badbones69.crazycrates.api.builders.CrateBuilder;
-import com.badbones69.crazycrates.api.enums.PersistentKeys;
-import com.badbones69.crazycrates.api.utils.MiscUtils;
-import java.util.logging.Level;
 
 public class QuickCrate extends CrateBuilder {
-
-    private final @NotNull BukkitCrateManager crateManager = this.plugin.getCrateManager();
-
-    private final @NotNull BukkitUserManager userManager = this.plugin.getUserManager();
 
     public QuickCrate(Crate crate, Player player, Location location) {
         super(crate, player, location);

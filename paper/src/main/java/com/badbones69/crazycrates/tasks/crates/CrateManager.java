@@ -5,7 +5,7 @@ import com.badbones69.crazycrates.api.objects.Crate;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.simpleyaml.exceptions.InvalidConfigurationException;
-import us.crazycrew.crazycrates.CrazyCrates;
+import us.crazycrew.crazycrates.platform.Server;
 import us.crazycrew.crazycrates.platform.crates.CrateConfig;
 import java.io.File;
 import java.io.IOException;
@@ -17,7 +17,7 @@ public class CrateManager {
 
     private final @NotNull CrazyCratesPaper plugin = JavaPlugin.getPlugin(CrazyCratesPaper.class);
 
-    private final @NotNull CrazyCrates instance = this.plugin.getInstance();
+    private final @NotNull Server instance = this.plugin.getInstance();
 
     private final Set<Crate> crates = new HashSet<>();
 
