@@ -13,12 +13,14 @@ public interface Server {
 
     File[] getKeyFiles();
 
+    File getCrateFolder();
+
+    File[] getCrateFiles();
+
     Logger getLogger();
 
     KeyManager getKeyManager();
 
     UserManager getUserManager();
-
-    //CrateManager getCrateManager();
 
 }

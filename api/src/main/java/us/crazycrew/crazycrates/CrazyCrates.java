@@ -42,12 +42,20 @@ public class CrazyCrates implements ICrazyCrates {
         return this.server.getKeyManager();
     }
 
-    public @NotNull File[] getKeyFiles() {
-        return this.server.getKeyFiles();
-    }
-
     public @NotNull File getKeyFolder() {
         return this.server.getKeyFolder();
+    }
+
+    public @NotNull File getCrateFolder() {
+        return this.server.getCrateFolder();
+    }
+
+    public @NotNull File[] getCrateFiles() {
+        return this.server.getCrateFiles();
+    }
+
+    public @NotNull File[] getKeyFiles() {
+        return this.server.getKeyFiles();
     }
 
     public @NotNull Logger getLogger() {
