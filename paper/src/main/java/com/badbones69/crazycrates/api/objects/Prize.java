@@ -12,6 +12,8 @@ import org.bukkit.inventory.meta.trim.TrimMaterial;
 import org.bukkit.inventory.meta.trim.TrimPattern;
 import org.bukkit.persistence.PersistentDataType;
 import org.simpleyaml.configuration.ConfigurationSection;
+import us.crazycrew.crazycrates.platform.utils.EnchantUtils;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -80,7 +82,7 @@ public class Prize {
 
         if (this.section.contains("DisplayEnchantments")) {
             for (String enchant : this.section.getStringList("DisplayEnchantments")) {
-                Enchantment enchantment = ItemUtils.getEnchantment(enchant.split(":")[0]);
+                Enchantment enchantment = ItemUtils.getEnchantment(EnchantUtils.getEnchant(enchant.split(":")[0]));
 
                 if (enchantment != null) {
                     this.displayItem.addEnchantment(enchantment, Integer.parseInt(enchant.split(":")[1]));

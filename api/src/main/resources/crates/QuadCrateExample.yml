@@ -110,12 +110,12 @@ Crate:
         - '&7Win a very rare chest plate.'
         - '&6&lChance: &c&l40%'
       DisplayEnchantments:
-        - 'PROTECTION_ENVIRONMENTAL:5'
-        - 'DURABILITY:3'
+        - 'protection:5'
+        - 'unbreaking:3'
       MaxRange: 100
       Chance: 40
       Items:
-        - 'Item:DIAMOND_CHESTPLATE, Amount:1, Damage:25, Trim-Pattern:SENTRY, Trim-Material:EMERALD, Name:&3Rare ChestPlate, PROTECTION_ENVIRONMENTAL:5, DURABILITY:3'
+        - 'Item:DIAMOND_CHESTPLATE, Amount:1, Damage:25, Trim-Pattern:sentry, Trim-Material:emerald, Name:&3Rare ChestPlate, protection:5, unbreaking:3'
     2:
       DisplayName: '&b&lCrazy &4&lSword'
       DisplayItem: 'GOLDEN_SWORD'
@@ -127,12 +127,12 @@ Crate:
         - '&7Win a crazy cool sword.'
         - '&6&lChance: &c&l35%'
       DisplayEnchantments:
-        - 'DAMAGE_ALL:5'
-        - 'FIRE_ASPECT:1'
+        - 'sharpness:5'
+        - 'fire_aspect:1'
       MaxRange: 100
       Chance: 35
       Items:
-        - 'Item:GOLDEN_SWORD, Amount:1, Damage:13, Name:&b&lCrazy &4&lSword, DAMAGE_ALL:5, FIRE_ASPECT:1'
+        - 'Item:GOLDEN_SWORD, Amount:1, Damage:13, Name:&b&lCrazy &4&lSword, sharpness:5, fire_aspect:1'
       Messages:
         - '&7You just won &r%reward%.'
     3:

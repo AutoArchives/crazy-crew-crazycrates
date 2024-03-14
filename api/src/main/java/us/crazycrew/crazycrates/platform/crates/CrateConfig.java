@@ -1,6 +1,7 @@
 package us.crazycrew.crazycrates.platform.crates;
 
 import org.simpleyaml.configuration.ConfigurationSection;
+import org.simpleyaml.configuration.comments.format.YamlCommentFormat;
 import org.simpleyaml.configuration.file.YamlFile;
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
 import us.crazycrew.crazycrates.platform.crates.types.AbstractCrateManager;
@@ -8,9 +9,6 @@ import us.crazycrew.crazycrates.platform.crates.types.CasinoManager;
 import us.crazycrew.crazycrates.platform.crates.types.CosmicManager;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 public class CrateConfig extends YamlFile {
 
@@ -30,43 +28,9 @@ public class CrateConfig extends YamlFile {
     public void load() throws IOException {
         this.file.createOrLoadWithComments();
 
-        Set<String> keys = getConfigurationSection("Crate.Prizes").getKeys(false);
+        this.file.setCommentFormat(YamlCommentFormat.PRETTY);
 
-        for (String key : keys) {
-            ConfigurationSection prizeSection = getConfigurationSection(key);
-
-            if (prizeSection != null) {
-                if (prizeSection.contains("DisplayEnchantments")) {
-                    List<String> finalEnchantments = new ArrayList<>();
-
-                    prizeSection.getStringList("DisplayEnchantments").forEach(line -> finalEnchantments.add(line.replaceAll("PROTECTION_ENVIRONMENTAL", "protection")
-                            .replaceAll("PROTECTION_FIRE", "fire_protection")
-                            .replaceAll("PROTECTION_FALL", "feather_falling")
-                            .replaceAll("PROTECTION_EXPLOSIONS", "blast_protection")
-                            .replaceAll("PROTECTION_PROJECTILE", "projectile_protection")
-                            .replaceAll("OXYGEN", "respiration")
-                            .replaceAll("WATER_WORKER", "aqua_affinity")
-                            .replaceAll("DAMAGE_ALL", "sharpness")
-                            .replaceAll("DAMAGE_UNDEAD", "smite")
-                            .replaceAll("DAMAGE_ARTHROPODS", "bane_of_arthropods")
-                            .replaceAll("LOOT_BONUS_MOBS", "looting")
-                            .replaceAll("SWEEPING_EDGE", "sweeping")
-                            .replaceAll("DIG_SPEED", "efficiency")
-                            .replaceAll("DURABILITY", "unbreaking")
-                            .replaceAll("LOOT_BONUS_BLOCKS", "fortune")
-                            .replaceAll("ARROW_DAMAGE", "power")
-                            .replaceAll("ARROW_KNOCKBACK", "punch")
-                            .replaceAll("ARROW_FIRE", "flame")
-                            .replaceAll("ARROW_INFINITE", "infinity")
-                            .replaceAll("LUCK", "luck_of_the_sea")));
-
-                    prizeSection.set("DisplayEnchantments", finalEnchantments);
-                }
-            }
-
-            this.file.save();
-            this.file.loadWithComments();
-        }
+        //Set<String> keys = getConfigurationSection("Crate.Prizes").getKeys(false);
 
         switch (getCrateType()) {
             case cosmic -> this.crateManager = new CosmicManager(this);
@@ -76,7 +40,7 @@ public class CrateConfig extends YamlFile {
     }
 
     /**
-     * @return the file
+     * @return the crate file.
      */
     public YamlFile getFile() {
         return this.file;
@@ -89,30 +53,51 @@ public class CrateConfig extends YamlFile {
         return this.crateManager;
     }
 
+    /**
+     * @return the crate section.
+     */
     public ConfigurationSection getCrateSection() {
         return getConfigurationSection("Crate");
     }
 
+    /**
+     * @return the sound section.
+     */
     public ConfigurationSection getSoundSection() {
         return getCrateSection().getConfigurationSection("sound");
     }
 
+    /**
+     * @return the preview section.
+     */
     public ConfigurationSection getPreviewSection() {
         return getCrateSection().getConfigurationSection("Preview");
     }
 
+    /**
+     * @return the hologram section.
+     */
     public ConfigurationSection getHologramSection() {
         return getCrateSection().getConfigurationSection("Hologram");
     }
 
+    /**
+     * @return the prize section.
+     */
     public ConfigurationSection getPrizeSection() {
         return getCrateSection().getConfigurationSection("Prizes");
     }
 
+    /**
+     * @return the crate type or CSGO if none is found.
+     */
     public CrateType getCrateType() {
         return CrateType.getFromName(getCrateSection().getString("CrateType", "CSGO"));
     }
 
+    /**
+     * @return the name of the crate.
+     */
     public String getCrateName() {
         return getCrateSection().getString("CrateName", " ");
     }

@@ -117,74 +117,74 @@ Crate:
       DisplayItem: 'NETHERITE_HELMET'
       DisplayTrim:
         # Available Materials: https://jd.papermc.io/paper/1.20/org/bukkit/inventory/meta/trim/TrimMaterial.html
-        Material: 'REDSTONE'
+        Material: 'redstone'
         # Available Patterns: https://jd.papermc.io/paper/1.20/org/bukkit/inventory/meta/trim/TrimPattern.html
-        Pattern: 'SENTRY'
+        Pattern: 'sentry'
       DisplayAmount: 1
       Lore:
         - '&7Win the warlord''s helmet.'
         - '&6&lChance: &c&l40%'
       DisplayEnchantments:
-        - 'PROTECTION_ENVIRONMENTAL:5'
-        - 'DURABILITY:3'
+        - 'protection:5'
+        - 'unbreaking:3'
       MaxRange: 100
       Chance: 40
       Items:
-        - 'Item:NETHERITE_HELMET, Amount:1, Damage:25, Trim-Pattern:SENTRY, Trim-Material:REDSTONE, Name:&4&lWarlord''s Helmet, PROTECTION_ENVIRONMENTAL:5, DURABILITY:3'
+        - 'Item:NETHERITE_HELMET, Amount:1, Damage:25, Trim-Pattern:sentry, Trim-Material:redstone, Name:&4&lWarlord''s Helmet, protection:5, unbreaking:3'
     2:
       DisplayName: '&4&lWarlord''s Chestplate'
       DisplayItem: 'NETHERITE_CHESTPLATE'
       DisplayTrim:
         # Available Materials: https://jd.papermc.io/paper/1.20/org/bukkit/inventory/meta/trim/TrimMaterial.html
-        Material: 'REDSTONE'
+        Material: 'redstone'
         # Available Patterns: https://jd.papermc.io/paper/1.20/org/bukkit/inventory/meta/trim/TrimPattern.html
-        Pattern: 'SENTRY'
+        Pattern: 'sentry'
       DisplayAmount: 1
       Lore:
         - '&7Win the warlord''s chestplate.'
         - '&6&lChance: &c&l40%'
       DisplayEnchantments:
-        - 'PROTECTION_ENVIRONMENTAL:5'
-        - 'DURABILITY:3'
+        - 'protection:5'
+        - 'unbreaking:3'
       MaxRange: 100
       Chance: 40
       Items:
-        - 'Item:NETHERITE_CHESTPLATE, Amount:1, Damage:25, Trim-Pattern:SENTRY, Trim-Material:REDSTONE, Name:&4&lWarlord''s Chestplate, PROTECTION_ENVIRONMENTAL:5, DURABILITY:3'
+        - 'Item:NETHERITE_CHESTPLATE, Amount:1, Damage:25, Trim-Pattern:sentry, Trim-Material:redstone, Name:&4&lWarlord''s Chestplate, protection:5, unbreaking:3'
     3:
       DisplayName: '&4&lWarlord''s Leggings'
       DisplayItem: 'NETHERITE_LEGGINGS'
       DisplayTrim:
         # Available Materials: https://jd.papermc.io/paper/1.20/org/bukkit/inventory/meta/trim/TrimMaterial.html
-        Material: 'REDSTONE'
+        Material: 'redstone'
         # Available Patterns: https://jd.papermc.io/paper/1.20/org/bukkit/inventory/meta/trim/TrimPattern.html
-        Pattern: 'SENTRY'
+        Pattern: 'sentry'
       DisplayAmount: 1
       Lore:
         - '&7Win the warlord''s leggings.'
         - '&6&lChance: &c&l40%'
       DisplayEnchantments:
-        - 'PROTECTION_ENVIRONMENTAL:5'
-        - 'DURABILITY:3'
+        - 'protection:5'
+        - 'sharpness:3'
       MaxRange: 100
       Chance: 40
       Items:
-        - 'Item:NETHERITE_LEGGINGS, Amount:1, Damage:25, Trim-Pattern:SENTRY, Trim-Material:REDSTONE, Name:&4&lWarlord''s Leggings, PROTECTION_ENVIRONMENTAL:5, DURABILITY:3'
+        - 'Item:NETHERITE_LEGGINGS, Amount:1, Damage:25, Trim-Pattern:sentry, Trim-Material:redstone, Name:&4&lWarlord''s Leggings, protection:5, unbreaking:3'
     4:
       DisplayName: '&4&lWarlord''s Boots'
       DisplayItem: 'NETHERITE_BOOTS'
       DisplayTrim:
         # Available Materials: https://jd.papermc.io/paper/1.20/org/bukkit/inventory/meta/trim/TrimMaterial.html
-        Material: 'REDSTONE'
+        Material: 'redstone'
         # Available Patterns: https://jd.papermc.io/paper/1.20/org/bukkit/inventory/meta/trim/TrimPattern.html
-        Pattern: 'SENTRY'
+        Pattern: 'sentry'
       DisplayAmount: 1
       Lore:
         - '&7Win the warlord''s boots.'
         - '&6&lChance: &c&l40%'
       DisplayEnchantments:
-        - 'PROTECTION_ENVIRONMENTAL:5'
-        - 'DURABILITY:3'
+        - 'protection:5'
+        - 'sharpness:3'
       MaxRange: 100
       Chance: 40
       Items:
-        - 'Item:NETHERITE_BOOTS, Amount:1, Damage:25, Trim-Pattern:SENTRY, Trim-Material:REDSTONE, Name:&4&lWarlord''s Boots, PROTECTION_ENVIRONMENTAL:5, DURABILITY:3'
+        - 'Item:NETHERITE_BOOTS, Amount:1, Damage:25, Trim-Pattern:sentry, Trim-Material:redstone, Name:&4&lWarlord''s Boots, protection:5, unbreaking:3'
