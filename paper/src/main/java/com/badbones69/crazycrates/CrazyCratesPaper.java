@@ -1,6 +1,7 @@
 package com.badbones69.crazycrates;
 
 import com.badbones69.crazycrates.api.FileManager;
+import com.badbones69.crazycrates.commands.CommandManager;
 import com.badbones69.crazycrates.platform.PaperServer;
 import com.badbones69.crazycrates.support.metrics.MetricsManager;
 import com.badbones69.crazycrates.tasks.BukkitUserManager;
@@ -31,17 +32,18 @@ public class CrazyCratesPaper extends JavaPlugin {
 
     @Override
     public void onLoad() {
+        this.factory = new ClusterFactory(this);
+
+        this.instance = new PaperServer();
+        this.instance.enable();
+
+        this.timer = new Timer();
+
         ConfigManager.load();
     }
 
     @Override
     public void onEnable() {
-        this.factory = new ClusterFactory(this);
-
-        this.instance = new PaperServer();
-
-        this.timer = new Timer();
-
         this.fileManager = new FileManager();
 
         List.of(
@@ -57,6 +59,9 @@ public class CrazyCratesPaper extends JavaPlugin {
 
         this.crateManager = new CrateManager();
         this.crateManager.load();
+
+        CommandManager commandManager = new CommandManager();
+        commandManager.load();
 
         /*
 
@@ -133,6 +138,10 @@ public class CrazyCratesPaper extends JavaPlugin {
         if (holograms != null && !holograms.isMapEmpty()) {
             holograms.removeAllHolograms();
         }*/
+    }
+
+    public CrateManager getCrateManager() {
+        return this.crateManager;
     }
 
     public @NotNull Server getInstance() {

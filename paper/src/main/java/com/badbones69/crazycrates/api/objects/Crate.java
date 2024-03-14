@@ -99,7 +99,7 @@ public class Crate {
         this.prizeMessage = this.section.getStringList("Prize-Message");
 
         this.displayItem = new ItemBuilder()
-                .setMaterial(this.section.getString("Item", "DIAMOND"))
+                .setMaterial(this.section.getString("Item", "CHEST"))
                 .setName(this.section.getString("Name", " "))
                 .setLore(this.section.getStringList("Lore") == null ? Collections.emptyList() : this.section.getStringList("Lore"))
                 .setGlow(this.section.getBoolean("Glowing", false))
