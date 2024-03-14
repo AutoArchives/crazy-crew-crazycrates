@@ -16,6 +16,7 @@ public class PaperServer implements Server {
     private final KeyManager keyManager;
     private final BukkitUserManager userManager;
     private final File keyFolder;
+    private final File crateFolder;
 
     private final File folder;
 
@@ -24,6 +25,9 @@ public class PaperServer implements Server {
 
         this.keyFolder = new File(this.folder, "keys");
         this.keyFolder.mkdirs();
+
+        this.crateFolder = new File(this.folder, "crates");
+        this.crateFolder.mkdirs();
 
         this.keyManager = new KeyManager(this);
 
@@ -41,8 +45,18 @@ public class PaperServer implements Server {
     }
 
     @Override
+    public File getCrateFolder() {
+        return this.crateFolder;
+    }
+
+    @Override
     public @NotNull File[] getKeyFiles() {
         return this.keyFolder.listFiles((dir, name) -> name.endsWith(".yml"));
+    }
+
+    @Override
+    public File[] getCrateFiles() {
+        return this.crateFolder.listFiles((dir, name) -> name.endsWith(".yml"));
     }
 
     @Override
