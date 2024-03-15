@@ -1,15 +1,20 @@
 package com.badbones69.crazycrates.api.builders.types;
 
 import ch.jalu.configme.SettingsManager;
+import com.badbones69.crazycrates.CrazyCratesPaper;
 import com.badbones69.crazycrates.api.builders.ItemBuilder;
+import com.badbones69.crazycrates.api.enums.Messages;
 import com.badbones69.crazycrates.api.objects.Crate;
+import com.badbones69.crazycrates.api.utils.ItemUtils;
 import org.bukkit.Material;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.platform.config.ConfigManager;
 import us.crazycrew.crazycrates.platform.config.impl.ConfigKeys;
@@ -153,7 +158,7 @@ public class CrateMainMenu extends InventoryBuilder {
 
     public static class CrateMenuListener implements Listener {
 
-        //private final @NotNull CrazyCratesPaper plugin = JavaPlugin.getPlugin(CrazyCratesPaper.class);
+        private final @NotNull CrazyCratesPaper plugin = JavaPlugin.getPlugin(CrazyCratesPaper.class);
 
         //private final @NotNull InventoryManager inventoryManager = this.plugin.getInventoryManager();
 
@@ -165,9 +170,9 @@ public class CrateMainMenu extends InventoryBuilder {
 
         @EventHandler
         public void onInventoryClick(InventoryClickEvent event) {
-            Inventory inventory = event.getInventory();
+            if (!(event.getInventory().getHolder(false) instanceof CrateMainMenu holder)) return;
 
-            if (!(inventory.getHolder(false) instanceof CrateMainMenu holder)) return;
+            Inventory inventory = holder.getInventory();
 
             event.setCancelled(true);
 
@@ -179,10 +184,33 @@ public class CrateMainMenu extends InventoryBuilder {
 
             if (!item.hasItemMeta()) return;
 
-            /*Crate crate = this.plugin.getCrateManager().getCrateFromName(ItemUtils.getKey(item.getItemMeta()));
+            Crate crate = this.plugin.getCrateManager().getCrate(ItemUtils.getCrate(item.getItemMeta()));
 
             if (crate == null) return;
 
+            switch (event.getClick()) {
+                case RIGHT, SHIFT_RIGHT -> {
+                    if (crate.isPreviewToggle()) {
+                        crate.playSound(player, "click-sound", "UI_BUTTON_CLICK", SoundCategory.PLAYERS);
+
+                        player.closeInventory();
+
+                        //todo() create preview
+
+                        return;
+                    }
+
+                    player.sendMessage(Messages.preview_disabled.getMessage("{crate}", crate.getCrateName(), player));
+                }
+
+                case LEFT, SHIFT_LEFT -> {
+                    crate.playSound(player, "click-sound", "UI_BUTTON_CLICK", SoundCategory.PLAYERS);
+
+                    player.sendMessage("This is left click.");
+                }
+            }
+
+            /*
             if (event.getAction() == InventoryAction.PICKUP_HALF) { // Right-clicked the item
                 if (crate.isPreviewEnabled()) {
                     crate.playSound(player, player.getLocation(), "click-sound", "UI_BUTTON_CLICK", SoundCategory.PLAYERS);

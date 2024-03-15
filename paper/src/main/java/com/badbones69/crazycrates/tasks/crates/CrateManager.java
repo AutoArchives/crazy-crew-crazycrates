@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
 
 public class CrateManager {
 
@@ -38,12 +39,10 @@ public class CrateManager {
             try {
                 crateConfig.load();
             } catch (InvalidConfigurationException exception) {
-                this.plugin.getLogger().warning(file.getName() + " contains invalid YAML structure.");
-                exception.printStackTrace();
+                this.plugin.getLogger().log(Level.WARNING, file.getName() + " contains invalid YAML structure.", exception);
                 continue;
             } catch (IOException exception) {
-                this.plugin.getLogger().warning("Could not load crate file: " + file.getName());
-                exception.printStackTrace();
+                this.plugin.getLogger().log(Level.WARNING, "Could not load crate file: " + file.getName(), exception);
                 continue;
             }
 
@@ -51,6 +50,19 @@ public class CrateManager {
 
             this.crates.add(crate);
         }
+    }
+
+    public Crate getCrate(String fileName) {
+        Crate crate = null;
+
+        for (Crate key : this.crates) {
+            if (!key.getFileName().equalsIgnoreCase(fileName)) continue;
+
+            crate = key;
+            break;
+        }
+
+        return crate;
     }
 
     public Set<Crate> getCrates() {

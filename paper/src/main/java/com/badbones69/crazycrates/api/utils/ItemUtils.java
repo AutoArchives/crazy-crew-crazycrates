@@ -21,4 +21,8 @@ public class ItemUtils {
     public static String getKey(ItemMeta itemMeta) {
         return itemMeta.getPersistentDataContainer().get(PersistentKeys.crate_key.getNamespacedKey(), PersistentDataType.STRING);
     }
+
+    public static String getCrate(ItemMeta itemMeta) {
+        return itemMeta.getPersistentDataContainer().get(PersistentKeys.crate_name.getNamespacedKey(), PersistentDataType.STRING);
+    }
 }

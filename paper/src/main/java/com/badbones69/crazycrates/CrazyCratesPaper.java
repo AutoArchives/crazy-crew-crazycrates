@@ -1,9 +1,14 @@
 package com.badbones69.crazycrates;
 
 import com.badbones69.crazycrates.api.FileManager;
+import com.badbones69.crazycrates.api.builders.types.CrateMainMenu;
+import com.badbones69.crazycrates.api.utils.MiscUtils;
+import com.badbones69.crazycrates.api.utils.MsgUtils;
 import com.badbones69.crazycrates.commands.CommandManager;
 import com.badbones69.crazycrates.platform.PaperServer;
+import com.badbones69.crazycrates.support.PluginSupport;
 import com.badbones69.crazycrates.support.metrics.MetricsManager;
+import com.badbones69.crazycrates.support.placeholders.PlaceholderAPISupport;
 import com.badbones69.crazycrates.tasks.InventoryManager;
 import com.badbones69.crazycrates.tasks.crates.CrateManager;
 import com.ryderbelserion.cluster.ClusterFactory;
@@ -13,6 +18,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.platform.Server;
 import us.crazycrew.crazycrates.platform.config.ConfigManager;
+import us.crazycrew.crazycrates.platform.config.impl.ConfigKeys;
 import java.util.List;
 import java.util.Timer;
 
@@ -61,6 +67,38 @@ public class CrazyCratesPaper extends JavaPlugin {
         CommandManager commandManager = new CommandManager();
         commandManager.load();
 
+        List.of(
+             new CrateMainMenu.CrateMenuListener()
+        ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
+
+        boolean isLogging = MiscUtils.isLogging();
+
+        if (isLogging) {
+            String prefix = ConfigManager.getConfig().getProperty(ConfigKeys.console_prefix);
+
+            for (PluginSupport value : PluginSupport.values()) {
+                if (value.isPluginEnabled()) {
+                    getServer().getConsoleSender().sendMessage(MsgUtils.color(prefix + "&6&l" + value.name() + " &a&lFOUND"));
+                } else {
+                    getServer().getConsoleSender().sendMessage(MsgUtils.color(prefix + "&6&l" + value.name() + " &c&lNOT FOUND"));
+                }
+            }
+        }
+
+        if (PluginSupport.PLACEHOLDERAPI.isPluginEnabled()) {
+            if (isLogging) getLogger().info("PlaceholderAPI support is enabled!");
+
+            new PlaceholderAPISupport().register();
+        }
+
+        if (ConfigManager.getConfig().getProperty(ConfigKeys.toggle_metrics)) {
+            this.metrics = new MetricsManager();
+
+            this.metrics.start();
+        }
+
+        if (isLogging) getLogger().info("You can disable logging by going to the plugin-config.yml and setting verbose to false.");
+
         /*
 
         this.inventoryManager = new InventoryManager();
@@ -88,36 +126,7 @@ public class CrazyCratesPaper extends JavaPlugin {
                 new CrateOpenListener(),
                 new WarCrateListener(),
                 new MiscListener()
-        ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
-
-        CommandManager commandManager = new CommandManager();
-        commandManager.load();
-
-        if (MiscUtils.isLogging()) {
-            String prefix = ConfigManager.getConfig().getProperty(ConfigKeys.console_prefix);
-
-            for (PluginSupport value : PluginSupport.values()) {
-                if (value.isPluginEnabled()) {
-                    getServer().getConsoleSender().sendMessage(MsgUtils.color(prefix + "&6&l" + value.name() + " &a&lFOUND"));
-                } else {
-                    getServer().getConsoleSender().sendMessage(MsgUtils.color(prefix + "&6&l" + value.name() + " &c&lNOT FOUND"));
-                }
-            }
-        }
-
-        if (PluginSupport.PLACEHOLDERAPI.isPluginEnabled()) {
-            if (MiscUtils.isLogging()) getLogger().info("PlaceholderAPI support is enabled!");
-
-            new PlaceholderAPISupport().register();
-        }
-
-        if (ConfigManager.getConfig().getProperty(ConfigKeys.toggle_metrics)) {
-            this.metrics = new MetricsManager();
-
-            this.metrics.start();
-        }
-
-        if (MiscUtils.isLogging()) getLogger().info("You can disable logging by going to the plugin-config.yml and setting verbose to false.");*/
+        ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));;*/
     }
 
     @Override

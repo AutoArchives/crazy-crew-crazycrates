@@ -14,9 +14,12 @@ public class CrateConfig extends YamlFile {
 
     private AbstractCrateManager crateManager;
     private final YamlFile file;
+    private final String fileName;
 
     public CrateConfig(File file) {
         this.file = new YamlFile(file.getPath());
+
+        this.fileName = file.getName().replaceAll(".yml", "");
     }
 
     @Override
@@ -28,8 +31,6 @@ public class CrateConfig extends YamlFile {
     public void load() throws IOException {
         this.file.createOrLoadWithComments();
 
-        this.file.setCommentFormat(YamlCommentFormat.PRETTY);
-
         //Set<String> keys = getConfigurationSection("Crate.Prizes").getKeys(false);
 
         switch (getCrateType()) {
@@ -37,6 +38,10 @@ public class CrateConfig extends YamlFile {
 
             case casino -> this.crateManager = new CasinoManager(this);
         }
+    }
+
+    public String getFileName() {
+        return this.fileName;
     }
 
     /**

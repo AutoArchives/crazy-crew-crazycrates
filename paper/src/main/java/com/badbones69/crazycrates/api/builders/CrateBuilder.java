@@ -390,7 +390,7 @@ public abstract class CrateBuilder extends BukkitRunnable {
 
         if (section != null) {
             SoundEffect sound = new SoundEffect(
-                    section,
+                    null,
                     type,
                     fallback,
                     category

@@ -2,9 +2,12 @@ package com.badbones69.crazycrates.api.objects;
 
 import com.badbones69.crazycrates.CrazyCratesPaper;
 import com.badbones69.crazycrates.api.builders.ItemBuilder;
+import com.badbones69.crazycrates.api.enums.PersistentKeys;
 import com.badbones69.crazycrates.api.utils.MiscUtils;
 import com.badbones69.crazycrates.api.utils.MsgUtils;
+import com.badbones69.crazycrates.tasks.crates.effects.SoundEffect;
 import me.clip.placeholderapi.PlaceholderAPI;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.permissions.Permission;
@@ -58,20 +61,24 @@ public class Crate {
 
     private final List<Prize> prizes = new ArrayList<>();
 
+    private final CrateConfig crateConfig;
+
     /**
      * Builds a crate object.
      *
      * @param crateConfig the config to use
      */
     public Crate(CrateConfig crateConfig) {
+        this.crateConfig = crateConfig;
+
         this.section = crateConfig.getCrateSection();
 
         this.crateType = crateConfig.getCrateType();
 
         this.crateName = crateConfig.getCrateName();
-        this.previewName = this.section.getString("Preview-Name", crateConfig.getFile().getName().replace(".yml", ""));
+        this.previewName = this.section.getString("Preview-Name", crateConfig.getFileName());
 
-        this.fileName = crateConfig.getFile().getName().replace(".yml", "");
+        this.fileName = crateConfig.getFileName();
 
         this.startingKeys = this.section.getInt("StartingKeys", 0);
         this.requiredKeys = this.section.getInt("RequiredKeys", 0);
@@ -103,7 +110,7 @@ public class Crate {
                 .setName(this.section.getString("Name", " "))
                 .setLore(this.section.getStringList("Lore") == null ? Collections.emptyList() : this.section.getStringList("Lore"))
                 .setGlow(this.section.getBoolean("Glowing", false))
-                .build();
+                .setString(PersistentKeys.crate_name.getNamespacedKey(), this.fileName).build();
 
         ConfigurationSection preview = crateConfig.getPreviewSection();
 
@@ -240,6 +247,10 @@ public class Crate {
 
             MsgUtils.sendMessage(player, MiscUtils.isPapiActive() ? PlaceholderAPI.setPlaceholders(player, value) : value, false);
         }
+    }
+
+    public void playSound(Player player, String type, String fallback, SoundCategory category) {
+        new SoundEffect(this.crateConfig.getSoundSection(), type, fallback, category).play(player, player.getLocation());
     }
 
     /**
