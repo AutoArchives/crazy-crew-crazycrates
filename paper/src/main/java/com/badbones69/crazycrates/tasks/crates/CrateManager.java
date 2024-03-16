@@ -7,17 +7,14 @@ import com.badbones69.crazycrates.api.objects.Key;
 import com.badbones69.crazycrates.api.objects.other.CrateLocation;
 import com.badbones69.crazycrates.api.utils.ItemUtils;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.simpleyaml.exceptions.InvalidConfigurationException;
-import us.crazycrew.crazycrates.api.enums.types.CrateType;
 import us.crazycrew.crazycrates.platform.Server;
 import us.crazycrew.crazycrates.platform.crates.CrateConfig;
 import us.crazycrew.crazycrates.platform.keys.KeyConfig;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -32,10 +29,6 @@ public class CrateManager {
     private final Set<Crate> crates = new HashSet<>();
     private final Set<String> brokenCrates = new HashSet<>();
     private final Set<CrateLocation> crateLocations = new HashSet<>();
-
-    public Set<CrateLocation> getCrateLocations() {
-        return Collections.unmodifiableSet(this.crateLocations);
-    }
 
     private final Set<Key> keys = new HashSet<>();
 
@@ -199,6 +192,10 @@ public class CrateManager {
 
     public Set<String> getBrokenCrates() {
         return Collections.unmodifiableSet(this.brokenCrates);
+    }
+
+    public Set<CrateLocation> getCrateLocations() {
+        return Collections.unmodifiableSet(this.crateLocations);
     }
 
     public void addActiveCrate(UUID uuid, Location location) {
