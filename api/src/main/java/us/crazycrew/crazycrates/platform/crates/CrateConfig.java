@@ -1,7 +1,6 @@
 package us.crazycrew.crazycrates.platform.crates;
 
 import org.simpleyaml.configuration.ConfigurationSection;
-import org.simpleyaml.configuration.comments.format.YamlCommentFormat;
 import org.simpleyaml.configuration.file.YamlFile;
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
 import us.crazycrew.crazycrates.platform.crates.types.AbstractCrateManager;
@@ -30,8 +29,6 @@ public class CrateConfig extends YamlFile {
     @Override
     public void load() throws IOException {
         this.file.createOrLoadWithComments();
-
-        //Set<String> keys = getConfigurationSection("Crate.Prizes").getKeys(false);
 
         switch (getCrateType()) {
             case cosmic -> this.crateManager = new CosmicManager(this);

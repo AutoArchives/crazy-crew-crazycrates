@@ -16,6 +16,7 @@ import org.bukkit.inventory.InventoryView;
 import org.jetbrains.annotations.NotNull;
 import com.badbones69.crazycrates.api.utils.MsgUtils;
 import java.util.List;
+import java.util.Set;
 
 @SuppressWarnings("ALL")
 public abstract class InventoryBuilder implements InventoryHolder {
@@ -23,12 +24,12 @@ public abstract class InventoryBuilder implements InventoryHolder {
     protected final @NotNull CrazyCratesPaper plugin = JavaPlugin.getPlugin(CrazyCratesPaper.class);
 
     private final Inventory inventory;
-    private final Player player;
+    private Player player;
     private String title;
     private Crate crate;
     private int size;
     private int page;
-    private List<Tier> tiers;
+    private Set<Tier> tiers;
 
     public InventoryBuilder(Player player, int size, String title) {
         this.title = title;
@@ -65,7 +66,7 @@ public abstract class InventoryBuilder implements InventoryHolder {
         this.inventory = this.plugin.getServer().createInventory(this, this.size, inventoryTitle);
     }
 
-    public InventoryBuilder(List<Tier> tiers, Crate crate, Player player, int size, String title) {
+    public InventoryBuilder(Set<Tier> tiers, Crate crate, Player player, int size, String title) {
         this.title = title;
         this.player = player;
         this.size = size;
@@ -105,6 +106,12 @@ public abstract class InventoryBuilder implements InventoryHolder {
 
     public abstract InventoryBuilder build();
 
+    public InventoryBuilder setPlayer(Player player) {
+        this.player = player;
+
+        return this;
+    }
+
     public void size(int size) {
         this.size = size;
     }
@@ -137,7 +144,7 @@ public abstract class InventoryBuilder implements InventoryHolder {
         return this.player;
     }
 
-    public List<Tier> getTiers() {
+    public Set<Tier> getTiers() {
         return this.tiers;
     }
 

@@ -63,6 +63,8 @@ public class CrazyCratesPaper extends JavaPlugin {
         this.crateManager = new CrateManager();
         this.crateManager.load();
 
+        this.inventoryManager = new InventoryManager();
+
         CommandManager.load();
 
         List.of(
@@ -146,7 +148,7 @@ public class CrazyCratesPaper extends JavaPlugin {
         }*/
     }
 
-    public CrateManager getCrateManager() {
+    public @NotNull CrateManager getCrateManager() {
         return this.crateManager;
     }
 

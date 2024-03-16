@@ -24,6 +24,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 public class CrateTierMenu extends InventoryBuilder {
 
@@ -31,7 +32,7 @@ public class CrateTierMenu extends InventoryBuilder {
 
     private final @NotNull SettingsManager config = ConfigManager.getConfig();
 
-    public CrateTierMenu(List<Tier> tiers, Crate crate, Player player, int size, String title) {
+    public CrateTierMenu(Set<Tier> tiers, Crate crate, Player player, int size, String title) {
         super(tiers, crate, player, size, title);
     }
 

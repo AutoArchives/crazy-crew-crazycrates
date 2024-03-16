@@ -7,7 +7,6 @@ import com.badbones69.crazycrates.api.enums.PersistentKeys;
 import com.badbones69.crazycrates.api.events.PlayerPrizeEvent;
 import com.badbones69.crazycrates.api.utils.MiscUtils;
 import com.badbones69.crazycrates.api.utils.MsgUtils;
-import com.badbones69.crazycrates.tasks.crates.CrateManager;
 import com.badbones69.crazycrates.tasks.crates.effects.SoundEffect;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.apache.commons.lang.WordUtils;
@@ -27,16 +26,16 @@ import org.simpleyaml.configuration.ConfigurationSection;
 import us.crazycrew.crazycrates.api.crates.CrateHologram;
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
 import us.crazycrew.crazycrates.platform.crates.CrateConfig;
-
+import us.crazycrew.crazycrates.platform.crates.types.AbstractCrateManager;
+import us.crazycrew.crazycrates.platform.crates.types.CasinoManager;
+import us.crazycrew.crazycrates.platform.crates.types.CosmicManager;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Logger;
-
-import static java.util.regex.Matcher.quoteReplacement;
 
 public class Crate {
 
     private final @NotNull CrazyCratesPaper plugin = JavaPlugin.getPlugin(CrazyCratesPaper.class);
-    private final @NotNull CrateManager crateManager = this.plugin.getCrateManager();
 
     private final boolean executeCommands;
     private final List<String> commands;
@@ -73,6 +72,8 @@ public class Crate {
     private final List<Prize> prizes = new ArrayList<>();
 
     private final CrateConfig crateConfig;
+
+    private final Set<Tier> tiers = new HashSet<>();
 
     /**
      * Builds a crate object.
@@ -148,12 +149,28 @@ public class Crate {
             }
         }
 
+        if (this.crateConfig.getCrateManager() != null) {
+            this.crateConfig.getCrateManager().getTierSection().getKeys(false).forEach(tier -> {
+                String path = "Crate.Tiers." + tier;
+
+                ConfigurationSection tierSection = this.crateConfig.getConfigurationSection(path);
+
+                if (tierSection != null) {
+                    this.tiers.add(new Tier(tier, tierSection));
+                }
+            });
+        }
+
         PluginManager server = this.plugin.getServer().getPluginManager();
 
         if (server.getPermission("crazycrates.open." + getCrateName()) == null) {
             server.addPermission(new Permission("crazycrates.open." + getCrateName(), "Allows you to open " + getCrateName(), PermissionDefault.TRUE));
         }
     }
+
+    /*public Inventory getTierPreviewInventory(Player player) {
+        return this.tierPreviewInventory.setPlayer(player).build().getInventory();
+    }*/
 
     /**
      * @return the slot in the menu.
@@ -464,19 +481,23 @@ public class Crate {
     }
 
     public Tier getTier() {
-                /*if (crate.getTiers() != null && !crate.getTiers().isEmpty()) {
-            for (int stopLoop = 0; stopLoop <= 100; stopLoop++) {
-                for (Tier tier : crate.getTiers()) {
-                    int chance = tier.getChance();
+        if (this.tiers.isEmpty()) return null;
 
-                    int num = MiscUtils.useOtherRandom() ? ThreadLocalRandom.current().nextInt(tier.getMaxRange()) : new Random().nextInt(tier.getMaxRange());
+        Tier tier = null;
 
-                    if (num >= 1 && num <= chance) {
-                        return tier;
-                    }
+        for (int stopLoop = 0; stopLoop <= 100; stopLoop++) {
+            for (Tier key : this.tiers) {
+                double chance = key.getChance();
+
+                double number = MiscUtils.useOtherRandom() ? ThreadLocalRandom.current().nextDouble(100.0) : new Random().nextDouble(100.0);
+
+                if (number >= 1.0 && number <= chance) {
+                    tier = key;
+                    break;
                 }
             }
-        }*/
-        return null;
+        }
+
+        return tier;
     }
 }
