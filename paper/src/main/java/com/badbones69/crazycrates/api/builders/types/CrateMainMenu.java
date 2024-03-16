@@ -46,42 +46,12 @@ public class CrateMainMenu extends InventoryBuilder {
 
             slot--;
 
-            inventory.setItem(slot, crate.getDisplayItem());
+            if (crate.isInMenu()) {
+                inventory.setItem(slot, crate.getDisplayItem());
+            }
         }
 
-        /*for (Crate crate : this.plugin.getCrateManager().getUsableCrates()) {
-            FileConfiguration file = crate.getFile();
-
-            if (file != null) {
-                if (file.getBoolean("Crate.InGUI", false)) {
-                    String path = "Crate.";
-                    int slot = file.getInt(path + "Slot");
-
-                    if (slot > getSize()) continue;
-
-                    slot--;
-
-                    String name = file.getString(path + "Name", path + "Name is missing in " + crate.getName() + ".yml");
-
-                    inventory.setItem(slot, new ItemBuilder()
-                            .setTarget(getPlayer())
-                            .setMaterial(file.getString(path + "Item", "CHEST"))
-                            .setName(name)
-                            .setLore(file.getStringList(path + "Lore"))
-                            .setCrateName(crate.getName())
-                            .setPlayerName(file.getString(path + "Player"))
-                            .setGlow(file.getBoolean(path + "Glowing"))
-                            .addLorePlaceholder("%keys%", NumberFormat.getNumberInstance().format(this.userManager.getVirtualKeys(getPlayer().getUniqueId(), crate.getName())))
-                            .addLorePlaceholder("%keys_physical%", NumberFormat.getNumberInstance().format(this.userManager.getPhysicalKeys(getPlayer().getUniqueId(), crate.getName())))
-                            .addLorePlaceholder("%keys_total%", NumberFormat.getNumberInstance().format(this.userManager.getTotalKeys(getPlayer().getUniqueId(), crate.getName())))
-                            .addLorePlaceholder("%crate_opened%", NumberFormat.getNumberInstance().format(this.userManager.getCrateOpened(getPlayer().getUniqueId(), crate.getName())))
-                            .addLorePlaceholder("%player%", getPlayer().getName())
-                            .build());
-                }
-            }
-        }*/
-
-        /*if (this.config.getProperty(ConfigKeys.filler_toggle)) {
+        if (this.config.getProperty(ConfigKeys.filler_toggle)) {
             String id = this.config.getProperty(ConfigKeys.filler_item);
             String name = this.config.getProperty(ConfigKeys.filler_name);
             List<String> lore = this.config.getProperty(ConfigKeys.filler_lore);
@@ -120,7 +90,7 @@ public class CrateMainMenu extends InventoryBuilder {
                             String[] lore = option.split(",");
 
                             for (String line : lore) {
-                                option = getCrates(option);
+                                //option = getCrates(option);
 
                                 item.addLore(option.replaceAll("\\{player}", getPlayer().getName()));
                             }
@@ -144,7 +114,7 @@ public class CrateMainMenu extends InventoryBuilder {
                     inventory.setItem(slot, item.setTarget(getPlayer()).build());
                 }
             }
-        }*/
+        }
 
         return this;
     }
@@ -166,11 +136,9 @@ public class CrateMainMenu extends InventoryBuilder {
 
         private final @NotNull CrateManager crateManager = this.plugin.getCrateManager();
 
+        private final @NotNull SettingsManager config = ConfigManager.getConfig();
+
         //private final @NotNull InventoryManager inventoryManager = this.plugin.getInventoryManager();
-
-        //private final @NotNull SettingsManager config = ConfigManager.getConfig();
-
-        //private final @NotNull BukkitCrateManager crateManager = this.plugin.getCrateManager();
 
         //private final @NotNull BukkitUserManager userManager = this.plugin.getUserManager();
 
