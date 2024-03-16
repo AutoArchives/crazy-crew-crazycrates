@@ -7,11 +7,16 @@ import com.badbones69.crazycrates.api.objects.Key;
 import com.badbones69.crazycrates.api.objects.other.CrateLocation;
 import com.badbones69.crazycrates.api.utils.ItemUtils;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
+import org.simpleyaml.configuration.ConfigurationSection;
+import org.simpleyaml.configuration.file.YamlConfiguration;
 import org.simpleyaml.exceptions.InvalidConfigurationException;
+import us.crazycrew.crazycrates.CrazyCratesProvider;
 import us.crazycrew.crazycrates.platform.Server;
 import us.crazycrew.crazycrates.platform.crates.CrateConfig;
 import us.crazycrew.crazycrates.platform.keys.KeyConfig;
@@ -76,6 +81,35 @@ public class CrateManager {
 
             try {
                 crateConfig.load();
+
+                ConfigurationSection section = crateConfig.getCrateSection().getConfigurationSection("PhysicalKey");
+
+                if (section != null) {
+                    File keyFile = new File(CrazyCratesProvider.get().getKeyFolder() + "/" + crateConfig.getFileName() + ".yml");
+
+                    keyFile.createNewFile();
+
+                    YamlConfiguration configuration = YamlConfiguration.loadConfiguration(keyFile);
+
+                    configuration.set("item.name", section.getString("Name"));
+                    configuration.set("item.lore", section.getStringList("Lore"));
+                    configuration.set("item.material", section.getString("Item"));
+                    configuration.set("item.glowing", section.getBoolean("Glowing"));
+
+                    configuration.set("item.flags", Collections.emptyList());
+                    configuration.set("item.unbreakable", false);
+
+                    configuration.save(keyFile);
+
+                    crateConfig.getFile().set("Crate.PhysicalKey", null);
+
+                    crateConfig.getFile().set("Crate.keys", new ArrayList<>() {{
+                        add(keyFile.getName());
+                    }});
+
+                    crateConfig.getFile().save();
+                    crateConfig.getFile().loadWithComments();
+                }
             } catch (InvalidConfigurationException exception) {
                 this.brokenCrates.add(file.getName());
                 this.plugin.getLogger().log(Level.WARNING, file.getName() + " contains invalid YAML structure.", exception);
