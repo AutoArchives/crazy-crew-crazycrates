@@ -47,7 +47,9 @@ public class CommandManager {
 
         getCommandManager().registerSuggestion(SuggestionKey.of("locations"), (sender, arguments) -> crateManager.getCrateLocations().stream().map(CrateLocation::getID).toList());
 
-        getCommandManager().registerSuggestion(SuggestionKey.of("crates"), (sender, arguments) -> FileUtils.getAllCratesNames());
+        getCommandManager().registerSuggestion(SuggestionKey.of("crates"), (sender, arguments) -> FileUtils.getFiles("crates"));
+
+        getCommandManager().registerSuggestion(SuggestionKey.of("keys"), (sender, arguments) -> FileUtils.getFiles("keys"));
 
         getCommandManager().registerArgument(CustomPlayer.class, (sender, arguments) -> new CustomPlayer(arguments));
 

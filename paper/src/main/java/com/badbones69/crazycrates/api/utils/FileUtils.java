@@ -24,12 +24,12 @@ public class FileUtils {
     }
 
     /**
-     * @return A list of crate names.
+     * @return A list of any file.
      */
-    public static List<String> getAllCratesNames() {
+    public static List<String> getFiles(String folder) {
         List<String> files = new ArrayList<>();
 
-        File crateDirectory = new File(plugin.getDataFolder(), "/crates");
+        File crateDirectory = new File(plugin.getDataFolder(), "/" + folder);
 
         String[] file = crateDirectory.list();
 
@@ -39,10 +39,10 @@ public class FileUtils {
             if (filesList != null) {
                 for (File directory : filesList) {
                     if (directory.isDirectory()) {
-                        String[] folder = directory.list();
+                        String[] folderList = directory.list();
 
-                        if (folder != null) {
-                            for (String name : folder) {
+                        if (folderList != null) {
+                            for (String name : folderList) {
                                 if (!name.endsWith(".yml")) continue;
 
                                 files.add(name.replaceAll(".yml", ""));
@@ -83,12 +83,10 @@ public class FileUtils {
         copyFile(file.toPath(), "messages.yml");
 
         copyFiles(new File(file, "crates").toPath(), "crates", List.of(
-                "CosmicCrateExample.yml",
-                "CrateExample.yml",
                 "QuadCrateExample.yml",
                 "QuickCrateExample.yml",
                 "WarCrateExample.yml",
-                "CasinoExample.yml"
+                "CrateExample.yml"
         ));
     }
 
