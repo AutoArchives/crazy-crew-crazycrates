@@ -1,13 +1,19 @@
 package com.badbones69.crazycrates.tasks.crates;
 
 import com.badbones69.crazycrates.CrazyCratesPaper;
+import com.badbones69.crazycrates.api.enums.PersistentKeys;
 import com.badbones69.crazycrates.api.objects.Crate;
 import com.badbones69.crazycrates.api.objects.Key;
 import com.badbones69.crazycrates.api.objects.other.CrateLocation;
+import com.badbones69.crazycrates.api.utils.ItemUtils;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.simpleyaml.exceptions.InvalidConfigurationException;
+import us.crazycrew.crazycrates.api.enums.types.CrateType;
 import us.crazycrew.crazycrates.platform.Server;
 import us.crazycrew.crazycrates.platform.crates.CrateConfig;
 import us.crazycrew.crazycrates.platform.keys.KeyConfig;
@@ -24,6 +30,7 @@ public class CrateManager {
     private final @NotNull Server instance = this.plugin.getInstance();
 
     private final Set<Crate> crates = new HashSet<>();
+    private final Set<String> brokenCrates = new HashSet<>();
     private final Set<CrateLocation> crateLocations = new HashSet<>();
 
     public Set<CrateLocation> getCrateLocations() {
@@ -77,9 +84,11 @@ public class CrateManager {
             try {
                 crateConfig.load();
             } catch (InvalidConfigurationException exception) {
+                this.brokenCrates.add(file.getName());
                 this.plugin.getLogger().log(Level.WARNING, file.getName() + " contains invalid YAML structure.", exception);
                 continue;
             } catch (IOException exception) {
+                this.brokenCrates.add(file.getName());
                 this.plugin.getLogger().log(Level.WARNING, "Could not load crate file: " + file.getName(), exception);
                 continue;
             }
@@ -116,12 +125,80 @@ public class CrateManager {
         return key;
     }
 
+    /**
+     * Get a crate that has a key valid for opening.
+     *
+     * @param crateName the crate to check.
+     * @param keyName the key to check.
+     * @return key or null.
+     */
+    public Key getKeyFromCrate(String crateName, String keyName) {
+        // If it's null/empty, return.
+        if (crateName == null || crateName.isEmpty()) return null;
+
+        // Get crate.
+        Crate crate = getCrate(crateName);
+
+        // If crate is null.
+        if (crate == null) return null;
+
+        // If it's null/empty, return.
+        if (keyName == null || keyName.isEmpty()) return null;
+
+        // If the key section doesn't contain the one we're checking.
+        if (!crate.getKeys().contains(keyName)) return null;
+
+        return getKey(keyName);
+    }
+
+    /**
+     * Get a crate from the key. Only used for older keys.
+     *
+     * @param item the key ItemStack you are checking.
+     * @return a crate if is a key from a crate otherwise null if it is not.
+     */
+    public Crate getCrateFromKey(ItemStack item) {
+        if (!item.hasItemMeta()) return null;
+
+        ItemMeta itemMeta = item.getItemMeta();
+
+        if (!itemMeta.getPersistentDataContainer().has(PersistentKeys.crate_key.getNamespacedKey())) {
+            // Get the item meta as a string
+            String value = itemMeta.getAsString();
+
+            String[] sections = value.split(",");
+
+            String pair = null;
+
+            for (String key : sections) {
+                if (key.contains("CrazyCrates-Crate")) {
+                    pair = key.trim().replaceAll("\\{", "").replaceAll("\"", "");
+                    break;
+                }
+            }
+
+            if (pair == null) {
+                return null;
+            }
+
+            return getCrate(pair.split(":")[1]);
+        }
+
+        String crateName = ItemUtils.getKey(itemMeta);
+
+        return getCrate(crateName);
+    }
+
     public Set<Key> getKeys() {
         return Collections.unmodifiableSet(this.keys);
     }
 
     public Set<Crate> getCrates() {
         return Collections.unmodifiableSet(this.crates);
+    }
+
+    public Set<String> getBrokenCrates() {
+        return Collections.unmodifiableSet(this.brokenCrates);
     }
 
     public void addActiveCrate(UUID uuid, Location location) {
