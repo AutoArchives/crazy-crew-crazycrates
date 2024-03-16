@@ -3,6 +3,7 @@ package com.badbones69.crazycrates.commands.crates.types.admin;
 import com.badbones69.crazycrates.api.enums.Messages;
 import com.badbones69.crazycrates.api.objects.Crate;
 import com.badbones69.crazycrates.commands.crates.BaseCommand;
+import com.badbones69.crazycrates.tasks.InventoryManager;
 import com.badbones69.crazycrates.tasks.crates.CrateManager;
 import dev.triumphteam.cmd.bukkit.annotation.Permission;
 import dev.triumphteam.cmd.core.annotations.Command;
@@ -11,9 +12,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionDefault;
 import org.jetbrains.annotations.NotNull;
+import us.crazycrew.crazycrates.api.enums.types.CrateType;
 
 public class CommandPreview extends BaseCommand {
 
+    private final @NotNull InventoryManager inventoryManager = this.plugin.getInventoryManager();
     private final @NotNull CrateManager crateManager = this.plugin.getCrateManager();
 
     @Command("preview")
@@ -45,7 +48,7 @@ public class CommandPreview extends BaseCommand {
             return;
         }
 
-        //this.inventoryManager.addViewer(target);
-        //this.inventoryManager.openNewCratePreview(target, crate,crate.getCrateType() == CrateType.cosmic || crate.getCrateType() == CrateType.casino);
+        this.inventoryManager.addViewer(target);
+        this.inventoryManager.openNewCratePreview(target, crate, crate.getCrateType() == CrateType.cosmic || crate.getCrateType() == CrateType.casino);
     }
 }
