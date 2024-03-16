@@ -41,6 +41,8 @@ public class Key {
 
         this.isUnbreakable = config.isUnbreakable();
         this.isGlowing = config.isGlowing();
+
+        //todo() when checking for old keys, we need to check if the crate name matches still.
         this.itemStack = new ItemBuilder().setMaterial(getMaterial())
                 // Bind the file name to the key item.
                 .setString(PersistentKeys.crate_key.getNamespacedKey(), this.fileName)
