@@ -345,45 +345,6 @@ public class FileManager {
     }
 
     /**
-     * @return A list of crate names.
-     */
-    public List<String> getAllCratesNames() {
-        List<String> files = new ArrayList<>();
-
-        File crateDirectory = new File(this.plugin.getDataFolder(), "/crates");
-
-        String[] file = crateDirectory.list();
-
-        if (file != null) {
-            File[] filesList = crateDirectory.listFiles();
-
-            if (filesList != null) {
-                for (File directory : filesList) {
-                    if (directory.isDirectory()) {
-                        String[] folder = directory.list();
-
-                        if (folder != null) {
-                            for (String name : folder) {
-                                if (!name.endsWith(".yml")) continue;
-
-                                files.add(name.replaceAll(".yml", ""));
-                            }
-                        }
-                    }
-                }
-            }
-
-            for (String name : file) {
-                if (!name.endsWith(".yml")) continue;
-
-                files.add(name.replaceAll(".yml", ""));
-            }
-        }
-
-        return Collections.unmodifiableList(files);
-    }
-
-    /**
      * Was found here: <a href="https://bukkit.org/threads/extracting-file-from-jar.16962">...</a>
      */
     private void copyFile(InputStream in, File out) throws Exception {

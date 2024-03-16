@@ -12,6 +12,7 @@ import com.badbones69.crazycrates.api.objects.Tier;
 import com.badbones69.crazycrates.api.objects.other.BrokeLocation;
 import com.badbones69.crazycrates.api.ChestManager;
 import com.badbones69.crazycrates.api.builders.ItemBuilder;
+import com.badbones69.crazycrates.api.utils.FileUtils;
 import com.badbones69.crazycrates.api.utils.MiscUtils;
 import com.badbones69.crazycrates.tasks.crates.types.*;
 import com.badbones69.crazycrates.tasks.crates.types.CasinoCrate;
@@ -178,7 +179,7 @@ public class BukkitCrateManager {
 
         if (MiscUtils.isLogging()) this.plugin.getLogger().info("Loading all crate information...");
 
-        for (String crateName : this.fileManager.getAllCratesNames()) {
+        for (String crateName : FileUtils.getFiles("crates")) {
             try {
                 FileConfiguration file = this.fileManager.getFile(crateName).getFile();
                 CrateType crateType = CrateType.getFromName(file.getString("Crate.CrateType"));
