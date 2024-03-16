@@ -104,7 +104,7 @@ public class CrateManager {
                     crateConfig.getFile().set("Crate.PhysicalKey", null);
 
                     crateConfig.getFile().set("Crate.keys", new ArrayList<>() {{
-                        add(keyFile.getName());
+                        add(keyFile.getName().replaceAll(".yml", ""));
                     }});
 
                     crateConfig.getFile().save();
