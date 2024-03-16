@@ -16,11 +16,16 @@ public abstract class Server {
 
     public void enable() {
         List.of(
-                "CrateExample.yml",
                 "WarCrateExample.yml",
                 "QuickCrateExample.yml",
-                "QuadCrateExample.yml"
+                "QuadCrateExample.yml",
+                "CrateExample.yml"
         ).forEach(line -> FileUtils.copyFile(getCrateFolder().toPath(), "crates", line));
+
+        List.of(
+                "DiamondKey.yml",
+                "CasinoKey.yml"
+        ).forEach(line -> FileUtils.copyFile(getKeyFolder().toPath(), "keys", line));
     }
 
     public void reload() {

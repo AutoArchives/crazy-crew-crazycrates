@@ -1,13 +1,11 @@
 package us.crazycrew.crazycrates.platform.keys;
 
-import com.ryderbelserion.cluster.utils.FileUtils;
 import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.platform.Server;
 import us.crazycrew.crazycrates.CrazyCratesProvider;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
@@ -18,13 +16,6 @@ public class KeyManager {
     private final @NotNull Server instance = CrazyCratesProvider.get();
 
     private final @NotNull Logger logger = this.instance.getLogger();
-
-    public KeyManager() {
-        List.of(
-                "CasinoKey.yml",
-                "DiamondKey.yml"
-        ).forEach(key -> FileUtils.copyFile(this.instance.getKeyFolder().toPath(), "keys", key));
-    }
 
     private final Map<String, KeyConfig> keys = new ConcurrentHashMap<>();
 
