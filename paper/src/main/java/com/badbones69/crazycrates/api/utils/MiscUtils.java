@@ -172,13 +172,18 @@ public class MiscUtils {
         return -1;
     }
 
-    public static void failedToTakeKey(CommandSender player, String crateName) {
-        plugin.getServer().getLogger().warning("An error has occurred while trying to take a physical key from a player");
-        plugin.getServer().getLogger().warning("Player: " + player.getName());
-        plugin.getServer().getLogger().warning("Crate: " + crateName);
+    public static void failedToTakeKey(CommandSender player, String crateName, String keyName) {
+        List.of(
+                "An error has occurred while trying to take a physical key from a player.",
+                "Player: " + player.getName(),
+                "Key: " + keyName,
+                "Crate: " + crateName
+        ).forEach(plugin.getServer().getLogger()::warning);
 
-        player.sendMessage(MsgUtils.getPrefix("&cAn issue has occurred when trying to take a key."));
-        player.sendMessage(MsgUtils.getPrefix("&cCommon reasons includes not having enough keys."));
+        List.of(
+                "&cAn issue has occurred when trying to take a key.",
+                "&cCommon reasons includes not having enough keys."
+        ).forEach(line -> player.sendMessage(MsgUtils.getPrefix(line)));
     }
 
     public static long pickNumber(long min, long max) {
