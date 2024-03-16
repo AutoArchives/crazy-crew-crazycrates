@@ -26,7 +26,7 @@ public class Key {
 
     private final boolean isGlowing;
 
-    private final ItemStack itemStack;
+    private final ItemBuilder itemStack;
 
     public Key(KeyConfig config) {
         this.fileName = config.getFileName();
@@ -52,7 +52,7 @@ public class Key {
         this.itemStack = new ItemBuilder().setMaterial(getMaterial())
                 // Bind the file name to the key item.
                 .setString(PersistentKeys.crate_key.getNamespacedKey(), this.fileName)
-                .setName(getName()).setLore(getLore()).setGlow(isGlowing()).setUnbreakable(isUnbreakable()).setItemFlags(getFlags()).build();
+                .setName(getName()).setLore(getLore()).setGlow(isGlowing()).setUnbreakable(isUnbreakable()).setItemFlags(getFlags());
     }
 
     public String getFileName() {
@@ -84,6 +84,18 @@ public class Key {
     }
 
     public ItemStack getKey() {
-        return this.itemStack;
+        return this.itemStack.build();
+    }
+
+    public ItemStack getKey(Player player) {
+        return this.itemStack.setTarget(player).build();
+    }
+
+    public ItemStack getKey(int amount) {
+        return this.itemStack.setAmount(amount).build();
+    }
+
+    public ItemStack getKey(int amount, Player player) {
+        return this.itemStack.setAmount(amount).setTarget(player).build();
     }
 }
