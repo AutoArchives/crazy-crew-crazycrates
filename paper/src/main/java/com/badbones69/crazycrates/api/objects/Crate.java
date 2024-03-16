@@ -8,6 +8,7 @@ import com.badbones69.crazycrates.api.utils.MsgUtils;
 import com.badbones69.crazycrates.tasks.crates.CrateManager;
 import com.badbones69.crazycrates.tasks.crates.effects.SoundEffect;
 import me.clip.placeholderapi.PlaceholderAPI;
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -24,6 +25,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
+
+import static java.util.regex.Matcher.quoteReplacement;
 
 public class Crate {
 
@@ -328,5 +332,60 @@ public class Crate {
      */
     public List<Prize> getPrizes() {
         return Collections.unmodifiableList(this.prizes);
+    }
+
+    /**
+     * Gives a prize to a player.
+     *
+     * @param player the player to get the prize.
+     * @param prize the prize to give.
+     */
+    public void givePrize(Player player, Prize prize) {
+        Logger logger = this.plugin.getLogger();
+
+        if (prize == null) {
+            if (MiscUtils.isLogging()) logger.warning("No prize was found when giving " + player.getName() + " a prize.");
+
+            return;
+        }
+
+        for (String command : prize.getCommands()) {
+            if (command.contains("%random%:")) {
+                String cmd = command;
+                StringBuilder commandBuilder = new StringBuilder();
+
+                for (String word : cmd.split(" ")) {
+                    if (word.startsWith("%random%:")) {
+                        word = word.replace("%random%:", "");
+
+                        try {
+                            long min = Long.parseLong(word.split("-")[0]);
+                            long max = Long.parseLong(word.split("-")[1]);
+                            commandBuilder.append(MiscUtils.pickNumber(min, max)).append(" ");
+                        } catch (Exception exception) {
+                            commandBuilder.append("1 ");
+
+                            logger.warning("The prize " + prize.getPrizeNumber() + " in the " + getCrateName() + " crate has caused an error when trying to run a command.");
+                            logger.warning("Command: " + cmd);
+                        }
+                    } else {
+                        commandBuilder.append(word).append(" ");
+                    }
+                }
+
+                command = commandBuilder.toString();
+                command = command.substring(0, command.length() - 1);
+
+                if (MiscUtils.isPapiActive()) command = PlaceholderAPI.setPlaceholders(player, command);
+
+                String display = prize.getDisplayItem().getItemMeta().getDisplayName();
+
+                String name = display.isEmpty() ? MsgUtils.color(WordUtils.capitalizeFully(prize.getDisplayItem().getType().getKey().getKey().replaceAll("_", " "))) : display;
+
+                MiscUtils.sendCommand(command.replaceAll("%player%", player.getName()).replaceAll("%reward%", name).replaceAll("%crate%", getPreviewName()));
+            }
+        }
+
+        sendMessage(player, prize);
     }
 }

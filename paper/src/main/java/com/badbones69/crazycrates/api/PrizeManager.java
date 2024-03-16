@@ -34,12 +34,7 @@ public class PrizeManager {
      * @param prize the player is being given.
      */
     public static void givePrize(Player player, Prize prize, Crate crate) {
-        /*if (prize == null) {
-            if (MiscUtils.isLogging()) plugin.getLogger().warning("No prize was found when giving " + player.getName() + " a prize.");
-
-            return;
-        }
-
+        /*
         prize = prize.hasPermission(player) ? prize.getAlternativePrize() : prize;
 
         for (ItemStack item : prize.getItems()) {
@@ -67,72 +62,7 @@ public class PrizeManager {
             } else {
                 player.getWorld().dropItemNaturally(player.getLocation(), clone.build());
             }
-        }
-
-        for (String command : prize.getCommands()) { // /give %player% iron %random%:1-64
-            if (command.contains("%random%:")) {
-                String cmd = command;
-                StringBuilder commandBuilder = new StringBuilder();
-
-                for (String word : cmd.split(" ")) {
-                    if (word.startsWith("%random%:")) {
-                        word = word.replace("%random%:", "");
-
-                        try {
-                            long min = Long.parseLong(word.split("-")[0]);
-                            long max = Long.parseLong(word.split("-")[1]);
-                            commandBuilder.append(MiscUtils.pickNumber(min, max)).append(" ");
-                        } catch (Exception e) {
-                            commandBuilder.append("1 ");
-
-                            plugin.getLogger().warning("The prize " + prize.getPrizeName() + " in the " + prize.getCrateName() + " crate has caused an error when trying to run a command.");
-                            plugin.getLogger().warning("Command: " + cmd);
-                        }
-                    } else {
-                        commandBuilder.append(word).append(" ");
-                    }
-                }
-
-                command = commandBuilder.toString();
-                command = command.substring(0, command.length() - 1);
-            }
-
-            if (MiscUtils.isPapiActive()) command = PlaceholderAPI.setPlaceholders(player, command);
-
-            String display = prize.getDisplayItemBuilder().getName();
-
-            String name = display == null || display.isEmpty() ? MsgUtils.color(WordUtils.capitalizeFully(prize.getDisplayItemBuilder().getMaterial().getKey().getKey().replaceAll("_", " "))) : display;
-
-            MiscUtils.sendCommand(command
-                    .replaceAll("%player%", quoteReplacement(player.getName()))
-                    .replaceAll("%reward%", quoteReplacement(name))
-                    .replaceAll("%crate%", quoteReplacement(crate.getCrateInventoryName())));
-        }
-
-        if (!crate.getPrizeMessage().isEmpty() && prize.getMessages().isEmpty()) {
-            for (String message : crate.getPrizeMessage()) {
-                sendMessage(player, prize, crate, message);
-            }
-
-            return;
-        }
-
-        for (String message : prize.getMessages()) {
-            sendMessage(player, prize, crate, message);
         }*/
-    }
-
-    private static void sendMessage(Player player, Prize prize, Crate crate, String message) {
-        /*String display = prize.getDisplayItemBuilder().getName();
-
-        String name = display == null || display.isEmpty() ? MsgUtils.color(WordUtils.capitalizeFully(prize.getDisplayItemBuilder().getMaterial().getKey().getKey().replaceAll("_", " "))) : display;
-
-        String defaultMessage = message
-                .replaceAll("%player%", quoteReplacement(player.getName()))
-                .replaceAll("%reward%", quoteReplacement(name))
-                .replaceAll("%crate%", quoteReplacement(crate.getCrateInventoryName()));
-
-        MsgUtils.sendMessage(player, MiscUtils.isPapiActive() ? PlaceholderAPI.setPlaceholders(player, defaultMessage) : defaultMessage, false);*/
     }
 
     /**
