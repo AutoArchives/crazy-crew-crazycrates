@@ -1,5 +1,10 @@
-package com.badbones69.crazycrates.commands.subs;
+package com.badbones69.crazycrates.commands.v1.subs;
 
+public class BaseKeyCommand {
+
+}
+
+/*
 import com.badbones69.crazycrates.CrazyCratesPaper;
 import com.badbones69.crazycrates.api.objects.Crate;
 import com.badbones69.crazycrates.api.utils.MiscUtils;
@@ -61,7 +66,6 @@ public class BaseKeyCommand extends BaseCommand {
      * @param sender sender to send message to.
      * @param header header of the message.
      * @param messageContent content of the message.
-     */
     private void getKeys(Player player, CommandSender sender, String header, String messageContent) {
         List<String> message = Lists.newArrayList();
 
@@ -113,4 +117,4 @@ public class BaseKeyCommand extends BaseCommand {
 
         sender.sendMessage(messageContent);
     }
-}
+}*/
