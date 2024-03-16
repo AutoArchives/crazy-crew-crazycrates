@@ -1,4 +1,4 @@
-package com.badbones69.crazycrates.tasks.crates;
+package com.badbones69.crazycrates.tasks.v1;
 
 import ch.jalu.configme.SettingsManager;
 import com.Zrips.CMI.Modules.ModuleHandling.CMIModule;
