@@ -36,7 +36,7 @@ Crate:
       toggle: true
       # The type of sound to use.
       # https://jd.papermc.io/paper/1.20/org/bukkit/Sound.html
-      value: 'BLOCK_NOTE_BLOCK_XYLOPHONE'
+      value: 'block_note_block_xylophone'
       # The volume of the pitch.
       volume: 1.0
       # The speed of the sound.
@@ -47,7 +47,7 @@ Crate:
       toggle: true
       # The type of sound to use.
       # https://jd.papermc.io/paper/1.20/org/bukkit/Sound.html
-      value: 'UI_BUTTON_CLICK'
+      value: 'ui_button_click'
       # The volume of the pitch.
       volume: 1.0
       # The speed of the sound.
@@ -58,7 +58,7 @@ Crate:
       toggle: true
       # The type of sound to use.
       # https://jd.papermc.io/paper/1.20/org/bukkit/Sound.html
-      value: 'ENTITY_PLAYER_LEVELUP'
+      value: 'entity_player_levelup'
       # The volume of the pitch.
       volume: 1.0
       # The speed of the sound.
@@ -80,7 +80,7 @@ Crate:
       Toggle: true
       # The name of the border item.
       Name: ' '
-      Item: 'YELLOW_STAINED_GLASS_PANE'
+      Item: 'yellow_stained_glass_pane'
   Hologram:
     Toggle: true
     Height: 1.5
@@ -90,7 +90,7 @@ Crate:
   Prizes:
     1:
       DisplayName: '&a&lFancy Pants'
-      DisplayItem: 'CHAINMAIL_LEGGINGS'
+      DisplayItem: 'chainmail_leggings'
       # Only works on items with durability. This will make the item appear more damaged.
       # It does not set the durability but subtracts this number from the durability is 100, It subtracts 75.
       # It cannot be 0.
@@ -109,12 +109,12 @@ Crate:
       MaxRange: 100
       Chance: 40
       Items:
-        - 'Item:CHAINMAIL_LEGGINGS, Amount:1, Damage:75, Trim-Pattern:sentry, Trim-Material:lapis, Name:&aFancy Pants, protection:2'
+        - 'Item:chainmail_leggings, Amount:1, Damage:75, Trim-Pattern:sentry, Trim-Material:lapis, Name:&aFancy Pants, protection:2'
       Messages:
         - '&7You just won a &r%reward%.'
     2:
       DisplayName: '&b&lClassic Sword'
-      DisplayItem: 'DIAMOND_SWORD'
+      DisplayItem: 'diamond_sword'
       # Only works on items with durability. This will make the item appear more damaged.
       # It does not set the durability but subtracts this number from the durability is 100, It subtracts 7.
       # It cannot be 0.
@@ -129,12 +129,12 @@ Crate:
       MaxRange: 100
       Chance: 35
       Items:
-        - 'Item:DIAMOND_SWORD, Amount:1, Damage:7, Name:&bClassic Sword, sharpness:2, fire_aspect:1'
+        - 'Item:diamond_sword, Amount:1, Damage:7, Name:&bClassic Sword, sharpness:2, fire_aspect:1'
       Messages:
         - '&7You just won &r%reward%.'
     3:
       DisplayName: '&e&l$100,000'
-      DisplayItem: 'SUNFLOWER'
+      DisplayItem: 'sunflower'
       DisplayAmount: 1
       Lore:
         - '&7Make it rain a lot of Money.'

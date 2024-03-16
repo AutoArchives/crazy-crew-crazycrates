@@ -1,6 +1,6 @@
 item:
   # The material of the key.
-  material: 'TRIPWIRE_HOOK'
+  material: 'tripwire_hook'
   # The name of the key.
   name: '&b&lDiamond Crate Key'
   # The lore of the key.

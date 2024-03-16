@@ -34,7 +34,7 @@ gui:
       # The main menu button.
       menu:
         # The item the button should be.
-        item: COMPASS
+        item: compass
         override:
           # This will disable our current functionality of our main menu button in crate previews.
           # It allows you to override and use a menu of your choice from your plugin using a command.
@@ -50,7 +50,7 @@ gui:
       # The next button.
       next:
         # The item the button should be.
-        item: FEATHER
+        item: feather
         # The name of the item.
         name: '&6&lNext >>'
         # The lore of the item.
@@ -59,7 +59,7 @@ gui:
       # The back button.
       back:
         # The item the button should be.
-        item: FEATHER
+        item: feather
         # The name of the item.
         name: '&6&l<< Back'
         # The lore of the item.
@@ -69,7 +69,7 @@ gui:
         # Should the menu should be filled with one type of item?
         toggle: false
         # The item to fill the menu with.
-        item: BLACK_STAINED_GLASS_PANE
+        item: black_stained_glass_pane
         # The name of the item.
         name: ' '
         # The lore of the item.
@@ -79,33 +79,33 @@ gui:
         toggle: true
         # The items to set to the gui.
         items:
-          - 'Slot:1, Item:RED_STAINED_GLASS_PANE, Name: '
-          - 'Slot:2, Item:RED_STAINED_GLASS_PANE, Name: '
-          - 'Slot:3, Item:RED_STAINED_GLASS_PANE, Name: '
-          - 'Slot:4, Item:RED_STAINED_GLASS_PANE, Name: '
-          - 'Slot:5, Item:RED_STAINED_GLASS_PANE, Name: '
-          - 'Slot:6, Item:RED_STAINED_GLASS_PANE, Name: '
-          - 'Slot:7, Item:RED_STAINED_GLASS_PANE, Name: '
-          - 'Slot:8, Item:RED_STAINED_GLASS_PANE, Name: '
-          - 'Slot:9, Item:RED_STAINED_GLASS_PANE, Name: '
-          - 'Slot:37, Item:RED_STAINED_GLASS_PANE, Name: '
-          - 'Slot:38, Item:RED_STAINED_GLASS_PANE, Name: '
-          - 'Slot:39, Item:RED_STAINED_GLASS_PANE, Name: '
-          - 'Slot:40, Item:RED_STAINED_GLASS_PANE, Name: '
-          - 'Slot:41, Item:RED_STAINED_GLASS_PANE, Name: '
-          - 'Slot:42, Item:RED_STAINED_GLASS_PANE, Name: '
-          - 'Slot:43, Item:RED_STAINED_GLASS_PANE, Name: '
-          - 'Slot:44, Item:RED_STAINED_GLASS_PANE, Name: '
-          - 'Slot:45, Item:RED_STAINED_GLASS_PANE, Name: '
-          - 'Slot:10, Item:BLUE_STAINED_GLASS_PANE, Name: '
-          - 'Slot:19, Item:BLUE_STAINED_GLASS_PANE, Name: '
-          - 'Slot:28, Item:BLUE_STAINED_GLASS_PANE, Name: '
-          - 'Slot:18, Item:BLUE_STAINED_GLASS_PANE, Name: '
-          - 'Slot:27, Item:BLUE_STAINED_GLASS_PANE, Name: '
-          - 'Slot:36, Item:BLUE_STAINED_GLASS_PANE, Name: '
-          - 'Slot:11, Item:CYAN_STAINED_GLASS_PANE, Name: '
-          - 'Slot:13, Item:CYAN_STAINED_GLASS_PANE, Name: '
-          - 'Slot:15, Item:CYAN_STAINED_GLASS_PANE, Name: '
+          - 'Slot:1, Item:red_stained_glass_pane, Name: '
+          - 'Slot:2, Item:red_stained_glass_pane, Name: '
+          - 'Slot:3, Item:red_stained_glass_pane, Name: '
+          - 'Slot:4, Item:red_stained_glass_pane, Name: '
+          - 'Slot:5, Item:red_stained_glass_pane, Name: '
+          - 'Slot:6, Item:red_stained_glass_pane, Name: '
+          - 'Slot:7, Item:red_stained_glass_pane, Name: '
+          - 'Slot:8, Item:red_stained_glass_pane, Name: '
+          - 'Slot:9, Item:red_stained_glass_pane, Name: '
+          - 'Slot:37, Item:red_stained_glass_pane, Name: '
+          - 'Slot:38, Item:red_stained_glass_pane, Name: '
+          - 'Slot:39, Item:red_stained_glass_pane, Name: '
+          - 'Slot:40, Item:red_stained_glass_pane, Name: '
+          - 'Slot:41, Item:red_stained_glass_pane, Name: '
+          - 'Slot:42, Item:red_stained_glass_pane, Name: '
+          - 'Slot:43, Item:red_stained_glass_pane, Name: '
+          - 'Slot:44, Item:red_stained_glass_pane, Name: '
+          - 'Slot:45, Item:red_stained_glass_pane, Name: '
+          - 'Slot:10, Item:blue_stained_glass_pane, Name: '
+          - 'Slot:19, Item:blue_stained_glass_pane, Name: '
+          - 'Slot:28, Item:blue_stained_glass_pane, Name: '
+          - 'Slot:18, Item:blue_stained_glass_pane, Name: '
+          - 'Slot:27, Item:blue_stained_glass_pane, Name: '
+          - 'Slot:36, Item:blue_stained_glass_pane, Name: '
+          - 'Slot:11, Item:cyan_STAINED_GLASS_PANE, Name: '
+          - 'Slot:13, Item:cyan_STAINED_GLASS_PANE, Name: '
+          - 'Slot:15, Item:cyan_STAINED_GLASS_PANE, Name: '
           - 'Slot:25, Item:CYAN_STAINED_GLASS_PANE, Name: '
           - 'Slot:17, Item:CYAN_STAINED_GLASS_PANE, Name: '
           - 'Slot:20, Item:CYAN_STAINED_GLASS_PANE, Name: '
@@ -159,7 +159,7 @@ crate:
       # Should a sound should be played if they have no key?
       toggle: true
       # The sound to play.
-      name: ENTITY_VILLAGER_NO
+      name: entity_villager_no
   # Settings related to QuadCrate
   quad-crate:
     # How long should the quad crate be active?

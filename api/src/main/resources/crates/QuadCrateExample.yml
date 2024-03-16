@@ -41,7 +41,7 @@ Crate:
       toggle: true
       # The type of sound to use.
       # https://jd.papermc.io/paper/1.20/org/bukkit/Sound.html
-      value: 'BLOCK_STONE_STEP'
+      value: 'block_stone_step'
       # The volume of the pitch.
       volume: 1.0
       # The speed of the sound.
@@ -52,7 +52,7 @@ Crate:
       toggle: true
       # The type of sound to use.
       # https://jd.papermc.io/paper/1.20/org/bukkit/Sound.html
-      value: 'UI_BUTTON_CLICK'
+      value: 'ui_button_click'
       # The volume of the pitch.
       volume: 1.0
       # The speed of the sound.
@@ -63,14 +63,14 @@ Crate:
       toggle: true
       # The type of sound to use.
       # https://jd.papermc.io/paper/1.20/org/bukkit/Sound.html
-      value: 'BLOCK_ANVIL_LAND'
+      value: 'block_anvil_land'
       # The volume of the pitch.
       volume: 1.0
       # The speed of the sound.
       pitch: 1.0
   Prize-Message:
     - '&7You have won &c%reward% &7from &c%crate%.'
-  Item: 'BREWING_STAND'
+  Item: 'brewing_stand'
   Glowing: false
   Name: '&b&lQuad Crate'
   Lore:
@@ -85,7 +85,7 @@ Crate:
       Toggle: true
       # The name of the border item.
       Name: ' '
-      Item: 'BLACK_STAINED_GLASS_PANE'
+      Item: 'black_stained_glass_pane'
   Hologram:
     Toggle: true
     Height: 1.5
@@ -95,16 +95,16 @@ Crate:
   Prizes:
     1:
       DisplayName: '&3&lRare ChestPlate'
-      DisplayItem: 'DIAMOND_CHESTPLATE'
+      DisplayItem: 'diamond_chestplate'
       # Only works on items with durability. This will make the item appear more damaged.
       # It does not set the durability but subtracts this number from the durability is 100, It subtracts 25.
       # It cannot be 0.
       DisplayDamage: 25
       DisplayTrim:
         # Available Materials: https://jd.papermc.io/paper/1.20/org/bukkit/inventory/meta/trim/TrimMaterial.html
-        Material: 'QUARTZ'
+        Material: 'quartz'
         # Available Patterns: https://jd.papermc.io/paper/1.20/org/bukkit/inventory/meta/trim/TrimPattern.html
-        Pattern: 'SENTRY'
+        Pattern: 'sentry'
       DisplayAmount: 1
       Lore:
         - '&7Win a very rare chest plate.'
@@ -115,10 +115,10 @@ Crate:
       MaxRange: 100
       Chance: 40
       Items:
-        - 'Item:DIAMOND_CHESTPLATE, Amount:1, Damage:25, Trim-Pattern:sentry, Trim-Material:emerald, Name:&3Rare ChestPlate, protection:5, unbreaking:3'
+        - 'Item:diamond_chestplate, Amount:1, Damage:25, Trim-Pattern:sentry, Trim-Material:emerald, Name:&3Rare ChestPlate, protection:5, unbreaking:3'
     2:
       DisplayName: '&b&lCrazy &4&lSword'
-      DisplayItem: 'GOLDEN_SWORD'
+      DisplayItem: 'golden_sword'
       # Only works on items with durability. This will make the item appear more damaged.
       # It does not set the durability but subtracts this number from the durability is 100, It subtracts 13.
       DisplayDamage: 13
@@ -132,12 +132,12 @@ Crate:
       MaxRange: 100
       Chance: 35
       Items:
-        - 'Item:GOLDEN_SWORD, Amount:1, Damage:13, Name:&b&lCrazy &4&lSword, sharpness:5, fire_aspect:1'
+        - 'Item:golden_sword, Amount:1, Damage:13, Name:&b&lCrazy &4&lSword, sharpness:5, fire_aspect:1'
       Messages:
         - '&7You just won &r%reward%.'
     3:
       DisplayName: '&e&l$1,000,000'
-      DisplayItem: 'SUNFLOWER'
+      DisplayItem: 'sunflower'
       DisplayAmount: 1
       Lore:
         - '&7Make it rain a butt load of Money.'

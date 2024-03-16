@@ -66,6 +66,6 @@ public class CosmicManager extends AbstractCrateManager {
     }
 
     public String getTierPreviewFillerItem() {
-        return this.config.getCrateSection().getString("tier-preview.glass.item", "RED_STAINED_GLASS_PANE");
+        return this.config.getCrateSection().getString("tier-preview.glass.item", "red_stained_glass_pane");
     }
 }

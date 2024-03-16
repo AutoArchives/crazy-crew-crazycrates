@@ -44,7 +44,7 @@ Crate:
       toggle: true
       # The type of sound to use.
       # https://jd.papermc.io/paper/1.20/org/bukkit/Sound.html
-      value: 'BLOCK_LAVA_POP'
+      value: 'block_lava_pop'
       # The volume of the pitch.
       volume: 1.0
       # The speed of the sound.
@@ -55,7 +55,7 @@ Crate:
       toggle: true
       # The type of sound to use.
       # https://jd.papermc.io/paper/1.20/org/bukkit/Sound.html
-      value: 'UI_BUTTON_CLICK'
+      value: 'ui_button_click'
       # The volume of the pitch.
       volume: 1.0
       # The speed of the sound.
@@ -66,7 +66,7 @@ Crate:
       toggle: true
       # The type of sound to use.
       # https://jd.papermc.io/paper/1.20/org/bukkit/Sound.html
-      value: 'ENTITY_PLAYER_LEVELUP'
+      value: 'entity_player_levelup'
       # The volume of the pitch.
       volume: 1.0
       # The speed of the sound.
@@ -76,7 +76,7 @@ Crate:
   Prize-Message:
     - '&7You have won &c%reward% &7from &c%crate%.'
   # Item the crate is in the GUI
-  Item: 'BEACON'
+  Item: 'beacon'
   # If the crate in the main /cc GUI is glowing or not.
   Glowing: false
   # Name of the item in the GUI.
@@ -98,7 +98,7 @@ Crate:
       # The name of the border item.
       Name: ' '
       # The item that shows in the border. Can be glass or any other item.
-      Item: 'GRAY_STAINED_GLASS_PANE'
+      Item: 'gray_stained_glass_pane'
   # Settings for the holograms.
   Hologram:
     # Toggle on and off the holograms for the crates.
@@ -114,7 +114,7 @@ Crate:
   Prizes:
     1:
       DisplayName: '&4&lWarlord''s Helmet'
-      DisplayItem: 'NETHERITE_HELMET'
+      DisplayItem: 'netherite_helmet'
       DisplayTrim:
         # Available Materials: https://jd.papermc.io/paper/1.20/org/bukkit/inventory/meta/trim/TrimMaterial.html
         Material: 'redstone'
@@ -130,10 +130,10 @@ Crate:
       MaxRange: 100
       Chance: 40
       Items:
-        - 'Item:NETHERITE_HELMET, Amount:1, Damage:25, Trim-Pattern:sentry, Trim-Material:redstone, Name:&4&lWarlord''s Helmet, protection:5, unbreaking:3'
+        - 'Item:netherite_helmet, Amount:1, Damage:25, Trim-Pattern:sentry, Trim-Material:redstone, Name:&4&lWarlord''s Helmet, protection:5, unbreaking:3'
     2:
       DisplayName: '&4&lWarlord''s Chestplate'
-      DisplayItem: 'NETHERITE_CHESTPLATE'
+      DisplayItem: 'netherite_chestplate'
       DisplayTrim:
         # Available Materials: https://jd.papermc.io/paper/1.20/org/bukkit/inventory/meta/trim/TrimMaterial.html
         Material: 'redstone'
@@ -149,10 +149,10 @@ Crate:
       MaxRange: 100
       Chance: 40
       Items:
-        - 'Item:NETHERITE_CHESTPLATE, Amount:1, Damage:25, Trim-Pattern:sentry, Trim-Material:redstone, Name:&4&lWarlord''s Chestplate, protection:5, unbreaking:3'
+        - 'Item:netherite_chestplate, Amount:1, Damage:25, Trim-Pattern:sentry, Trim-Material:redstone, Name:&4&lWarlord''s Chestplate, protection:5, unbreaking:3'
     3:
       DisplayName: '&4&lWarlord''s Leggings'
-      DisplayItem: 'NETHERITE_LEGGINGS'
+      DisplayItem: 'netherite_leggings'
       DisplayTrim:
         # Available Materials: https://jd.papermc.io/paper/1.20/org/bukkit/inventory/meta/trim/TrimMaterial.html
         Material: 'redstone'
@@ -168,10 +168,10 @@ Crate:
       MaxRange: 100
       Chance: 40
       Items:
-        - 'Item:NETHERITE_LEGGINGS, Amount:1, Damage:25, Trim-Pattern:sentry, Trim-Material:redstone, Name:&4&lWarlord''s Leggings, protection:5, unbreaking:3'
+        - 'Item:netherite_leggings, Amount:1, Damage:25, Trim-Pattern:sentry, Trim-Material:redstone, Name:&4&lWarlord''s Leggings, protection:5, unbreaking:3'
     4:
       DisplayName: '&4&lWarlord''s Boots'
-      DisplayItem: 'NETHERITE_BOOTS'
+      DisplayItem: 'netherite_boots'
       DisplayTrim:
         # Available Materials: https://jd.papermc.io/paper/1.20/org/bukkit/inventory/meta/trim/TrimMaterial.html
         Material: 'redstone'
@@ -187,4 +187,4 @@ Crate:
       MaxRange: 100
       Chance: 40
       Items:
-        - 'Item:NETHERITE_BOOTS, Amount:1, Damage:25, Trim-Pattern:sentry, Trim-Material:redstone, Name:&4&lWarlord''s Boots, protection:5, unbreaking:3'
+        - 'Item:netherite_boots, Amount:1, Damage:25, Trim-Pattern:sentry, Trim-Material:redstone, Name:&4&lWarlord''s Boots, protection:5, unbreaking:3'
