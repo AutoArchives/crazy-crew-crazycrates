@@ -25,7 +25,7 @@ public class Key {
     private final ItemStack itemStack;
 
     public Key(KeyConfig config) {
-        this.material = ItemUtils.getMaterial(config.getMaterial());
+        this.fileName = config.getFileName();
 
         this.name = config.getName();
 
@@ -47,6 +47,10 @@ public class Key {
                 // Bind the file name to the key item.
                 .setString(PersistentKeys.crate_key.getNamespacedKey(), this.fileName)
                 .setName(getName()).setLore(getLore()).setGlow(isGlowing()).setUnbreakable(isUnbreakable()).setItemFlags(getFlags()).build();
+    }
+
+    public String getFileName() {
+        return this.fileName;
     }
 
     public Material getMaterial() {
