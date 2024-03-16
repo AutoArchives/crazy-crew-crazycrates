@@ -1,13 +1,16 @@
 package us.crazycrew.crazycrates.platform.crates;
 
 import org.simpleyaml.configuration.ConfigurationSection;
+import org.simpleyaml.configuration.file.YamlConfiguration;
 import org.simpleyaml.configuration.file.YamlFile;
+import us.crazycrew.crazycrates.CrazyCratesProvider;
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
 import us.crazycrew.crazycrates.platform.crates.types.AbstractCrateManager;
 import us.crazycrew.crazycrates.platform.crates.types.CasinoManager;
 import us.crazycrew.crazycrates.platform.crates.types.CosmicManager;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
 
 public class CrateConfig extends YamlFile {
 
