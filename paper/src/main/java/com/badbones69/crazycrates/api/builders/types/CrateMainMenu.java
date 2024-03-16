@@ -6,6 +6,7 @@ import com.badbones69.crazycrates.api.builders.ItemBuilder;
 import com.badbones69.crazycrates.api.enums.Messages;
 import com.badbones69.crazycrates.api.objects.Crate;
 import com.badbones69.crazycrates.api.utils.ItemUtils;
+import com.badbones69.crazycrates.tasks.crates.CrateManager;
 import org.bukkit.Material;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
@@ -16,6 +17,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
+import us.crazycrew.crazycrates.api.enums.types.KeyType;
 import us.crazycrew.crazycrates.platform.config.ConfigManager;
 import us.crazycrew.crazycrates.platform.config.impl.ConfigKeys;
 import com.badbones69.crazycrates.api.builders.InventoryBuilder;
@@ -24,6 +26,8 @@ import java.util.List;
 public class CrateMainMenu extends InventoryBuilder {
 
     //private final @NotNull BukkitUserManager userManager = this.plugin.getUserManager();
+
+    private final CrateManager crateManager = this.plugin.getCrateManager();
 
     private final @NotNull SettingsManager config = ConfigManager.getConfig();
 
@@ -160,6 +164,8 @@ public class CrateMainMenu extends InventoryBuilder {
 
         private final @NotNull CrazyCratesPaper plugin = JavaPlugin.getPlugin(CrazyCratesPaper.class);
 
+        private final @NotNull CrateManager crateManager = this.plugin.getCrateManager();
+
         //private final @NotNull InventoryManager inventoryManager = this.plugin.getInventoryManager();
 
         //private final @NotNull SettingsManager config = ConfigManager.getConfig();
@@ -204,33 +210,19 @@ public class CrateMainMenu extends InventoryBuilder {
                 }
 
                 case LEFT, SHIFT_LEFT -> {
+                    if (this.crateManager.isCrateActive(player.getUniqueId())) {
+                        player.sendMessage(Messages.already_opening_crate.getMessage("{crate}", crate.getCrateName(), player));
+                        return;
+                    }
+
                     crate.playSound(player, "click-sound", "UI_BUTTON_CLICK", SoundCategory.PLAYERS);
 
-                    player.sendMessage("This is left click.");
+                    KeyType type = KeyType.virtual_key;
+                    boolean hasKey = false;
                 }
             }
 
             /*
-            if (event.getAction() == InventoryAction.PICKUP_HALF) { // Right-clicked the item
-                if (crate.isPreviewEnabled()) {
-                    crate.playSound(player, player.getLocation(), "click-sound", "UI_BUTTON_CLICK", SoundCategory.PLAYERS);
-
-                    player.closeInventory();
-
-                    this.inventoryManager.addViewer(player);
-                    this.inventoryManager.openNewCratePreview(player, crate, crate.getCrateType() == CrateType.cosmic || crate.getCrateType() == CrateType.casino);
-                } else {
-                    player.sendMessage(Messages.preview_disabled.getMessage("{crate}", crate.getName(), player));
-                }
-
-                return;
-            }
-
-            if (this.crateManager.isInOpeningList(player)) {
-                player.sendMessage(Messages.already_opening_crate.getMessage("{crate}", crate.getName(), player));
-                return;
-            }
-
             boolean hasKey = false;
             KeyType keyType = KeyType.virtual_key;
 

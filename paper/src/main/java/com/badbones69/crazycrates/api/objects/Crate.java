@@ -5,6 +5,7 @@ import com.badbones69.crazycrates.api.builders.ItemBuilder;
 import com.badbones69.crazycrates.api.enums.PersistentKeys;
 import com.badbones69.crazycrates.api.utils.MiscUtils;
 import com.badbones69.crazycrates.api.utils.MsgUtils;
+import com.badbones69.crazycrates.tasks.crates.CrateManager;
 import com.badbones69.crazycrates.tasks.crates.effects.SoundEffect;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.SoundCategory;
@@ -14,6 +15,7 @@ import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 import org.simpleyaml.configuration.ConfigurationSection;
 import us.crazycrew.crazycrates.api.crates.CrateHologram;
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
@@ -25,7 +27,8 @@ import java.util.Set;
 
 public class Crate {
 
-    private final CrazyCratesPaper plugin = JavaPlugin.getPlugin(CrazyCratesPaper.class);
+    private final @NotNull CrazyCratesPaper plugin = JavaPlugin.getPlugin(CrazyCratesPaper.class);
+    private final @NotNull CrateManager crateManager = this.plugin.getCrateManager();
 
     private final boolean executeCommands;
     private final List<String> commands;
@@ -119,7 +122,7 @@ public class Crate {
 
         this.fillerToggle = preview.getBoolean("Glass.Toggle", false);
         this.fillerItem = new ItemBuilder()
-                .setMaterial(preview.getString("Glass.Item", "GRAY_STAINED_GLASS_PANE"))
+                .setMaterial(preview.getString("Glass.Item", "gray_stained_glass_pane"))
                 .setName(preview.getString("Glass.Name", ""))
                 .build();
 

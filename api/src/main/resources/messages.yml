@@ -5,8 +5,8 @@
 # Features: https://github.com/Crazy-Crew/CrazyCrates/issues
 # 
 misc:
-  # A list of available placeholders: {prefix}
-  unknown-command: '{prefix}&cThis command is not known.'
+  # A list of available placeholders: {prefix}, {command}
+  unknown-command: '{prefix}&c{command} is not a known command.'
   # Only activates when you try to use an ender pearl while opening a crate.
   no-teleporting: '{prefix}&cYou may not teleport away while opening a crate.'
   # A list of available placeholders: {prefix}

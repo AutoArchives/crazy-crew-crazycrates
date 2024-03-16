@@ -17,6 +17,10 @@ public class KeyConfig extends YamlConfiguration {
         load(this.file);
     }
 
+    public String getFileName() {
+        return getFile().getName().replaceAll(".yml", "");
+    }
+
     public File getFile() {
         return this.file;
     }
