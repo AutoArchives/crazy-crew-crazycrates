@@ -843,35 +843,6 @@ public class BukkitCrateManager {
         return crateLocation;
     }
 
-    public Crate getCrateFromLocation(Location location) {
-        Crate crate = null;
-
-        for (CrateLocation key : this.crateLocations) {
-            if (key.getLocation().equals(location)) {
-                crate = key.getCrate();
-                break;
-            }
-        }
-
-        return crate;
-    }
-
-    /**
-     * Get a schematic based on its name.
-     *
-     * @param name the name of the schematic.
-     * @return the CrateSchematic otherwise returns null if not found.
-     */
-    public CrateSchematic getCrateSchematic(String name) {
-        for (CrateSchematic schematic : this.crateSchematics) {
-            if (schematic.getSchematicName().equalsIgnoreCase(name)) {
-                return schematic;
-            }
-        }
-
-        return null;
-    }
-
     /**
      * Check if an entity is a display reward for a crate.
      *

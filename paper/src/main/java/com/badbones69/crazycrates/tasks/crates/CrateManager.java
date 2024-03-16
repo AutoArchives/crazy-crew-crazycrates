@@ -267,6 +267,64 @@ public class CrateManager {
     }
 
     /**
+     * Get crate by location.
+     *
+     * @param location the location to check.
+     * @return crate object or null if nothing found.
+     */
+    public Crate getCrate(Location location) {
+        Crate crate = null;
+
+        for (CrateLocation key : this.crateLocations) {
+            if (!key.getLocation().equals(location)) continue;
+
+            crate = key.getCrate();
+            break;
+        }
+
+        return crate;
+    }
+
+    /**
+     * Get a schematic based on its name.
+     *
+     * @param name the name of the schematic.
+     * @return the crate schematic object or null.
+     */
+    public CrateSchematic getSchematic(String name) {
+        CrateSchematic schematic = null;
+
+        for (CrateSchematic key : this.crateSchematics) {
+            if (!key.getSchematicName().equalsIgnoreCase(name)) continue;
+
+            schematic = key;
+            break;
+        }
+
+        return schematic;
+    }
+
+    /**
+     * Gets the physical crate of the location.
+     *
+     * @param location location you are checking.
+     * @return a crate location if the location is a physical crate otherwise null if not.
+     */
+    public CrateLocation getLocation(Location location) {
+        CrateLocation crateLocation = null;
+
+        for (CrateLocation key : this.crateLocations) {
+            if (!key.getLocation().equals(location)) continue;
+
+            crateLocation = key;
+
+            break;
+        }
+
+        return crateLocation;
+    }
+
+    /**
      * Get crate by name.
      *
      * @param name the name to check.
