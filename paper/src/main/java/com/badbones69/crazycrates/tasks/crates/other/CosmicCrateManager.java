@@ -1,6 +1,5 @@
 package com.badbones69.crazycrates.tasks.crates.other;
 
-import com.badbones69.crazycrates.api.PrizeManager;
 import com.badbones69.crazycrates.api.builders.ItemBuilder;
 import com.badbones69.crazycrates.api.objects.Crate;
 import com.badbones69.crazycrates.api.objects.Tier;
@@ -108,11 +107,11 @@ public class CosmicCrateManager extends AbstractCrateManager {
             }
 
             // In case there is no tier.
-            return PrizeManager.getTier(crate);
+            return crate.getTier();
         }
 
         // In case there is no item meta.
-        return PrizeManager.getTier(crate);
+        return crate.getTier();
     }
 
     public ItemMeta setTier(ItemMeta itemMeta, String name) {

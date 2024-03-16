@@ -2,7 +2,9 @@ package com.badbones69.crazycrates.api.objects;
 
 import com.badbones69.crazycrates.CrazyCratesPaper;
 import com.badbones69.crazycrates.api.builders.ItemBuilder;
+import com.badbones69.crazycrates.api.enums.Messages;
 import com.badbones69.crazycrates.api.enums.PersistentKeys;
+import com.badbones69.crazycrates.api.events.PlayerPrizeEvent;
 import com.badbones69.crazycrates.api.utils.MiscUtils;
 import com.badbones69.crazycrates.api.utils.MsgUtils;
 import com.badbones69.crazycrates.tasks.crates.CrateManager;
@@ -11,9 +13,13 @@ import me.clip.placeholderapi.PlaceholderAPI;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -21,10 +27,8 @@ import org.simpleyaml.configuration.ConfigurationSection;
 import us.crazycrew.crazycrates.api.crates.CrateHologram;
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
 import us.crazycrew.crazycrates.platform.crates.CrateConfig;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+
+import java.util.*;
 import java.util.logging.Logger;
 
 import static java.util.regex.Matcher.quoteReplacement;
@@ -349,6 +353,33 @@ public class Crate {
             return;
         }
 
+        for (ItemStack item : prize.getItems()) {
+            if (item == null) {
+                Map<String, String> placeholders = new HashMap<>();
+                placeholders.put("{crate}", getFileName());
+                placeholders.put("{prize}", prize.getPrizeName());
+                player.sendMessage(Messages.prize_error.getMessage(placeholders, player));
+
+                continue;
+            }
+
+            if (!MiscUtils.isInventoryFull(player)) {
+                player.getInventory().addItem(item);
+            } else {
+                player.getWorld().dropItemNaturally(player.getLocation(), item);
+            }
+        }
+
+        for (ItemBuilder item : prize.getItemBuilders()) {
+            ItemBuilder clone = new ItemBuilder(item).setTarget(player);
+
+            if (!MiscUtils.isInventoryFull(player)) {
+                player.getInventory().addItem(clone.build());
+            } else {
+                player.getWorld().dropItemNaturally(player.getLocation(), clone.build());
+            }
+        }
+
         for (String command : prize.getCommands()) {
             if (command.contains("%random%:")) {
                 String cmd = command;
@@ -365,7 +396,7 @@ public class Crate {
                         } catch (Exception exception) {
                             commandBuilder.append("1 ");
 
-                            logger.warning("The prize " + prize.getPrizeNumber() + " in the " + getCrateName() + " crate has caused an error when trying to run a command.");
+                            logger.warning("The prize " + prize.getPrizeName() + " in the " + getCrateName() + " crate has caused an error when trying to run a command.");
                             logger.warning("Command: " + cmd);
                         }
                     } else {
@@ -386,6 +417,66 @@ public class Crate {
             }
         }
 
+        if (prize.isFirework()) MiscUtils.spawnFirework(player.getLocation().add(0, 1, 0), null);
+
+        this.plugin.getServer().getPluginManager().callEvent(new PlayerPrizeEvent(player, this, getFileName(), prize));
+
         sendMessage(player, prize);
+    }
+
+    public void givePrize(Inventory inventory, int slot, Player player) {
+        ItemStack itemStack = inventory.getItem(slot);
+
+        if (itemStack == null) return;
+
+        Prize prize = getPrize(itemStack);
+
+        givePrize(player, prize);
+    }
+
+    /**
+     * @param item the item to check.
+     * @return the prize you asked for.
+     */
+    public Prize getPrize(ItemStack item) {
+        ItemMeta itemMeta = item.getItemMeta();
+
+        PersistentDataContainer container = itemMeta.getPersistentDataContainer();
+
+        return getPrize(container.get(PersistentKeys.crate_prize.getNamespacedKey(), PersistentDataType.STRING));
+    }
+
+    /**
+     * @param prizeName the prize name to check.
+     * @return the prize you asked for.
+     */
+    public Prize getPrize(String prizeName) {
+        Prize prize = null;
+
+        for (Prize key : this.prizes) {
+            if (key.getPrizeName().equalsIgnoreCase(prizeName)) {
+                prize = key;
+                break;
+            }
+        }
+
+        return prize;
+    }
+
+    public Tier getTier() {
+                /*if (crate.getTiers() != null && !crate.getTiers().isEmpty()) {
+            for (int stopLoop = 0; stopLoop <= 100; stopLoop++) {
+                for (Tier tier : crate.getTiers()) {
+                    int chance = tier.getChance();
+
+                    int num = MiscUtils.useOtherRandom() ? ThreadLocalRandom.current().nextInt(tier.getMaxRange()) : new Random().nextInt(tier.getMaxRange());
+
+                    if (num >= 1 && num <= chance) {
+                        return tier;
+                    }
+                }
+            }
+        }*/
+        return null;
     }
 }

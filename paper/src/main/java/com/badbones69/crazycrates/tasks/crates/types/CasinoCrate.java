@@ -4,16 +4,12 @@ import com.badbones69.crazycrates.api.builders.CrateBuilder;
 import com.badbones69.crazycrates.api.enums.PersistentKeys;
 import com.badbones69.crazycrates.api.objects.Crate;
 import com.badbones69.crazycrates.api.utils.MiscUtils;
-import com.badbones69.crazycrates.api.PrizeManager;
-import com.badbones69.crazycrates.tasks.BukkitUserManager;
-import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.api.enums.types.KeyType;
 
 public class CasinoCrate extends CrateBuilder {
@@ -64,9 +60,9 @@ public class CasinoCrate extends CrateBuilder {
 
                 //this.crateManager.endCrate(getPlayer());
 
-                PrizeManager.getPrize(getCrate(), getInventory(), 11, getPlayer());
-                PrizeManager.getPrize(getCrate(), getInventory(), 13, getPlayer());
-                PrizeManager.getPrize(getCrate(), getInventory(), 15, getPlayer());
+                getCrate().givePrize(getInventory(), 11, getPlayer());
+                getCrate().givePrize(getInventory(), 13, getPlayer());
+                getCrate().givePrize(getInventory(), 15, getPlayer());
 
                 //this.crateManager.removePlayerFromOpeningList(getPlayer());
 

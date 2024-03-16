@@ -13,9 +13,7 @@ import org.bukkit.inventory.meta.trim.TrimPattern;
 import org.bukkit.persistence.PersistentDataType;
 import org.simpleyaml.configuration.ConfigurationSection;
 import us.crazycrew.crazycrates.platform.utils.EnchantUtils;
-
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Prize {
 
@@ -24,10 +22,12 @@ public class Prize {
 
     private final ItemBuilder displayItem;
 
+    private final List<ItemBuilder> builders;
     private final List<String> commands;
     private final List<String> messages;
+    private final Set<ItemStack> items;
 
-    private final String prizeNumber;
+    private final String prizeName;
 
     private final boolean isFirework;
 
@@ -42,7 +42,7 @@ public class Prize {
     public Prize(ConfigurationSection section) {
         this.section = section;
 
-        this.prizeNumber = this.section.getName();
+        this.prizeName = this.section.getName();
 
         this.commands = section.getStringList("Commands") == null ? Collections.emptyList() : section.getStringList("Commands");
         this.messages = section.getStringList("Messages") == null ? Collections.emptyList() : section.getStringList("Messages");
@@ -90,8 +90,22 @@ public class Prize {
             }
         }
 
+        List<?> editorItems = section.getList("Editor-Items");
+
+        this.items = new HashSet<>();
+
+        if (editorItems != null) {
+            for (Object key : editorItems) {
+                this.items.add((ItemStack) key);
+            }
+        }
+
+        this.builders = ItemBuilder.convertStringList(this.section.getStringList("Items"), this.prizeName);
+
         ItemMeta itemMeta = this.displayItem.getItemMeta();
+
         itemMeta.getPersistentDataContainer().set(PersistentKeys.crate_prize.getNamespacedKey(), PersistentDataType.STRING, this.section.getName());
+
         this.displayItem.setItemMeta(itemMeta);
     }
 
@@ -107,8 +121,8 @@ public class Prize {
      *
      * @return the name of the section.
      */
-    public String getPrizeNumber() {
-        return this.prizeNumber;
+    public String getPrizeName() {
+        return this.prizeName;
     }
 
     /**
@@ -155,6 +169,21 @@ public class Prize {
      */
     public ItemStack getDisplayItem() {
         return this.displayItem.build();
+    }
+
+    /**
+     * @return a set of item stacks.
+     */
+    public Set<ItemStack> getItems() {
+        return this.items;
+    }
+
+
+    /**
+     * @return a list of itemstacks built from the Items: section
+     */
+    public List<ItemBuilder> getItemBuilders() {
+        return this.builders;
     }
 
     /**
