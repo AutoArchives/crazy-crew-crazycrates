@@ -22,6 +22,8 @@ public class Key {
 
     private final boolean isGlowing;
 
+    private final ItemStack itemStack;
+
     public Key(KeyConfig config) {
         this.material = ItemUtils.getMaterial(config.getMaterial());
 
@@ -39,6 +41,10 @@ public class Key {
 
         this.isUnbreakable = config.isUnbreakable();
         this.isGlowing = config.isGlowing();
+        this.itemStack = new ItemBuilder().setMaterial(getMaterial())
+                // Bind the file name to the key item.
+                .setString(PersistentKeys.crate_key.getNamespacedKey(), this.fileName)
+                .setName(getName()).setLore(getLore()).setGlow(isGlowing()).setUnbreakable(isUnbreakable()).setItemFlags(getFlags()).build();
     }
 
     public Material getMaterial() {
@@ -66,6 +72,6 @@ public class Key {
     }
 
     public ItemStack getKey() {
-        return new ItemBuilder().setMaterial(getMaterial()).setName(getName()).setLore(getLore()).setGlow(isGlowing()).setUnbreakable(isUnbreakable()).setItemFlags(getFlags()).build();
+        return this.itemStack;
     }
 }
