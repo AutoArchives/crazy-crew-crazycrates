@@ -593,6 +593,10 @@ public class BukkitUserManager extends UserManager {
 
         Files.DATA.saveFile();
     }
+
+    private boolean isKeyInvalid(String keyName) {
+        return keyName.isBlank() || this.crateManager.getKey(keyName) == null;
+    }
     
     private boolean isCrateInvalid(String crateName) {
         return crateName.isBlank() || this.crateManager.getCrate(crateName) == null;
