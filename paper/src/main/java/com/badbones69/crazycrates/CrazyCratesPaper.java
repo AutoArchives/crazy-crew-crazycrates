@@ -1,6 +1,7 @@
 package com.badbones69.crazycrates;
 
 import com.badbones69.crazycrates.api.FileManager;
+import com.badbones69.crazycrates.api.builders.types.CrateAdminMenu;
 import com.badbones69.crazycrates.api.builders.types.CrateMainMenu;
 import com.badbones69.crazycrates.api.utils.MiscUtils;
 import com.badbones69.crazycrates.api.utils.MsgUtils;
@@ -23,8 +24,6 @@ import java.util.List;
 import java.util.Timer;
 
 public class CrazyCratesPaper extends JavaPlugin {
-
-    private final @NotNull BukkitCommandManager<CommandSender> commandManager = BukkitCommandManager.create(this);
 
     private InventoryManager inventoryManager;
     private CrateManager crateManager;
@@ -64,10 +63,10 @@ public class CrazyCratesPaper extends JavaPlugin {
         this.crateManager = new CrateManager();
         this.crateManager.load();
 
-        CommandManager commandManager = new CommandManager();
-        commandManager.load();
+        CommandManager.load();
 
         List.of(
+             new CrateAdminMenu.CrateAdminListener(),
              new CrateMainMenu.CrateMenuListener()
         ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
 
@@ -153,10 +152,6 @@ public class CrazyCratesPaper extends JavaPlugin {
 
     public @NotNull Server getInstance() {
         return this.instance;
-    }
-
-    public @NotNull BukkitCommandManager<CommandSender> getCommandManager() {
-        return this.commandManager;
     }
 
     public @NotNull InventoryManager getInventoryManager() {
