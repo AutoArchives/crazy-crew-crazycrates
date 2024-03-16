@@ -275,88 +275,6 @@ public class BukkitCrateManager {
         }
 
         //addCrate(new Crate("Menu", "Menu", CrateType.menu, new ItemStack(Material.AIR), "", new ArrayList<>(), null, 0, null, 0, 0, Collections.emptyList(), null));
-
-        if (MiscUtils.isLogging()) {
-            List.of(
-                    "All crate information has been loaded.",
-                    "Loading all the physical crate locations."
-            ).forEach(line -> this.plugin.getLogger().info(line));
-        }
-
-        FileConfiguration locations = Files.LOCATIONS.getFile();
-        int loadedAmount = 0;
-        int brokeAmount = 0;
-
-        ConfigurationSection section = locations.getConfigurationSection("Locations");
-
-        if (section != null) {
-            for (String locationName : section.getKeys(false)) {
-                try {
-                    String worldName = locations.getString("Locations." + locationName + ".World");
-
-                    // If name is null, we return.
-                    if (worldName == null) return;
-
-                    // If name is empty or blank, we return.
-                    if (worldName.isEmpty() || worldName.isBlank()) return;
-
-                    World world = this.plugin.getServer().getWorld(worldName);
-                    int x = locations.getInt("Locations." + locationName + ".X");
-                    int y = locations.getInt("Locations." + locationName + ".Y");
-                    int z = locations.getInt("Locations." + locationName + ".Z");
-                    Location location = new Location(world, x, y, z);
-
-                    /*Crate crate = this.plugin.getCrateManager().getCrateFromName(locations.getString("Locations." + locationName + ".Crate"));
-
-                    if (world != null && crate != null) {
-                        this.crateLocations.add(new CrateLocation(locationName, crate, location));
-
-                        if (this.holograms != null) {
-                            this.holograms.createHologram(location.getBlock(), crate);
-                        }
-
-                        loadedAmount++;
-                    } else {
-                        this.brokeLocations.add(new BrokeLocation(locationName, crate, x, y, z, worldName));
-                        brokeAmount++;
-                    }*/
-
-                } catch (Exception ignored) {}
-            }
-        }
-
-        // Checking if all physical locations loaded
-        if (MiscUtils.isLogging()) {
-            if (loadedAmount > 0 || brokeAmount > 0) {
-                if (brokeAmount <= 0) {
-                    this.plugin.getLogger().info("All physical crate locations have been loaded.");
-                } else {
-                    this.plugin.getLogger().info("Loaded " + loadedAmount + " physical crate locations.");
-                    this.plugin.getLogger().info("Failed to load " + brokeAmount + " physical crate locations.");
-                }
-            }
-
-            this.plugin.getLogger().info("Searching for schematics to load.");
-        }
-
-        // Loading schematic files
-        String[] schems = new File(this.plugin.getDataFolder() + "/schematics/").list();
-
-        if (schems != null) {
-            for (String schematicName : schems) {
-                if (schematicName.endsWith(".nbt")) {
-                    this.crateSchematics.add(new CrateSchematic(schematicName, new File(plugin.getDataFolder() + "/schematics/" + schematicName)));
-
-                    if (MiscUtils.isLogging()) this.plugin.getLogger().info(schematicName + " was successfully found and loaded.");
-                }
-            }
-        }
-
-        if (MiscUtils.isLogging()) this.plugin.getLogger().info("All schematics were found and loaded.");
-
-        cleanDataFile();
-
-        this.plugin.getInventoryManager().loadButtons();
     }
 
     // The crate that the player is opening.
@@ -1039,49 +957,6 @@ public class BukkitCrateManager {
         boolean glowing = file.getBoolean("Crate.PhysicalKey.Glowing", true);
 
         return new ItemBuilder().setMaterial(id).setName(name).setLore(lore).setGlow(glowing).build();
-    }
-
-    // Cleans the data file.
-    private void cleanDataFile() {
-        FileConfiguration data = Files.DATA.getFile();
-
-        if (!data.contains("Players")) return;
-
-        if (MiscUtils.isLogging()) this.plugin.getLogger().info("Cleaning up the data.yml file.");
-
-        List<String> removePlayers = new ArrayList<>();
-
-        for (String uuid : data.getConfigurationSection("Players").getKeys(false)) {
-            if (data.contains("Players." + uuid + ".tracking")) return;
-
-            boolean hasKeys = false;
-            List<String> noKeys = new ArrayList<>();
-
-            for (Crate crate : getUsableCrates()) {
-                //if (data.getInt("Players." + uuid + "." + crate.getName()) <= 0) {
-                    //noKeys.add(crate.getName());
-                //} else {
-                //    hasKeys = true;
-                //}
-            }
-
-            if (hasKeys) {
-                noKeys.forEach(crate -> data.set("Players." + uuid + "." + crate, null));
-            } else {
-                removePlayers.add(uuid);
-            }
-        }
-
-        if (!removePlayers.isEmpty()) {
-            if (MiscUtils.isLogging()) this.plugin.getLogger().info(removePlayers.size() + " player's data has been marked to be removed.");
-
-            removePlayers.forEach(uuid -> data.set("Players." + uuid, null));
-
-            if (MiscUtils.isLogging()) this.plugin.getLogger().info("All empty player data has been removed.");
-        }
-
-        if (MiscUtils.isLogging()) this.plugin.getLogger().info("The data.yml file has been cleaned.");
-        Files.DATA.saveFile();
     }
 
     // War Crate

@@ -5,7 +5,6 @@ import com.badbones69.crazycrates.CrazyCratesPaper;
 import com.badbones69.crazycrates.api.FileManager.Files;
 import com.badbones69.crazycrates.api.enums.Messages;
 import com.badbones69.crazycrates.api.events.PlayerReceiveKeyEvent;
-import com.badbones69.crazycrates.api.objects.Crate;
 import com.badbones69.crazycrates.api.objects.Key;
 import com.badbones69.crazycrates.api.utils.MiscUtils;
 import org.bukkit.Material;
@@ -422,21 +421,21 @@ public class UserManager extends us.crazycrew.crazycrates.api.users.UserManager 
         Files.DATA.saveFile();
     }
 
-    public void loadOldOfflinePlayersKeys(Player player, List<Crate> crates) {
+    public void loadOldOfflinePlayersKeys(Player player, List<Key> keys) {
         FileConfiguration data = Files.DATA.getFile();
         String name = player.getName().toLowerCase();
 
         if (data.contains("Offline-Players." + name)) {
-            for (Crate crate : crates) {
-                if (data.contains("Offline-Players." + name + "." + crate.getFileName())) {
-                    PlayerReceiveKeyEvent event = new PlayerReceiveKeyEvent(player, crate, PlayerReceiveKeyEvent.KeyReceiveReason.OFFLINE_PLAYER, 1);
+            for (Key key : keys) {
+                if (data.contains("Offline-Players." + name + "." + key.getFileName())) {
+                    PlayerReceiveKeyEvent event = new PlayerReceiveKeyEvent(player, key, PlayerReceiveKeyEvent.KeyReceiveReason.OFFLINE_PLAYER, 1);
                     this.plugin.getServer().getPluginManager().callEvent(event);
 
                     if (!event.isCancelled()) {
-                        int keys = getVirtualKeys(player.getUniqueId(), crate.getFileName());
-                        int addedKeys = data.getInt("Offline-Players." + name + "." + crate.getFileName());
+                        int amount = getVirtualKeys(player.getUniqueId(), key.getFileName());
+                        int addedKeys = data.getInt("Offline-Players." + name + "." + key.getFileName());
 
-                        data.set("Players." + player.getUniqueId() + "." + crate.getFileName(), (Math.max((keys + addedKeys), 0)));
+                        data.set("Players." + player.getUniqueId() + "." + key.getFileName(), (Math.max((amount + addedKeys), 0)));
 
                         Files.DATA.saveFile();
                     }
@@ -498,6 +497,8 @@ public class UserManager extends us.crazycrew.crazycrates.api.users.UserManager 
     @Override
     public int getCrateOpened(UUID uuid, String crateName) {
         if (isCrateInvalid(crateName)) {
+            if (MiscUtils.isLogging()) this.plugin.getLogger().warning("Crate " + crateName + " doesn't exist.");
+
             return 0;
         }
 
