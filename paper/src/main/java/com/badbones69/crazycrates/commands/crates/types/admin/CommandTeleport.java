@@ -4,6 +4,7 @@ import com.badbones69.crazycrates.commands.crates.BaseCommand;
 import dev.triumphteam.cmd.bukkit.annotation.Permission;
 import dev.triumphteam.cmd.core.annotations.Command;
 import dev.triumphteam.cmd.core.annotations.Suggestion;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionDefault;
@@ -12,7 +13,6 @@ import org.bukkit.World;
 import com.badbones69.crazycrates.api.FileManager.Files;
 import com.badbones69.crazycrates.api.utils.MsgUtils;
 import org.jetbrains.annotations.NotNull;
-
 import java.util.Objects;
 
 public class CommandTeleport extends BaseCommand {
@@ -22,13 +22,17 @@ public class CommandTeleport extends BaseCommand {
     @Command("tp")
     @Permission(value = "crazycrates.teleport", def = PermissionDefault.OP)
     public void onAdminTeleport(Player player, @Suggestion("locations") String id) {
-        if (!this.locations.contains("Locations")) {
+        ConfigurationSection section = this.locations.getConfigurationSection("Locations");
+
+        if (section == null) {
             this.locations.set("Locations.Clear", null);
 
             Files.LOCATIONS.saveFile();
+
+            return;
         }
 
-        for (String name : this.locations.getConfigurationSection("Locations").getKeys(false)) {
+        for (String name : section.getKeys(false)) {
             if (name.equalsIgnoreCase(id)) {
                 World world = this.plugin.getServer().getWorld(Objects.requireNonNull(this.locations.getString("Locations." + name + ".World")));
 
