@@ -117,14 +117,14 @@ public class UserManager extends us.crazycrew.crazycrates.api.users.UserManager 
                 }
 
                 if (config.getProperty(ConfigKeys.give_virtual_keys_when_inventory_full)) {
-                    addVirtualKeys(amount, uuid, key.getFileName());
+                    addVirtualKeys(amount, uuid, key.getName());
 
                     if (config.getProperty(ConfigKeys.notify_player_when_inventory_full)) {
                         Map<String, String> placeholders = new HashMap<>();
                         placeholders.put("{amount}", String.valueOf(amount));
                         placeholders.put("{player}", player.getName());
                         placeholders.put("{keytype}", keyType.getFriendlyName());
-                        placeholders.put("{key}", key.getFileName());
+                        placeholders.put("{key}", key.getName());
 
                         player.sendMessage(Messages.cannot_give_player_keys.getMessage(placeholders, player));
                     }
@@ -348,7 +348,7 @@ public class UserManager extends us.crazycrew.crazycrates.api.users.UserManager 
         if (!this.data.contains("Offline-Players." + uuid) || keys.isEmpty()) return;
 
         for (Key key : keys) {
-            if (this.data.contains("Offline-Players." + uuid + "." + key.getFileName())) {
+            if (this.data.contains("Offline-Players." + uuid + "." + key.getName())) {
                 //todo() add event.
                 //PlayerReceiveKeyEvent event = new PlayerReceiveKeyEvent(player, crate, PlayerReceiveKeyEvent.KeyReceiveReason.OFFLINE_PLAYER, 1);
                 //this.plugin.getServer().getPluginManager().callEvent(event);
@@ -357,7 +357,7 @@ public class UserManager extends us.crazycrew.crazycrates.api.users.UserManager 
 
                 int keysGiven = 0;
 
-                int amount = this.data.getInt("Offline-Players." + uuid + "." + key.getFileName());
+                int amount = this.data.getInt("Offline-Players." + uuid + "." + key.getName());
 
                 while (keysGiven < amount) {
                     if (MiscUtils.isInventoryFull(player)) {
@@ -371,22 +371,21 @@ public class UserManager extends us.crazycrew.crazycrates.api.users.UserManager 
                 if (MiscUtils.isInventoryFull(player)) {
                     player.getInventory().addItem(key.getKey(amount, player));
                 } else {
-                    addVirtualKeys(amount, uuid, key.getFileName());
+                    addVirtualKeys(amount, uuid, key.getName());
                 }
 
-                if (keysGiven >= amount) this.data.set("Offline-Players." + uuid + "." + key.getFileName(), null);
+                if (keysGiven >= amount) this.data.set("Offline-Players." + uuid + "." + key.getName(), null);
             }
 
-            if (this.data.contains("Offline-Players." + uuid + ".Physical." + key.getFileName())) {
-                //todo() add event.
-                //PlayerReceiveKeyEvent event = new PlayerReceiveKeyEvent(player, crate, PlayerReceiveKeyEvent.KeyReceiveReason.OFFLINE_PLAYER, 1);
-                //this.plugin.getServer().getPluginManager().callEvent(event);
+            if (this.data.contains("Offline-Players." + uuid + ".Physical." + key.getName())) {
+                PlayerReceiveKeyEvent event = new PlayerReceiveKeyEvent(player, key, PlayerReceiveKeyEvent.KeyReceiveReason.OFFLINE_PLAYER, 1);
+                this.plugin.getServer().getPluginManager().callEvent(event);
 
-                //if (event.isCancelled()) return;
+                if (event.isCancelled()) return;
 
                 int keysGiven = 0;
 
-                int amount = this.data.getInt("Offline-Players." + uuid + ".Physical." + key.getFileName());
+                int amount = this.data.getInt("Offline-Players." + uuid + ".Physical." + key.getName());
 
                 while (keysGiven < amount) {
                     // If the inventory is full, drop the remaining keys then stop.
@@ -402,7 +401,7 @@ public class UserManager extends us.crazycrew.crazycrates.api.users.UserManager 
                 player.getInventory().addItem(key.getKey(keysGiven, player));
 
                 // If keys given is greater or equal than, remove data.
-                if (keysGiven >= amount) this.data.set("Offline-Players." + uuid + ".Physical." + key.getFileName(), null);
+                if (keysGiven >= amount) this.data.set("Offline-Players." + uuid + ".Physical." + key.getName(), null);
             }
         }
 
@@ -427,15 +426,15 @@ public class UserManager extends us.crazycrew.crazycrates.api.users.UserManager 
 
         if (data.contains("Offline-Players." + name)) {
             for (Key key : keys) {
-                if (data.contains("Offline-Players." + name + "." + key.getFileName())) {
+                if (data.contains("Offline-Players." + name + "." + key.getName())) {
                     PlayerReceiveKeyEvent event = new PlayerReceiveKeyEvent(player, key, PlayerReceiveKeyEvent.KeyReceiveReason.OFFLINE_PLAYER, 1);
                     this.plugin.getServer().getPluginManager().callEvent(event);
 
                     if (!event.isCancelled()) {
-                        int amount = getVirtualKeys(player.getUniqueId(), key.getFileName());
-                        int addedKeys = data.getInt("Offline-Players." + name + "." + key.getFileName());
+                        int amount = getVirtualKeys(player.getUniqueId(), key.getName());
+                        int addedKeys = data.getInt("Offline-Players." + name + "." + key.getName());
 
-                        data.set("Players." + player.getUniqueId() + "." + key.getFileName(), (Math.max((amount + addedKeys), 0)));
+                        data.set("Players." + player.getUniqueId() + "." + key.getName(), (Math.max((amount + addedKeys), 0)));
 
                         Files.DATA.saveFile();
                     }

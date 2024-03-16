@@ -16,12 +16,12 @@ public class CrateConfig extends YamlFile {
 
     private AbstractCrateManager crateManager;
     private final YamlFile file;
-    private final String fileName;
+    private final String name;
 
     public CrateConfig(File file) {
         this.file = new YamlFile(file.getPath());
 
-        this.fileName = file.getName().replaceAll(".yml", "");
+        this.name = file.getName().replaceAll(".yml", "");
     }
 
     @Override
@@ -40,8 +40,11 @@ public class CrateConfig extends YamlFile {
         }
     }
 
-    public String getFileName() {
-        return this.fileName;
+    /**
+     * @return the name of the file without .yml
+     */
+    public String getName() {
+        return this.name;
     }
 
     /**

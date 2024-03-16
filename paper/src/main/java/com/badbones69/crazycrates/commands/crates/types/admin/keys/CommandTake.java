@@ -24,7 +24,7 @@ public class CommandTake extends BaseCommand {
     @Command("take-random")
     @Permission(value = "crazycrates.takeerandomkey", def = PermissionDefault.OP)
     public void keyTakeRandom(CommandSender sender, @Suggestion("key-types") String keyType, @Suggestion("numbers") int amount, @Suggestion("players") CommandManager.CustomPlayer target) {
-        keyTake(sender, keyType, this.crateManager.getKeys().stream().toList().get(MiscUtils.randomNumber(0, this.crateManager.getKeys().size() - 2)).getFileName(), amount, target);
+        keyTake(sender, keyType, this.crateManager.getKeys().stream().toList().get(MiscUtils.randomNumber(0, this.crateManager.getKeys().size() - 2)).getName(), amount, target);
     }
 
     @Command("take")

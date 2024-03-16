@@ -21,7 +21,7 @@ public class CommandList extends BaseCommand {
         StringBuilder crates = new StringBuilder();
         String brokeCrates;
 
-        this.crateManager.getCrates().forEach(crate -> crates.append("&a").append(crate.getFileName()).append("&8, "));
+        this.crateManager.getCrates().forEach(crate -> crates.append("&a").append(crate.getName()).append("&8, "));
 
         StringBuilder brokeCratesBuilder = new StringBuilder();
 
@@ -45,7 +45,7 @@ public class CommandList extends BaseCommand {
             int y = loc.getLocation().getBlockY();
             int z = loc.getLocation().getBlockZ();
 
-            sender.sendMessage(MsgUtils.color("&8[&b" + line + "&8]: " + "&c" + loc.getID() + "&8, &c" + crate.getFileName() + "&8, &c" + world + "&8, &c" + x + "&8, &c" + y + "&8, &c" + z));
+            sender.sendMessage(MsgUtils.color("&8[&b" + line + "&8]: " + "&c" + loc.getID() + "&8, &c" + crate.getName() + "&8, &c" + world + "&8, &c" + x + "&8, &c" + y + "&8, &c" + z));
             line++;
         }
     }

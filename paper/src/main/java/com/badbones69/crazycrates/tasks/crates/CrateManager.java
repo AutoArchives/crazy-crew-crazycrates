@@ -96,7 +96,7 @@ public class CrateManager {
                 ConfigurationSection section = crateConfig.getCrateSection().getConfigurationSection("PhysicalKey");
 
                 if (section != null) {
-                    File keyFile = new File(CrazyCratesProvider.get().getKeyFolder() + "/" + crateConfig.getFileName() + ".yml");
+                    File keyFile = new File(CrazyCratesProvider.get().getKeyFolder() + "/" + crateConfig.getName() + ".yml");
 
                     keyFile.createNewFile();
 
@@ -239,8 +239,8 @@ public class CrateManager {
             List<String> noKeys = new ArrayList<>();
 
             for (Key key : getKeys()) {
-                if (data.getInt("Players." + uuid + "." + key.getFileName()) <= 0) {
-                    noKeys.add(key.getFileName());
+                if (data.getInt("Players." + uuid + "." + key.getName()) <= 0) {
+                    noKeys.add(key.getName());
                 } else {
                     hasKeys = true;
                 }
@@ -269,14 +269,14 @@ public class CrateManager {
     /**
      * Get crate by name.
      *
-     * @param fileName the name to check.
+     * @param name the name to check.
      * @return crate object or null if nothing found.
      */
-    public Crate getCrate(String fileName) {
+    public Crate getCrate(String name) {
         Crate crate = null;
 
         for (Crate key : this.crates) {
-            if (!key.getFileName().equalsIgnoreCase(fileName)) continue;
+            if (!key.getName().equalsIgnoreCase(name)) continue;
 
             crate = key;
             break;
@@ -288,14 +288,14 @@ public class CrateManager {
     /**
      * Get key by name.
      *
-     * @param fileName the name to check.
+     * @param name the name to check.
      * @return key object or null if nothing found.
      */
-    public Key getKey(String fileName) {
+    public Key getKey(String name) {
         Key key = null;
 
         for (Key pair : this.keys) {
-            if (!pair.getFileName().equalsIgnoreCase(fileName)) continue;
+            if (!pair.getName().equalsIgnoreCase(name)) continue;
 
             key = pair;
             break;
@@ -349,7 +349,7 @@ public class CrateManager {
     /**
      * Get a crate from the key. Only used for older keys.
      *
-     * @param item the key ItemStack you are checking.
+     * @param item the key you are checking.
      * @return a crate if is a key from a crate otherwise null if it is not.
      */
     public Crate getCrateFromKey(ItemStack item) {
@@ -444,7 +444,7 @@ public class CrateManager {
     /**
      * Removes a crate from the active crates.
      *
-     * @param uuid the uuid of the player opening the craste.
+     * @param uuid the uuid of the player opening the crate.
      */
     public void removeActiveCrate(UUID uuid) {
         this.locations.remove(uuid);

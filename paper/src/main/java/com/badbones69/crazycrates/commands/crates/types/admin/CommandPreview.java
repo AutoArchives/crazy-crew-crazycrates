@@ -35,12 +35,12 @@ public class CommandPreview extends BaseCommand {
 
         if (!crate.isPreviewToggle()) {
             if (sender instanceof Player player) {
-                player.sendMessage(Messages.preview_disabled.getMessage("{crate}", crate.getFileName(), player));
+                player.sendMessage(Messages.preview_disabled.getMessage("{crate}", crate.getName(), player));
 
                 return;
             }
 
-            sender.sendMessage(Messages.preview_disabled.getMessage("{crate}", crate.getFileName()));
+            sender.sendMessage(Messages.preview_disabled.getMessage("{crate}", crate.getName()));
 
             return;
         }

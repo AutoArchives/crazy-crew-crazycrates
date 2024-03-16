@@ -45,7 +45,7 @@ public class Crate {
     private final CrateType crateType;
     private final String previewName;
     private final String crateName;
-    private final String fileName;
+    private final String name;
 
     private final int startingKeys;
     private final int requiredKeys;
@@ -88,9 +88,9 @@ public class Crate {
         this.crateType = crateConfig.getCrateType();
 
         this.crateName = crateConfig.getCrateName();
-        this.previewName = this.section.getString("Preview-Name", crateConfig.getFileName());
+        this.previewName = this.section.getString("Preview-Name", crateConfig.getName());
 
-        this.fileName = crateConfig.getFileName();
+        this.name = crateConfig.getName();
 
         this.startingKeys = this.section.getInt("StartingKeys", 0);
         this.requiredKeys = this.section.getInt("RequiredKeys", 0);
@@ -122,7 +122,7 @@ public class Crate {
                 .setName(this.section.getString("Name", " "))
                 .setLore(this.section.getStringList("Lore") == null ? Collections.emptyList() : this.section.getStringList("Lore"))
                 .setGlow(this.section.getBoolean("Glowing", false))
-                .setString(PersistentKeys.crate_name.getNamespacedKey(), this.fileName).build();
+                .setString(PersistentKeys.crate_name.getNamespacedKey(), this.name).build();
 
         ConfigurationSection preview = crateConfig.getPreviewSection();
 
@@ -330,8 +330,8 @@ public class Crate {
     /**
      * @return the name of the crate file without .yml
      */
-    public String getFileName() {
-        return this.fileName;
+    public String getName() {
+        return this.name;
     }
 
     /**
@@ -373,7 +373,7 @@ public class Crate {
         for (ItemStack item : prize.getItems()) {
             if (item == null) {
                 Map<String, String> placeholders = new HashMap<>();
-                placeholders.put("{crate}", getFileName());
+                placeholders.put("{crate}", getName());
                 placeholders.put("{prize}", prize.getPrizeName());
                 player.sendMessage(Messages.prize_error.getMessage(placeholders, player));
 
@@ -436,7 +436,7 @@ public class Crate {
 
         if (prize.isFirework()) MiscUtils.spawnFirework(player.getLocation().add(0, 1, 0), null);
 
-        this.plugin.getServer().getPluginManager().callEvent(new PlayerPrizeEvent(player, this, getFileName(), prize));
+        this.plugin.getServer().getPluginManager().callEvent(new PlayerPrizeEvent(player, this, getName(), prize));
 
         sendMessage(player, prize);
     }

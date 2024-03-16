@@ -24,7 +24,7 @@ public class CommandGive extends BaseCommand {
     @Command("give-random")
     @Permission(value = "crazycrates.giverandomkey", def = PermissionDefault.OP)
     public void keyGiveRandom(CommandSender sender, @Suggestion("key-types") String keyType, @Suggestion("numbers") int amount, @Suggestion("players") CommandManager.CustomPlayer target) {
-        keyGive(sender, keyType, this.crateManager.getKeys().stream().toList().get(MiscUtils.randomNumber(0, this.crateManager.getKeys().size() - 2)).getFileName(), amount, target);
+        keyGive(sender, keyType, this.crateManager.getKeys().stream().toList().get(MiscUtils.randomNumber(0, this.crateManager.getKeys().size() - 2)).getName(), amount, target);
     }
 
     @Command("give")
