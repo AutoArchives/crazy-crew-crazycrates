@@ -1,6 +1,5 @@
-package com.badbones69.crazycrates.commands.v1;
+package com.badbones69.crazycrates.commands;
 
-import com.badbones69.crazycrates.commands.CommandManager;
 import dev.triumphteam.cmd.bukkit.BukkitCommandManager;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
