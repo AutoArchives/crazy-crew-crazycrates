@@ -3,6 +3,7 @@ package com.badbones69.crazycrates.tasks.crates;
 import com.badbones69.crazycrates.CrazyCratesPaper;
 import com.badbones69.crazycrates.api.objects.Crate;
 import com.badbones69.crazycrates.api.objects.Key;
+import com.badbones69.crazycrates.api.objects.other.CrateLocation;
 import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -23,6 +24,12 @@ public class CrateManager {
     private final @NotNull Server instance = this.plugin.getInstance();
 
     private final Set<Crate> crates = new HashSet<>();
+    private final Set<CrateLocation> crateLocations = new HashSet<>();
+
+    public Set<CrateLocation> getCrateLocations() {
+        return Collections.unmodifiableSet(this.crateLocations);
+    }
+
     private final Set<Key> keys = new HashSet<>();
 
     private final Map<UUID, Location> locations = new HashMap<>();
