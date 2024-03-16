@@ -53,6 +53,7 @@ public enum Messages {
     needs_more_room(CrateKeys.needs_more_room),
     out_of_time(CrateKeys.out_of_time),
     not_a_crate(CrateKeys.not_a_crate),
+    not_a_key(CrateKeys.not_a_key),
     not_a_number(CrateKeys.not_a_number),
     preview_disabled(CrateKeys.preview_disabled),
     required_keys(CrateKeys.required_keys),
