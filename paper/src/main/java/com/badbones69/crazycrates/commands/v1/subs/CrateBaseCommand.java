@@ -493,39 +493,6 @@ public class CrateBaseCommand {
         player.sendMessage(Messages.created_physical_crate.getMessage(placeholders, player));
     }
 
-    @SubCommand("give")
-    @Permission(value = "crazycrates.command.admin.givekey", def = PermissionDefault.OP)
-    public void onAdminCrateGive(CommandSender sender, @Suggestion("key-types") String keyType, @Suggestion("crates") String crateName, @Suggestion("numbers") int amount, @Suggestion("online-players") CustomPlayer target) {
-        KeyType type = KeyType.getFromName(keyType);
-
-        /*KeyType type = KeyType.getFromName(keyType);
-        Crate crate = this.crateManager.getCrateFromName(crateName);
-
-        if (amount <= 0) {
-            if (sender instanceof Player human) {
-                human.sendMessage(Messages.not_a_number.getMessage("{number}", String.valueOf(amount), human));
-
-                return;
-            }
-
-            sender.sendMessage(Messages.not_a_number.getMessage("{number}", String.valueOf(amount)));
-
-            return;
-        }
-
-        if (target.getPlayer() != null) {
-            Player player = target.getPlayer();
-
-            addKey(sender, player, null, crate, type, amount);
-
-            return;
-        }
-
-        OfflinePlayer offlinePlayer = target.getOfflinePlayer();
-
-        addKey(sender, null, offlinePlayer, crate, type, amount);
-    }
-
     private void addKey(CommandSender sender, Player player, OfflinePlayer offlinePlayer, Crate crate, KeyType type, int amount) {
         PlayerReceiveKeyEvent event = new PlayerReceiveKeyEvent(player, crate, PlayerReceiveKeyEvent.KeyReceiveReason.GIVE_COMMAND, amount);
 
@@ -584,54 +551,6 @@ public class CrateBaseCommand {
 
             EventManager.logKeyEvent(offlinePlayer, sender, crate, type, EventManager.KeyEventType.KEY_EVENT_GIVEN, this.config.getProperty(ConfigKeys.log_to_file), this.config.getProperty(ConfigKeys.log_to_console));
         }
-    }
-
-    @SubCommand("take")
-    @Permission(value = "crazycrates.command.admin.takekey", def = PermissionDefault.OP)
-    public void onAdminCrateTake(CommandSender sender, @Suggestion("key-types") String keyType, @Suggestion("crates") String crateName, @Suggestion("numbers") int amount, @Suggestion("online-players") CustomPlayer target) {
-        KeyType type = KeyType.getFromName(keyType);
-
-        Crate crate = this.crateManager.getCrateFromName(crateName);
-
-        if (type == null || type == KeyType.free_key) {
-            sender.sendMessage(MsgUtils.color(MsgUtils.getPrefix() + "&cPlease use Virtual/V or Physical/P for a Key type."));
-
-            return;
-        }
-
-        if (crate == null || crate.getCrateType() == CrateType.menu) {
-            if (sender instanceof Player human) {
-                human.sendMessage(Messages.not_a_crate.getMessage("{crate}", crateName, human));
-
-                return;
-            }
-
-            sender.sendMessage(Messages.not_a_crate.getMessage("{crate}", crateName));
-
-            return;
-        }
-
-        if (amount <= 0) {
-            if (sender instanceof Player human) {
-                human.sendMessage(Messages.not_a_number.getMessage("{number}", String.valueOf(amount), human));
-
-                return;
-            }
-
-            sender.sendMessage(Messages.not_a_number.getMessage("{number}", String.valueOf(amount)));
-
-            return;
-        }
-        
-        if (target.getPlayer() != null) {
-            Player player = target.getPlayer();
-            
-            takeKey(sender, player, null, crate, type, amount);
-
-            return;
-        }
-        
-        takeKey(sender, null, target.getOfflinePlayer(), crate, type, amount);
     }
 
     private void takeKey(CommandSender sender, Player player, OfflinePlayer offlinePlayer, Crate crate, KeyType type, int amount) {
