@@ -2,6 +2,8 @@ package com.badbones69.crazycrates.listeners;
 
 import ch.jalu.configme.SettingsManager;
 import com.badbones69.crazycrates.CrazyCratesPaper;
+import com.badbones69.crazycrates.api.objects.Crate;
+import com.badbones69.crazycrates.tasks.crates.CrateManager;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -23,6 +25,8 @@ import com.badbones69.crazycrates.tasks.InventoryManager;
 public class CrateControlListener implements Listener {
 
     private final @NotNull CrazyCratesPaper plugin = JavaPlugin.getPlugin(CrazyCratesPaper.class);
+
+    private final @NotNull CrateManager crateManager = this.plugin.getCrateManager();
 
     private final @NotNull InventoryManager inventoryManager = this.plugin.getInventoryManager();
 
@@ -214,12 +218,12 @@ public class CrateControlListener implements Listener {
         for (Block block : event.getBlocks()) {
             Location location = block.getLocation();
 
-            /*Crate crate = this.crateManager.getCrateFromLocation(location);
+            Crate crate = this.crateManager.getCrate(location);
 
             if (crate != null) {
                 event.setCancelled(true);
                 return;
-            }*/
+            }
         }
     }
 
@@ -228,12 +232,12 @@ public class CrateControlListener implements Listener {
         for (Block block : event.getBlocks()) {
             Location location = block.getLocation();
 
-            /*Crate crate = this.crateManager.getCrateFromLocation(location);
+            Crate crate = this.crateManager.getCrate(location);
 
             if (crate != null) {
                 event.setCancelled(true);
                 return;
-            }*/
+            }
         }
     }
 
