@@ -156,10 +156,10 @@ public class CrateManager {
      * Get a crate that has a key valid for opening.
      *
      * @param crateName the crate to check.
-     * @param keyName the key to check.
+     * @param itemStack the key to check.
      * @return key or null.
      */
-    public Key getKeyFromCrate(String crateName, String keyName) {
+    public Key getKeyFromCrate(String crateName, ItemStack itemStack) {
         // If it's null/empty, return.
         if (crateName == null || crateName.isEmpty()) return null;
 
@@ -168,6 +168,12 @@ public class CrateManager {
 
         // If crate is null.
         if (crate == null) return null;
+
+        if (!itemStack.hasItemMeta()) return null;
+
+        ItemMeta itemMeta = itemStack.getItemMeta();
+
+        String keyName = itemMeta.getPersistentDataContainer().get(PersistentKeys.crate_key.getNamespacedKey(), PersistentDataType.STRING);
 
         // If it's null/empty, return.
         if (keyName == null || keyName.isEmpty()) return null;
@@ -179,12 +185,24 @@ public class CrateManager {
     }
 
     /**
+     * Checks if the item used is an old key.
+     *
+     * @param item the item to check.
+     * @return true if it is the old key otherwise false.
+     */
+    public boolean isKeyFromCrate(ItemStack item) {
+        return getCrateFromKey(item) != null;
+    }
+
+    /**
      * Get a crate from the key. Only used for older keys.
      *
      * @param item the key ItemStack you are checking.
      * @return a crate if is a key from a crate otherwise null if it is not.
      */
     public Crate getCrateFromKey(ItemStack item) {
+        if (item == null || item.getType() == Material.AIR) return null;
+
         if (!item.hasItemMeta()) return null;
 
         ItemMeta itemMeta = item.getItemMeta();
