@@ -1,16 +1,20 @@
 package com.badbones69.crazycrates.api.objects;
 
 import com.badbones69.crazycrates.api.builders.ItemBuilder;
+import com.badbones69.crazycrates.api.enums.PersistentKeys;
 import com.ryderbelserion.cluster.utils.ItemUtils;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataType;
 import us.crazycrew.crazycrates.platform.keys.KeyConfig;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Key {
+
+    private final String fileName;
 
     private final Material material;
     private final String name;
@@ -26,6 +30,8 @@ public class Key {
 
     public Key(KeyConfig config) {
         this.fileName = config.getFileName();
+
+        this.material = ItemUtils.getMaterial(config.getMaterial().toLowerCase());
 
         this.name = config.getName();
 
