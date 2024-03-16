@@ -24,7 +24,7 @@ dependencyResolutionManagement {
 
             library("decentholograms", "com.github.decentsoftware-eu", "decentholograms").version("2.8.6")
 
-            library("triumphcmds", "dev.triumphteam", "triumph-cmd-bukkit").version("2.0.0-SNAPSHOT")
+            library("triumphcmds", "dev.triumphteam", "triumph-cmd-bukkit").version("2.0.0-ALPHA-9")
 
             library("simpleyaml", "com.github.Carleslc.Simple-YAML", "Simple-Yaml").version("1.8.4")
 
