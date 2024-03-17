@@ -3,7 +3,7 @@ package com.badbones69.crazycrates.listeners;
 import ch.jalu.configme.SettingsManager;
 import com.badbones69.crazycrates.CrazyCratesPaper;
 import com.badbones69.crazycrates.api.objects.Crate;
-import com.badbones69.crazycrates.tasks.crates.CrateManager;
+import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -26,7 +26,7 @@ public class CrateControlListener implements Listener {
 
     private final @NotNull CrazyCratesPaper plugin = JavaPlugin.getPlugin(CrazyCratesPaper.class);
 
-    private final @NotNull CrateManager crateManager = this.plugin.getCrateManager();
+    private final @NotNull BukkitCrateManager crateManager = this.plugin.getCrateManager();
 
     private final @NotNull InventoryManager inventoryManager = this.plugin.getInventoryManager();
 
@@ -245,11 +245,11 @@ public class CrateControlListener implements Listener {
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
-        //if (this.crateManager.hasCrateTask(player)) this.crateManager.endCrate(player);
+        if (this.crateManager.hasActiveTask(player)) this.crateManager.endActiveTask(player);
 
-        //if (this.crateManager.hasQuadCrateTask(player)) this.crateManager.endQuadCrate(player);
+        if (this.crateManager.hasActiveQuadTask(player)) this.crateManager.endActiveQuadTask(player);
 
-        //if (this.crateManager.isInOpeningList(player)) this.crateManager.removePlayerFromOpeningList(player);
+        if (this.crateManager.isInOpeningList(player)) this.crateManager.removePlayerFromOpeningList(player);
     }
     
     private void knockBack(Player player, Location location) {

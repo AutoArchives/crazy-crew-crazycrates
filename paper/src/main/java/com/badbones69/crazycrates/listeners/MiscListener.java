@@ -5,6 +5,9 @@ import com.badbones69.crazycrates.api.builders.types.CrateAdminMenu;
 import com.badbones69.crazycrates.api.builders.types.CrateMainMenu;
 import com.badbones69.crazycrates.api.builders.types.CratePreviewMenu;
 import com.badbones69.crazycrates.api.builders.types.CratePrizeMenu;
+import com.badbones69.crazycrates.tasks.InventoryManager;
+import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
+import com.badbones69.crazycrates.tasks.crates.BukkitUserManager;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryPickupItemEvent;
 import org.bukkit.event.player.PlayerAttemptPickupItemEvent;
@@ -17,44 +20,54 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
+import us.crazycrew.crazycrates.api.enums.types.CrateType;
 
 public class MiscListener implements Listener {
 
     private final @NotNull CrazyCratesPaper plugin = JavaPlugin.getPlugin(CrazyCratesPaper.class);
+
+    private final @NotNull InventoryManager inventoryManager = this.plugin.getInventoryManager();
+
+    private final @NotNull BukkitCrateManager crateManager = this.plugin.getCrateManager();
+
+    private final @NotNull BukkitUserManager userManager = this.plugin.getUserManager();
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
         // Set new keys if we have to.
-        //this.crateManager.setNewPlayerKeys(player);
+        this.crateManager.setNewPlayerKeys(player);
 
-        /*// Just in case any old data is in there.
-        this.userManager.loadOldOfflinePlayersKeys(player, this.crateManager.getUsableCrates());
+        // Just in case any old data is in there.
+        this.userManager.loadOldOfflinePlayersKeys(player, this.crateManager.getKeys());
 
         // Also add the new data.
-        this.userManager.loadOfflinePlayersKeys(player, this.crateManager.getUsableCrates());*/
+        this.userManager.loadOfflinePlayersKeys(player, this.crateManager.getKeys());
     }
 
     @EventHandler(ignoreCancelled = true)
     public void onPlayerAttemptPickUp(PlayerAttemptPickupItemEvent event) {
-        /*if (this.crateManager.isDisplayReward(event.getItem())) {
+        if (this.crateManager.isDisplayReward(event.getItem())) {
             event.setCancelled(true);
+
             return;
         }
 
-        if (this.crateManager.isInOpeningList(event.getPlayer())) {
+        Player player = event.getPlayer();
+
+        if (this.crateManager.isInOpeningList(player)) {
             // DrBot Start
-            if (this.crateManager.getOpeningCrate(event.getPlayer()).getCrateType().equals(CrateType.quick_crate)) return;
+            if (this.crateManager.getOpeningCrate(player).getCrateType().equals(CrateType.quick_crate)) return;
 
             // DrBot End
             event.setCancelled(true);
-        }*/
+        }
     }
 
     @EventHandler(ignoreCancelled = true)
     public void onPlayerQuit(PlayerQuitEvent event) {
-        /*Player player = event.getPlayer();
+        Player player = event.getPlayer();
 
         this.inventoryManager.removeViewer(player);
         this.inventoryManager.removeCrateViewer(player);
@@ -63,18 +76,18 @@ public class MiscListener implements Listener {
         this.crateManager.endQuickCrate(player, player.getLocation(), this.crateManager.getOpeningCrate(player), false);
 
         // End just in case.
-        this.crateManager.endCrate(player);
-        this.crateManager.endQuadCrate(player);
+        this.crateManager.endActiveTask(player);
+        this.crateManager.endActiveQuadTask(player);
 
         this.crateManager.removeCloser(player);
         this.crateManager.removeHands(player);
         this.crateManager.removePicker(player);
-        this.crateManager.removePlayerKeyType(player);*/
+        this.crateManager.removePlayerKeyType(player);
     }
 
     @EventHandler
     public void onItemPickUp(InventoryPickupItemEvent event) {
-        //if (this.crateManager.isDisplayReward(event.getItem())) event.setCancelled(true);
+        if (this.crateManager.isDisplayReward(event.getItem())) event.setCancelled(true);
     }
 
     @EventHandler

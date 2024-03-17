@@ -6,7 +6,7 @@ import com.badbones69.crazycrates.api.utils.FileUtils;
 import com.badbones69.crazycrates.commands.relations.ArgumentRelations;
 import com.badbones69.crazycrates.commands.crates.types.CommandHelp;
 import com.badbones69.crazycrates.commands.crates.types.admin.CommandAdmin;
-import com.badbones69.crazycrates.tasks.crates.CrateManager;
+import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
 import dev.triumphteam.cmd.bukkit.BukkitCommandManager;
 import dev.triumphteam.cmd.core.suggestion.SuggestionKey;
 import org.bukkit.OfflinePlayer;
@@ -24,7 +24,7 @@ public class CommandManager {
 
     private final static @NotNull CrazyCratesPaper plugin = JavaPlugin.getPlugin(CrazyCratesPaper.class);
 
-    private final static @NotNull CrateManager crateManager = plugin.getCrateManager();
+    private final static @NotNull BukkitCrateManager BUKKIT_CRATE_MANAGER = plugin.getCrateManager();
 
     private final static @NotNull BukkitCommandManager<CommandSender> commandManager = BukkitCommandManager.create(plugin);
 
@@ -45,7 +45,7 @@ public class CommandManager {
 
         getCommandManager().registerSuggestion(SuggestionKey.of("key-types"), (sender, arguments) -> List.of("virtual", "v", "physical", "p"));
 
-        getCommandManager().registerSuggestion(SuggestionKey.of("locations"), (sender, arguments) -> crateManager.getCrateLocations().stream().map(CrateLocation::getID).toList());
+        getCommandManager().registerSuggestion(SuggestionKey.of("locations"), (sender, arguments) -> BUKKIT_CRATE_MANAGER.getCrateLocations().stream().map(CrateLocation::getID).toList());
 
         getCommandManager().registerSuggestion(SuggestionKey.of("crates"), (sender, arguments) -> FileUtils.getFiles("crates"));
 

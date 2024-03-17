@@ -4,7 +4,7 @@ import com.badbones69.crazycrates.api.objects.Crate;
 import com.badbones69.crazycrates.api.objects.other.CrateLocation;
 import com.badbones69.crazycrates.api.utils.MsgUtils;
 import com.badbones69.crazycrates.commands.crates.BaseCommand;
-import com.badbones69.crazycrates.tasks.crates.CrateManager;
+import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
 import dev.triumphteam.cmd.bukkit.annotation.Permission;
 import dev.triumphteam.cmd.core.annotations.Command;
 import org.bukkit.command.CommandSender;
@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class CommandList extends BaseCommand {
 
-    private final @NotNull CrateManager crateManager = this.plugin.getCrateManager();
+    private final @NotNull BukkitCrateManager crateManager = this.plugin.getCrateManager();
 
     @Command("list")
     @Permission(value = "crazycrates.list", def = PermissionDefault.OP)

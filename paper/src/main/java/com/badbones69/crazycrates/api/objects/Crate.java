@@ -26,9 +26,7 @@ import org.simpleyaml.configuration.ConfigurationSection;
 import us.crazycrew.crazycrates.api.crates.CrateHologram;
 import us.crazycrew.crazycrates.api.enums.types.CrateType;
 import us.crazycrew.crazycrates.platform.crates.CrateConfig;
-import us.crazycrew.crazycrates.platform.crates.types.AbstractCrateManager;
-import us.crazycrew.crazycrates.platform.crates.types.CasinoManager;
-import us.crazycrew.crazycrates.platform.crates.types.CosmicManager;
+
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Logger;
@@ -137,6 +135,18 @@ public class Crate {
 
         ConfigurationSection section = crateConfig.getPrizeSection();
 
+        if (this.crateConfig.getCrateManager() != null) {
+            this.crateConfig.getCrateManager().getTierSection().getKeys(false).forEach(tier -> {
+                String path = "Crate.Tiers." + tier;
+
+                ConfigurationSection tierSection = this.crateConfig.getConfigurationSection(path);
+
+                if (tierSection != null) {
+                    this.tiers.add(new Tier(tier, tierSection));
+                }
+            });
+        }
+
         if (section != null) {
             Set<String> keys = section.getKeys(false);
 
@@ -145,7 +155,7 @@ public class Crate {
 
                 if (prizeSection == null) continue;
 
-                this.prizes.add(new Prize(prizeSection));
+                this.prizes.add(new Prize(prizeSection, this.tiers, this.name, this.crateType));
             }
         }
 
@@ -159,6 +169,12 @@ public class Crate {
                     this.tiers.add(new Tier(tier, tierSection));
                 }
             });
+
+            for (String key : this.crateConfig.getPrizeSection().getKeys(false)) {
+                ConfigurationSection prize = this.crateConfig.getPrizeSection().getConfigurationSection(key);
+
+                this.prizes.add(new Prize(prize, this.tiers, this.name, this.crateType));
+            }
         }
 
         PluginManager server = this.plugin.getServer().getPluginManager();
@@ -212,6 +228,10 @@ public class Crate {
      */
     public int getStartingKeys() {
         return this.startingKeys;
+    }
+
+    public boolean isStartingKeys() {
+        return getStartingKeys() >= 1;
     }
 
     /**

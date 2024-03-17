@@ -4,7 +4,7 @@ import com.badbones69.crazycrates.api.enums.Messages;
 import com.badbones69.crazycrates.api.objects.Crate;
 import com.badbones69.crazycrates.commands.crates.BaseCommand;
 import com.badbones69.crazycrates.tasks.InventoryManager;
-import com.badbones69.crazycrates.tasks.crates.CrateManager;
+import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
 import dev.triumphteam.cmd.bukkit.annotation.Permission;
 import dev.triumphteam.cmd.core.annotations.Command;
 import dev.triumphteam.cmd.core.annotations.Suggestion;
@@ -17,7 +17,7 @@ import us.crazycrew.crazycrates.api.enums.types.CrateType;
 public class CommandPreview extends BaseCommand {
 
     private final @NotNull InventoryManager inventoryManager = this.plugin.getInventoryManager();
-    private final @NotNull CrateManager crateManager = this.plugin.getCrateManager();
+    private final @NotNull BukkitCrateManager crateManager = this.plugin.getCrateManager();
 
     @Command("preview")
     @Permission(value = "crazycrates.preview", def = PermissionDefault.OP)

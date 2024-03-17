@@ -34,6 +34,13 @@ public class Tier {
     }
 
     /**
+     * @return the tier name.
+     */
+    public String getTierName() {
+        return this.tierName;
+    }
+
+    /**
      * @return the item without the fluff.
      */
     public ItemBuilder getItem() {

@@ -1,5 +1,6 @@
 package com.badbones69.crazycrates.api.objects;
 
+import com.badbones69.crazycrates.CrazyCratesPaper;
 import com.badbones69.crazycrates.api.builders.ItemBuilder;
 import com.badbones69.crazycrates.api.enums.PersistentKeys;
 import com.ryderbelserion.cluster.utils.ItemUtils;
@@ -11,35 +12,60 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.trim.TrimMaterial;
 import org.bukkit.inventory.meta.trim.TrimPattern;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 import org.simpleyaml.configuration.ConfigurationSection;
+import us.crazycrew.crazycrates.api.enums.types.CrateType;
 import us.crazycrew.crazycrates.platform.utils.EnchantUtils;
 import java.util.*;
 
 public class Prize {
 
+    private final @NotNull CrazyCratesPaper plugin = JavaPlugin.getPlugin(CrazyCratesPaper.class);
+
     private final ConfigurationSection section;
 
-
-    private final ItemBuilder displayItem;
+    private ItemBuilder displayItem = new ItemBuilder();
 
     private final List<ItemBuilder> builders;
     private final List<String> commands;
     private final List<String> messages;
-    private final Set<ItemStack> items;
+    private final Set<ItemStack> items = new HashSet<>();
+    private final Set<Tier> tiers = new HashSet<>();
 
     private final String prizeName;
 
-    private final boolean isFirework;
+    private boolean isFirework = false;
 
-    private final int maxRange;
-    private final int chance;
+    private double chance = 0.0;
+
+    private Prize alternativePrize;
+
+    /**
+     * Create a new prize.
+     * This option is used only for Alternative Prizes.
+     *
+     * @param section the configuration section.
+     */
+    public Prize(ConfigurationSection section) {
+        this.section = section;
+        this.prizeName = this.section.getName();
+
+        this.builders = ItemBuilder.convertStringList(section.getStringList("Items"), this.prizeName);
+
+        this.commands = section.getStringList("Commands") == null ? Collections.emptyList() : section.getStringList("Commands");
+        this.messages = section.getStringList("Messages") == null ? Collections.emptyList() : section.getStringList("Messages");
+    }
 
     /**
      * Builds a prize object.
      *
      * @param section the config section of the prize.
+     * @param crateTiers the tiers to check in the prize.
+     * @param name the name of the crate.
+     * @param crateType the type of the crate.
      */
-    public Prize(ConfigurationSection section) {
+    public Prize(ConfigurationSection section, Set<Tier> crateTiers, String name, CrateType crateType) {
         this.section = section;
 
         this.prizeName = this.section.getName();
@@ -49,12 +75,11 @@ public class Prize {
 
         this.isFirework = section.getBoolean("Firework", false);
 
-        this.maxRange = section.getInt("MaxRange", 100);
-        this.chance = section.getInt("Chance", 25);
+        this.chance = section.getDouble("Chance", 25.0);
 
         this.displayItem = new ItemBuilder()
-                .setMaterial(this.section.getString("DisplayItem", "RED_TERRACOTTA"))
-                .setName(this.section.getString("DisplayName", WordUtils.capitalizeFully(section.getString("DisplayItem", "RED_TERRACOTTA").replaceAll("_", " "))))
+                .setMaterial(this.section.getString("DisplayItem", "red_terracotta"))
+                .setName(this.section.getString("DisplayName", WordUtils.capitalizeFully(section.getString("DisplayItem", "red_terracotta").replaceAll("_", " "))))
                 .setLore(section.getStringList("Lore") == null ? Collections.emptyList() : section.getStringList("Lore"))
                 .setGlow(section.getBoolean("Glowing", false))
                 .setUnbreakable(section.getBoolean("Unbreakable", false))
@@ -90,9 +115,40 @@ public class Prize {
             }
         }
 
-        List<?> editorItems = section.getList("Editor-Items");
+        if (this.section.contains("Alternative-Prize")) {
+            ConfigurationSection alternativeSection = this.section.getConfigurationSection("Alternative-Prize");
 
-        this.items = new HashSet<>();
+            if (alternativeSection != null) {
+                boolean isEnabled = alternativeSection.getBoolean("Toggle");
+
+                if (isEnabled) {
+                    this.alternativePrize = new Prize(alternativeSection);
+                }
+            }
+        }
+
+        if (crateType == CrateType.casino || crateType == CrateType.cosmic) {
+            if (this.section.contains("Tiers")) {
+                for (String tier : this.section.getStringList("Tiers")) {
+                    for (Tier key : crateTiers) {
+                        if (key.getTierName().equalsIgnoreCase(tier)) {
+                            this.tiers.add(key);
+                        }
+                    }
+                }
+            } else {
+                if (!crateTiers.isEmpty()) {
+                    List.of(
+                            "The tiers are not defined in prize: " + this.prizeName,
+                            "but the " + name + " file the prize is in has tiers defined.",
+                            "Please attempt to fix this issue. You can see example files ",
+                            "in the examples folder that refreshes when you reload the plugin."
+                    ).forEach(this.plugin.getLogger()::warning);
+                }
+            }
+        }
+
+        List<?> editorItems = section.getList("Editor-Items");
 
         if (editorItems != null) {
             for (Object key : editorItems) {
@@ -129,14 +185,14 @@ public class Prize {
      * @return A list of commands to execute.
      */
     public List<String> getCommands() {
-        return commands;
+        return this.commands;
     }
 
     /**
      * @return A list of messages to send.
      */
     public List<String> getMessages() {
-        return messages;
+        return this.messages;
     }
 
     /**
@@ -145,21 +201,21 @@ public class Prize {
      * @return true or false
      */
     public boolean isFirework() {
-        return isFirework;
+        return this.isFirework;
     }
 
     /**
      * @return the max range of the chance.
      */
-    public int getMaxRange() {
-        return maxRange;
+    public double getMaxRange() {
+        return 100.0;
     }
 
     /**
      * @return the chance the prize can be won.
      */
-    public int getChance() {
-        return chance;
+    public double getChance() {
+        return this.chance;
     }
 
     /**
@@ -178,6 +234,19 @@ public class Prize {
         return this.items;
     }
 
+    /**
+     * @return a set of tiers.
+     */
+    public Set<Tier> getTiers() {
+        return Collections.unmodifiableSet(this.tiers);
+    }
+
+    /**
+     * @return the alternative prize if not null.
+     */
+    public Prize getAlternativePrize() {
+        return this.alternativePrize;
+    }
 
     /**
      * @return a list of itemstacks built from the Items: section

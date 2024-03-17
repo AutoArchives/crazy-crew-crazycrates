@@ -3,7 +3,7 @@ package com.badbones69.crazycrates.commands.crates.types.admin;
 import com.badbones69.crazycrates.api.enums.Messages;
 import com.badbones69.crazycrates.api.objects.Crate;
 import com.badbones69.crazycrates.commands.crates.BaseCommand;
-import com.badbones69.crazycrates.tasks.crates.CrateManager;
+import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
 import dev.triumphteam.cmd.bukkit.annotation.Permission;
 import dev.triumphteam.cmd.core.annotations.Command;
 import dev.triumphteam.cmd.core.annotations.Suggestion;
@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class CommandDebug extends BaseCommand {
 
-    private final @NotNull CrateManager crateManager = this.plugin.getCrateManager();
+    private final @NotNull BukkitCrateManager crateManager = this.plugin.getCrateManager();
 
     @Command("debug")
     @Permission(value = "crazycrates.debug", def = PermissionDefault.OP)

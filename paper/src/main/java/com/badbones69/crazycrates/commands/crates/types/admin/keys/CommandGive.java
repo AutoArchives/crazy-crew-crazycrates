@@ -6,7 +6,7 @@ import com.badbones69.crazycrates.api.utils.MiscUtils;
 import com.badbones69.crazycrates.api.utils.MsgUtils;
 import com.badbones69.crazycrates.commands.CommandManager;
 import com.badbones69.crazycrates.commands.crates.BaseCommand;
-import com.badbones69.crazycrates.tasks.crates.CrateManager;
+import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
 import dev.triumphteam.cmd.bukkit.annotation.Permission;
 import dev.triumphteam.cmd.core.annotations.Command;
 import dev.triumphteam.cmd.core.annotations.Suggestion;
@@ -19,7 +19,7 @@ import us.crazycrew.crazycrates.api.enums.types.KeyType;
 
 public class CommandGive extends BaseCommand {
 
-    private final @NotNull CrateManager crateManager = this.plugin.getCrateManager();
+    private final @NotNull BukkitCrateManager crateManager = this.plugin.getCrateManager();
 
     @Command("give-random")
     @Permission(value = "crazycrates.giverandomkey", def = PermissionDefault.OP)

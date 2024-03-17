@@ -19,11 +19,11 @@ import us.crazycrew.crazycrates.platform.config.ConfigManager;
 import us.crazycrew.crazycrates.platform.config.impl.ConfigKeys;
 import java.util.*;
 
-public class UserManager extends us.crazycrew.crazycrates.api.users.UserManager {
+public class BukkitUserManager extends us.crazycrew.crazycrates.api.users.UserManager {
 
     private final @NotNull CrazyCratesPaper plugin = JavaPlugin.getPlugin(CrazyCratesPaper.class);
 
-    private final @NotNull CrateManager crateManager = this.plugin.getCrateManager();
+    private final @NotNull BukkitCrateManager crateManager = this.plugin.getCrateManager();
 
     private final @NotNull FileConfiguration data = Files.DATA.getFile();
 
@@ -173,7 +173,7 @@ public class UserManager extends us.crazycrew.crazycrates.api.users.UserManager 
 
             if (!item.hasItemMeta()) continue;
 
-            if (this.crateManager.getKeyFromCrate(crateName, item) != null) keys += item.getAmount();
+            if (this.crateManager.isKeyFromCrate(crateName, item)) keys += item.getAmount();
         }
 
         return keys;
@@ -211,9 +211,7 @@ public class UserManager extends us.crazycrew.crazycrates.api.users.UserManager 
                     }
 
                     for (ItemStack item : items) {
-                        Key key = this.crateManager.getKeyFromCrate(crateName, item);
-
-                        if (key != null) {
+                        if (this.crateManager.isKeyFromCrate(crateName, item)) {
                             int keyAmount = item.getAmount();
 
                             if (takeAmount - keyAmount >= 0) {
@@ -295,7 +293,7 @@ public class UserManager extends us.crazycrew.crazycrates.api.users.UserManager 
         }
 
         for (ItemStack item : items) {
-            if (this.crateManager.getKeyFromCrate(crateName, item) != null) {
+            if (this.crateManager.isKeyFromCrate(crateName, item)) {
                 return true;
             }
         }
@@ -342,18 +340,17 @@ public class UserManager extends us.crazycrew.crazycrates.api.users.UserManager 
         return false;
     }
 
-    public void loadOfflinePlayerKeys(Player player, List<Key> keys) {
+    public void loadOfflinePlayersKeys(Player player, Set<Key> keys) {
         UUID uuid = player.getUniqueId();
 
         if (!this.data.contains("Offline-Players." + uuid) || keys.isEmpty()) return;
 
         for (Key key : keys) {
             if (this.data.contains("Offline-Players." + uuid + "." + key.getName())) {
-                //todo() add event.
-                //PlayerReceiveKeyEvent event = new PlayerReceiveKeyEvent(player, crate, PlayerReceiveKeyEvent.KeyReceiveReason.OFFLINE_PLAYER, 1);
-                //this.plugin.getServer().getPluginManager().callEvent(event);
+                PlayerReceiveKeyEvent event = new PlayerReceiveKeyEvent(player, key, PlayerReceiveKeyEvent.KeyReceiveReason.OFFLINE_PLAYER, 1);
+                this.plugin.getServer().getPluginManager().callEvent(event);
 
-                //if (event.isCancelled()) return;
+                if (event.isCancelled()) return;
 
                 int keysGiven = 0;
 
@@ -420,7 +417,7 @@ public class UserManager extends us.crazycrew.crazycrates.api.users.UserManager 
         Files.DATA.saveFile();
     }
 
-    public void loadOldOfflinePlayersKeys(Player player, List<Key> keys) {
+    public void loadOldOfflinePlayersKeys(Player player, Set<Key> keys) {
         FileConfiguration data = Files.DATA.getFile();
         String name = player.getName().toLowerCase();
 

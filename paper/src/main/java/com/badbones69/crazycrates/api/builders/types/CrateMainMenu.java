@@ -5,8 +5,11 @@ import com.badbones69.crazycrates.CrazyCratesPaper;
 import com.badbones69.crazycrates.api.builders.ItemBuilder;
 import com.badbones69.crazycrates.api.enums.Messages;
 import com.badbones69.crazycrates.api.objects.Crate;
+import com.badbones69.crazycrates.api.objects.Key;
 import com.badbones69.crazycrates.api.utils.ItemUtils;
-import com.badbones69.crazycrates.tasks.crates.CrateManager;
+import com.badbones69.crazycrates.tasks.InventoryManager;
+import com.badbones69.crazycrates.tasks.crates.BukkitCrateManager;
+import com.badbones69.crazycrates.tasks.crates.BukkitUserManager;
 import org.bukkit.Material;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
@@ -25,9 +28,9 @@ import java.util.List;
 
 public class CrateMainMenu extends InventoryBuilder {
 
-    //private final @NotNull BukkitUserManager userManager = this.plugin.getUserManager();
+    private final @NotNull BukkitUserManager userManager = this.plugin.getUserManager();
 
-    private final CrateManager crateManager = this.plugin.getCrateManager();
+    private final BukkitCrateManager crateManager = this.plugin.getCrateManager();
 
     private final @NotNull SettingsManager config = ConfigManager.getConfig();
 
@@ -90,7 +93,7 @@ public class CrateMainMenu extends InventoryBuilder {
                             String[] lore = option.split(",");
 
                             for (String line : lore) {
-                                //option = getCrates(option);
+                                option = getCrates(option);
 
                                 item.addLore(option.replaceAll("\\{player}", getPlayer().getName()));
                             }
@@ -120,12 +123,22 @@ public class CrateMainMenu extends InventoryBuilder {
     }
 
     private String getCrates(String option) {
-        /*for (Crate crate : this.plugin.getCrateManager().getUsableCrates()) {
-            option = option.replaceAll("%" + crate.getName().toLowerCase() + "}", this.userManager.getVirtualKeys(getPlayer().getUniqueId(), crate.getName()) + "")
-                    .replaceAll("%" + crate.getName().toLowerCase() + "_physical%", this.userManager.getPhysicalKeys(getPlayer().getUniqueId(), crate.getName()) + "")
-                    .replaceAll("%" + crate.getName().toLowerCase() + "_total%", this.userManager.getTotalKeys(getPlayer().getUniqueId(), crate.getName()) + "")
-                    .replaceAll("%" + crate.getName().toLowerCase() + "_opened%", this.userManager.getCrateOpened(getPlayer().getUniqueId(), crate.getName()) + "");
-        }*/
+        for (Key key : this.plugin.getCrateManager().getKeys()) {
+            String name = key.getName().toLowerCase();
+
+            int virtualKeys = this.userManager.getVirtualKeys(getPlayer().getUniqueId(), key.getName());
+            int physicalKeys = this.userManager.getPhysicalKeys(getPlayer().getUniqueId(), this.crateManager.getCrateFromKey(key.getName()).getName(), key.getName());
+            int totalKeys = virtualKeys + physicalKeys;
+
+            option = option
+                    .replaceAll("%" + name + "_physical%", physicalKeys + "")
+                    .replaceAll("%" + name + "_total%", totalKeys + "")
+                    .replaceAll("%" + name + "}", virtualKeys + "");
+        }
+
+        for (Crate crate : this.plugin.getCrateManager().getCrates()) {
+            option = option.replaceAll("%" + crate.getName() + "_opened", this.userManager.getCrateOpened(getPlayer().getUniqueId(), crate.getName()) + "");
+        }
 
         return option;
     }
@@ -134,13 +147,13 @@ public class CrateMainMenu extends InventoryBuilder {
 
         private final @NotNull CrazyCratesPaper plugin = JavaPlugin.getPlugin(CrazyCratesPaper.class);
 
-        private final @NotNull CrateManager crateManager = this.plugin.getCrateManager();
+        private final @NotNull BukkitCrateManager crateManager = this.plugin.getCrateManager();
 
         private final @NotNull SettingsManager config = ConfigManager.getConfig();
 
-        //private final @NotNull InventoryManager inventoryManager = this.plugin.getInventoryManager();
+        private final @NotNull InventoryManager inventoryManager = this.plugin.getInventoryManager();
 
-        //private final @NotNull BukkitUserManager userManager = this.plugin.getUserManager();
+        private final @NotNull BukkitUserManager userManager = this.plugin.getUserManager();
 
         @EventHandler
         public void onInventoryClick(InventoryClickEvent event) {
@@ -178,7 +191,7 @@ public class CrateMainMenu extends InventoryBuilder {
                 }
 
                 case LEFT, SHIFT_LEFT -> {
-                    if (this.crateManager.isCrateActive(player.getUniqueId())) {
+                    if (this.crateManager.isCrateActive(player)) {
                         player.sendMessage(Messages.already_opening_crate.getMessage("{crate}", crate.getCrateName(), player));
                         return;
                     }
@@ -187,6 +200,15 @@ public class CrateMainMenu extends InventoryBuilder {
 
                     KeyType type = KeyType.virtual_key;
                     boolean hasKey = false;
+
+                    if (this.userManager.getVirtualKeys(player.getUniqueId(), crate.getName()) >= 1) {
+                        hasKey = true;
+                    } else {
+                        if (this.config.getProperty(ConfigKeys.virtual_accepts_physical_keys) && this.userManager.hasPhysicalKey(player.getUniqueId(), crate.getName(), false)) {
+                            hasKey = true;
+                            keyType = KeyType.physical_key;
+                        }
+                    }
                 }
             }
 

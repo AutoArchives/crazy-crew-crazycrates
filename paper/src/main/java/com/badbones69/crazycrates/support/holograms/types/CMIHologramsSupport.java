@@ -7,7 +7,6 @@ import us.crazycrew.crazycrates.api.crates.CrateHologram;
 import net.Zrips.CMILib.Container.CMILocation;
 import org.bukkit.block.Block;
 import com.badbones69.crazycrates.support.holograms.HologramManager;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
