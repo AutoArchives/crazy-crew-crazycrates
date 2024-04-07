@@ -1,0 +1,9 @@
+.gradle
+.idea
+
+build
+
+paper/.gradle
+paper/build
+
+jars
