@@ -1,15 +1,26 @@
 plugins {
+    alias(libs.plugins.run.paper)
     alias(libs.plugins.userdev)
     alias(libs.plugins.shadow)
 }
 
+val mcVersion = libs.versions.bundle.get()
+
 dependencies {
     implementation(fileTree("$rootDir/libs/shade").include("*.jar"))
 
-    paperweight.paperDevBundle(libs.versions.bundle)
+    paperweight.paperDevBundle(mcVersion)
 }
 
 tasks {
+    runServer {
+        jvmArgs("-Dnet.kyori.ansi.colorLevel=truecolor")
+
+        defaultCharacterEncoding = Charsets.UTF_8.name()
+
+        minecraftVersion(mcVersion)
+    }
+
     assemble {
         dependsOn(reobfJar)
     }
