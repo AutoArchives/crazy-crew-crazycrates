@@ -1,101 +1,92 @@
-import git.formatLog
-import git.latestCommitHash
-import git.latestCommitMessage
-
 plugins {
-    id("io.papermc.hangar-publish-plugin") version "0.1.2"
-    id("com.modrinth.minotaur") version "2.+"
+    id("io.github.goooler.shadow") version "8.1.7"
 
-    id("io.github.goooler.shadow")
+    `maven-publish`
 
-    `java-plugin`
+    `java-library`
 }
 
-val buildNumber: String = System.getenv("NEXT_BUILD_NUMBER") ?: "SNAPSHOT"
+project.group = "us.crazycrew.crazycrates"
+project.version = "0.5"
 
-val isSnapshot = true
-
-rootProject.version = if (isSnapshot) "3.0-$buildNumber" else "3.0"
-
-val content: String = if (isSnapshot) {
-    formatLog(latestCommitHash(), latestCommitMessage(), rootProject.name)
-} else {
-    rootProject.file("CHANGELOG.md").readText(Charsets.UTF_8)
+repositories {
+    mavenCentral()
 }
 
-subprojects.filter { it.name != "api" }.forEach {
-    it.project.version = rootProject.version
+dependencies {
+    compileOnly("net.kyori", "adventure-api", "4.17.0")
 }
 
-modrinth {
-    token.set(System.getenv("MODRINTH_TOKEN"))
+val javaComponent: SoftwareComponent = components["java"]
 
-    projectId.set(rootProject.name.lowercase())
-
-    versionType.set(if (isSnapshot) "beta" else "release")
-
-    versionName.set("${rootProject.name} ${rootProject.version}")
-    versionNumber.set(rootProject.version as String)
-
-    changelog.set(content)
-
-    uploadFile.set(rootProject.projectDir.resolve("jars/${rootProject.name}-${rootProject.version}.jar"))
-
-    gameVersions.set(listOf(
-        "1.20.6"
-    ))
-
-    loaders.add("paper")
-    loaders.add("purpur")
-    loaders.add("folia")
-
-    autoAddDependsOn.set(false)
-    detectLoaders.set(false)
-
-    dependencies {
-        optional.version("fancyholograms", "2.0.6")
+tasks {
+    val sourcesJar by creating(Jar::class) {
+        archiveClassifier.set("sources")
+        from(sourceSets.main.get().allSource)
     }
-}
 
-hangarPublish {
-    publications.register("plugin") {
-        apiKey.set(System.getenv("HANGAR_KEY"))
+    val javadocJar by creating(Jar::class) {
+        dependsOn.add(javadoc)
+        archiveClassifier.set("javadoc")
+        from(javadoc)
+    }
 
-        id.set(rootProject.name.lowercase())
+    publishing {
+        repositories {
+            maven {
+                url = uri("http://localhost:8080/releases")
 
-        version.set(rootProject.version as String)
+                credentials {
+                    this.username = System.getenv("gradle_username")
+                    this.password = System.getenv("gradle_password")
+                }
 
-        channel.set(if (isSnapshot) "Snapshot" else "Release")
+                isAllowInsecureProtocol = true
+            }
+        }
 
-        changelog.set(content)
+        publications {
+            create<MavenPublication>("maven") {
+                artifactId = "api"
 
-        platforms {
-            paper {
-                jar.set(rootProject.projectDir.resolve("jars/${rootProject.name}-${rootProject.version}.jar"))
+                from(javaComponent)
 
-                platformVersions.set(listOf(
-                    "1.20.6"
-                ))
+                artifact(sourcesJar)
+                artifact(javadocJar)
 
-                dependencies {
-                    hangar("PlaceholderAPI") {
-                        required = false
+                versionMapping {
+                    usage("java-api") {
+                        fromResolutionOf("runtimeClasspath")
+                    }
+                    usage("java-runtime") {
+                        fromResolutionResult()
+                    }
+                }
+
+                pom {
+                    name.set("CrazyCrates API")
+                    description.set("The official API of CrazyCrates")
+                    url.set("https://modrinth.com/plugin/crazycrates")
+
+                    licenses {
+                        licenses {
+                            name.set("MIT")
+                            url.set("https://opensource.org/licenses/MIT")
+                        }
                     }
 
-                    hangar("FancyHolograms") {
-                        required = false
+                    developers {
+                        developer {
+                            id.set("ryderbelserion")
+                            name.set("Ryder Belserion")
+                            email.set("no-reply@ryderbelserion.com")
+                        }
                     }
 
-                    url("Oraxen", "https://www.spigotmc.org/resources/%E2%98%84%EF%B8%8F-oraxen-custom-items-blocks-emotes-furniture-resourcepack-and-gui-1-18-1-20-4.72448/") {
-                        required = false
-                    }
-
-                    url("CMI", "https://www.spigotmc.org/resources/cmi-298-commands-insane-kits-portals-essentials-economy-mysql-sqlite-much-more.3742/") {
-                        required = false
-                    }
-
-                    url("DecentHolograms", "https://www.spigotmc.org/resources/decentholograms-1-8-1-20-4-papi-support-no-dependencies.96927/") {
-                        required = false
+                    scm {
+                        connection.set("scm:git:git://github.com/Crazy-Crew/CrazyCrates")
+                        developerConnection.set("scm:git:ssh://github.com/Crazy-Crew/CrazyCrates")
+                        url.set("https://github.com/Crazy-Crew/CrazyCrates")
                     }
                 }
             }
