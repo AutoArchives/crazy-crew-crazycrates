@@ -8,7 +8,7 @@ import java.util.List;
  * A class containing the data required to create a hologram.
  *
  * @author Ryder Belserion
- * @version 0.5
+ * @version 0.6
  * @since 0.1
  */
 public class CrateHologram {

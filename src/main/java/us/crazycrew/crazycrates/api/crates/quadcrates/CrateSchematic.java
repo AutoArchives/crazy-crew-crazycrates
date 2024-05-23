@@ -6,7 +6,7 @@ import java.io.File;
  * A record holding the data required to load a schematic
  *
  * @author Ryder Belserion
- * @version 0.5
+ * @version 0.6
  * @since 0.1
  *
  * @param schematicName the name of the file
