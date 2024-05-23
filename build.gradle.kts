@@ -34,7 +34,7 @@ tasks {
     publishing {
         repositories {
             maven {
-                url = uri("http://localhost:8080/releases")
+                url = uri("https://repo.crazycrew.us/releases")
 
                 credentials {
                     this.username = System.getenv("gradle_username")
