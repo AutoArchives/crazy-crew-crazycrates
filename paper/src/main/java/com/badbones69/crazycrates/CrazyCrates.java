@@ -34,10 +34,8 @@ import org.jetbrains.annotations.NotNull;
 import us.crazycrew.crazycrates.platform.Server;
 import us.crazycrew.crazycrates.platform.config.ConfigManager;
 import us.crazycrew.crazycrates.platform.config.impl.ConfigKeys;
-
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Timer;
@@ -60,13 +58,13 @@ public class CrazyCrates extends JavaPlugin {
 
     @Override
     public void onLoad() {
-        this.instance = new Server(this);
+        File crateFolder = new File(getDataFolder(), "crates");
 
-        if (this.instance.getCrateFolder() != null) {
-            final List<@NotNull File> files = Arrays.stream(this.instance.getCrateFiles()).toList();
+        if (crateFolder.exists()) {
+            File[] files = crateFolder.listFiles((dir, name) -> name.endsWith(".yml"));
 
-            if (!files.isEmpty()) {
-                files.forEach(file -> {
+            if (files != null) {
+                Arrays.stream(files).toList().forEach(file -> {
                     final FileConfiguration configuration = YamlConfiguration.loadConfiguration(file);
 
                     ConfigurationSection section = configuration.getConfigurationSection("Crate.Prizes");
@@ -90,17 +88,17 @@ public class CrazyCrates extends JavaPlugin {
                                     configuration.set("Crate.Prizes." + key + ".DisplayItem", itemStack.getType().name());
                                     configuration.set("Crate.Prizes." + key + ".DisplayAmount", itemStack.getAmount());
 
-                                    /*if (configuration.contains("Crate.Prizes." + key + ".Items")) {
-                                        List<String> items = new ArrayList<>(configuration.getStringList("Crate.Prizes." + key + ".Items"));
+                                        /*if (configuration.contains("Crate.Prizes." + key + ".Items")) {
+                                            List<String> items = new ArrayList<>(configuration.getStringList("Crate.Prizes." + key + ".Items"));
 
-                                        items.add("Item:" + itemStack.getType().name() + ", Amount:" + itemStack.getAmount() + ", Nbt:" + tag);
+                                            items.add("Item:" + itemStack.getType().name() + ", Amount:" + itemStack.getAmount() + ", Nbt:" + tag);
 
-                                        configuration.set("Crate.Prizes." + key + ".Items", items);
-                                    } else {
-                                        configuration.set("Crate.Prizes." + key + ".Items", List.of(
-                                                "Item:" + itemStack.getType().name() + ", Amount:" + itemStack.getAmount() + ", Nbt:" + tag
-                                        ));
-                                    }*/
+                                            configuration.set("Crate.Prizes." + key + ".Items", items);
+                                        } else {
+                                            configuration.set("Crate.Prizes." + key + ".Items", List.of(
+                                                    "Item:" + itemStack.getType().name() + ", Amount:" + itemStack.getAmount() + ", Nbt:" + tag
+                                            ));
+                                        }*/
                                 });
 
                                 configuration.set("Crate.Prizes." + key + ".Editor-Items", null);
@@ -117,6 +115,7 @@ public class CrazyCrates extends JavaPlugin {
             }
         }
 
+        this.instance = new Server(this);
         this.instance.enable();
     }
 
