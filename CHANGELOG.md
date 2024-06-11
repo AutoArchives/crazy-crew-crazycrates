@@ -1,5 +1,5 @@
 ## Fixes:
-* Fixed an issue with the migrator
+* Fixed an issue with the migrator on fresh installs
 
 ## Misc:
 * Remove unused code for a feature that no longer exists
