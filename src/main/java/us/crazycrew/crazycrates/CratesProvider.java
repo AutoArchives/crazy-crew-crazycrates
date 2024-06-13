@@ -8,7 +8,7 @@ import us.crazycrew.crazycrates.platform.IServer;
  * A class used to initialize the api so other plugins can use it.
  *
  * @author Ryder Belserion
- * @version 0.6
+ * @version 0.7
  * @since 0.4
  */
 public class CratesProvider {

@@ -6,7 +6,7 @@ import java.util.List;
  * A class containing available config options to use.
  *
  * @author Ryder Belserion
- * @version 0.6
+ * @version 0.7
  * @since 0.5
  */
 public interface ISettings {

@@ -10,7 +10,7 @@ import java.util.UUID;
  * Ability to set keys, get keys, getting total keys or checking total crates opened or individual crates opened.
  *
  * @author Ryder Belserion
- * @version 0.6
+ * @version 0.7
  * @since 0.1
  */
 public abstract class UserManager {

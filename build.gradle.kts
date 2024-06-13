@@ -7,7 +7,7 @@ plugins {
 }
 
 project.group = "us.crazycrew.crazycrates"
-project.version = "0.6"
+project.version = "0.7"
 
 repositories {
     mavenCentral()
