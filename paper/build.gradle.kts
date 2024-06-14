@@ -65,7 +65,6 @@ tasks {
 
     processResources {
         inputs.properties("name" to rootProject.name)
-        inputs.properties("version" to project.version)
         inputs.properties("group" to project.group)
         inputs.properties("description" to project.properties["description"])
         inputs.properties("website" to project.properties["website"])
