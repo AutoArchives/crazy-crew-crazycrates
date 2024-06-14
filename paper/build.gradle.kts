@@ -10,16 +10,10 @@ base {
     archivesName.set(rootProject.name)
 }
 
-repositories {
-    maven("https://repo.fancyplugins.de/releases")
-
-    maven("https://repo.oraxen.com/releases")
-}
-
 dependencies {
     paperweight.paperDevBundle(libs.versions.paper)
 
-    api(projects.crazycratesApi)
+    api(project(":api"))
 
     implementation(libs.vital.paper) {
         exclude("org.yaml")

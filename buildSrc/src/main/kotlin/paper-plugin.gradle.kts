@@ -1,5 +1,3 @@
-import com.ryderbelserion.feather.enums.Repository
-
 plugins {
     id("java-plugin")
 }
@@ -7,9 +5,13 @@ plugins {
 repositories {
     maven("https://repo.extendedclip.com/content/repositories/placeholderapi")
 
+    maven("https://papermc.io/repo/repository/maven-public")
+
     maven("https://repo.triumphteam.dev/snapshots")
 
-    maven("https://maven.enginehub.org/repo")
+    maven("https://repo.fancyplugins.de/releases")
 
-    maven(Repository.Paper.url)
+    maven("https://repo.oraxen.com/releases")
+
+    maven("https://maven.enginehub.org/repo")
 }

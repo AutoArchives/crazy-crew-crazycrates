@@ -1,5 +1,3 @@
-import com.ryderbelserion.feather.libs
-
 rootProject.name = "buildSrc"
 
 dependencyResolutionManagement {
@@ -10,12 +8,6 @@ dependencyResolutionManagement {
 
         mavenCentral()
     }
-
-    versionCatalogs {
-        register("libs") {
-            from(files(libs))
-        }
-    }
 }
 
 pluginManagement {
@@ -24,8 +16,4 @@ pluginManagement {
 
         gradlePluginPortal()
     }
-}
-
-plugins {
-    id("com.ryderbelserion.feather-settings")
 }
