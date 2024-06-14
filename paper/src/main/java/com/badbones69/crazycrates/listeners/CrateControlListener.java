@@ -94,6 +94,35 @@ public class CrateControlListener implements Listener {
             player.sendRichMessage(Messages.preview_disabled.getMessage(player, "{crate}", crate.getName()));
         }
     }
+
+    @EventHandler
+    public void onInteract(PlayerInteractEvent event) {
+        final Player player = event.getPlayer();
+
+        final Block clickedBlock = event.getClickedBlock();
+
+        if (clickedBlock == null) return;
+
+        final CrateLocation crateLocation = this.crateManager.getCrateLocation(clickedBlock.getLocation());
+
+        // If location is null, return.
+        if (crateLocation == null) return;
+
+        final Crate crate = crateLocation.getCrate();
+
+        event.setCancelled(true);
+
+        if (crate.getCrateType() == CrateType.menu) {
+            // this is to stop players in QuadCrate to not be able to try and open a crate set to menu.
+            if (!this.crateManager.isInOpeningList(player) && this.config.getProperty(ConfigKeys.enable_crate_menu)) {
+                final CrateMainMenu crateMainMenu = new CrateMainMenu(player, this.config.getProperty(ConfigKeys.inventory_name), this.config.getProperty(ConfigKeys.inventory_size));
+
+                player.openInventory(crateMainMenu.build().getInventory());
+            } else {
+                player.sendRichMessage(Messages.feature_disabled.getMessage(player));
+            }
+        }
+    }
     
     // This must run as highest, so it doesn't cause other plugins to check
     // the items that were added to the players inventory and replaced the item in the player's hand.
@@ -115,6 +144,8 @@ public class CrateControlListener implements Listener {
 
         Crate crate = crateLocation.getCrate();
 
+        if (crate.getCrateType() == CrateType.menu) return;
+
         // If crate is null, return.
         if (crate == null) return;
 
@@ -126,19 +157,6 @@ public class CrateControlListener implements Listener {
         }
 
         event.setCancelled(true);
-
-        if (crate.getCrateType() == CrateType.menu) {
-            // this is to stop players in QuadCrate to not be able to try and open a crate set to menu.
-            if (!this.crateManager.isInOpeningList(player) && this.config.getProperty(ConfigKeys.enable_crate_menu)) {
-                CrateMainMenu crateMainMenu = new CrateMainMenu(player, this.config.getProperty(ConfigKeys.inventory_size), this.config.getProperty(ConfigKeys.inventory_name));
-
-                player.openInventory(crateMainMenu.build().getInventory());
-            } else {
-                player.sendRichMessage(Messages.feature_disabled.getMessage(player));
-            }
-
-            return;
-        }
 
         KeyCheckEvent keyCheckEvent = new KeyCheckEvent(player, crateLocation);
         player.getServer().getPluginManager().callEvent(keyCheckEvent);
