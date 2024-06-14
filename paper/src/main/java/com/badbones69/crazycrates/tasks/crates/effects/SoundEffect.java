@@ -4,7 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
-import org.simpleyaml.configuration.ConfigurationSection;
+import org.bukkit.configuration.ConfigurationSection;
 
 public class SoundEffect {
 

@@ -6,8 +6,8 @@ import com.badbones69.crazycrates.api.utils.MiscUtils;
 import com.badbones69.crazycrates.support.SkullCreator;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.ryderbelserion.vital.paper.enums.Support;
+import com.ryderbelserion.vital.paper.util.AdvUtil;
 import com.ryderbelserion.vital.paper.util.DyeUtil;
-import com.ryderbelserion.vital.paper.util.MiscUtil;
 import io.th0rgal.oraxen.api.OraxenItems;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.text.Component;
@@ -304,10 +304,10 @@ public class ItemBuilder {
 
     private Component parse(String message) {
         if (Support.placeholder_api.isEnabled() && this.target != null) {
-            return MiscUtil.parse(PlaceholderAPI.setPlaceholders(this.target, message));
+            return AdvUtil.parse(PlaceholderAPI.setPlaceholders(this.target, message));
         }
 
-        return MiscUtil.parse(message);
+        return AdvUtil.parse(message);
     }
 
     /**
@@ -578,7 +578,7 @@ public class ItemBuilder {
             });
 
             this.itemStack = new ItemStack(Material.STONE);
-            this.itemStack.editMeta(itemMeta -> itemMeta.displayName(MiscUtil.parse("<red>An error has occurred with the item builder.")));
+            this.itemStack.editMeta(itemMeta -> itemMeta.displayName(AdvUtil.parse("<red>An error has occurred with the item builder.")));
 
             this.material = this.itemStack.getType();
 

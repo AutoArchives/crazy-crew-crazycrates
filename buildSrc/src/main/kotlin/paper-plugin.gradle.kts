@@ -1,9 +1,15 @@
-plugins {
-    id("io.papermc.paperweight.userdev")
+import com.ryderbelserion.feather.enums.Repository
 
-    id("root-plugin")
+plugins {
+    id("java-plugin")
 }
 
-dependencies {
-    paperweight.paperDevBundle("1.20.4-R0.1-SNAPSHOT")
+repositories {
+    maven("https://repo.extendedclip.com/content/repositories/placeholderapi")
+
+    maven("https://repo.triumphteam.dev/snapshots")
+
+    maven("https://maven.enginehub.org/repo")
+
+    maven(Repository.Paper.url)
 }

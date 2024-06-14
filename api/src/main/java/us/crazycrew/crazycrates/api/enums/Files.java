@@ -1,8 +1,8 @@
 package us.crazycrew.crazycrates.api.enums;
 
-import com.ryderbelserion.vital.core.config.YamlManager;
+import com.ryderbelserion.vital.paper.files.config.FileManager;
 import org.jetbrains.annotations.NotNull;
-import org.simpleyaml.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.FileConfiguration;
 import us.crazycrew.crazycrates.CratesProvider;
 import us.crazycrew.crazycrates.platform.Server;
 
@@ -13,7 +13,7 @@ public enum Files {
 
     private final @NotNull Server server = CratesProvider.get();
 
-    private final @NotNull YamlManager fileManager = server.getFileManager();
+    private final @NotNull FileManager fileManager = server.getFileManager();
 
     private final FileConfiguration config;
     private final String fileName;

@@ -11,7 +11,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import com.badbones69.crazycrates.api.enums.PersistentKeys;
 import org.bukkit.persistence.PersistentDataType;
-import org.simpleyaml.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.FileConfiguration;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;

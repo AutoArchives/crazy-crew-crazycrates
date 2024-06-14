@@ -1,7 +1,7 @@
 package us.crazycrew.crazycrates.platform;
 
 import com.ryderbelserion.vital.core.Vital;
-import com.ryderbelserion.vital.core.config.YamlManager;
+import com.ryderbelserion.vital.paper.files.config.FileManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 
 public class Server extends Vital implements ICrazyCrates {
 
-    private YamlManager fileManager;
+    private FileManager fileManager;
     private final JavaPlugin plugin;
     private final File crateFolder;
 
@@ -37,7 +37,7 @@ public class Server extends Vital implements ICrazyCrates {
 
         this.isLogging = ConfigManager.getConfig().getProperty(ConfigKeys.verbose_logging);
 
-        this.fileManager = new YamlManager();
+        this.fileManager = new FileManager();
         this.fileManager.addFile("locations.yml").addFile("data.yml")
                 .addFolder("crates")
                 .addFolder("schematics")
@@ -78,7 +78,7 @@ public class Server extends Vital implements ICrazyCrates {
         return this.isLogging;
     }
 
-    public @NotNull YamlManager getFileManager() {
+    public @NotNull FileManager getFileManager() {
         return this.fileManager;
     }
 

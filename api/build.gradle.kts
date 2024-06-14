@@ -1,50 +1,41 @@
 plugins {
-    id("io.github.goooler.shadow")
+    alias(libs.plugins.shadowJar)
 
-    `root-plugin`
+    `java-plugin`
 }
 
 project.group = "us.crazycrew.crazycrates"
 project.version = "1.0-snapshot"
 
 repositories {
-    maven("https://repo.papermc.io/repository/maven-public")
+    maven("https://repo.extendedclip.com/content/repositories/placeholderapi")
+
+    maven("https://repo.oraxen.com/releases")
+
+    mavenCentral()
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
+    compileOnly(libs.vital.paper)
 
-    compileOnly(libs.vital.core)
+    compileOnly(libs.placeholderapi)
 
-    compileOnly(libs.config.me)
+    compileOnly(libs.oraxen)
+
+    compileOnly(libs.paper)
 }
 
-java {
-    withSourcesJar()
-    withJavadocJar()
-}
+val javaComponent: SoftwareComponent = components["java"]
 
 tasks {
-    publishing {
-        repositories {
-            maven {
-                url = uri("https://repo.crazycrew.us/snapshots")
+    val sourcesJar by creating(Jar::class) {
+        archiveClassifier.set("sources")
+        from(sourceSets.main.get().allSource)
+    }
 
-                credentials {
-                    this.username = System.getenv("gradle_username")
-                    this.password = System.getenv("gradle_password")
-                }
-            }
-        }
-
-        publications {
-            create<MavenPublication>("maven") {
-                group = project.group
-                artifactId = project.name
-                version = "${project.version}"
-
-                artifact(shadowJar)
-            }
-        }
+    val javadocJar by creating(Jar::class) {
+        dependsOn.add(javadoc)
+        archiveClassifier.set("javadoc")
+        from(javadoc)
     }
 }

@@ -21,9 +21,10 @@ import com.badbones69.crazycrates.support.placeholders.PlaceholderAPISupport;
 import com.badbones69.crazycrates.tasks.BukkitUserManager;
 import com.badbones69.crazycrates.tasks.InventoryManager;
 import com.badbones69.crazycrates.tasks.crates.CrateManager;
-import com.ryderbelserion.vital.core.config.YamlManager;
+import com.ryderbelserion.vital.paper.files.config.FileManager;
 import com.ryderbelserion.vital.paper.VitalPaper;
 import com.ryderbelserion.vital.paper.enums.Support;
+import com.ryderbelserion.vital.paper.files.config.FileManager;
 import net.minecraft.world.item.ItemStack;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -55,6 +56,7 @@ public class CrazyCrates extends JavaPlugin {
     private InventoryManager inventoryManager;
     private BukkitUserManager userManager;
     private CrateManager crateManager;
+    private FileManager fileManager;
 
     @Override
     public void onLoad() {
@@ -115,13 +117,14 @@ public class CrazyCrates extends JavaPlugin {
             }
         }
 
-        this.instance = new Server(this);
-        this.instance.enable();
     }
 
     @Override
     public void onEnable() {
         new VitalPaper(this);
+
+        this.instance = new Server(this);
+        this.instance.enable();
 
         // Register permissions that we need.
         registerPermissions();
@@ -224,7 +227,7 @@ public class CrazyCrates extends JavaPlugin {
         return this.crateManager;
     }
 
-    public @NotNull YamlManager getFileManager() {
+    public @NotNull FileManager getFileManager() {
         return this.instance.getFileManager();
     }
 

@@ -2,9 +2,9 @@ package com.badbones69.crazycrates.tasks.crates.types;
 
 import com.badbones69.crazycrates.api.objects.Crate;
 import com.badbones69.crazycrates.api.builders.ItemBuilder;
-import com.badbones69.crazycrates.scheduler.FoliaRunnable;
 import com.badbones69.crazycrates.tasks.BukkitUserManager;
 import com.badbones69.crazycrates.tasks.crates.CrateManager;
+import com.ryderbelserion.vital.paper.util.scheduler.FoliaRunnable;
 import org.bukkit.Material;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
@@ -36,6 +36,8 @@ public class WarCrate extends CrateBuilder {
             return;
         }
 
+        final Player player = getPlayer();
+
         boolean keyCheck = this.userManager.takeKeys(1, getPlayer().getUniqueId(), getCrate().getName(), type, checkHand);
 
         if (!keyCheck) {
@@ -52,7 +54,11 @@ public class WarCrate extends CrateBuilder {
         this.crateManager.addPicker(getPlayer(), false);
         this.crateManager.addCloser(getPlayer(), false);
 
-        addCrateTask(new FoliaRunnable(getPlayer().getScheduler(), null) {
+        setRandomPrizes();
+
+        player.openInventory(getInventory());
+
+        addCrateTask(new FoliaRunnable(player.getScheduler(), null) {
             int full = 0;
             int open = 0;
 
@@ -67,7 +73,7 @@ public class WarCrate extends CrateBuilder {
                 this.open++;
 
                 if (this.open >= 3) {
-                    getPlayer().openInventory(getInventory());
+                    player.updateInventory();
 
                     this.open = 0;
                 }
@@ -79,7 +85,7 @@ public class WarCrate extends CrateBuilder {
 
                     setRandomGlass();
 
-                    crateManager.addPicker(getPlayer(), true);
+                    crateManager.addPicker(player, true);
                 }
             }
         }.runAtFixedRate(this.plugin, 1, 3));

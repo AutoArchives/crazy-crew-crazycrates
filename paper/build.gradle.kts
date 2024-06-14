@@ -1,39 +1,46 @@
 plugins {
-    id("io.github.goooler.shadow")
-
-    alias(libs.plugins.run.paper)
+    alias(libs.plugins.paperweight)
+    alias(libs.plugins.shadowJar)
+    alias(libs.plugins.runPaper)
 
     `paper-plugin`
 }
 
+base {
+    archivesName.set(rootProject.name)
+}
+
 repositories {
     maven("https://repo.fancyplugins.de/releases")
+
+    maven("https://repo.oraxen.com/releases")
 }
 
 dependencies {
-    compileOnly(fileTree("$rootDir/libs/compile").include("*.jar"))
+    paperweight.paperDevBundle(libs.versions.paper)
 
-    implementation(project(":api"))
+    api(projects.crazycratesApi)
 
     implementation(libs.vital.paper) {
+        exclude("org.yaml")
         exclude("ch.jalu")
     }
 
-    compileOnly(libs.head.database.api)
+    compileOnly(fileTree("$projectDir/libs/compile").include("*.jar"))
 
     compileOnly(libs.decent.holograms)
 
     compileOnly(libs.fancy.holograms)
 
-    compileOnly(libs.placeholder.api)
-
-    compileOnly(libs.itemsadder.api)
-
     compileOnly(libs.triumph.cmds)
 
-    compileOnly(libs.oraxen.api)
+    compileOnly(libs.placeholderapi)
 
-    compileOnly(libs.config.me)
+    compileOnly(libs.itemsadder)
+
+    compileOnly(libs.configme)
+
+    compileOnly(libs.oraxen)
 }
 
 tasks {
@@ -58,7 +65,7 @@ tasks {
 
     shadowJar {
         listOf(
-            "com.ryderbelserion.vital"
+            "com.ryderbelserion"
         ).forEach { relocate(it, "libs.$it") }
     }
 
@@ -66,7 +73,6 @@ tasks {
         inputs.properties("name" to rootProject.name)
         inputs.properties("version" to project.version)
         inputs.properties("group" to project.group)
-        //inputs.properties("authors" to project.properties["authors"])
         inputs.properties("description" to project.properties["description"])
         inputs.properties("website" to project.properties["website"])
 

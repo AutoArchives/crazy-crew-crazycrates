@@ -3,13 +3,12 @@ package com.badbones69.crazycrates.api;
 import com.badbones69.crazycrates.api.objects.Tier;
 import com.badbones69.crazycrates.api.builders.ItemBuilder;
 import com.ryderbelserion.vital.paper.enums.Support;
-import com.ryderbelserion.vital.paper.util.MiscUtil;
+import com.ryderbelserion.vital.paper.util.AdvUtil;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import com.badbones69.crazycrates.CrazyCrates;
 import com.badbones69.crazycrates.api.events.PlayerPrizeEvent;
 import com.badbones69.crazycrates.api.objects.Crate;
 import com.badbones69.crazycrates.api.objects.Prize;
-import com.badbones69.crazycrates.api.enums.Messages;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -19,8 +18,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import com.badbones69.crazycrates.api.utils.MiscUtils;
 import com.badbones69.crazycrates.api.utils.MsgUtils;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import static java.util.regex.Matcher.quoteReplacement;
@@ -129,7 +126,7 @@ public class PrizeManager {
         MiscUtils.sendCommand(command
                 .replaceAll("%player%", quoteReplacement(player.getName()))
                 .replaceAll("%reward%", quoteReplacement(name))
-                .replaceAll("%reward_stripped%", quoteReplacement(PlainTextComponentSerializer.plainText().serialize(MiscUtil.parse(name))))
+                .replaceAll("%reward_stripped%", quoteReplacement(PlainTextComponentSerializer.plainText().serialize(AdvUtil.parse(name))))
                 .replaceAll("%crate%", quoteReplacement(crate.getCrateInventoryName())));
     }
 
@@ -145,7 +142,7 @@ public class PrizeManager {
         String defaultMessage = message
                 .replaceAll("%player%", quoteReplacement(player.getName()))
                 .replaceAll("%reward%", quoteReplacement(name))
-                .replaceAll("%reward_stripped%", quoteReplacement(PlainTextComponentSerializer.plainText().serialize(MiscUtil.parse(name))))
+                .replaceAll("%reward_stripped%", quoteReplacement(PlainTextComponentSerializer.plainText().serialize(AdvUtil.parse(name))))
                 .replaceAll("%crate%", quoteReplacement(crate.getCrateInventoryName()));
 
         MsgUtils.sendMessage(player, Support.placeholder_api.isEnabled()  ? PlaceholderAPI.setPlaceholders(player, defaultMessage) : defaultMessage, false);

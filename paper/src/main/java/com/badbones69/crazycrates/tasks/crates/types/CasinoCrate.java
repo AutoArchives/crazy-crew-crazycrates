@@ -14,7 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
-import org.simpleyaml.configuration.ConfigurationSection;
+import org.bukkit.configuration.ConfigurationSection;
 import us.crazycrew.crazycrates.api.enums.types.KeyType;
 import java.util.concurrent.ThreadLocalRandom;
 

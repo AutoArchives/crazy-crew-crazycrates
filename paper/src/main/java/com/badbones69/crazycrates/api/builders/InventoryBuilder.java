@@ -6,7 +6,7 @@ import com.badbones69.crazycrates.api.objects.Crate;
 import com.badbones69.crazycrates.api.objects.Tier;
 import com.badbones69.crazycrates.api.utils.MiscUtils;
 import com.ryderbelserion.vital.paper.enums.Support;
-import com.ryderbelserion.vital.paper.util.MiscUtil;
+import com.ryderbelserion.vital.paper.util.AdvUtil;
 import net.kyori.adventure.text.serializer.json.JSONComponentSerializer;
 import net.minecraft.network.protocol.game.ClientboundOpenScreenPacket;
 import net.minecraft.server.level.ServerPlayer;
@@ -46,7 +46,7 @@ public abstract class InventoryBuilder implements InventoryHolder {
 
         String inventoryTitle = Support.placeholder_api.isEnabled() ? PlaceholderAPI.setPlaceholders(getPlayer(), this.title) : this.title;
 
-        this.inventory = this.plugin.getServer().createInventory(this, this.size, MiscUtil.parse(inventoryTitle));
+        this.inventory = this.plugin.getServer().createInventory(this, this.size, AdvUtil.parse(inventoryTitle));
     }
 
     public InventoryBuilder(Crate crate, Player player, int size, String title) {
@@ -58,7 +58,7 @@ public abstract class InventoryBuilder implements InventoryHolder {
 
         String inventoryTitle = Support.placeholder_api.isEnabled() ? PlaceholderAPI.setPlaceholders(getPlayer(), this.title) : this.title;
 
-        this.inventory = this.plugin.getServer().createInventory(this, this.size, MiscUtil.parse(inventoryTitle));
+        this.inventory = this.plugin.getServer().createInventory(this, this.size, AdvUtil.parse(inventoryTitle));
     }
 
     public InventoryBuilder(Crate crate, Player player, int size, int page, String title) {
@@ -71,7 +71,7 @@ public abstract class InventoryBuilder implements InventoryHolder {
 
         String inventoryTitle = Support.placeholder_api.isEnabled() ? PlaceholderAPI.setPlaceholders(getPlayer(), this.title) : this.title;
 
-        this.inventory = this.plugin.getServer().createInventory(this, this.size, MiscUtil.parse(inventoryTitle));
+        this.inventory = this.plugin.getServer().createInventory(this, this.size, AdvUtil.parse(inventoryTitle));
     }
 
     public InventoryBuilder(List<Tier> tiers, Crate crate, Player player, int size, String title) {
@@ -85,7 +85,7 @@ public abstract class InventoryBuilder implements InventoryHolder {
 
         String inventoryTitle = Support.placeholder_api.isEnabled() ? PlaceholderAPI.setPlaceholders(getPlayer(), this.title) : this.title;
 
-        this.inventory = this.plugin.getServer().createInventory(this, this.size, MiscUtil.parse(inventoryTitle));
+        this.inventory = this.plugin.getServer().createInventory(this, this.size, AdvUtil.parse(inventoryTitle));
     }
 
     public boolean overrideMenu() {
@@ -159,7 +159,7 @@ public abstract class InventoryBuilder implements InventoryHolder {
         ServerPlayer entityPlayer = (ServerPlayer) ((CraftHumanEntity) getView().getPlayer()).getHandle();
         int containerId = entityPlayer.containerMenu.containerId;
         MenuType<?> windowType = CraftContainer.getNotchInventoryType(getView().getTopInventory());
-        entityPlayer.connection.send(new ClientboundOpenScreenPacket(containerId, windowType, CraftChatMessage.fromJSON(JSONComponentSerializer.json().serialize(MiscUtil.parse(this.title)))));
+        entityPlayer.connection.send(new ClientboundOpenScreenPacket(containerId, windowType, CraftChatMessage.fromJSON(JSONComponentSerializer.json().serialize(AdvUtil.parse(this.title)))));
         getPlayer().updateInventory();
     }
 

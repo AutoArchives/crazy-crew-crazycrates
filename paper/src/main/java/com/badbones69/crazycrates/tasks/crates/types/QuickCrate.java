@@ -9,7 +9,7 @@ import com.badbones69.crazycrates.scheduler.FoliaRunnable;
 import com.badbones69.crazycrates.support.holograms.HologramManager;
 import com.badbones69.crazycrates.tasks.BukkitUserManager;
 import com.badbones69.crazycrates.tasks.crates.CrateManager;
-import com.ryderbelserion.vital.core.util.AdvUtil;
+import com.ryderbelserion.vital.paper.util.AdvUtil;
 import org.bukkit.Location;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;

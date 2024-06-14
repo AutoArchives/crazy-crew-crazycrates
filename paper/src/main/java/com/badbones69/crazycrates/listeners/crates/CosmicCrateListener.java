@@ -4,10 +4,10 @@ import com.badbones69.crazycrates.api.events.PlayerPrizeEvent;
 import com.badbones69.crazycrates.api.events.PlayerReceiveKeyEvent;
 import com.badbones69.crazycrates.api.builders.ItemBuilder;
 import com.ryderbelserion.vital.paper.enums.Support;
-import com.ryderbelserion.vital.paper.util.MiscUtil;
+import com.ryderbelserion.vital.paper.util.AdvUtil;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.simpleyaml.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.FileConfiguration;
 import us.crazycrew.crazycrates.platform.config.ConfigManager;
 import us.crazycrew.crazycrates.platform.config.impl.ConfigKeys;
 import com.badbones69.crazycrates.api.PrizeManager;
@@ -55,64 +55,6 @@ public class CosmicCrateListener implements Listener {
     private final @NotNull BukkitUserManager userManager = this.plugin.getUserManager();
 
     @EventHandler
-    public void onInventoryClose(InventoryCloseEvent event) {
-        Inventory inventory = event.getInventory();
-
-        if (!(inventory.getHolder(false) instanceof CratePrizeMenu holder)) return;
-
-        Player player = holder.getPlayer();
-
-        // Get opening crate.
-        Crate crate = this.crateManager.getOpeningCrate(player);
-
-        // Check if player is in the opening list.
-        if (!this.crateManager.isInOpeningList(player) || crate.getCrateType() != CrateType.cosmic) return;
-
-        // Get crate manager.
-        CosmicCrateManager cosmicCrateManager = (CosmicCrateManager) crate.getManager();
-
-        boolean playSound = false;
-
-        if (holder.contains(" - Prizes")) {
-            for (Integer key : cosmicCrateManager.getPrizes(player).keySet()) {
-                ItemStack item = inventory.getItem(key);
-
-                if (item != null) {
-                    Tier tier = getTier(crate, item);
-
-                    if (tier != null) {
-                        Prize prize = crate.pickPrize(player, tier);
-
-                        for (int stop = 0; prize == null && stop <= 2000; stop++) {
-                            prize = crate.pickPrize(player, tier);
-                        }
-
-                        PrizeManager.givePrize(player, prize, crate);
-
-                        playSound = true;
-                    }
-                }
-            }
-        }
-
-        // Play sound.
-        if (playSound) crate.playSound(player, player.getLocation(), "click-sound", "UI_BUTTON_CLICK", SoundCategory.PLAYERS);
-
-        // Remove opening stuff.
-        this.crateManager.removePlayerFromOpeningList(player);
-        this.crateManager.removePlayerKeyType(player);
-
-        // Cancel crate task just in case.
-        this.crateManager.removeCrateTask(player);
-
-        // Remove hand checks.
-        this.crateManager.removeHands(player);
-
-        // Remove the player from the hashmap.
-        cosmicCrateManager.removePickedPlayer(player);
-    }
-
-    @EventHandler
     public void onInventoryClickPrize(InventoryClickEvent event) {
         // Get the inventory.
         Inventory inventory = event.getInventory();
@@ -150,7 +92,7 @@ public class CosmicCrateListener implements Listener {
         // Check if null or air.
         if (itemStack == null || itemStack.getType() == Material.AIR) return;
 
-        Tier tier = getTier(crate, itemStack);
+        Tier tier = this.crateManager.getTier(crate, itemStack);
 
         // If tier is null, return
         if (tier == null) return;
@@ -363,7 +305,7 @@ public class CosmicCrateListener implements Listener {
                 if (!broadcastMessage.isBlank()) {
                     String builder = Support.placeholder_api.isEnabled() ? PlaceholderAPI.setPlaceholders(player, broadcastMessage) : broadcastMessage;
 
-                    this.plugin.getServer().broadcast(MiscUtil.parse(builder.replaceAll("%prefix%", MsgUtils.getPrefix()).replaceAll("%player%", player.getName())));
+                    this.plugin.getServer().broadcast(AdvUtil.parse(builder.replaceAll("%prefix%", MsgUtils.getPrefix()).replaceAll("%player%", player.getName())));
                 }
             }
 
@@ -480,13 +422,5 @@ public class CosmicCrateListener implements Listener {
                 }
             }, 10000L);
         }
-    }
-
-    private Tier getTier(Crate crate, ItemStack item) {
-        for (Tier tier : crate.getTiers()) {
-            if (tier.getTierItem(null).isSimilar(item)) return tier;
-        }
-
-        return null;
     }
 }
