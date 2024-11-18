@@ -8,6 +8,7 @@ import com.ryderbelserion.vital.paper.api.files.CustomFile;
 import com.ryderbelserion.vital.paper.util.PaperMethods;
 import com.ryderbelserion.vital.utils.Methods;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
@@ -26,6 +27,8 @@ import java.util.Map;
 import java.util.Optional;
 
 public class ExcellentCratesMigrator extends ICrateMigrator {
+
+    private final ComponentLogger logger = this.plugin.getComponentLogger();
 
     public ExcellentCratesMigrator(final CommandSender sender) {
         super(sender, MigrationType.EXCELLENT_CRATES);
@@ -52,7 +55,7 @@ public class ExcellentCratesMigrator extends ICrateMigrator {
             final File crateFile = new File(directory, crateName);
 
             if (crateFile.exists()) {
-                this.plugin.getComponentLogger().warn("Crate {} already exists in {}.", crateName, directory.getName());
+                this.logger.warn("Crate {} already exists in {}.", crateName, directory.getName());
 
                 failed.add("<red>⤷ " + crateName);
 
@@ -62,7 +65,7 @@ public class ExcellentCratesMigrator extends ICrateMigrator {
             try {
                 crateFile.createNewFile();
             } catch (IOException exception) {
-                this.plugin.getComponentLogger().warn("Failed to create crate file {} in {}.", crateName, directory.getName(), exception);
+                this.logger.warn("Failed to create crate file {} in {}.", crateName, directory.getName(), exception);
 
                 failed.add("<red>⤷ " + crateName);
             }

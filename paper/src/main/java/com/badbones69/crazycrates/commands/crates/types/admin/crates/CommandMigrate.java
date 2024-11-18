@@ -1,6 +1,7 @@
 package com.badbones69.crazycrates.commands.crates.types.admin.crates;
 
 import com.badbones69.crazycrates.api.enums.Messages;
+import com.badbones69.crazycrates.commands.crates.types.admin.crates.migrator.types.plugins.SpecializedCratesMigrator;
 import com.badbones69.crazycrates.utils.MiscUtils;
 import com.badbones69.crazycrates.commands.crates.types.BaseCommand;
 import com.badbones69.crazycrates.commands.crates.types.admin.crates.migrator.enums.MigrationType;
@@ -49,7 +50,15 @@ public class CommandMigrate extends BaseCommand {
 
             case CRATES_DEPRECATED_ALL -> new DeprecatedCrateMigrator(sender, type).run();
 
-            case SPECIALIZED_CRATES -> sender.sendRichMessage(Messages.migration_not_available.getMessage(sender));
+            case SPECIALIZED_CRATES -> {
+                if (!MiscUtils.isSpecializedCratesEnabled()) {
+                    sender.sendRichMessage(Messages.migration_plugin_not_enabled.getMessage(sender, "{name}", type.getName()));
+
+                    return;
+                }
+
+                new SpecializedCratesMigrator(sender).run();
+            }
 
             case EXCELLENT_CRATES -> {
                 if (!MiscUtils.isExcellentCratesEnabled()) {

@@ -418,4 +418,8 @@ public class MiscUtils {
     public static boolean isExcellentCratesEnabled() {
         return plugin.getServer().getPluginManager().isPluginEnabled("ExcellentCrates");
     }
+
+    public static boolean isSpecializedCratesEnabled() {
+        return plugin.getServer().getPluginManager().isPluginEnabled("SpecializedCrates");
+    }
 }
