@@ -21,6 +21,8 @@ subprojects {
     repositories {
         maven("https://repo.codemc.io/repository/maven-public")
 
+        maven("https://repo.ryderbelserion.com/snapshots")
+
         maven("https://repo.crazycrew.us/libraries")
         maven("https://repo.crazycrew.us/releases")
 
