@@ -118,10 +118,6 @@ public final class CrazyCratesPaper extends CrazyCratesPlugin<CommandSender, Wor
                 .addFolder(this.path.resolve("schematics"), FileType.NBT)
                 .addFolder(this.path.resolve("buttons"), FileType.YAML);
 
-        if (Plugins.placeholder_api.isEnabled()) {
-            new PlaceholderAPISupport().register();
-        }
-
         this.senderAdapter = new PaperSenderAdapter();
 
         loadMessages();
@@ -137,6 +133,10 @@ public final class CrazyCratesPaper extends CrazyCratesPlugin<CommandSender, Wor
         this.crateManager = new CrateManager();
 
         this.userManager = new BukkitUserManager(this, this.crateManager);
+
+        if (Plugins.placeholder_api.isEnabled()) {
+            new PlaceholderAPISupport().register();
+        }
 
         this.inventoryManager.loadButtons();
 
