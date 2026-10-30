@@ -474,9 +474,9 @@ public class Prize {
                         }
                     }
                 }
-
-                potionBuilder.setColor(this.section.contains("Settings.RGB") ? this.section.getString("Settings.RGB", "") : this.section.getString("Settings.Color", "")).build();
             }
+
+            builder.setColor(this.section.contains("Settings.RGB") ? this.section.getString("Settings.RGB", "") : this.section.getString("Settings.Color", "")).build();
 
             return builder;
         } catch (final Exception exception) {
